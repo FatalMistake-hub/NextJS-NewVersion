@@ -10,6 +10,10 @@ import theme from '@definitions/chakra/theme';
 import { useState } from 'react';
 import Router from 'next/router';
 import ProgressBar from '@badrap/bar-of-progress';
+import { persistor, store } from 'src/redux/store';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+
 const progressBar = new ProgressBar({
     size: 4,
     color: '#00b0b3',
@@ -27,10 +31,14 @@ function MyApp({ Component, pageProps }: AppProps<{ dehydratedState: DehydratedS
         <ChakraProvider theme={theme}>
             <ContextProvider>
                 <QueryClientProvider client={queryClient}>
-                    <Hydrate state={pageProps.dehydratedState}>
-                        <Component {...pageProps} />
-                        <ReactQueryDevtools />
-                    </Hydrate>
+                    <Provider store={store}>
+                        <PersistGate loading={null} persistor={persistor}>
+                            <Hydrate state={pageProps.dehydratedState}>
+                                <Component {...pageProps} />
+                                <ReactQueryDevtools />
+                            </Hydrate>
+                        </PersistGate>
+                    </Provider>
                 </QueryClientProvider>
             </ContextProvider>
         </ChakraProvider>

@@ -13,6 +13,20 @@ import SearchOptionWrapper from './SearchOptionWrapper';
 import { formatRangeDate } from 'src/utils/dateUntils';
 import { useDataContext } from 'src/hooks/useDataContext';
 import { useRouter } from 'next/router';
+import { useAppDispatch, useAppSelector } from 'src/redux/hook';
+import {
+    DECREASE_ADULTS,
+    DECREASE_CHILDREN,
+    DECREASE_INFANTS,
+    INCREASE_ADULTS,
+    INCREASE_CHILDREN,
+    INCREASE_INFANTS,
+    RESET_DATES,
+    RESET_GUESTS,
+    selectSearch,
+    SET_LOCATION,
+} from 'src/redux/slice/searchSlice';
+import { formatGuests } from 'src/utils/guestsUtil';
 
 enum ESearchMenu {
     LOCATION = 'location',
@@ -32,7 +46,9 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
     const router = useRouter();
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
     // data
-    const [{ location, checkIn, checkOut, guests }, dispatch] = useDataContext();
+    // const [{ location, checkIn, checkOut, guests }, dispatch] = useDataContext();
+    const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
+    const dispatch = useAppDispatch();
     // handler
     const handleOnBlur = (event?: FocusEvent<HTMLElement>) => {
         const { relatedTarget } = event || {};
@@ -49,9 +65,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
     };
 
     const resetDate = () => {
-        dispatch({
-            type: DATA_ACTION_TYPES.RESET_DATES,
-        });
+        dispatch(RESET_DATES);
         handleOnBlur();
     };
 
@@ -66,15 +80,15 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
         }
         setSearchMenu(null);
 
-        // router.push({
-        //     pathname: '/search',
-        //     query: {
-        //         location,
-        //         checkIn: checkIn?.toISOString(),
-        //         checkOut: checkOut?.toISOString(),
-        //         guests: JSON.stringify(guests),
-        //     },
-        // });
+        router.push({
+            pathname: '/search',
+            query: {
+                location,
+                checkIn: checkIn?.toISOString(),
+                checkOut: checkOut?.toISOString(),
+                guests: JSON.stringify(guests),
+            },
+        });
     };
 
     const dateRangeStyle = 'left-4 right-4 searchbar:left-auto searchbar:right-1/2 searchbar:translate-x-1/2 searchbar:w-[850px]';
@@ -100,11 +114,14 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                             title="Location"
                             placeholder="Where are you going?"
                             active={searchMenu === ESearchMenu.LOCATION}
-                            value={0}
-                            onChange={() => {}}
+                            value={location}
+                            onChange={({ target }) => dispatch(SET_LOCATION(target.value))}
                             onFocus={() => setSearchMenu(ESearchMenu.LOCATION)}
                             onBlur={handleOnBlur}
-                            onClear={() => {}}
+                            onClear={() => {
+                                dispatch(SET_LOCATION(''));
+                                handleOnBlur();
+                            }}
                         >
                             <SearchOptionWrapper className="left-0">
                                 <div className="py-4">
@@ -120,16 +137,16 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                             // withSearch
                             title="Date"
                             placeholder="Add when you want to go"
-                            active={searchMenu === ESearchMenu.GUESTS}
-                            value={formatRangeDate(1, 2)}
-                            onFocus={() => setSearchMenu(ESearchMenu.GUESTS)}
+                            active={searchMenu === ESearchMenu.CHECK_IN}
+                            value={formatRangeDate(checkIn, checkOut)}
+                            onFocus={() => setSearchMenu(ESearchMenu.CHECK_IN)}
                             onBlur={handleOnBlur}
                             onClear={resetDate}
                             isSearch={!!searchMenu}
                         >
                             {/* date picker */}
                             <SearchOptionWrapper className={dateRangeStyle}>
-                                {searchMenu === ESearchMenu.GUESTS && <DateRangeCP />}
+                                {searchMenu === ESearchMenu.CHECK_IN && <DateRangeCP />}
                             </SearchOptionWrapper>
                         </SearchOptionButton>
                         <SearchOptionButton
@@ -138,11 +155,11 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                             title="Guests"
                             placeholder="Add guests"
                             active={searchMenu === ESearchMenu.GUESTS}
-                            value={1}
+                            value={formatGuests(guests)}
                             onFocus={() => setSearchMenu(ESearchMenu.GUESTS)}
                             onBlur={handleOnBlur}
                             onClear={() => {
-                                // dispatch({ type: DATA_ACTION_TYPES.RESET_GUESTS });
+                                dispatch(RESET_GUESTS);
                                 handleOnBlur();
                             }}
                             isSearch={!!searchMenu}
@@ -155,7 +172,12 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                                             <h2 className="font-medium">Adults</h2>
                                             <p className="text-sm leading-4 text-gray-300">Ages 13 or above</p>
                                         </div>
-                                        <Counter value={0} maxValue={16} onIncrease={() => {}} onDescrease={() => {}} />
+                                        <Counter
+                                            value={guests.adults}
+                                            maxValue={16}
+                                            onIncrease={() => dispatch(INCREASE_ADULTS)}
+                                            onDescrease={() => dispatch(DECREASE_ADULTS)}
+                                        />
                                     </div>
                                 </div>
                                 <div>
@@ -164,7 +186,12 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                                             <h2 className="font-medium">Children</h2>
                                             <p className="text-sm leading-4 text-gray-300">Ages 2-12</p>
                                         </div>
-                                        <Counter value={0} maxValue={16} onIncrease={() => {}} onDescrease={() => {}} />
+                                        <Counter
+                                            value={guests.children}
+                                            maxValue={5}
+                                            onIncrease={() => dispatch(INCREASE_CHILDREN)}
+                                            onDescrease={() => dispatch(DECREASE_CHILDREN)}
+                                        />
                                     </div>
                                 </div>
                                 <div>
@@ -173,7 +200,12 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                                             <h2 className="font-medium">Infants</h2>
                                             <p className="text-sm leading-4 text-gray-300">Under 2</p>
                                         </div>
-                                        <Counter value={0} maxValue={16} onIncrease={() => {}} onDescrease={() => {}} />
+                                        <Counter
+                                            value={guests.infants}
+                                            maxValue={5}
+                                            onIncrease={() => dispatch(INCREASE_INFANTS)}
+                                            onDescrease={() => dispatch(DECREASE_INFANTS)}
+                                        />
                                     </div>
                                 </div>
                             </SearchOptionWrapper>

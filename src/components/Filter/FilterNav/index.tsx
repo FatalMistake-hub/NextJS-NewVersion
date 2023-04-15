@@ -91,11 +91,11 @@ const NAV_ITEMS: Array<NavItem> = [
         type: 'Button',
         label: 'Thiên nhiên và hoạt động ngoài trời',
     },
-    {
-        type: 'Button',
-        label: 'Bộ lọc',
-        leftIcon:<FaSlidersH/>,
-    },
+    // {
+    //     type: 'Button',
+    //     label: 'Bộ lọc',
+    //     leftIcon: <FaSlidersH />,
+    // },
 ];
 interface NavItem {
     type?: string;
@@ -113,37 +113,57 @@ const FilterNav: FC = () => {
     const popoverContentBgColor = useColorModeValue('white', 'gray.800');
 
     return (
-        <Stack direction={'row'} spacing={4}>
-            {NAV_ITEMS.map((navItem) => (
-                <Box key={navItem.label}>
-                    <Popover trigger={'hover'} placement={'bottom-start'}>
-                        <PopoverTrigger>
-                            {navItem.type === 'Button' ? (
-                                <Button
-                                    borderRadius="48px"
-                                    rightIcon={navItem.rightIcon}
-                                    leftIcon={navItem.leftIcon}
-                                    colorScheme="teal"
-                                    variant="outline"
-                                >
-                                    {navItem.label}
-                                </Button>
-                            ) : (
-                                <Divider orientation="vertical" />
-                            )}
-                        </PopoverTrigger>
-                        {navItem.children ? (
-                            <PopoverContent>
-                                <PopoverArrow />
-                                <PopoverCloseButton />
-                                <PopoverHeader>Confirmation!</PopoverHeader>
-                                <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
-                            </PopoverContent>
-                        ) : null}
-                    </Popover>
-                </Box>
-            ))}
-        </Stack>
+        // <Stack direction={'row'} spacing={2} justifyContent="space-between" width="full" >
+        <>
+            <div className="flex flex-wrap items-center justify-between w-full px-1 overflow-y-hidden h-14">
+                {NAV_ITEMS.map((navItem) => (
+                    <Box key={navItem.label} className="py-2">
+                        <Popover trigger={'hover'} placement={'bottom-start'}>
+                            <PopoverTrigger>
+                                {navItem.type === 'Button' ? (
+                                    <Button
+                                        borderRadius="48px"
+                                        rightIcon={navItem.rightIcon}
+                                        leftIcon={navItem.leftIcon}
+                                        colorScheme="teal"
+                                        variant="outline"
+                                    >
+                                        {navItem.label}
+                                    </Button>
+                                ) : (
+                                    <Divider orientation="vertical" />
+                                )}
+                            </PopoverTrigger>
+                            {navItem.children ? (
+                                <PopoverContent>
+                                    <PopoverArrow />
+                                    <PopoverCloseButton />
+                                    <PopoverHeader>Confirmation!</PopoverHeader>
+                                    <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
+                                </PopoverContent>
+                            ) : null}
+                        </Popover>
+                    </Box>
+                ))}
+            </div>
+            <div className="flex items-center ml-2">
+                <Popover trigger={'hover'} placement={'bottom-start'}>
+                    <PopoverTrigger>
+                        <Button borderRadius="48px" leftIcon={<FaSlidersH />} colorScheme="teal" variant="outline">
+                            Bộ lọc
+                        </Button>
+                    </PopoverTrigger>
+
+                    <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <PopoverHeader>Confirmation!</PopoverHeader>
+                        <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
+                    </PopoverContent>
+                </Popover>
+            </div>
+        </>
+        // </Stack>
     );
 };
 export default FilterNav;

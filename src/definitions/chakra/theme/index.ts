@@ -18,6 +18,6 @@ const overrides = {
     fontSizes,
 };
 
-const theme = extendTheme(overrides);
+const theme = extendTheme(overrides,{components:{}});
 
 export default theme;

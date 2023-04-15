@@ -8,35 +8,25 @@ const Main: React.FC = () => {
     const theme = useTheme();
     return (
         <>
-            <Flex textAlign="center" display="flex" flexDirection="column" justifyContent="center" alignItems="center" pt={'86px'}>
-                <Center
-                    backgroundColor="white"
-                    flexDirection="column"
-                    display="flex"
-                    textAlign="left"
-                    width="full"
-                    padding={5}
-                    borderRadius={10}
-                    mb={10}
-                    mt={7}
-                >
-                    <div className='w-full px-10'><FilterNav /></div>
-                    <Spacer />
-                    <div className="w-full p-10">
-                        <Heading as="h2" size="lg" noOfLines={1}>
-                            Tất cả trải nghiệm
-                        </Heading>
-                        <SimpleGrid minChildWidth="160px" spacingX={160}>
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                            <CardItem />
-                        </SimpleGrid>
-                    </div>
-                </Center>
+            <Flex display="flex" flexDirection="column" justifyContent="center" alignItems="center" pt={'86px'}>
+                <div className="max-w-[1800px] w-full px-[10px] mx-auto overflow-x-clip pt-10 flex">
+                    <FilterNav />
+                </div>
+                <Spacer />
+                <div className="w-full p-10">
+                    <Heading as="h2" size="lg" noOfLines={1}>
+                        Tất cả trải nghiệm
+                    </Heading>
+                    <SimpleGrid minChildWidth="160px" spacingX={160}>
+                        <CardItem />
+                        <CardItem />
+                        <CardItem />
+                        <CardItem />
+                        <CardItem />
+                        <CardItem />
+                        <CardItem />
+                    </SimpleGrid>
+                </div>
             </Flex>
         </>
     );
