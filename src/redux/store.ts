@@ -8,6 +8,7 @@ const persistConfig = {
     key: 'root',
     version: 1,
     storage,
+    blacklist: ['search'],
 };
 const rootReducer = combineReducers({
     search: searchSlice,

@@ -41,6 +41,7 @@ const DateRangeCP: FC<IAppDateRangeProps> = ({ months }) => {
                 minDate={new Date()}
                 showDateDisplay={false}
                 monthDisplayFormat="MMMM YYY"
+                className='items-center w-full h-full'
             />
         </div>
     );

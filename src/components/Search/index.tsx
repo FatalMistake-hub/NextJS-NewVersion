@@ -64,11 +64,6 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
         if (!result) setSearchMenu(null);
     };
 
-    const resetDate = () => {
-        dispatch(RESET_DATES);
-        handleOnBlur();
-    };
-
     const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!location) {
@@ -137,16 +132,19 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                             // withSearch
                             title="Date"
                             placeholder="Add when you want to go"
-                            active={searchMenu === ESearchMenu.CHECK_IN}
+                            active={searchMenu === ESearchMenu.CHECK_OUT}
                             value={formatRangeDate(checkIn, checkOut)}
-                            onFocus={() => setSearchMenu(ESearchMenu.CHECK_IN)}
+                            onFocus={() => setSearchMenu(ESearchMenu.CHECK_OUT)}
                             onBlur={handleOnBlur}
-                            onClear={resetDate}
+                            onClear={() => {
+                                dispatch(RESET_DATES(null));
+                                handleOnBlur();
+                            }}
                             isSearch={!!searchMenu}
                         >
                             {/* date picker */}
                             <SearchOptionWrapper className={dateRangeStyle}>
-                                {searchMenu === ESearchMenu.CHECK_IN && <DateRangeCP />}
+                                {searchMenu === ESearchMenu.CHECK_OUT && <DateRangeCP />}
                             </SearchOptionWrapper>
                         </SearchOptionButton>
                         <SearchOptionButton
@@ -157,9 +155,9 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                             active={searchMenu === ESearchMenu.GUESTS}
                             value={formatGuests(guests)}
                             onFocus={() => setSearchMenu(ESearchMenu.GUESTS)}
-                            onBlur={handleOnBlur}
+                            onBlur={() => {}}
                             onClear={() => {
-                                dispatch(RESET_GUESTS);
+                                dispatch(RESET_GUESTS(0));
                                 handleOnBlur();
                             }}
                             isSearch={!!searchMenu}
@@ -173,10 +171,11 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                                             <p className="text-sm leading-4 text-gray-300">Ages 13 or above</p>
                                         </div>
                                         <Counter
+                                            type="adults"
                                             value={guests.adults}
                                             maxValue={16}
-                                            onIncrease={() => dispatch(INCREASE_ADULTS)}
-                                            onDescrease={() => dispatch(DECREASE_ADULTS)}
+                                            onIncrease={() => dispatch(INCREASE_ADULTS(1))}
+                                            onDescrease={() => dispatch(DECREASE_ADULTS(1))}
                                         />
                                     </div>
                                 </div>
@@ -187,10 +186,11 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                                             <p className="text-sm leading-4 text-gray-300">Ages 2-12</p>
                                         </div>
                                         <Counter
+                                            type="children"
                                             value={guests.children}
                                             maxValue={5}
-                                            onIncrease={() => dispatch(INCREASE_CHILDREN)}
-                                            onDescrease={() => dispatch(DECREASE_CHILDREN)}
+                                            onIncrease={() => dispatch(INCREASE_CHILDREN(1))}
+                                            onDescrease={() => dispatch(DECREASE_CHILDREN(1))}
                                         />
                                     </div>
                                 </div>
@@ -201,10 +201,11 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                                             <p className="text-sm leading-4 text-gray-300">Under 2</p>
                                         </div>
                                         <Counter
+                                            type="infants"
                                             value={guests.infants}
                                             maxValue={5}
-                                            onIncrease={() => dispatch(INCREASE_INFANTS)}
-                                            onDescrease={() => dispatch(DECREASE_INFANTS)}
+                                            onIncrease={() => dispatch(INCREASE_INFANTS(1))}
+                                            onDescrease={() => dispatch(DECREASE_INFANTS(1))}
                                         />
                                     </div>
                                 </div>

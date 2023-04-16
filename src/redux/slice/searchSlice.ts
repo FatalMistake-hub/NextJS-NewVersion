@@ -15,12 +15,6 @@ interface IGuests {
     children: number;
     infants: number;
 }
-const initialState: ISearchState = {
-    location: '',
-    checkIn: null,
-    checkOut: null,
-    guests: { adults: 0, children: 0, infants: 0 },
-};
 
 export const searchSlice = createSlice({
     name: 'search',
@@ -43,58 +37,56 @@ export const searchSlice = createSlice({
         SET_GUESTS: (state, action: PayloadAction<IGuests>) => {
             state.guests = action.payload;
         },
-        RESET_DATES: (state) => {
-            state.checkOut = null;
-            state.checkIn = null;
+        RESET_DATES: (state, action: PayloadAction<Date | null>) => {
+            state.checkOut = action.payload;
+            state.checkIn = action.payload;
         },
-        RESET_GUESTS: (state) => {
-            state.guests = initialState.guests;
+        RESET_GUESTS: (state, action: PayloadAction<number>) => {
+            state.guests.children = action.payload;
+            state.guests.adults = action.payload;
+            state.guests.infants = action.payload;
         },
-        INCREASE_ADULTS: (state) => {
-            if (state.guests.adults < 16) {
+        INCREASE_ADULTS: (state, action: PayloadAction<number>) => {
+            if (state.guests.adults < 16 && state.guests.adults + state.guests.children < 16) {
                 state.guests.adults += 1;
             }
         },
-        INCREASE_CHILDREN: (state) => {
+        INCREASE_CHILDREN: (state, action: PayloadAction<number>) => {
             if (state.guests.children >= 5) {
-                state.guests.children = state.guests.children;
-            }
-            if (state.guests.children < 5 && state.guests.adults <= 0) {
+            } else if (state.guests.children < 5 && state.guests.adults <= 0) {
                 state.guests.children += 1;
                 state.guests.adults += 1;
+            } else if (state.guests.adults + state.guests.children < 16) {
+                state.guests.children += 1;
             }
-            state.guests.children += 1;
         },
-        INCREASE_INFANTS: (state) => {
+        INCREASE_INFANTS: (state, action: PayloadAction<number>) => {
             if (state.guests.infants >= 5) {
-                state.guests.infants = state.guests.infants;
-            }
-            if (state.guests.infants < 5 && state.guests.adults <= 0) {
+            } else if (state.guests.infants < 5 && state.guests.adults <= 0) {
                 state.guests.infants += 1;
                 state.guests.adults += 1;
+            } else {
+                state.guests.infants += 1;
             }
-            state.guests.infants += 1;
         },
-        DECREASE_ADULTS: (state) => {
+        DECREASE_ADULTS: (state, action: PayloadAction<number>) => {
             if (state.guests.adults <= 0) {
-                state = state;
+            } else if (state.guests.adults <= 1 && (state.guests.children >= 1 || state.guests.infants >= 1)) {
+            } else {
+                state.guests.adults -= 1;
             }
-            if (state.guests.adults <= 1 && (state.guests.children >= 1 || state.guests.infants >= 1)) {
-                state = state;
-            }
-            state.guests.adults -= 1;
         },
-        DECREASE_CHILDREN: (state) => {
+        DECREASE_CHILDREN: (state, action: PayloadAction<number>) => {
             if (state.guests.children <= 0) {
-                state = state;
+            } else {
+                state.guests.children -= 1;
             }
-            state.guests.children -= 1;
         },
-        DECREASE_INFANTS: (state) => {
+        DECREASE_INFANTS: (state, action: PayloadAction<number>) => {
             if (state.guests.infants <= 0) {
-                state = state;
+            } else {
+                state.guests.infants -= 1;
             }
-            state.guests.infants -= 1;
         },
     },
 });
