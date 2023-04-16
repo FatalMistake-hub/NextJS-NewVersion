@@ -1,4 +1,4 @@
-import { CloseIcon } from '@chakra-ui/icons';
+import { CloseButton } from '@chakra-ui/react';
 import { FC } from 'react';
 import { FaXing } from 'react-icons/fa';
 
@@ -26,7 +26,7 @@ const ClearButtonProps: FC<ClearButtonProps> = ({ onClick, active, isFocus, sepa
                 className={`${active && isFocus ? 'opacity-100' : 'opacity-0'} flex items-center pr-3`}
                 onClick={onClick}
             >
-                <CloseIcon className="h-6 p-1 bg-gray-200 rounded-full bg-opacity-60 hover:bg-opacity-100" />
+                <CloseButton size="sm" borderRadius='full' />
             </div>
         </div>
     );
