@@ -1,18 +1,20 @@
 import '@styles/global.scss';
 
-import { DehydratedState, Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { type DehydratedState, Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { AppProps } from 'next/app';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, Flex } from '@chakra-ui/react';
 import { ContextProvider } from 'src/context/store';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import theme from '@definitions/chakra/theme';
-import { useState } from 'react';
+import { useState, ReactElement, ReactNode } from 'react';
 import Router from 'next/router';
 import ProgressBar from '@badrap/bar-of-progress';
 import { persistor, store } from 'src/redux/store';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import MainLayout from '@components/layouts/MainLayout';
+import { NextPage } from 'next';
 
 const progressBar = new ProgressBar({
     size: 4,
@@ -24,19 +26,36 @@ const progressBar = new ProgressBar({
 Router.events.on('routeChangeStart', progressBar.start);
 Router.events.on('routeChangeComplete', progressBar.finish);
 Router.events.on('routeChangeError', progressBar.finish);
-function MyApp({ Component, pageProps }: AppProps<{ dehydratedState: DehydratedState }>): JSX.Element {
-    const [queryClient] = useState(() => new QueryClient());
 
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+    getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+    Component: NextPageWithLayout;
+};
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+    const [queryClient] = useState(() => new QueryClient());
+    // const getLayout = Component.getLayout ?? ((page) => page);
+    const renderWithLayout =
+        Component.getLayout ||
+        function (page) {
+            return <MainLayout>{page}</MainLayout>;
+        };
     return (
         <ChakraProvider theme={theme}>
             <ContextProvider>
                 <QueryClientProvider client={queryClient}>
                     <Provider store={store}>
                         <PersistGate loading={null} persistor={persistor}>
-                            <Hydrate state={pageProps.dehydratedState}>
-                                <Component {...pageProps} />
-                                <ReactQueryDevtools />
-                            </Hydrate>
+                            {/* <Hydrate state={pageProps.dehydratedState}> */}
+                            {/* <MainLayout>
+
+                                {getLayout(<Component {...pageProps} />)}
+                                </MainLayout> */}
+                            {renderWithLayout(<Component {...pageProps} />)}
+                            <ReactQueryDevtools />
+                            {/* </Hydrate> */}
                         </PersistGate>
                     </Provider>
                 </QueryClientProvider>

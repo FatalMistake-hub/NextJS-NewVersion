@@ -19,6 +19,8 @@ import {
     PopoverBody,
     useDisclosure,
     Divider,
+    PopoverFooter,
+    ButtonGroup,
 } from '@chakra-ui/react';
 import { FC, JSXElementConstructor, ReactElement } from 'react';
 import { FaChevronDown, FaSlidersH } from 'react-icons/fa';
@@ -115,10 +117,10 @@ const FilterNav: FC = () => {
     return (
         // <Stack direction={'row'} spacing={2} justifyContent="space-between" width="full" >
         <>
-            <div className="flex flex-wrap items-center justify-between w-full px-1 overflow-y-hidden h-14">
+            <div className="flex flex-wrap items-center justify-between w-full pl-1 overflow-y-hidden h-14 ">
                 {NAV_ITEMS.map((navItem) => (
                     <Box key={navItem.label} className="py-2">
-                        <Popover trigger={'hover'} placement={'bottom-start'}>
+                        <Popover placement={'bottom-start'}>
                             <PopoverTrigger>
                                 {navItem.type === 'Button' ? (
                                     <Button
@@ -138,29 +140,28 @@ const FilterNav: FC = () => {
                                 <PopoverContent>
                                     <PopoverArrow />
                                     <PopoverCloseButton />
-                                    <PopoverHeader>Confirmation!</PopoverHeader>
+
                                     <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
+                                    <PopoverFooter>
+                                        <div className='flex items-center justify-between w-full p-1'>
+                                            <Button size="sm" variant="link">
+                                                Cancel
+                                            </Button>
+                                            <Button size="sm" colorScheme="teal" variant="solid">
+                                                Apply
+                                            </Button>
+                                        </div>
+                                    </PopoverFooter>
                                 </PopoverContent>
                             ) : null}
                         </Popover>
                     </Box>
                 ))}
             </div>
-            <div className="flex items-center ml-2">
-                <Popover trigger={'hover'} placement={'bottom-start'}>
-                    <PopoverTrigger>
-                        <Button borderRadius="48px" leftIcon={<FaSlidersH />} colorScheme="teal" variant="outline">
-                            Bộ lọc
-                        </Button>
-                    </PopoverTrigger>
-
-                    <PopoverContent>
-                        <PopoverArrow />
-                        <PopoverCloseButton />
-                        <PopoverHeader>Confirmation!</PopoverHeader>
-                        <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
-                    </PopoverContent>
-                </Popover>
+            <div className="flex items-center pr-1 ml-2">
+                <Button borderRadius="48px" leftIcon={<FaSlidersH />} colorScheme="teal" variant="outline">
+                    Bộ lọc
+                </Button>
             </div>
         </>
         // </Stack>
