@@ -1,5 +1,5 @@
 import '@styles/global.scss';
-
+import '@styles/reactDateRange.scss';
 import { type DehydratedState, Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { AppProps } from 'next/app';

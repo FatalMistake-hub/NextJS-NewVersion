@@ -47,16 +47,16 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
     const [isActiveSearch, setIsActiveSearch] = useState<boolean>(searchPage ? false : true);
     const [activeMenu, setActiveMenu] = useState<EHeaderOpions | null>(EHeaderOpions.PLACES_TO_STAY);
 
-    const handleOnScroll = () => {
-        const position = window.scrollY;
-        if (position >= 50) {
-            setIsSnapTop(false);
-            setIsActiveSearch(false);
-        } else {
-            setIsSnapTop(true);
-            setIsActiveSearch(true);
-        }
-    };
+    // const handleOnScroll = () => {
+    //     const position = window.scrollY;
+    //     if (position >= 50) {
+    //         setIsSnapTop(false);
+    //         setIsActiveSearch(false);
+    //     } else {
+    //         setIsSnapTop(true);
+    //         setIsActiveSearch(true);
+    //     }
+    // };
     const headerBehavior = () => {
         let style = [];
         if (!isSnapTop) style.push('bg-white shadow-lg');
@@ -64,13 +64,13 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
         if (isActiveSearch) style.push('bg-white shadow-lg pb-8');
         return style.join(' ');
     };
-    useEffect(() => {
-        // listen to scroll
-        if (!searchPage) {
-            window.addEventListener('scroll', handleOnScroll);
-        }
-        return () => window.removeEventListener('scroll', handleOnScroll);
-    }, [searchPage]);
+    // useEffect(() => {
+    //     // listen to scroll
+    //     if (!searchPage) {
+    //         window.addEventListener('scroll', handleOnScroll);
+    //     }
+    //     return () => window.removeEventListener('scroll', handleOnScroll);
+    // }, [searchPage]);
     return (
         <>
             <header className={`${headerBehavior()} z-50 fixed top-0 w-full pt-5 duration-300 md:transition-none`}>

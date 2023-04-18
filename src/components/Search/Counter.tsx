@@ -16,7 +16,6 @@ interface ICounterProps {
 
 const Counter: FC<ICounterProps> = ({ type, value, maxValue, onIncrease, onDescrease }) => {
     const { guests } = useAppSelector(selectSearch);
-    console.log(value === maxValue || guests.adults + guests.children === 16);
     return (
         <div className="flex items-center">
             <span

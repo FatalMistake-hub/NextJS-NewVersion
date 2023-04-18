@@ -86,7 +86,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
         });
     };
 
-    const dateRangeStyle = 'left-4 right-4 searchbar:left-auto searchbar:right-1/2 searchbar:translate-x-1/2 searchbar:w-[850px]';
+    const dateRangeStyle = 'left-2 right-2 searchbar:left-auto searchbar:right-1/2 searchbar:translate-x-1/2 searchbar:w-[950px]';
 
     return (
         <>
@@ -98,7 +98,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                 >
                     <form
                         action="/search"
-                        className={' grid-cols-[0.8fr,0.7fr,0.7fr,auto] lg:grid-cols-[1fr,0.7fr,0.7fr,auto] grid flex-grow'}
+                        className={' grid-cols-[0.8fr,0.7fr,0.7fr,auto] lg:grid-cols-[1fr,0.7fr,1fr] grid flex-grow'}
                         onSubmit={handleOnSubmit}
                     >
                         {/* location */}
@@ -130,6 +130,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
 
                         <SearchOptionButton
                             // withSearch
+                            separator
                             title="Date"
                             placeholder="Add when you want to go"
                             active={searchMenu === ESearchMenu.CHECK_OUT}
@@ -155,7 +156,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                             active={searchMenu === ESearchMenu.GUESTS}
                             value={formatGuests(guests)}
                             onFocus={() => setSearchMenu(ESearchMenu.GUESTS)}
-                            onBlur={() => {}}
+                            onBlur={handleOnBlur}
                             onClear={() => {
                                 dispatch(RESET_GUESTS(0));
                                 handleOnBlur();

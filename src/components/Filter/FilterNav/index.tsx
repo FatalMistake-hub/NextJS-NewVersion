@@ -4,10 +4,6 @@ import {
     Text,
     IconButton,
     Button,
-    Stack,
-    Collapse,
-    Icon,
-    Link,
     Popover,
     PopoverTrigger,
     PopoverContent,
@@ -22,45 +18,44 @@ import {
     PopoverFooter,
     ButtonGroup,
 } from '@chakra-ui/react';
+import FilterModal from '@components/Modal/FilterModal';
 import { FC, JSXElementConstructor, ReactElement } from 'react';
 import { FaChevronDown, FaSlidersH } from 'react-icons/fa';
 import { IconType } from 'react-icons/lib';
-
+import LanguagePicker from '../FilterItem/LanguagePicker';
+import PriceRange from '../FilterItem/PriceRange';
+import TimeInDay from '../FilterItem/TimeInDay';
+interface NavItem {
+    type?: string;
+    label?: string;
+    rightIcon?: ReactElement<any, string | JSXElementConstructor<any>>;
+    leftIcon?: ReactElement<any, string | JSXElementConstructor<any>>;
+    subLabel?: string;
+    children?: ReactElement;
+    href?: string;
+    minWidth?: string;
+}
 const NAV_ITEMS: Array<NavItem> = [
     {
         type: 'Button',
         label: 'Giá',
         rightIcon: <FaChevronDown />,
-        children: [
-            {
-                label: 'Explore Design Work',
-                subLabel: 'Trending Design to inspire you',
-            },
-        ],
+        children: <PriceRange />,
+        minWidth: '400px',
     },
     {
         type: 'Button',
         label: 'Ngôn ngữ có thể sử dụng',
         rightIcon: <FaChevronDown />,
-
-        children: [
-            {
-                label: 'Job Board',
-                subLabel: 'Find your dream design job',
-            },
-        ],
+        children: <LanguagePicker />,
+        minWidth: '500px',
     },
     {
         type: 'Button',
         label: 'Thời gian trong ngày',
         rightIcon: <FaChevronDown />,
-
-        children: [
-            {
-                label: 'Job Board',
-                subLabel: 'Find your dream design job',
-            },
-        ],
+        children: <TimeInDay />,
+        minWidth: '320px',
     },
     {
         type: 'Divider',
@@ -99,21 +94,12 @@ const NAV_ITEMS: Array<NavItem> = [
     //     leftIcon: <FaSlidersH />,
     // },
 ];
-interface NavItem {
-    type?: string;
-    label?: string;
-    rightIcon?: ReactElement<any, string | JSXElementConstructor<any>>;
-    leftIcon?: ReactElement<any, string | JSXElementConstructor<any>>;
-    subLabel?: string;
-    children?: Array<NavItem>;
-    href?: string;
-}
 
 const FilterNav: FC = () => {
     const linkColor = useColorModeValue('gray.600', 'gray.200');
     const linkHoverColor = useColorModeValue('gray.800', 'white');
     const popoverContentBgColor = useColorModeValue('white', 'gray.800');
-
+    const { isOpen: isFilterOpen, onClose: onFilterClose, onOpen: onFilterOpen } = useDisclosure();
     return (
         // <Stack direction={'row'} spacing={2} justifyContent="space-between" width="full" >
         <>
@@ -127,7 +113,7 @@ const FilterNav: FC = () => {
                                         borderRadius="48px"
                                         rightIcon={navItem.rightIcon}
                                         leftIcon={navItem.leftIcon}
-                                        colorScheme="teal"
+                                        colorScheme="black"
                                         variant="outline"
                                     >
                                         {navItem.label}
@@ -137,13 +123,12 @@ const FilterNav: FC = () => {
                                 )}
                             </PopoverTrigger>
                             {navItem.children ? (
-                                <PopoverContent>
+                                <PopoverContent p={2} minW={navItem.minWidth}>
                                     <PopoverArrow />
-                                    <PopoverCloseButton />
 
-                                    <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
+                                    <PopoverBody>{navItem.children}</PopoverBody>
                                     <PopoverFooter>
-                                        <div className='flex items-center justify-between w-full p-1'>
+                                        <div className="flex items-center justify-between w-full pt-1">
                                             <Button size="sm" variant="link">
                                                 Cancel
                                             </Button>
@@ -159,10 +144,11 @@ const FilterNav: FC = () => {
                 ))}
             </div>
             <div className="flex items-center pr-1 ml-2">
-                <Button borderRadius="48px" leftIcon={<FaSlidersH />} colorScheme="teal" variant="outline">
+                <Button borderRadius="48px" leftIcon={<FaSlidersH />} colorScheme="black" variant="outline" onClick={onFilterOpen}>
                     Bộ lọc
                 </Button>
             </div>
+            <FilterModal isOpen={isFilterOpen} onClose={onFilterClose} />
         </>
         // </Stack>
     );

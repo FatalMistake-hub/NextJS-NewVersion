@@ -65,23 +65,19 @@ const SearchOptionButton: FC<ISearchOptionButtonProps> = ({
                     <span className="text-sm text-gray-300 truncate max-w-[105px] lg:max-w-none">{value || placeholder}</span>
                 )}
             </div>
-
             {/* clear icon */}
             <ClearButtonProps onClick={onClear} active={value} isFocus={active} separator={separator} />
 
             {withSearch && (
-                <Button
-                    colorScheme="teal"
-                    variant="solid"
+                <button
                     type="submit"
-                    rounded={'full'}
                     className={`${
                         isSearch ? 'w-auto saturate-200' : 'w-12'
-                    } flex items-center justify-center m-2 ml-0 px-3 h-12  rounded-full   hover:saturate-200`}
+                    } flex items-center justify-center m-2 ml-0 px-3 h-12  rounded-full bg-primary  hover:saturate-200`}
                 >
                     <FaSearch className="h-5 text-white" />
                     <span className={`${isSearch ? 'inline-block' : 'hidden'} ml-2 font-medium text-white`}>Search</span>
-                </Button>
+                </button>
             )}
             <div className={`${active ? 'block' : 'hidden'} mt-16`}>{children}</div>
         </span>

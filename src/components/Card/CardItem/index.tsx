@@ -77,24 +77,31 @@ const CardItem: React.FC = () => {
                         <p className="ml-1 font-medium text-gray-400 dark:text-white">4.95</p>
 
                         <Link href="#">
-                            <p className="ml-1 text-sm font-medium text-gray-400 underline hover:no-underline dark:text-white">
+                            <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white">
                                 (73 reviews)
                             </p>
                         </Link>
+                        <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white">-</p>
+                        <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white">3 giờ</p>
                     </div>
                 </Flex>
                 <Flex mt="1" justifyContent="space-between" alignContent="center">
-                    <Box fontSize="-moz-initial" fontWeight="semibold" as="h4" lineHeight="tight" >
+                    <Box fontSize="-moz-initial" fontWeight="semibold" as="h4" lineHeight="tight">
                         {data.name}
                     </Box>
                 </Flex>
 
                 <Flex justifyContent="space-between" alignContent="center">
-                    <Box fontSize="xl" color={useColorModeValue('gray.800', 'white')}>
-                        <Box as="span" color={'gray.600'} fontSize="md" >
-                            £
+                    <Box fontSize="xl" color={useColorModeValue('gray.800', 'white')} width="full">
+                        <Box as="span" color={'gray.600'} fontSize="md" mr={'4px'}>
+                            Từ
                         </Box>
-                        {data.price.toFixed(2)}
+                        <Box as="span" color={'gray.600'} fontSize="md" mr={'4px'}>
+                            ${data.price.toFixed(2)}
+                        </Box>
+                        <Box as="span" color={'gray.600'} fontSize="md">
+                            /người
+                        </Box>
                     </Box>
                 </Flex>
             </Box>
