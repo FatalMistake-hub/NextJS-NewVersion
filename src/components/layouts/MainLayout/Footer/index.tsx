@@ -65,7 +65,7 @@ const ListHeader = ({ children }: { children: ReactNode }) => {
 
 export const Footer: React.FC = () => {
     return (
-        <footer>
+        <footer className='-z-10'>
             <Box bg={useColorModeValue('gray.50', 'gray.900')} color={useColorModeValue('gray.700', 'gray.200')}>
                 <Container as={Stack} maxW={'6xl'} py={10}>
                     <SimpleGrid templateColumns={{ sm: '1fr 1fr', md: '2fr 1fr 1fr 2fr' }} spacing={8}>

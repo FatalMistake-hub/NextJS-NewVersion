@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, ReactElement, useMemo, useState } from 'react';
 import { Marker, Popup } from 'react-map-gl';
 import { getCenter } from 'geolib';
 import { getSearch, searchResults } from 'src/utils/data';
@@ -13,14 +13,17 @@ import { formatGuests } from 'src/utils/guestsUtil';
 import { formatRangeDate } from 'src/utils/dateUntils';
 import Link from 'next/link';
 import CardItem from '@components/Card/CardItem';
-function Search() {
+import { Header } from '@components/layouts/MainLayout/Header';
+import { Footer } from '@components/layouts/MainLayout/Footer';
+
+
+const Search = () => {
     const router = useRouter();
     console.log(router.query);
     const [isFullMap, setIsFullMap] = useState<boolean>(false);
-    const [visibleMapButton, setVisibleMapButton] = useState<boolean>(true);
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
 
-    const [popupInfo, setPopupInfo] = useState();
+    const [popupInfo, setPopupInfo] = useState<any>();
     const getCenterMap = () => {
         const coords = searchResults.map((result) => ({
             latitude: result.lat,
@@ -38,33 +41,14 @@ function Search() {
         if (dates) return `• ${dates}`;
     };
 
-    const pins = useMemo(
-        () =>
-            searchResults.map((city: any, index) => (
-                <Marker
-                    key={`marker-${index}`}
-                    longitude={city.long}
-                    latitude={city.lat}
-                    anchor="bottom"
-                    onClick={(e) => {
-                        // If we let the click event propagates to the map, it will immediately close the popup
-                        // with `closeOnClick: true`
-                        e.originalEvent.stopPropagation();
-                        setPopupInfo(city);
-                    }}
-                >
-                    <Pin />
-                </Marker>
-            )),
-        [],
-    );
+
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className={`flex flex-col min-h-screen ${isFullMap && 'overflow-hidden'}overflow-x-hidden `}>
             <main
                 className={`${!isFullMap && 'lg:grid-cols-[700px,1fr] xl:grid-cols-[840px,1fr]'} flex-grow grid grid-cols-1 duration-500`}
             >
                 {/* left - cards */}
-                <div className={`${isFullMap && 'hidden'} px-4 py-8 duration-500 lg:py-12 lg:px-7`}>
+                <div className={`${isFullMap && 'hidden'} px-6 pb-8 pt-[134px] duration-500`}>
                     {/* search data */}
                     <span className="inline-block mb-2 text-sm text-gray-400">
                         217 Stays {checkIn && getDates(checkIn, checkOut)} {guests && getGuests(guests)}
@@ -106,7 +90,8 @@ function Search() {
                 {/* right - maps */}
                 <section
                     className={
-                         'block fixed left-0 right-0 bottom-0 top-0 sm:block sm:sticky top-[86px] h-map flex-grow bg-yellow-900 bg-opacity-10 duration-100'}
+                        'block fixed left-0 right-0 bottom-0 top-0 sm:block sm:sticky top-[86px] h-map flex-grow bg-teal-900 bg-opacity-10 duration-100'
+                    }
                 >
                     <MapBase center={getCenterMap()} className="relative ">
                         <button
@@ -121,20 +106,20 @@ function Search() {
                                 <BiChevronLeft className="h-5" />
                             )}
                         </button>
-                        {searchResults.map((result) => (
+                        {searchResults.map((result, index) => (
                             <Marker
-                                key={result.lat + result.long}
+                                key={`marker-${index}`}
                                 latitude={result.lat}
                                 longitude={result.long}
-                                // offsetLeft={-20}
-                                // offsetTop={-10}
-                                offset={[-20, -10]}
+                                offsetLeft={-20}
+                                offsetTop={-10}
+                                // offset={[-20, -10]}
                             >
                                 <button className="relative">
                                     <button className="px-3 py-1 font-bold duration-300 bg-white rounded-full shadow-md cursor-pointer focus:scale-90 peer">
                                         {result.price.split('/')[0]}
                                     </button>
-                                    <div className="absolute hidden w-48 p-3 text-left bg-white border border-gray-200 rounded-lg cursor-pointer bottom-9 peer-focus:block">
+                                    <div className="absolute z-10 hidden w-48 p-3 text-left bg-white border border-gray-200 rounded-lg cursor-pointer bottom-9 peer-focus:block">
                                         <div className="relative w-full h-24 mb-2">
                                             <Image
                                                 src={result.img}
@@ -153,12 +138,28 @@ function Search() {
                                 </button>
                             </Marker>
                         ))}
+                        {/* {pins}
+                        {popupInfo && (
+                            <Popup anchor="top" longitude={popupInfo.long} latitude={popupInfo.lat} onClose={() => setPopupInfo(null)}>
+                                <div>
+                                    {popupInfo.city}, {popupInfo.state} |{' '}
+                                    <a
+                                        target="_new"
+                                        href={`http://en.wikipedia.org/w/index.php?title=Special:Search&search=${popupInfo.city}, ${popupInfo.state}`}
+                                    >
+                                        Wikipedia
+                                    </a>
+                                </div>
+                                <img width="100%" src={popupInfo.image} />
+                            </Popup>
+                        )} */}
                     </MapBase>
                 </section>
             </main>
+            {!isFullMap && <Footer />}
         </div>
     );
-}
+};
 
 export const getServerSideProps = async () => {
     const searchResults = await getSearch();
@@ -168,6 +169,11 @@ export const getServerSideProps = async () => {
     };
 };
 export default Search;
-// Search.getLayout = function (page: ReactElement) {
-//     return <>{page}</>;
-// };
+Search.getLayout = function (page: ReactElement) {
+    return (
+        <>
+            <Header />
+            {page}
+        </>
+    );
+};

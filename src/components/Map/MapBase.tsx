@@ -1,6 +1,5 @@
 import React, { FC, PropsWithChildren } from 'react';
-import Map from 'react-map-gl';
-
+import ReactMapGL, { GeolocateControl, FullscreenControl, NavigationControl, ScaleControl } from 'react-map-gl';
 interface IMap extends PropsWithChildren<any> {
     center: { longitude: number; latitude: number };
 }
@@ -15,15 +14,20 @@ const MapBase: FC<IMap> = ({ children, center }) => {
     });
 
     return (
-        <Map
-            initialViewState={viewport}
+        <ReactMapGL
+            {...viewport}
             mapStyle={process.env.MAPBOX_STYLE}
-            mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-            style={{ width: '100vw', height: '100%' }}
-            onMove={(viewport: any) => setViewport(viewport)}
+            mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+            // style={{ width: '100vw', height: '100vh' }}
+            width="100%"
+            height="100%"
+            onViewportChange={(viewport: any) => setViewport(viewport)}
+            className="relative"
         >
+            <NavigationControl className="top-3 right-3" />
+            <ScaleControl className="bottom-3 left-3" />
             {children}
-        </Map>
+        </ReactMapGL>
     );
 };
 
