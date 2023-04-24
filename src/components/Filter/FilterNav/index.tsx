@@ -104,8 +104,8 @@ const FilterNav: FC = () => {
         // <Stack direction={'row'} spacing={2} justifyContent="space-between" width="full" >
         <>
             <div className="flex flex-wrap items-center justify-between w-full pl-1 overflow-y-hidden h-14 ">
-                {NAV_ITEMS.map((navItem) => (
-                    <Box key={navItem.label} className="py-2">
+                {NAV_ITEMS.map((navItem,i) => (
+                    <Box key={i} className="py-2">
                         <Popover placement={'bottom-start'}>
                             <PopoverTrigger>
                                 {navItem.type === 'Button' ? (

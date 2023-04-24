@@ -15,6 +15,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import MainLayout from '@components/layouts/MainLayout';
 import { NextPage } from 'next';
+import { useLoadScript } from '@react-google-maps/api';
 
 const progressBar = new ProgressBar({
     size: 4,
@@ -42,6 +43,16 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         function (page) {
             return <MainLayout>{page}</MainLayout>;
         };
+    //     let key: string;
+    // if (process.env.GOOGLE_MAPS_API_KEY) {
+    //     key = process.env.GOOGLE_MAPS_API_KEY;
+    //     const { isLoaded } = useLoadScript({
+    //         googleMapsApiKey: 'AIzaSyDmqhwSvxnTbBPWxvQVTpu9lWME-JZvul0',
+    //         // libraries: ['places'],
+    //     });
+    //     console.log('key', key);
+        
+    // }
     return (
         <ChakraProvider theme={theme}>
             <ContextProvider>
@@ -49,10 +60,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                     <Provider store={store}>
                         <PersistGate loading={null} persistor={persistor}>
                             {/* <Hydrate state={pageProps.dehydratedState}> */}
-                            {/* <MainLayout>
-
-                                {getLayout(<Component {...pageProps} />)}
-                                </MainLayout> */}
                             {renderWithLayout(<Component {...pageProps} />)}
                             <ReactQueryDevtools />
                             {/* </Hydrate> */}

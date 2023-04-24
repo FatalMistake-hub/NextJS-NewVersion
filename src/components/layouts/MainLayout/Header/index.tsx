@@ -30,6 +30,8 @@ import { EHeaderOpions } from 'src/types';
 import { formatRangeDate } from 'src/utils/dateUntils';
 import { formatGuests } from 'src/utils/guestsUtil';
 import HeaderOption from './HeaderOption';
+import { useAppSelector } from 'src/redux/hook';
+import { selectSearch } from 'src/redux/slice/searchSlice';
 
 interface HeaderProps {
     exploreNearby?: IExploreNearby[];
@@ -39,6 +41,9 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, query }) => {
     const { isOpen: isLoginOpen, onClose: onLoginClose, onOpen: onLoginOpen } = useDisclosure();
     const { isOpen: isSignUpOpen, onClose: onSignUpClose, onOpen: onSignUpOpen } = useDisclosure();
+
+    const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
+
     const { toggleColorMode } = useColorMode();
     const logoColor = useColorModeValue('teal.500', 'teal.200');
     const Icon = useColorModeValue(FaMoon, FaSun);
@@ -100,15 +105,15 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                         {searchPage ? (
                             <span className="flex-grow text-sm font-medium tracking-wide text-gray-500">
                                 <span className="px-4 py-1 border-r border-gay-200">
-                                    {query?.location || <span className="font-normal text-gray-300">Location</span>}
+                                    {location || <span className="font-normal text-gray-300">Location</span>}
                                 </span>
                                 <span className="px-4 py-1 border-r border-gay-200">
-                                    {formatRangeDate(query?.checkIn, query?.checkOut) || (
+                                    {formatRangeDate(checkIn, checkOut) || (
                                         <span className="font-normal text-gray-300">Add dates</span>
                                     )}
                                 </span>
                                 <span className="px-4 py-1">
-                                    {formatGuests(query?.guests, { noInfants: true }) || (
+                                    {formatGuests(guests, { noInfants: true }) || (
                                         <span className="font-normal text-gray-300">Add guests</span>
                                     )}
                                 </span>

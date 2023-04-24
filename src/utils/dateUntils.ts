@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-
+import { es, ru } from 'date-fns/locale';
 export const formatCheckDate = (date: Date, dateFormat?: string) => {
     if (!date) return '';
     return format(date, dateFormat || 'MMM d');

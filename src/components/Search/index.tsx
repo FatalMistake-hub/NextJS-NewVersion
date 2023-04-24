@@ -27,6 +27,9 @@ import {
     SET_LOCATION,
 } from 'src/redux/slice/searchSlice';
 import { formatGuests } from 'src/utils/guestsUtil';
+import LocationWrapper from './LocationWrapper';
+import usePlacesAutocomplete from 'use-places-autocomplete';
+import { useLoadScript } from '@react-google-maps/api';
 
 enum ESearchMenu {
     LOCATION = 'location',
@@ -45,8 +48,7 @@ interface ISearchBarProps {
 const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch, searchPage }: any) => {
     const router = useRouter();
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
-    // data
-    // const [{ location, checkIn, checkOut, guests }, dispatch] = useDataContext();
+
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
     const dispatch = useAppDispatch();
     // handler
@@ -88,6 +90,30 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
 
     const dateRangeStyle = 'left-2 right-2 searchbar:left-auto searchbar:right-1/2 searchbar:translate-x-1/2 searchbar:w-[950px]';
 
+    let key: string;
+    if (process.env.GOOGLE_MAPS_API_KEY) {
+        key = process.env.GOOGLE_MAPS_API_KEY;
+        console.log('key', key);
+        
+    }
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: 'AIzaSyDmqhwSvxnTbBPWxvQVTpu9lWME-JZvul0',
+        libraries: ['places'],
+    });
+        
+    const {
+        ready,
+        value,
+        suggestions: { status, data },
+        setValue,
+        clearSuggestions,
+    } = usePlacesAutocomplete({
+        debounce: 800,
+    });
+    console.log('data', data);
+    console.log('ready', ready);
+    console.log('value', value);
+    console.log('status', status);
     return (
         <>
             <div className={`${isActiveHeader ? 'visible' : 'invisible'} px-4`}>
@@ -110,21 +136,18 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                             placeholder="Where are you going?"
                             active={searchMenu === ESearchMenu.LOCATION}
                             value={location}
-                            onChange={({ target }) => dispatch(SET_LOCATION(target.value))}
+                            onChange={(e) => {
+                                dispatch(SET_LOCATION(e.target.value)), setValue(e.target.value);
+                            }}
                             onFocus={() => setSearchMenu(ESearchMenu.LOCATION)}
-                            onBlur={handleOnBlur}
+                            // onBlur={handleOnBlur}
                             onClear={() => {
                                 dispatch(SET_LOCATION(''));
                                 handleOnBlur();
                             }}
                         >
                             <SearchOptionWrapper className="left-0">
-                                <div className="py-4">
-                                    <h2 className="mb-4 text-xs font-bold">GO ANYWHERE, ANYTIME</h2>
-                                    <button className="flex justify-between w-[436px] px-6 py-4 border border-gray-200 rounded-full shadow-md text-primary">
-                                        <span className="font-bold">I&apos;m flexible</span> <FaChevronRight className="h-6" />
-                                    </button>
-                                </div>
+                                <LocationWrapper status={status} response={data} />
                             </SearchOptionWrapper>
                         </SearchOptionButton>
 
@@ -159,6 +182,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                             onBlur={handleOnBlur}
                             onClear={() => {
                                 dispatch(RESET_GUESTS(0));
+
                                 handleOnBlur();
                             }}
                             isSearch={!!searchMenu}

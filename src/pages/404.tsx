@@ -25,3 +25,10 @@ const Custom404 = () => {
 };
 
 export default Custom404;
+Custom404.getLayout = function (page:ReactElement) {
+    return (
+        <>
+            {page}
+        </>
+    );
+};

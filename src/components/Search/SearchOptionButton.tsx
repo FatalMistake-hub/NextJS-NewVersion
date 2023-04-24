@@ -20,7 +20,7 @@ interface ISearchOptionButtonProps extends PropsWithChildren<any> {
     value: any;
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
     onFocus: () => void;
-    onBlur: (event: FocusEvent<HTMLElement>) => void;
+    onBlur?: (event: FocusEvent<HTMLElement>) => void;
     onClear: () => void;
 }
 

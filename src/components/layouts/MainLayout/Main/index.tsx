@@ -8,7 +8,7 @@ const Main: React.FC = () => {
     const theme = useTheme();
     return (
         <>
-            <Flex display="flex" flexDirection="column" justifyContent="center" alignItems="center" pt={'86px'} px={'80px'}>
+            <Flex display="flex" flexDirection="column" justifyContent="center" alignItems="center" px={'80px'}>
                 <div className="max-w-[1800px] w-full  mx-auto overflow-x-clip pt-10  flex">
                     <FilterNav />
                 </div>

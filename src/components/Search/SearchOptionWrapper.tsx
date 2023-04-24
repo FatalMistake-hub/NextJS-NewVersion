@@ -5,7 +5,7 @@ interface ISearchOptionProps extends PropsWithChildren<any> {
 }
 
 const SearchOptionWrapper: FC<ISearchOptionProps> = ({ className, children }) => {
-    return <div className={`${className} absolute px-8 py-4 mt-3 bg-white rounded-3xl shadow-arround-bold`}>{children}</div>;
+    return <div className={`${className} absolute px-6 py-4 mt-3 bg-white rounded-3xl shadow-arround-bold`}>{children}</div>;
 };
 
 export default SearchOptionWrapper;
