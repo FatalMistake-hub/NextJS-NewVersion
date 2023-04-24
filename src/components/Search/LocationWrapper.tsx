@@ -1,7 +1,6 @@
 import { FC, PropsWithChildren, useEffect, FocusEvent } from 'react';
 import { FaChevronRight, FaSearchLocation } from 'react-icons/fa';
-import Searchsadf from 'src/pages/test';
-import GeocoderControl from 'src/pages/test';
+
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import { selectSearch, SET_LOCATION } from 'src/redux/slice/searchSlice';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
