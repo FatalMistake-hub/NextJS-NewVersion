@@ -12,24 +12,26 @@ const Main: React.FC = () => {
                 <div className="max-w-[1800px] w-full  mx-auto overflow-x-clip pt-10  flex">
                     <FilterNav />
                 </div>
-                
+
                 <div className="w-full pt-10">
                     <Heading as="h2" size="lg" noOfLines={1}>
                         Tất cả trải nghiệm
                     </Heading>
-                    <SimpleGrid minChildWidth="300px" gap="4">
-                        <CardItem />
-                        <CardItem />
-                        <CardItem />
-                        <CardItem />
-                        <CardItem />
-                        <CardItem />
-                        <CardItem />
+                    <SimpleGrid minChildWidth={'300px'}  gap="4">
+                        <CardItem className='h-[590px]' />
+                        <CardItem className='h-[590px]' />
+                        <CardItem className='h-[590px]' />
+                        <CardItem className='h-[590px]' />
+                        <CardItem className='h-[590px]' />
+                        <CardItem className='h-[590px]' />
+                        <CardItem className='h-[590px]' />
+                        
                     </SimpleGrid>
                 </div>
-                
-                <Button colorScheme='black' color={'white'} p={6} className='my-8 bg-black'>Tải thêm</Button>
-                
+
+                <Button colorScheme="black" color={'white'} p={6} className="my-8 bg-black">
+                    Tải thêm
+                </Button>
             </Flex>
         </>
     );
