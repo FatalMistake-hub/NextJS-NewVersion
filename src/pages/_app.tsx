@@ -1,10 +1,13 @@
 import '@styles/global.scss';
+import '@styles/cardSwiper.scss';
 import '@styles/reactDateRange.scss';
 // import '@styles/swiper.module.scss';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/free-mode';
+import 'swiper/css/effect-cards';
+
 import { type DehydratedState, Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { AppProps } from 'next/app';

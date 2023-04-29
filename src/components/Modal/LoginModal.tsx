@@ -1,5 +1,5 @@
 import {
-    Box,
+
     Button,
     Input,
     Modal,
@@ -16,23 +16,20 @@ import {
     Stack,
     Link,
     Heading,
-    FormErrorMessage,
+
 } from '@chakra-ui/react';
-import { FaLock, FaUserNinja } from 'react-icons/fa';
+
 import React, { useState } from 'react';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import useLogin from 'src/hooks/auth/useLogin';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
-    const { login, isLoading } = useLogin();
-    const{data:session}=useSession()
     const Login = useFormik({
         initialValues: {
             email: '',

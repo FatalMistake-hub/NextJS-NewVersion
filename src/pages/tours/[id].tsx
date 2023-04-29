@@ -4,7 +4,7 @@ import {
     BreadcrumbItem,
     BreadcrumbLink,
     GridItem,
-    BreadcrumbSeparator,
+    useDisclosure,
     Flex,
     Button,
     Heading,
@@ -27,12 +27,16 @@ import Comment from '@components/Comment';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper';
 import CardItem from '@components/Card/CardItem';
+import { FiMoreVertical } from 'react-icons/fi';
+import AllPictureModal from '@components/Modal/AllPictureModal';
 function Tours() {
     const router = useRouter();
     const { id } = router.query;
     const [show, setShow] = useState<any>({ cp1: false, cp2: false, cp3: false, cp4: false });
 
     const handleToggle = (name: string) => setShow((prevState: any) => ({ ...prevState, [name]: !prevState[name] }));
+
+    const { isOpen: isModalOpen, onClose: onModalClose, onOpen: onModalOpen } = useDisclosure();
     return (
         <Flex display="flex" flexDirection="column" justifyContent="center" alignItems="center" margin={'auto'} maxW={'1120px'}>
             <div className="w-full py-8 underline">
@@ -145,6 +149,19 @@ function Tours() {
                         />
                     </GridItem>
                 </Grid>
+                <div className="absolute bottom-4 right-4 z-10">
+                    <Button
+                        onClick={onModalOpen}
+                        size={'sm'}
+                        colorScheme="black"
+                        bgColor={'white'}
+                        color={'black'}
+                        variant="outline"
+                        leftIcon={<FiMoreVertical />}
+                    >
+                        Hiển thị tất cả ảnh
+                    </Button>
+                </div>
             </div>
             <VStack divider={<StackDivider borderColor="black.200" />} align="stretch">
                 <Box display={'flex'} width={'100%'}>
@@ -441,6 +458,7 @@ function Tours() {
                     </section>
                 </Box>
             </VStack>
+            <AllPictureModal isOpen={isModalOpen} onClose={onModalClose} />
         </Flex>
     );
 }

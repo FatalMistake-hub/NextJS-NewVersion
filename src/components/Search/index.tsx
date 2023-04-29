@@ -1,7 +1,7 @@
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 
-import React, { FC, FocusEvent, FormEvent, useState } from 'react';
+import React, { FC, FocusEvent, FormEvent, memo, useCallback, useState } from 'react';
 
 import Counter from './Counter';
 import { DATA_ACTION_TYPES } from 'src/context/actionTypes';
@@ -67,6 +67,9 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
         if (!result) setSearchMenu(null);
     };
 
+    const handleCloseSearch = useCallback(() => {
+        closeSearch();
+    }, [closeSearch]);
     const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!location) {
@@ -74,7 +77,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
             return;
         }
         if (searchPage) {
-            closeSearch();
+            handleCloseSearch();
         }
         setSearchMenu(null);
 
@@ -95,13 +98,11 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
     if (process.env.GOOGLE_MAPS_API_KEY) {
         key = process.env.GOOGLE_MAPS_API_KEY;
         console.log('key', key);
-        
     }
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: 'AIzaSyDmqhwSvxnTbBPWxvQVTpu9lWME-JZvul0',
         libraries: ['places'],
     });
-        
     const {
         ready,
         value,
@@ -121,7 +122,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                 <div
                     className={`${
                         !isActiveHeader && 'translate-y-[-75px] transform scale-50 opacity-0 z-[100]'
-                    } max-w-[850px] mx-auto mt-2 rounded-lg bg-white border border-gray-200 duration-300 hidden md:flex`}
+                    } max-w-[850px] mx-auto mt-2 rounded-2xl bg-white border border-gray-200 duration-300 hidden md:flex`}
                 >
                     <form
                         action="/search"
@@ -244,4 +245,4 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
     );
 };
 
-export default Search;
+export default memo(Search);

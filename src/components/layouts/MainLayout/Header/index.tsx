@@ -3,26 +3,21 @@ import {
     Avatar,
     Box,
     Button,
-    HStack,
-    IconButton,
-    LightMode,
     Menu,
     MenuButton,
     MenuDivider,
     MenuItem,
     MenuList,
     Stack,
-    ToastId,
     useColorMode,
     useColorModeValue,
     useDisclosure,
-    useToast,
+
 } from '@chakra-ui/react';
 import { FaAirbnb, FaGlobe, FaMoon, FaSearch, FaSun } from 'react-icons/fa';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import Link from 'next/link';
-import LoginModal from '@components/Modal/LoginModal';
 import Search from '@components/Search';
 import SignUpModal from '@components/Modal/RegisterModal';
 import { IExploreNearby } from 'src/types/interface';
@@ -34,6 +29,7 @@ import { useAppSelector } from 'src/redux/hook';
 import { selectSearch } from 'src/redux/slice/searchSlice';
 import { EHeaderOpions } from 'src/utils/constants/Enums';
 import { signOut, useSession } from 'next-auth/react';
+import LoginModal from '@components/Modal/LoginModal';
 
 interface HeaderProps {
     exploreNearby?: IExploreNearby[];
@@ -85,7 +81,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                     <button
                         className={`${isActiveSearch && ' scale-[1.33] translate-y-[75px] opacity-0 z-[-50] '} ${
                             searchPage ? 'pl-3' : 'pl-6'
-                        } relative flex items-center h-12 pr-2 py-2 mx-auto text-left transform  border border-gray-200 rounded-lg  shadow-md cursor-pointer min-w-[320px] min-h-[50px] hover:shadow-lg md:absolute left-24 lg:left-auto lg:right-1/2 lg:translate-x-1/2 duration-200`}
+                        } relative flex items-center h-12 pr-2 py-2 mx-auto text-left transform  border border-gray-200 rounded-xl  shadow-md cursor-pointer min-w-[320px] min-h-[50px] hover:shadow-lg md:absolute left-24 lg:left-auto lg:right-1/2 lg:translate-x-1/2 duration-200`}
                         onClick={() => setIsActiveSearch(true)}
                     >
                         {searchPage ? (
@@ -166,7 +162,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                                     _expanded={{ bg: 'teal.400' }}
                                     _focus={{ boxShadow: 'outline' }}
                                 >
-                                    <Avatar name="minhnhat" src="" size={'md'} />
+                                    <Avatar name={session?.user.username} src="https://bit.ly/broken-link" size={'md'} />
                                 </MenuButton>
                                 <MenuList className="shadow-md" p={2}>
                                     <>

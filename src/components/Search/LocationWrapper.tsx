@@ -22,7 +22,7 @@ const LocationWrapper: FC<ILocationProps> = ({ status, response }) => {
                     {response.map(({ place_id, description }) => (
                         <span
                             key={place_id}
-                            className="flex w-[400px] px-5 py-3 rounded-lg items-center hover:bg-gray-100  "
+                            className="flex w-[400px] px-5 py-3 rounded-2xl items-center hover:bg-gray-100  "
                             onClick={() => dispatch(SET_LOCATION(description))}
                         >
                             <div className="flex items-center justify-center w-12 h-12 mr-4 bg-gray-200 rounded-md">

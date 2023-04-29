@@ -46,7 +46,7 @@ const SearchOptionButton: FC<ISearchOptionButtonProps> = ({
             tabIndex={0}
             className={`${active ? 'shadow-arround hover:bg-white' : 'hover:bg-gray-200 hover:bg-opacity-40'} ${
                 relative && 'relative'
-            } flex items-center rounded-lg`}
+            } flex items-center rounded-2xl`}
             onFocus={onFocus}
             onBlur={onBlur}
         >
@@ -73,7 +73,7 @@ const SearchOptionButton: FC<ISearchOptionButtonProps> = ({
                     type="submit"
                     className={`${
                         isSearch ? 'w-auto saturate-200' : 'w-12'
-                    } flex items-center justify-center m-2 ml-0 px-3 h-12  rounded-lg bg-primary  hover:saturate-200`}
+                    } flex items-center justify-center m-2 ml-0 px-3 h-12  rounded-2xl bg-primary  hover:saturate-200`}
                 >
                     <FaSearch className="h-5 text-white" />
                     <span className={`${isSearch ? 'inline-block' : 'hidden'} ml-2 font-medium text-white`}>Search</span>
