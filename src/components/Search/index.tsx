@@ -6,7 +6,7 @@ import React, { FC, FocusEvent, FormEvent, useState } from 'react';
 import Counter from './Counter';
 import { DATA_ACTION_TYPES } from 'src/context/actionTypes';
 import DateRangeCP from './DateRange';
-import { EHeaderOpions } from 'src/types';
+
 import { FaChevronRight } from 'react-icons/fa';
 import SearchOptionButton from './SearchOptionButton';
 import SearchOptionWrapper from './SearchOptionWrapper';
@@ -30,6 +30,7 @@ import { formatGuests } from 'src/utils/guestsUtil';
 import LocationWrapper from './LocationWrapper';
 import usePlacesAutocomplete from 'use-places-autocomplete';
 import { useLoadScript } from '@react-google-maps/api';
+import { EHeaderOpions } from 'src/utils/constants/Enums';
 
 enum ESearchMenu {
     LOCATION = 'location',
@@ -120,7 +121,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                 <div
                     className={`${
                         !isActiveHeader && 'translate-y-[-75px] transform scale-50 opacity-0 z-[100]'
-                    } max-w-[850px] mx-auto mt-2 rounded-full bg-white border border-gray-200 duration-300 hidden md:flex`}
+                    } max-w-[850px] mx-auto mt-2 rounded-lg bg-white border border-gray-200 duration-300 hidden md:flex`}
                 >
                     <form
                         action="/search"
@@ -140,7 +141,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                                 dispatch(SET_LOCATION(e.target.value)), setValue(e.target.value);
                             }}
                             onFocus={() => setSearchMenu(ESearchMenu.LOCATION)}
-                            // onBlur={handleOnBlur}
+                            onBlur={handleOnBlur}
                             onClear={() => {
                                 dispatch(SET_LOCATION(''));
                                 handleOnBlur();

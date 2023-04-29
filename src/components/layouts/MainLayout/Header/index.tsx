@@ -26,12 +26,14 @@ import LoginModal from '@components/Modal/LoginModal';
 import Search from '@components/Search';
 import SignUpModal from '@components/Modal/RegisterModal';
 import { IExploreNearby } from 'src/types/interface';
-import { EHeaderOpions } from 'src/types';
+
 import { formatRangeDate } from 'src/utils/dateUntils';
 import { formatGuests } from 'src/utils/guestsUtil';
 import HeaderOption from './HeaderOption';
 import { useAppSelector } from 'src/redux/hook';
 import { selectSearch } from 'src/redux/slice/searchSlice';
+import { EHeaderOpions } from 'src/utils/constants/Enums';
+import { signOut, useSession } from 'next-auth/react';
 
 interface HeaderProps {
     exploreNearby?: IExploreNearby[];
@@ -52,16 +54,6 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
     const [isActiveSearch, setIsActiveSearch] = useState<boolean>(searchPage ? false : true);
     const [activeMenu, setActiveMenu] = useState<EHeaderOpions | null>(EHeaderOpions.PLACES_TO_STAY);
 
-    // const handleOnScroll = () => {
-    //     const position = window.scrollY;
-    //     if (position >= 50) {
-    //         setIsSnapTop(false);
-    //         setIsActiveSearch(false);
-    //     } else {
-    //         setIsSnapTop(true);
-    //         setIsActiveSearch(true);
-    //     }
-    // };
     const headerBehavior = () => {
         let style = [];
         if (!isSnapTop) style.push('bg-white shadow-lg');
@@ -69,13 +61,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
         if (isActiveSearch) style.push('bg-white shadow-lg pb-8');
         return style.join(' ');
     };
-    // useEffect(() => {
-    //     // listen to scroll
-    //     if (!searchPage) {
-    //         window.addEventListener('scroll', handleOnScroll);
-    //     }
-    //     return () => window.removeEventListener('scroll', handleOnScroll);
-    // }, [searchPage]);
+    const { data: session } = useSession();
     return (
         <>
             <header className={`${headerBehavior()} z-50 fixed top-0 w-full pt-5 duration-300 md:transition-none`}>
@@ -99,7 +85,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                     <button
                         className={`${isActiveSearch && ' scale-[1.33] translate-y-[75px] opacity-0 z-[-50] '} ${
                             searchPage ? 'pl-3' : 'pl-6'
-                        } relative flex items-center h-12 pr-2 mx-auto text-left transform  border border-gray-200 rounded-full shadow-md cursor-pointer min-w-[320px] min-h-[50px] hover:shadow-lg md:absolute left-24 lg:left-auto lg:right-1/2 lg:translate-x-1/2 duration-200`}
+                        } relative flex items-center h-12 pr-2 py-2 mx-auto text-left transform  border border-gray-200 rounded-lg  shadow-md cursor-pointer min-w-[320px] min-h-[50px] hover:shadow-lg md:absolute left-24 lg:left-auto lg:right-1/2 lg:translate-x-1/2 duration-200`}
                         onClick={() => setIsActiveSearch(true)}
                     >
                         {searchPage ? (
@@ -108,9 +94,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                                     {location || <span className="font-normal text-gray-300">Location</span>}
                                 </span>
                                 <span className="px-4 py-1 border-r border-gay-200">
-                                    {formatRangeDate(checkIn, checkOut) || (
-                                        <span className="font-normal text-gray-300">Add dates</span>
-                                    )}
+                                    {formatRangeDate(checkIn, checkOut) || <span className="font-normal text-gray-300">Add dates</span>}
                                 </span>
                                 <span className="px-4 py-1">
                                     {formatGuests(guests, { noInfants: true }) || (
@@ -125,8 +109,10 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                             colorScheme="teal"
                             variant="solid"
                             type="submit"
-                            rounded={'full'}
-                            className={` flex items-center justify-center   h-12  rounded-full   hover:saturate-200`}
+                            rounded={'lg'}
+                            size={'sm'}
+                            py={4}
+                            className={` flex items-center justify-center    rounded-full   hover:saturate-200`}
                         >
                             <FaSearch className="h-5 text-white" />
                         </Button>
@@ -159,50 +145,64 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                     </div>
                     {/* right side */}
                     {/* <HStack spacing={2}></HStack> */}
-                    <div className="flex items-center justify-between ">
+                    <div className="flex items-center justify-end min-w-[370px]">
                         <Link href="/">
                             <a
                                 className={`${
                                     isSnapTop ? 'text-white hover: hover:bg-opacity-10' : 'text-gray-500 hover:bg-gray-100 '
-                                } flex items-center h-10 px-4 rounded-full font-medium tracking-wide text-sm`}
+                                } flex items-center h-10 px-4 rounded-full font-medium tracking-wide text-sm min-w-fit`}
                             >
                                 Become a host
                             </a>
                         </Link>
-                        <Link href="/">
-                            <a
-                                className={`${
-                                    isSnapTop ? 'text-white hover: hover:bg-opacity-10' : 'text-gray-500 hover:bg-gray-100 '
-                                } flex items-center h-10 px-3 mr-1 rounded-full `}
-                            >
-                                <FaGlobe className="h-5" />
-                            </a>
-                        </Link>
-                        <IconButton onClick={toggleColorMode} variant={'ghost'} aria-label="Toggle dark mode" icon={<Icon />} />
 
-                        <Menu>
-                            <MenuButton
-                                transition="all 0.2s"
-                                borderRadius="full"
-                                borderWidth="1px"
-                                _hover={{ bg: 'gray.400' }}
-                                _expanded={{ bg: 'teal.400' }}
-                                _focus={{ boxShadow: 'outline' }}
-                            >
-                                <Avatar name="minhnhat" src="" size={'md'} />
-                            </MenuButton>
-                            <MenuList className="shadow-md">
-                                <MenuItem onClick={onLoginOpen}>Log in</MenuItem>
+                        {session?.user ? (
+                            <Menu>
+                                <MenuButton
+                                    transition="all 0.2s"
+                                    borderRadius="full"
+                                    borderWidth="1px"
+                                    _hover={{ bg: 'gray.400' }}
+                                    _expanded={{ bg: 'teal.400' }}
+                                    _focus={{ boxShadow: 'outline' }}
+                                >
+                                    <Avatar name="minhnhat" src="" size={'md'} />
+                                </MenuButton>
+                                <MenuList className="shadow-md" p={2}>
+                                    <>
+                                        <MenuItem>Tin nhắn</MenuItem>
 
-                                <MenuItem onClick={onSignUpOpen}>Sign up</MenuItem>
-                                <MenuDivider />
-                                <Link href="/rooms/upload">
-                                    <MenuItem>Upload room</MenuItem>
-                                </Link>
+                                        <MenuItem>Thông báo</MenuItem>
+                                        <MenuItem>Chuyến đi</MenuItem>
 
-                                <MenuItem>Log out</MenuItem>
-                            </MenuList>
-                        </Menu>
+                                        <MenuItem>Danh sách yêu thích</MenuItem>
+                                        <MenuDivider />
+
+                                        <MenuItem>Quản lý trải nghiệm</MenuItem>
+                                        <MenuItem>Tài khoản</MenuItem>
+
+                                        <MenuDivider />
+
+                                        <MenuItem
+                                            onClick={() => {
+                                                signOut(), console.log('sign out');
+                                            }}
+                                        >
+                                            Đăng xuất
+                                        </MenuItem>
+                                    </>
+                                </MenuList>
+                            </Menu>
+                        ) : (
+                            <Stack direction="row" spacing={4} align="center">
+                                <Button colorScheme="teal" variant="solid" onClick={onLoginOpen}>
+                                    Đăng nhập
+                                </Button>
+                                <Button colorScheme="teal" variant="outline" onClick={onSignUpOpen}>
+                                    Đăng ký
+                                </Button>
+                            </Stack>
+                        )}
                     </div>
                 </div>
                 {/* main search bar */}

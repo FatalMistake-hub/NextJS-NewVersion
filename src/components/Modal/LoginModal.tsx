@@ -2,8 +2,6 @@ import {
     Box,
     Button,
     Input,
-    InputGroup,
-    InputLeftElement,
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -11,8 +9,6 @@ import {
     ModalHeader,
     ModalOverlay,
     Text,
-    VStack,
-    useToast,
     Flex,
     FormControl,
     FormLabel,
@@ -20,23 +16,50 @@ import {
     Stack,
     Link,
     Heading,
-    useColorModeValue,
+    FormErrorMessage,
 } from '@chakra-ui/react';
 import { FaLock, FaUserNinja } from 'react-icons/fa';
 import React, { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import useLogin from 'src/hooks/auth/useLogin';
+import { signIn, useSession } from 'next-auth/react';
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-interface IForm {
-    username: string;
-    password: string;
-}
-
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+    const { login, isLoading } = useLogin();
+    const{data:session}=useSession()
+    const Login = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        validationSchema: Yup.object({
+            email: Yup.string()
+                .required('Bắt buộc!')
+                .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Vui lòng nhập một địa chỉ email hợp lệ!'),
+            password: Yup.string()
+                .required('Bắt buộc!')
+                .matches(
+                    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$/,
+                    'Mật khẩu phải có 7-19 ký tự và chứa ít nhất một chữ cái, một số và một ký tự đặc biệt!',
+                ),
+        }),
+        onSubmit: async(values) => {
+            const res = await signIn('credentials', {
+                email: values.email,
+                password: values.password,
+                redirect: false,
+            });
+            if (res?.status === 200) {
+                onClose();
+            }
+        },
+    });
     return (
         <Modal onClose={onClose} isOpen={isOpen}>
             <ModalOverlay />
@@ -47,7 +70,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     </Flex>
                 </ModalHeader> */}
                 <ModalCloseButton />
-                <ModalBody as="form">
+                <ModalBody>
                     <Flex align={'center'} justify={'center'}>
                         <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
                             <Stack align={'center'}>
@@ -56,15 +79,40 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                     to enjoy all of our cool <Link color={'teal.400'}>features</Link> ✌️
                                 </Text>
                             </Stack>
-                            <Box rounded={'lg'} bg={useColorModeValue('white', 'gray.700')} boxShadow={'lg'} p={8}>
+
+                            <form onSubmit={Login.handleSubmit}>
                                 <Stack spacing={4}>
                                     <FormControl id="email">
                                         <FormLabel>Email address</FormLabel>
-                                        <Input type="email" />
+                                        <Input
+                                            isInvalid={!!Login.errors.email}
+                                            type="email"
+                                            id="email"
+                                            name="email"
+                                            value={Login.values.email}
+                                            onChange={Login.handleChange}
+                                        />
+                                        {Login.errors.email && (
+                                            <Text color={'red'} mt={2}>
+                                                * {Login.errors.email}
+                                            </Text>
+                                        )}
                                     </FormControl>
                                     <FormControl id="password">
                                         <FormLabel>Password</FormLabel>
-                                        <Input type="password" />
+                                        <Input
+                                            isInvalid={!!Login.errors.password}
+                                            type="password"
+                                            id="password"
+                                            name="password"
+                                            value={Login.values.password}
+                                            onChange={Login.handleChange}
+                                        />
+                                        {Login.errors.password && (
+                                            <Text color={'red'} mt={2}>
+                                                * {Login.errors.password}
+                                            </Text>
+                                        )}
                                     </FormControl>
                                     <Stack spacing={10}>
                                         <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
@@ -72,6 +120,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                             <Link color={'teal.400'}>Forgot password?</Link>
                                         </Stack>
                                         <Button
+                                            type="submit"
                                             bg={'teal.400'}
                                             color={'white'}
                                             _hover={{
@@ -82,7 +131,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                         </Button>
                                     </Stack>
                                 </Stack>
-                            </Box>
+                            </form>
                         </Stack>
                     </Flex>
                 </ModalBody>

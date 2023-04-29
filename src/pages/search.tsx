@@ -14,7 +14,7 @@ import { formatRangeDate } from 'src/utils/dateUntils';
 import Link from 'next/link';
 import CardItem from '@components/Card/CardItem';
 import { Header } from '@components/layouts/MainLayout/Header';
-import { Footer } from '@components/layouts/MainLayout/Footer';
+import  Footer  from '@components/layouts/MainLayout/Footer';
 
 
 const Search = () => {

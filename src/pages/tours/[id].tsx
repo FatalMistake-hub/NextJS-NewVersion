@@ -22,7 +22,7 @@ import { BsHeart, BsShieldFillCheck, BsStar } from 'react-icons/bs';
 import Image from 'next/image';
 import { useState } from 'react';
 import CardBooking from '@components/Card/CardBooking';
-import { FaStar } from 'react-icons/fa';
+import { FaStar, FaUser } from 'react-icons/fa';
 import Comment from '@components/Comment';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Pagination } from 'swiper';
@@ -348,6 +348,56 @@ function Tours() {
                     <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={6}>
                         Những điều cần biết
                     </Heading>
+                    <div className="flex justify-start flex-wrap w-full mx-[-8px]">
+                        <div className="px-2 w-[33%]">
+                            <div className="pr-8 mb-8">
+                                <Heading as="h3" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
+                                    Yêu cầu đối với khách
+                                </Heading>
+                                <div className="flex items-baseline mb-4">
+                                    <div className="mr-2 min-w-[16px]  ">
+                                        <FaUser />
+                                    </div>
+                                    <Text>
+                                        Khách từ 10 tuổi trở lên có thể tham gia, tổng cộng tối đa 10 khách. Cha mẹ cũng có thể mang theo
+                                        trẻ dưới 2 tuổi.
+                                    </Text>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="px-2 w-[33%]">
+                            <div className="pr-8 mb-8">
+                                <Heading as="h3" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
+                                    Yêu cầu đối với khách
+                                </Heading>
+                                <div className="flex items-baseline mb-4">
+                                    <div className="mr-2 min-w-[16px] ">
+                                        <FaUser />
+                                    </div>
+                                    <Text>
+                                        Khách từ 10 tuổi trở lên có thể tham gia, tổng cộng tối đa 10 khách. Cha mẹ cũng có thể mang theo
+                                        trẻ dưới 2 tuổi.
+                                    </Text>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="px-2 w-[33%]">
+                            <div className="pr-8 mb-8">
+                                <Heading as="h3" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
+                                    Yêu cầu đối với khách
+                                </Heading>
+                                <div className="flex items-baseline mb-4">
+                                    <div className="mr-2 min-w-[16px] ">
+                                        <FaUser />
+                                    </div>
+                                    <Text>
+                                        Khách từ 10 tuổi trở lên có thể tham gia, tổng cộng tối đa 10 khách. Cha mẹ cũng có thể mang theo
+                                        trẻ dưới 2 tuổi.
+                                    </Text>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </Box>
                 <Box py={12}>
                     <section>
