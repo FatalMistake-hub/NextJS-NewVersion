@@ -5,6 +5,7 @@ import useLogin from 'src/hooks/auth/useLogin';
 import { http } from 'src/utils/instance/http';
 
 export const authOptions: AuthOptions = {
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
             name: 'Credentials',
