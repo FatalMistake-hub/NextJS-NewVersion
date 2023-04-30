@@ -1,7 +1,7 @@
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 
-import React, { FC, FocusEvent, FormEvent, memo, useCallback, useState } from 'react';
+import React, { ChangeEvent, FC, FocusEvent, FormEvent, memo, useCallback, useEffect, useState } from 'react';
 
 import Counter from './Counter';
 import { DATA_ACTION_TYPES } from 'src/context/actionTypes';
@@ -31,6 +31,8 @@ import LocationWrapper from './LocationWrapper';
 import usePlacesAutocomplete from 'use-places-autocomplete';
 import { useLoadScript } from '@react-google-maps/api';
 import { EHeaderOpions } from 'src/utils/constants/Enums';
+import useSearchLocation from 'src/hooks/map/useSearchLocation';
+import useDebounce from 'src/hooks/useDebounced';
 
 enum ESearchMenu {
     LOCATION = 'location',
@@ -94,28 +96,8 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
 
     const dateRangeStyle = 'left-2 right-2 searchbar:left-auto searchbar:right-1/2 searchbar:translate-x-1/2 searchbar:w-[950px]';
 
-    let key: string;
-    if (process.env.GOOGLE_MAPS_API_KEY) {
-        key = process.env.GOOGLE_MAPS_API_KEY;
-        console.log('key', key);
-    }
-    const { isLoaded } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyDmqhwSvxnTbBPWxvQVTpu9lWME-JZvul0',
-        libraries: ['places'],
-    });
-    const {
-        ready,
-        value,
-        suggestions: { status, data },
-        setValue,
-        clearSuggestions,
-    } = usePlacesAutocomplete({
-        debounce: 800,
-    });
-    console.log('data', data);
-    console.log('ready', ready);
-    console.log('value', value);
-    console.log('status', status);
+
+    const { data, isSuccess, isLoading, setSearchTerm } = useSearchLocation();
     return (
         <>
             <div className={`${isActiveHeader ? 'visible' : 'invisible'} px-4`}>
@@ -139,17 +121,17 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                             active={searchMenu === ESearchMenu.LOCATION}
                             value={location}
                             onChange={(e) => {
-                                dispatch(SET_LOCATION(e.target.value)), setValue(e.target.value);
+                                dispatch(SET_LOCATION(e.target.value)), setSearchTerm(e.target.value);
                             }}
                             onFocus={() => setSearchMenu(ESearchMenu.LOCATION)}
-                            onBlur={handleOnBlur}
+                            // onBlur={handleOnBlur}
                             onClear={() => {
                                 dispatch(SET_LOCATION(''));
                                 handleOnBlur();
                             }}
                         >
-                            <SearchOptionWrapper className="left-0">
-                                <LocationWrapper status={status} response={data} />
+                            <SearchOptionWrapper  className="left-0">
+                                <LocationWrapper status={isSuccess} response={data} loading={isLoading} />
                             </SearchOptionWrapper>
                         </SearchOptionButton>
 

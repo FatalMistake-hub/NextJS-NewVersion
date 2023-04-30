@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { BiChevronLeft, BiChevronRight, BiClipboard, BiMap } from 'react-icons/bi';
 import MapBase from '@components/Map/MapBase';
 import { useRouter } from 'next/router';
-import Pin from '@components/Map/Pin';
 import { useAppSelector } from 'src/redux/hook';
 import { selectSearch } from 'src/redux/slice/searchSlice';
 import { formatGuests } from 'src/utils/guestsUtil';

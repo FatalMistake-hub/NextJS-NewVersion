@@ -4,7 +4,7 @@ import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody,
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 // import required modules
-import { EffectCoverflow, Pagination } from 'swiper';
+import { EffectCoverflow, Pagination, Navigation, Keyboard } from 'swiper';
 import Image from 'next/image';
 interface AllPictureModalProps {
     isOpen: boolean;
@@ -17,8 +17,14 @@ const AllPictureModal: FC<AllPictureModalProps> = ({ isOpen, onClose }) => {
             <Modal onClose={onClose} size={'full'} isOpen={isOpen}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalCloseButton color={'white'} />
-                    <ModalBody display={'flex'} alignItems={'center'} justifyContent={'center'} backgroundColor={'black'}>
+                    <ModalCloseButton color={'white'} zIndex={'10'} />
+                    <ModalBody
+                        display={'flex'}
+                        alignItems={'center'}
+                        justifyContent={'center'}
+                        backgroundColor={'black'}
+                        position={'relative'}
+                    >
                         <Swiper
                             effect={'coverflow'}
                             grabCursor={true}
@@ -31,137 +37,122 @@ const AllPictureModal: FC<AllPictureModalProps> = ({ isOpen, onClose }) => {
                                 modifier: 1,
                                 slideShadows: true,
                             }}
-                            pagination={true}
+                            pagination={{
+                                clickable: true,
+                            }}
                             navigation={true}
-                            // virtual
-                            modules={[EffectCoverflow, Pagination]}
-                            className="mySwiper"
+                            keyboard={{
+                                enabled: true,
+                            }}
+                            modules={[EffectCoverflow, Pagination, Navigation, Keyboard]}
                         >
                             <SwiperSlide>
-                                <div className="w-full h-full">
-                                    <Image
-                                        src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                        alt={`Picture of `}
-                                        layout="responsive"
-                                        width={'100%'}
-                                        height={'100%'}
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    />
-                                </div>
+                                <Image
+                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                    alt={`Picture of `}
+                                    layout="responsive"
+                                    width={'300px'}
+                                    height={'300px'}
+                                    objectFit="cover"
+                                    placeholder="blur"
+                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className="w-full h-full">
-                                    <Image
-                                        src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                        alt={`Picture of `}
-                                        layout="responsive"
-                                        width={'100%'}
-                                        height={'100%'}
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    />
-                                </div>
+                                <Image
+                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                    alt={`Picture of `}
+                                    layout="responsive"
+                                    width={'300px'}
+                                    height={'300px'}
+                                    objectFit="cover"
+                                    placeholder="blur"
+                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className="w-full h-full">
-                                    <Image
-                                        src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                        alt={`Picture of `}
-                                        layout="responsive"
-                                        width={'100%'}
-                                        height={'100%'}
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    />
-                                </div>
+                                <Image
+                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                    alt={`Picture of `}
+                                    layout="responsive"
+                                    width={'300px'}
+                                    height={'300px'}
+                                    objectFit="cover"
+                                    placeholder="blur"
+                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className="w-full h-full">
-                                    <Image
-                                        src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                        alt={`Picture of `}
-                                        layout="responsive"
-                                        width={'100%'}
-                                        height={'100%'}
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    />
-                                </div>
+                                <Image
+                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                    alt={`Picture of `}
+                                    layout="responsive"
+                                    width={'300px'}
+                                    height={'300px'}
+                                    objectFit="cover"
+                                    placeholder="blur"
+                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className="w-full h-full">
-                                    <Image
-                                        src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                        alt={`Picture of `}
-                                        layout="responsive"
-                                        width={'100%'}
-                                        height={'100%'}
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    />
-                                </div>
+                                <Image
+                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                    alt={`Picture of `}
+                                    layout="responsive"
+                                    width={'300px'}
+                                    height={'300px'}
+                                    objectFit="cover"
+                                    placeholder="blur"
+                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className="w-full h-full">
-                                    <Image
-                                        src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                        alt={`Picture of `}
-                                        layout="responsive"
-                                        width={'100%'}
-                                        height={'100%'}
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    />
-                                </div>
+                                <Image
+                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                    alt={`Picture of `}
+                                    layout="responsive"
+                                    width={'300px'}
+                                    height={'300px'}
+                                    objectFit="cover"
+                                    placeholder="blur"
+                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className="w-full h-full">
-                                    <Image
-                                        src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                        alt={`Picture of `}
-                                        layout="responsive"
-                                        width={'100%'}
-                                        height={'100%'}
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    />
-                                </div>
+                                <Image
+                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                    alt={`Picture of `}
+                                    layout="responsive"
+                                    width={'300px'}
+                                    height={'300px'}
+                                    objectFit="cover"
+                                    placeholder="blur"
+                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className="w-full h-full">
-                                    <Image
-                                        src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                        alt={`Picture of `}
-                                        layout="responsive"
-                                        width={'100%'}
-                                        height={'100%'}
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    />
-                                </div>
+                                <Image
+                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                    alt={`Picture of `}
+                                    layout="responsive"
+                                    width={'300px'}
+                                    height={'300px'}
+                                    objectFit="cover"
+                                    placeholder="blur"
+                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                />
                             </SwiperSlide>
                             <SwiperSlide>
-                                <div className="w-full h-full">
-                                    <Image
-                                        src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                        alt={`Picture of `}
-                                        layout="responsive"
-                                        width={'100%'}
-                                        height={'100%'}
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    />
-                                </div>
+                                <Image
+                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                    alt={`Picture of `}
+                                    layout="responsive"
+                                    width={'300px'}
+                                    height={'300px'}
+                                    objectFit="cover"
+                                    placeholder="blur"
+                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
+                                />
                             </SwiperSlide>
                         </Swiper>
                     </ModalBody>
