@@ -19,14 +19,19 @@ import { useAppSelector, useAppDispatch } from 'src/redux/hook';
 import { formatRangeDate } from 'src/utils/dateUntils';
 import DateRangeCP from '@components/Search/DateRange';
 import Counter from '@components/Search/Counter';
-import { formatGuests } from 'src/utils/guestsUtil';
+import { formatGuests, formatGuestsMinimal } from 'src/utils/guestsUtil';
+import Link from 'next/link';
+import { ITours } from 'src/types/tours.type';
 enum ESearchMenu {
     LOCATION = 'location',
     CHECK_IN = 'checkIn',
     CHECK_OUT = 'checkOut',
     GUESTS = 'guests',
 }
-const CardBooking: FC = () => {
+type CardsBookingProps = Pick<ITours, 'priceOnePerson'>;
+
+
+const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson }) => {
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
 
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
@@ -64,17 +69,15 @@ const CardBooking: FC = () => {
                     <div className="flex justify-between items-center">
                         <section>
                             <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
-                                Từ $9 <span className="text-base font-normal ">/người</span>
+                                Từ ${priceOnePerson} <span className="text-base font-normal ">/người</span>
                             </Heading>
                             <Text className="text-base font-normal underline text-gray-300 hover:text-gray-400 ">Hiển thị tất cả giá</Text>
                         </section>
                     </div>
-                    <div className={`min-h-[65px] mt-6 mb-4 min-w-fit rounded-xl bg-white border border-gray-300 duration-300 hidden md:flex`}>
-                        <form
-                            action="/search"
-                            className={'w-full grid-cols-[0.8fr,0.7fr,auto] lg:grid-cols-[1fr,0.7fr] grid flex-grow'}
-                            onSubmit={handleOnSubmit}
-                        >
+                    <div
+                        className={`min-h-[65px] mt-6 mb-4 min-w-fit rounded-xl bg-white border border-gray-300 duration-300 hidden md:flex`}
+                    >
+                        <form action="/search" className={'w-full  lg:grid-cols-[1fr,1fr,auto] grid flex-grow'} onSubmit={handleOnSubmit}>
                             <SearchOptionButton
                                 // withSearch
                                 separator
@@ -100,7 +103,7 @@ const CardBooking: FC = () => {
                                 title="Khách"
                                 placeholder="Thêm khách"
                                 active={searchMenu === ESearchMenu.GUESTS}
-                                value={formatGuests(guests)}
+                                value={formatGuestsMinimal(guests)}
                                 onFocus={() => setSearchMenu(ESearchMenu.GUESTS)}
                                 onBlur={handleOnBlur}
                                 onClear={() => {
@@ -195,7 +198,7 @@ const CardBooking: FC = () => {
                                 Từ $35<span className="font-normal">/nhóm</span>
                             </Text>
                             <Button size={'sm'} colorScheme="teal">
-                                Chọn
+                                <Link href={'/payment/1'}>Chọn</Link>
                             </Button>
                         </div>
                     </div>

@@ -36,7 +36,7 @@ const LocationWrapper: FC<ILocationProps> = ({ status, response, loading }) => {
                         <span
                             key={data?.id}
                             className="flex w-[350px] px-4 py-3 rounded-2xl items-center hover:bg-gray-100  "
-                            onClick={() => dispatch(SET_LOCATION(`${data.properties.name}, `))}
+                            onClick={() => dispatch(SET_LOCATION(`${data.properties.name} `))}
                         >
                             <div className="flex items-center justify-center min-w-[48px] h-12 mr-4 bg-gray-200 rounded-md">
                                 <FaSearchLocation className="w-6 h-6" />

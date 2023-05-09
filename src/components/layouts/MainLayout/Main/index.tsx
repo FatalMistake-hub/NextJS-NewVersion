@@ -3,9 +3,25 @@ import CardItem from '@components/Card/CardItem';
 import FilterNav from '@components/Filter/FilterNav';
 
 import React from 'react';
+import useGetAllTour from 'src/hooks/tours/useGetAllTour';
+import { ITours } from 'src/types/tours.type';
 
 const Main: React.FC = () => {
+    const {
+        status,
+        ref,
+        data,
+        error,
+        isFetching,
+        isFetchingNextPage,
+        isFetchingPreviousPage,
+        fetchNextPage,
+        fetchPreviousPage,
+        hasNextPage,
+        hasPreviousPage,
+    } = useGetAllTour();
     const theme = useTheme();
+    console.log(hasNextPage);
     return (
         <>
             <Flex display="flex" flexDirection="column" justifyContent="center" alignItems="center" px={'80px'}>
@@ -17,20 +33,38 @@ const Main: React.FC = () => {
                     <Heading as="h2" size="lg" noOfLines={1}>
                         Tất cả trải nghiệm
                     </Heading>
-                    <SimpleGrid minChildWidth={'300px'}  gap="4">
-                        <CardItem className='h-[590px]' />
-                        <CardItem className='h-[590px]' />
-                        <CardItem className='h-[590px]' />
-                        <CardItem className='h-[590px]' />
-                        <CardItem className='h-[590px]' />
-                        <CardItem className='h-[590px]' />
-                        <CardItem className='h-[590px]' />
-                        
-                    </SimpleGrid>
-                </div>
 
-                <Button colorScheme="black" color={'white'} p={6} className="my-8 bg-black">
-                    Tải thêm
+                    {status === 'loading' ? (
+                        <p>Loading...</p>
+                    ) : status === 'error' ? (
+                        <span>Error: {error?.message}</span>
+                    ) : (
+                        <>
+                            {/* <div>
+                                <button onClick={() => fetchPreviousPage()} disabled={!hasPreviousPage || isFetchingPreviousPage}>
+                                    {isFetchingPreviousPage ? 'Loading more...' : hasPreviousPage ? 'Load Older' : 'Nothing more to load'}
+                                </button>
+                            </div> */}
+                            <SimpleGrid minChildWidth={'300px'} gap="4">
+                                {data?.pages?.map((page: any) =>
+                                    page?.data?.content?.map((result: ITours) => <CardItem className="h-[590px]" data={result} />),
+                                )}
+                            </SimpleGrid>
+                            
+                        </>
+                    )}
+                </div>
+                <Button
+                    onClick={() => fetchNextPage()}
+                    disabled={!hasNextPage || isFetchingNextPage}
+                    isLoading={isFetchingNextPage}
+                    // ref={ref}
+                    colorScheme="black"
+                    color={'white'}
+                    p={6}
+                    className="my-8 bg-black"
+                >
+                    {isFetchingNextPage ? 'Loading more...' : hasNextPage ? 'Load new' : 'Nothing more to load'}
                 </Button>
             </Flex>
         </>

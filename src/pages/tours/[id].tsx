@@ -29,14 +29,20 @@ import { FreeMode, Pagination } from 'swiper';
 import CardItem from '@components/Card/CardItem';
 import { FiMoreVertical } from 'react-icons/fi';
 import AllPictureModal from '@components/Modal/AllPictureModal';
+import CardSelectDay from '@components/Card/CardSelectDay';
+import AllDayModal from '@components/Modal/AllDayModal';
+import useGetDetailTour from 'src/hooks/tours/useGetDetailTour';
 function Tours() {
     const router = useRouter();
     const { id } = router.query;
+    const { data, isLoading, isError, isSuccess } = useGetDetailTour(id);
     const [show, setShow] = useState<any>({ cp1: false, cp2: false, cp3: false, cp4: false });
 
     const handleToggle = (name: string) => setShow((prevState: any) => ({ ...prevState, [name]: !prevState[name] }));
 
     const { isOpen: isModalOpen, onClose: onModalClose, onOpen: onModalOpen } = useDisclosure();
+    const { isOpen: isModalOpen2, onClose: onModalClose2, onOpen: onModalOpen2 } = useDisclosure();
+
     return (
         <Flex display="flex" flexDirection="column" justifyContent="center" alignItems="center" margin={'auto'} maxW={'1120px'}>
             <div className="w-full py-8 underline">
@@ -55,13 +61,11 @@ function Tours() {
                 </Breadcrumb>
             </div>
 
-            <Heading as="h1" fontSize={'26px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
-                Những viên ngọc ẩn giấu của Hội An xưa
+            <Heading as="h1" fontSize={'26px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1} lineHeight={'30px'}>
+                {data?.title}
             </Heading>
             <div className="w-full flex justify-between items-center">
-                <div className="mt-1">
-                    <Rating />
-                </div>
+                <div className="mt-1">{/* <Rating /> */}</div>
                 <div className="flex items-center">
                     <Button leftIcon={<BiShare />} color={'black'} variant={'ghost'} className="hover:bg-slate-100 underline ">
                         Chia sẻ
@@ -191,49 +195,7 @@ function Tours() {
                                     Những điều bạn sẽ làm
                                 </Heading>
                                 <Collapse startingHeight={170} in={show.cp1}>
-                                    Chúng tôi sẽ gặp nhau&nbsp;tại điểm hẹn và bắt đầu ghé thăm tiệm bánh lâu đời nhất ở Hội An. Nơi bạn sẽ
-                                    thấy người dân địa phương đã làm bánh Banh My 24/24 giờ như thế nào. <br />
-                                    <br />
-                                    Tiếp tục tham quan, chúng tôi sẽ đi bộ đến chợ để gặp những người phụ nữ đáng yêu của tôi bán thực phẩm
-                                    cho cả đời, nơi sẽ nếm thử các loại trái cây, bánh và mứt khô khác nhau. <br />
-                                    <br />
-                                    Tiếp tục hành trình ẩm thực của chúng tôi qua những con hẻm quyến rũ của Hội An, chúng tôi sẽ ăn hoa
-                                    hồng trắng ngon tại ngôi nhà cổ nhất trong thị trấn (300 tuổi), mì Cao Lau tại nhà hàng thuần chay không
-                                    thể bỏ qua và Súp Black Sesame với bí mật giữ cho người dân Hội An sống lâu.
-                                    <br />
-                                    <br />
-                                    Bằng cách tham gia tour du lịch này, bạn sẽ không chỉ hiểu thêm về ẩm thực thuần chay ở Hội An mà còn là
-                                    lịch sử của thị trấn đèn lồng đáng yêu này!
-                                    <br />
-                                    <br />
-                                    Đây là danh sách các món ăn chúng tôi sẽ thử (Chúng tôi có thể bỏ qua một số trong trường hợp nhà cung
-                                    cấp nghỉ một ngày, nhưng chúng tôi luôn có một kế hoạch dự phòng):
-                                    <br />
-                                    1. Vegan Banh My
-                                    <br />
-                                    2. Trái cây sữa, Longan, Rambutan...
-                                    <br />
-                                    3. Bánh xoài <br />
-                                    4. Mứt gừng khô + mứt nghệ khô
-                                    <br />
-                                    5. Coconut Candy
-                                    <br />
-                                    6. White Rose <br />
-                                    7. Mì Cao Lau <br />
-                                    8. Bánh Xèo
-                                    <br />
-                                    9. Smoothie
-                                    <br />
-                                    10. Súp mè đen
-                                    <br />
-                                    <br />
-                                    Tham gia cùng chúng tôi trong chuyến tham quan này để trải nghiệm những địa điểm ẩn giấu của ẩm thực
-                                    thuần chay Hội An lấy cảm hứng từ Việt Nam, Trung Quốc và Nhật Bản đến Pháp. Chúng tôi sẽ nếm thử tất cả
-                                    các nền văn hóa trong một tour du lịch ẩm thực một cách tương tác thú vị!
-                                    <br />
-                                    <br />
-                                    *Điều cần lưu ý: Vào cuối chuyến đi, chúng tôi sẽ cung cấp cho bạn Sách hướng dẫn để thưởng thức nhiều
-                                    Nhà hàng thuần chay hơn và những điều nên trải nghiệm trong thị trấn!
+                                    <div dangerouslySetInnerHTML={{ __html: `${data?.working}` }}></div>
                                 </Collapse>
                                 <Button size="sm" variant={'link'} onClick={() => handleToggle('cp1')} mt="1rem">
                                     Show {show.cp1 ? 'Less' : 'More'}
@@ -302,7 +264,7 @@ function Tours() {
                         </VStack>
                     </div>
                     <div className="relative w-[33.33333333333%] ml-[8.33333333332%]">
-                        <CardBooking />
+                        <CardBooking priceOnePerson={data?.priceOnePerson} />
                     </div>
                 </Box>
                 <Box py={12}>
@@ -323,42 +285,56 @@ function Tours() {
                         <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1}>
                             Chọn trong số các ngày còn trống
                         </Heading>
-                        <Text className="text-base  text-gray-400">Có sẵn 311</Text>
+                        <Text mb={6} className="text-base  text-gray-400">
+                            Có sẵn 311
+                        </Text>
 
-                        <div className=" max-w-[1120px]">
+                        <div className=" max-w-[1120px] ">
                             <Swiper
-                                slidesPerView={6}
-                                spaceBetween={15}
-                                freeMode={true}
+                                slidesPerView={5}
+                                spaceBetween={20}
                                 pagination={{
                                     clickable: true,
                                 }}
-                                modules={[FreeMode, Pagination]}
-                                className="mySwiper"
+                                modules={[Pagination]}
+                                className="min-h-[240px]"
                             >
                                 <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
+                                    <CardSelectDay />
                                 </SwiperSlide>
                                 <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
+                                    <CardSelectDay />
                                 </SwiperSlide>
                                 <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
+                                    <CardSelectDay />
                                 </SwiperSlide>
                                 <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
+                                    <CardSelectDay />
                                 </SwiperSlide>
                                 <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
+                                    <CardSelectDay />
                                 </SwiperSlide>
                                 <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
+                                    <CardSelectDay />
                                 </SwiperSlide>
                             </Swiper>
                         </div>
+                        <Button
+                            border={'1px solid #000000'}
+                            borderRadius={'8px'}
+                            color={'black'}
+                            height={'48px'}
+                            display={'flex'}
+                            colorScheme={'white'}
+                            className="hover:bg-gray-100 cursor-pointer"
+                            width={'20%'}
+                            mt={4}
+                            onClick={onModalOpen2}
+                        >
+                            <Text className="text-base break-words font-semibold  w-full  h-full py-3  text-center flex items-center justify-center">
+                                Hiển thị các ngày khác
+                            </Text>
+                        </Button>
                     </section>
                 </Box>
                 <Box py={12}>
@@ -432,33 +408,16 @@ function Tours() {
                                 modules={[FreeMode, Pagination]}
                                 className="mySwiper"
                             >
-                                <SwiperSlide>
+                                {/* <SwiperSlide>
                                     <CardItem className="h-[370px]" />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <CardItem className="h-[370px]" />
-                                </SwiperSlide>
+                                </SwiperSlide> */}
                             </Swiper>
                         </div>
                     </section>
                 </Box>
             </VStack>
             <AllPictureModal isOpen={isModalOpen} onClose={onModalClose} />
+            <AllDayModal isOpen={isModalOpen2} onClose={onModalClose2} />
         </Flex>
     );
 }

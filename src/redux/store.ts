@@ -1,8 +1,9 @@
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import searchSlice from './slice/searchSlice';
+
 // ...
 import storage from 'redux-persist/lib/storage';
+import searchSlice from './slice/searchSlice';
 
 const persistConfig = {
     key: 'root',

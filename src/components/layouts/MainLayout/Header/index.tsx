@@ -15,7 +15,6 @@ import {
 
 } from '@chakra-ui/react';
 import { FaAirbnb, FaGlobe, FaMoon, FaSearch, FaSun } from 'react-icons/fa';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import Link from 'next/link';
 import Search from '@components/Search';
@@ -42,9 +41,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
 
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
 
-    const { toggleColorMode } = useColorMode();
     const logoColor = useColorModeValue('teal.500', 'teal.200');
-    const Icon = useColorModeValue(FaMoon, FaSun);
 
     const [isSnapTop, setIsSnapTop] = useState<boolean>(searchPage ? false : true);
     const [isActiveSearch, setIsActiveSearch] = useState<boolean>(searchPage ? false : true);

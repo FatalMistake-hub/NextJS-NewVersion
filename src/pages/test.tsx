@@ -1,32 +1,21 @@
-import { Box, Button, Input, RadioGroup, Image } from '@chakra-ui/react';
-import { Formik, FormikProps } from 'formik';
-import { useSession } from 'next-auth/react';
+import { useState } from 'react';
+import { Pagination } from '@chakra-ui/react';
 
-const AVATARS = [
-    { name: 'Kat', image: 'https://randomuser.me/api/portraits/women/44.jpg' },
-    { name: 'Kevin', image: 'https://randomuser.me/api/portraits/men/86.jpg' },
-    { name: 'Andy', image: 'https://randomuser.me/api/portraits/men/29.jpg' },
-    { name: 'Jess', image: 'https://randomuser.me/api/portraits/women/95.jpg' },
-];
+function MyPagination() {
+    const [currentPage, setCurrentPage] = useState(1);
 
-type Values = {
-    email: string;
-};
+    // Function to handle page change
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        // Do something else, like fetching data for a new page
+    };
 
-export default function App() {
-    const { data: session } = useSession();
-    console.log('ssssss',session?.user);
     return (
-        <Box p={24}>
-            <Formik initialValues={{ email: '' }} onSubmit={console.log}>
-                {(props: FormikProps<Values>) => (
-                    <form onSubmit={props.handleSubmit}>
-                        <Input id="email" />
-
-                        <Button type="submit">Submit</Button>
-                    </form>
-                )}
-            </Formik>
-        </Box>
+        <Pagination
+            size="md"
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+            total={50} // Total number of pages
+        />
     );
 }
