@@ -81,9 +81,9 @@ const Search = () => {
                     </p>
                     {/* list */}
                     <section>
-                        {searchResults.map((result) => (
-                            <CardItem />
-                        ))}
+                        {/* {searchResults.map((result) => (
+                            // <CardItem />
+                        ))} */}
                     </section>
                 </div>
                 {/* right - maps */}

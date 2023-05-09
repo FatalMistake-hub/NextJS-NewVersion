@@ -28,9 +28,10 @@ enum ESearchMenu {
     CHECK_OUT = 'checkOut',
     GUESTS = 'guests',
 }
-type CardsBookingProps = Pick<ITours, 'priceOnePerson'>;
-
-
+// type CardsBookingProps = Pick<ITours, 'priceOnePerson' >;
+interface CardsBookingProps {
+    priceOnePerson: number|undefined;
+}
 const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson }) => {
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
 
