@@ -7,3 +7,9 @@ export enum ERole {
     ADMIN = "ADMIN",
     OWNER= "OWNER",
 }
+export enum ESearchMenu {
+    LOCATION = 'location',
+    CHECK_IN = 'checkIn',
+    CHECK_OUT = 'checkOut',
+    GUESTS = 'guests',
+}

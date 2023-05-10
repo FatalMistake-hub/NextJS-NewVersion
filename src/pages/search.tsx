@@ -13,8 +13,7 @@ import { formatRangeDate } from 'src/utils/dateUntils';
 import Link from 'next/link';
 import CardItem from '@components/Card/CardItem';
 import { Header } from '@components/layouts/MainLayout/Header';
-import  Footer  from '@components/layouts/MainLayout/Footer';
-
+import Footer from '@components/layouts/MainLayout/Footer';
 
 const Search = () => {
     const router = useRouter();
@@ -40,11 +39,12 @@ const Search = () => {
         if (dates) return `• ${dates}`;
     };
 
-
     return (
-        <div className={`flex flex-col min-h-screen ${isFullMap && 'overflow-hidden'}overflow-x-hidden `}>
+        <div className={`flex flex-col  ${isFullMap && 'overflow-hidden'}overflow-x-hidden `}>
             <main
-                className={`${!isFullMap && 'lg:grid-cols-[700px,1fr] xl:grid-cols-[840px,1fr]'} flex-grow grid grid-cols-1 duration-500`}
+                className={`${
+                    !isFullMap && 'lg:grid-cols-[700px,1fr] xl:grid-cols-[840px,1fr]'
+                } flex-grow grid grid-cols-1 duration-500 min-h-screen`}
             >
                 {/* left - cards */}
                 <div className={`${isFullMap && 'hidden'} px-6 pb-8 pt-[134px] duration-500`}>
@@ -88,11 +88,9 @@ const Search = () => {
                 </div>
                 {/* right - maps */}
                 <section
-                    className={
-                        'block fixed left-0 right-0 bottom-0 top-0 sm:block sm:sticky top-[86px] h-map flex-grow bg-teal-900 bg-opacity-10 duration-100'
-                    }
+                    className={`block fixed left-0 right-0 bottom-0 top-0 sm:block sm:sticky top-[86px] h-map flex-grow bg-teal-900 bg-opacity-10   duration-100`}
                 >
-                    <MapBase center={getCenterMap()} className="relative ">
+                    <MapBase center={getCenterMap()} className="relative top-[86px] ">
                         <button
                             className="absolute  top-1 items-center hidden p-3 m-4 text-gray-500 duration-300 bg-white border border-gray-200 rounded-lg shadow-lg sm:flex active:scale-90"
                             onClick={() => (isFullMap ? setIsFullMap(false) : setIsFullMap(true))}

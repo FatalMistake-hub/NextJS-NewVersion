@@ -9,7 +9,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
     return (
         <>
             <Header />
-            <div className="pt-[86px]">{children}</div>
+            <div className="pt-[86px] min-h-screen">{children}</div>
             <Footer />
         </>
     );
