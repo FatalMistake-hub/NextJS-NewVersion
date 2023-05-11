@@ -21,7 +21,7 @@ const Main: React.FC = () => {
         hasPreviousPage,
     } = useGetAllTour(10);
     const theme = useTheme();
-    console.log(hasNextPage);
+
     return (
         <>
             <Flex display="flex" flexDirection="column" justifyContent="center" alignItems="center" px={'80px'}>
@@ -30,7 +30,7 @@ const Main: React.FC = () => {
                 </div>
 
                 <div className="w-full pt-10">
-                    <Heading as="h2" size="lg" noOfLines={1}>
+                    <Heading lineHeight={1.4} as="h2" size="lg" noOfLines={1}>
                         Tất cả trải nghiệm
                     </Heading>
 

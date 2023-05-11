@@ -61,7 +61,7 @@ function Tours() {
                 </Breadcrumb>
             </div>
 
-            <Heading as="h1" fontSize={'26px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1} lineHeight={'30px'}>
+            <Heading lineHeight={1.4} as="h1" fontSize={'26px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1} >
                 {data?.title}
             </Heading>
             <div className="w-full flex justify-between items-center">
@@ -175,6 +175,7 @@ function Tours() {
                                 <div className="flex justify-between items-center">
                                     <section>
                                         <Heading
+                                            lineHeight={1.4}
                                             as="h2"
                                             fontSize={'22px'}
                                             fontWeight={'600'}
@@ -191,7 +192,7 @@ function Tours() {
                                 </div>
                             </Box>
                             <Box py={12}>
-                                <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={6}>
+                                <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={6}>
                                     Những điều bạn sẽ làm
                                 </Heading>
                                 <Collapse startingHeight={170} in={show.cp1}>
@@ -206,7 +207,15 @@ function Tours() {
                                     <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" className="mr-4" size={'lg'} />
 
                                     <section>
-                                        <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
+                                        <Heading
+                                            lineHeight={1.4}
+                                            as="h2"
+                                            fontSize={'22px'}
+                                            fontWeight={'600'}
+                                            width={'full'}
+                                            noOfLines={1}
+                                            mb={1}
+                                        >
                                             Gặp gỡ người tổ chức của bạn – Huy
                                         </Heading>
                                         <Text className="text-sm">Tổ chức trải nghiệm trên Airbnb kể từ 2016</Text>
@@ -268,7 +277,7 @@ function Tours() {
                     </div>
                 </Box>
                 <Box py={12}>
-                    <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={6}>
+                    <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={6}>
                         Nơi bạn sẽ đến
                     </Heading>
                     <Text className="pt-6">
@@ -282,7 +291,7 @@ function Tours() {
                 </Box>
                 <Box py={12}>
                     <section>
-                        <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1}>
+                        <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1}>
                             Chọn trong số các ngày còn trống
                         </Heading>
                         <Text mb={6} className="text-base  text-gray-400">
@@ -338,13 +347,13 @@ function Tours() {
                     </section>
                 </Box>
                 <Box py={12}>
-                    <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={6}>
+                    <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={6}>
                         Những điều cần biết
                     </Heading>
                     <div className="flex justify-start flex-wrap w-full mx-[-8px]">
                         <div className="px-2 w-[33%]">
                             <div className="pr-8 mb-8">
-                                <Heading as="h3" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
+                                <Heading lineHeight={1.4} as="h3" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
                                     Yêu cầu đối với khách
                                 </Heading>
                                 <div className="flex items-baseline mb-4">
@@ -360,7 +369,7 @@ function Tours() {
                         </div>
                         <div className="px-2 w-[33%]">
                             <div className="pr-8 mb-8">
-                                <Heading as="h3" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
+                                <Heading lineHeight={1.4} as="h3" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
                                     Yêu cầu đối với khách
                                 </Heading>
                                 <div className="flex items-baseline mb-4">
@@ -376,7 +385,7 @@ function Tours() {
                         </div>
                         <div className="px-2 w-[33%]">
                             <div className="pr-8 mb-8">
-                                <Heading as="h3" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
+                                <Heading lineHeight={1.4} as="h3" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
                                     Yêu cầu đối với khách
                                 </Heading>
                                 <div className="flex items-baseline mb-4">
@@ -394,7 +403,7 @@ function Tours() {
                 </Box>
                 <Box py={12}>
                     <section>
-                        <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1}>
+                        <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1}>
                             Trải nghiệm tương tự
                         </Heading>
                         <div className=" max-w-[1120px]">

@@ -46,7 +46,7 @@ const CardPayment: FC<CardsPaymentProps> = ({ className }) => {
                     </div>
                 </Box>
                 <Box py={4}>
-                    <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1}>
+                    <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1}>
                         Chi tiết giá
                     </Heading>
                     <div className="mt-6 flex items-center justify-between">
@@ -65,11 +65,11 @@ const CardPayment: FC<CardsPaymentProps> = ({ className }) => {
                     </div>
                 </Box>
                 <Box py={4}>
-                    <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1}>
+                    <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1}>
                         Chính sách hủy
                     </Heading>
 
-                    <Text fontSize={'16px'} mt={6} >
+                    <Text fontSize={'16px'} mt={6}>
                         Được hoàn tiền đầy đủ nếu bạn hủy muộn nhất vào 14:00, 12 thg 5 (ICT). Tìm hiểu thêm
                     </Text>
                 </Box>

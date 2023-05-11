@@ -162,13 +162,12 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                                 </MenuButton>
                                 <MenuList className="shadow-md" p={2}>
                                     <>
-
-                                        <MenuItem>
-                                            <Link href={'/guest/inbox'}> Tin nhắn</Link>
-                                        </MenuItem>
-                                        <MenuItem>
-                                            <Link href={'/trips'}>Chuyến đi</Link>
-                                        </MenuItem>
+                                        <Link href={'/guest/inbox'}>
+                                            <MenuItem w={'full'}>Tin nhắn</MenuItem>
+                                        </Link>
+                                        <Link href={'/trips'}>
+                                            <MenuItem>Chuyến đi</MenuItem>
+                                        </Link>
 
                                         <MenuItem>Danh sách yêu thích</MenuItem>
                                         <MenuDivider />
@@ -180,7 +179,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
 
                                         <MenuItem
                                             onClick={() => {
-                                                signOut(), console.log('sign out');
+                                                signOut();
                                             }}
                                         >
                                             Đăng xuất

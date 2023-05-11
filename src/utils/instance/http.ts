@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-
+const https = require('https');
 class Http {
     instance: AxiosInstance;
     constructor() {
@@ -9,6 +9,24 @@ class Http {
             headers: {
                 'Content-Type': 'application/json',
             },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false,
+            }),
+        });
+    }
+}
+class HttpHost {
+    instance: AxiosInstance;
+    constructor() {
+        this.instance = axios.create({
+            baseURL: process.env.NEXT_APP_BASE_URL,
+            timeout: 10000,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false,
+            }),
         });
     }
 }
@@ -40,5 +58,4 @@ class HttpMap {
 export const http = new Http().instance;
 export const httpAuth = new HttpAuth().instance;
 export const httpMap = new HttpMap().instance;
-
-
+export const httpHost = new HttpHost().instance;

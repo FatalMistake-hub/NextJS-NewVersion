@@ -14,7 +14,7 @@ const useLogin = () => {
             // const { access_token, refresh_token } = data.data;
             // localStorageClient.setValue(ACCESS_TOKEN, access_token);
             // localStorageClient.setValue(REFRESH_TOKEN, refresh_token);
-            console.log('data', data.data);
+           
 
             // Get user data
             // client.refetchQueries(QUERY_KEYS.GET_ME);

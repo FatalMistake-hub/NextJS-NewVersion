@@ -75,7 +75,7 @@ const Payment = () => {
                     variant="ghost"
                     aria-label={'CheckOut'}
                 ></IconButton>
-                <Heading as="h1" fontSize={'32px'} fontWeight={'600'} width={'full'} noOfLines={1}>
+                <Heading lineHeight={1.4} as="h1" fontSize={'32px'} fontWeight={'600'} width={'full'} noOfLines={1}>
                     Xác nhận và thanh toán
                 </Heading>
             </div>
@@ -83,11 +83,11 @@ const Payment = () => {
                 <div className="w-[50%] relative">
                     <VStack divider={<StackDivider borderColor="black.200" />} align="stretch" width={'full'}>
                         <Box pb={4}>
-                            <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} pb={8}>
+                            <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} pb={8}>
                                 Trải nghiệm của bạn
                             </Heading>
                             <div className="mr-6">
-                                <Heading as="h3" fontSize={'16px'} fontWeight={'700'} width={'full'} noOfLines={1}>
+                                <Heading lineHeight={1.4} as="h3" fontSize={'16px'} fontWeight={'700'} width={'full'} noOfLines={1}>
                                     Ngày
                                 </Heading>
                                 <Text fontSize={'16px'} width={'full'} noOfLines={1} mt={2}>
@@ -95,7 +95,7 @@ const Payment = () => {
                                 </Text>
                             </div>
                             <div className="pt-4">
-                                <Heading as="h3" fontSize={'16px'} fontWeight={'700'} width={'full'} noOfLines={1}>
+                                <Heading lineHeight={1.4} as="h3" fontSize={'16px'} fontWeight={'700'} width={'full'} noOfLines={1}>
                                     Khách
                                 </Heading>
                                 <Popover placement="bottom" closeOnBlur={true}>
@@ -172,7 +172,16 @@ const Payment = () => {
                         </Box>
                         <Box py={4}>
                             <div className="flex items-center justify-between">
-                                <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mr={6} mb={1}>
+                                <Heading
+                                    lineHeight={1.4}
+                                    as="h2"
+                                    fontSize={'22px'}
+                                    fontWeight={'600'}
+                                    width={'full'}
+                                    noOfLines={1}
+                                    mr={6}
+                                    mb={1}
+                                >
                                     Thanh toán bằng
                                 </Heading>
                                 <div className="">
@@ -185,7 +194,7 @@ const Payment = () => {
                                 </div>
                             </div>
                             <div className="mr-6">
-                                <Heading as="h3" fontSize={'16px'} fontWeight={'800'} width={'full'} noOfLines={1}>
+                                <Heading lineHeight={1.4} as="h3" fontSize={'16px'} fontWeight={'700'} width={'full'} noOfLines={1}>
                                     Ngày
                                 </Heading>
                                 <Text fontSize={'16px'} width={'full'} noOfLines={1} mt={2}>

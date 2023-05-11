@@ -1,8 +1,6 @@
 import NextAuth, { AuthOptions, User } from 'next-auth';
-import { JWT } from 'next-auth/jwt';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import useLogin from 'src/hooks/auth/useLogin';
-import { http } from 'src/utils/instance/http';
+import { httpHost } from 'src/utils/instance/http';
 
 export const authOptions: AuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
@@ -12,12 +10,12 @@ export const authOptions: AuthOptions = {
             authorize: async (credentials) => {
                 try {
                     // Authenticate user with credentials
-                    const user = await http.post(process.env.NEXT_APP_BASE_URL + '/login', {
+                    const user = await httpHost.post(process.env.NEXT_APP_BASE_URL + '/login', {
                         email: credentials?.email,
                         password: credentials?.password,
                     });
 
-                    if (user.data) {
+                    if (user.data && user.status === 200) {
                         return user.data;
                     }
 

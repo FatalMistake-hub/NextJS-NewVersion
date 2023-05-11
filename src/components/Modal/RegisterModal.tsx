@@ -68,7 +68,7 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                 matchingPassword: values.confirmPassword,
                 userName: values.name,
             });
-            console.log(values);
+          
         },
     });
     return (
@@ -81,7 +81,7 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                     <Flex align={'center'} justify={'center'} bg={useColorModeValue('white.50', 'white.800')}>
                         <Stack spacing={8} mx={'auto'} w={'full'} py={6} px={6}>
                             <Stack align={'center'}>
-                                <Heading fontSize={'4xl'} textAlign={'center'}>
+                                <Heading lineHeight={1.4} fontSize={'4xl'} textAlign={'center'}>
                                     Sign up
                                 </Heading>
                                 <Text fontSize={'lg'} color={'gray.600'}>

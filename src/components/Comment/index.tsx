@@ -7,7 +7,7 @@ const Comment: FC = () => {
     const handleToggle = () => setShow(!show);
     return (
         <>
-            <Heading as="h2" fontSize={'22px'} fontWeight={'600'} className="mb-6 px-3 flex items-center">
+            <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} className="mb-6 px-3 flex items-center">
                 <FaStar className="w-4 h-4" />
                 <Text className="ml-2 ">4.94 (30 đánh giá)</Text>
             </Heading>
@@ -17,7 +17,7 @@ const Comment: FC = () => {
                         <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" className="mr-4" />
 
                         <section>
-                            <Heading as="h1" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
+                            <Heading lineHeight={1.4} as="h1" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
                                 GMatt
                             </Heading>
                             <Text className="text-sm  text-gray-400">tháng 4 năm 2023</Text>
@@ -42,7 +42,7 @@ const Comment: FC = () => {
                         <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" className="mr-4" />
 
                         <section>
-                            <Heading as="h1" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
+                            <Heading lineHeight={1.4} as="h1" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
                                 GMatt
                             </Heading>
                             <Text className="text-sm  text-gray-400">tháng 4 năm 2023</Text>
@@ -67,7 +67,7 @@ const Comment: FC = () => {
                         <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" className="mr-4" />
 
                         <section>
-                            <Heading as="h1" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
+                            <Heading lineHeight={1.4} as="h1" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
                                 GMatt
                             </Heading>
                             <Text className="text-sm  text-gray-400">tháng 4 năm 2023</Text>
@@ -92,7 +92,7 @@ const Comment: FC = () => {
                         <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" className="mr-4" />
 
                         <section>
-                            <Heading as="h1" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
+                            <Heading lineHeight={1.4} as="h1" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
                                 GMatt
                             </Heading>
                             <Text className="text-sm  text-gray-400">tháng 4 năm 2023</Text>

@@ -1,7 +1,7 @@
-import colors from "./foundations/colors";
-import { extendTheme } from "@chakra-ui/react";
-import fontSizes from "./foundations/fontSizes";
-import styles from "./styles";
+import colors from './foundations/colors';
+import { extendTheme } from '@chakra-ui/react';
+import fontSizes from './foundations/fontSizes';
+import styles from './styles';
 
 /**
  * This file is generated for providing a custom theme to Chakra UI
@@ -18,6 +18,10 @@ const overrides = {
     fontSizes,
 };
 
-const theme = extendTheme(overrides,{components:{}});
+const theme = extendTheme(overrides, {
+    components: {
+        Button: { focusStyle: {} },
+    },
+});
 
 export default theme;

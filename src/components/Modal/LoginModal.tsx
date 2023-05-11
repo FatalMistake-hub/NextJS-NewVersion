@@ -1,5 +1,4 @@
 import {
-
     Button,
     Input,
     Modal,
@@ -16,7 +15,6 @@ import {
     Stack,
     Link,
     Heading,
-
 } from '@chakra-ui/react';
 
 import React, { useState } from 'react';
@@ -24,6 +22,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { signIn } from 'next-auth/react';
+import { http } from 'src/utils/instance/http';
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -46,12 +45,14 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     'Mật khẩu phải có 7-19 ký tự và chứa ít nhất một chữ cái, một số và một ký tự đặc biệt!',
                 ),
         }),
-        onSubmit: async(values) => {
+        onSubmit: async (values) => {
+
             const res = await signIn('credentials', {
                 email: values.email,
                 password: values.password,
                 redirect: false,
             });
+            
             if (res?.status === 200) {
                 onClose();
             }
@@ -71,7 +72,9 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                     <Flex align={'center'} justify={'center'}>
                         <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
                             <Stack align={'center'}>
-                                <Heading fontSize={'4xl'}>Sign in to your account</Heading>
+                                <Heading lineHeight={1.4} fontSize={'4xl'}>
+                                    Sign in to your account
+                                </Heading>
                                 <Text fontSize={'lg'} color={'gray.600'}>
                                     to enjoy all of our cool <Link color={'teal.400'}>features</Link> ✌️
                                 </Text>

@@ -5,7 +5,7 @@ const Trips = () => {
         <div className="flex justify-center w-full">
             <VStack divider={<StackDivider borderColor="black.200" />} align="stretch" width={'1440px'}>
                 <Box pt={9} pb={6}>
-                    <Heading as="h1" fontSize={'32px'} fontWeight={'600'} width={'full'} noOfLines={1}>
+                    <Heading lineHeight={1.4} as="h1" fontSize={'32px'} fontWeight={'600'} width={'full'} noOfLines={1}>
                         Chuyến đi
                     </Heading>
                 </Box>

@@ -19,8 +19,6 @@ import Link from 'next/link';
 import SignUpModal from '@components/Modal/RegisterModal';
 import { IExploreNearby } from 'src/types/interface';
 
-
-
 import { signOut, useSession } from 'next-auth/react';
 import LoginModal from '@components/Modal/LoginModal';
 
@@ -33,13 +31,10 @@ export const HeaderNoSearch: FC<HeaderNoSearchProps> = ({ exploreNearby, searchP
     const { isOpen: isLoginOpen, onClose: onLoginClose, onOpen: onLoginOpen } = useDisclosure();
     const { isOpen: isSignUpOpen, onClose: onSignUpClose, onOpen: onSignUpOpen } = useDisclosure();
 
-
-
     const logoColor = useColorModeValue('teal.500', 'teal.200');
 
     const [isSnapTop, setIsSnapTop] = useState<boolean>(searchPage ? false : true);
     const [isActiveSearch, setIsActiveSearch] = useState<boolean>(searchPage ? false : true);
-
 
     const headerBehavior = () => {
         let style = [];
@@ -97,13 +92,12 @@ export const HeaderNoSearch: FC<HeaderNoSearchProps> = ({ exploreNearby, searchP
                                 </MenuButton>
                                 <MenuList className="shadow-md" p={2}>
                                     <>
-
-                                        <MenuItem>
-                                            <Link href={'/guest/inbox'}> Tin nhắn</Link>
-                                        </MenuItem>
-                                        <MenuItem>
-                                            <Link href={'/trips'}>Chuyến đi</Link>
-                                        </MenuItem>
+                                        <Link href={'/guest/inbox'}>
+                                            <MenuItem>Tin nhắn</MenuItem>
+                                        </Link>
+                                        <Link href={'/trips'}>
+                                            <MenuItem>Chuyến đi</MenuItem>
+                                        </Link>
 
                                         <MenuItem>Danh sách yêu thích</MenuItem>
                                         <MenuDivider />
@@ -115,7 +109,7 @@ export const HeaderNoSearch: FC<HeaderNoSearchProps> = ({ exploreNearby, searchP
 
                                         <MenuItem
                                             onClick={() => {
-                                                signOut(), console.log('sign out');
+                                                signOut();
                                             }}
                                         >
                                             Đăng xuất
@@ -135,7 +129,6 @@ export const HeaderNoSearch: FC<HeaderNoSearchProps> = ({ exploreNearby, searchP
                         )}
                     </div>
                 </div>
-
             </header>
 
             <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />

@@ -72,7 +72,6 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                                 ) : (
                                     renderWithLayout(<Component {...pageProps} />)
                                 )}
-
                                 <ReactQueryDevtools />
                                 {/* </Hydrate> */}
                             </PersistGate>

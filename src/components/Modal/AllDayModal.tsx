@@ -72,7 +72,7 @@ const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose }) => {
 
         setSearchMenu(null);
     };
-    const dateRangeStyle = 'left-2 right-2 searchbar:left-auto searchbar:right-1/2 searchbar:translate-x-1/4 searchbar:w-[850px] ';
+    const dateRangeStyle = 'left-2 right-2 searchbar:left-auto searchbar:right-1/4 searchbar:translate-x-1/4 searchbar:w-[800px] ';
     return (
         <>
             <Modal onClose={onClose} size={'full'} isOpen={isOpen}>
@@ -87,11 +87,11 @@ const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose }) => {
                                         <Heading
                                             as="h3"
                                             fontSize={'26px'}
-                                            fontWeight={'800'}
+                                            fontWeight={'700'}
                                             width={'full'}
                                             noOfLines={1}
                                             mb={6}
-                                            lineHeight={'30px'}
+                                            lineHeight={'32px'}
                                         >
                                             Chọn ngày
                                         </Heading>

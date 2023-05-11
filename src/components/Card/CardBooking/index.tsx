@@ -30,7 +30,7 @@ enum ESearchMenu {
 }
 // type CardsBookingProps = Pick<ITours, 'priceOnePerson' >;
 interface CardsBookingProps {
-    priceOnePerson: number|undefined;
+    priceOnePerson: number | undefined;
 }
 const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson }) => {
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
@@ -69,7 +69,7 @@ const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson }) => {
                 <Box>
                     <div className="flex justify-between items-center">
                         <section>
-                            <Heading as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
+                            <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
                                 Từ ${priceOnePerson} <span className="text-base font-normal ">/người</span>
                             </Heading>
                             <Text className="text-base font-normal underline text-gray-300 hover:text-gray-400 ">Hiển thị tất cả giá</Text>

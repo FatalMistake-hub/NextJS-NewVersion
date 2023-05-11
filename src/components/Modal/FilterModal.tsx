@@ -24,6 +24,7 @@ import {
     Divider,
     Collapse,
     Button,
+    StackDivider,
 } from '@chakra-ui/react';
 import { FaLock, FaUserNinja } from 'react-icons/fa';
 import React, { useState } from 'react';
@@ -46,7 +47,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
 
     const handleToggle = (name: string) => setShow((prevState: any) => ({ ...prevState, [name]: !prevState[name] }));
     return (
-        <Modal onClose={onClose} isOpen={isOpen} size={'xl'} scrollBehavior={'inside'}>
+        <Modal onClose={onClose} isOpen={isOpen} size={'3xl'} scrollBehavior={'inside'}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>
@@ -55,9 +56,8 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                     </Flex>
                 </ModalHeader>
                 <ModalCloseButton />
-                <ModalBody as="form">
-                    <Flex align={'start'} justify={'center'} direction={'column'}>
-                        <Divider orientation="horizontal" />
+                <ModalBody as="form" w={'full'}>
+                    <VStack divider={<StackDivider borderColor="black.900" />} p={4} align="stretch" width={'full'}>
                         <div className="px-6 py-8">
                             <Text fontSize="2xl" fontWeight={'600'} mb={2}>
                                 Loại hoạt động
@@ -69,14 +69,14 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                                 Show {show.cp1 ? 'Less' : 'More'}
                             </Button>
                         </div>
-                        <Divider orientation="horizontal" />
+
                         <div className="px-6 py-8">
                             <Text fontSize="2xl" fontWeight={'600'} mb={2}>
                                 Khoảng giá
                             </Text>
                             <PriceRange />
                         </div>
-                        <Divider orientation="horizontal" />
+
                         <div className="px-6 py-8">
                             <Text fontSize="2xl" fontWeight={'600'} mb={2}>
                                 Ngôn ngữ có thể sử dụng
@@ -88,14 +88,14 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                                 Show {show.cp2 ? 'Less' : 'More'}
                             </Button>
                         </div>
-                        <Divider orientation="horizontal" />
+
                         <div className="px-6 py-8">
                             <Text fontSize="2xl" fontWeight={'600'} mb={2}>
                                 Thời gian trong ngày
                             </Text>
                             <TimeInDay collumn={2} />
                         </div>
-                    </Flex>
+                    </VStack>
                 </ModalBody>
                 <ModalFooter>
                     <div className="flex flex-col w-full">

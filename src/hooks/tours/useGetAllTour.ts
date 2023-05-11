@@ -26,7 +26,6 @@ const useGetAllTour = (pageSize: number): UseQueryInfinityResponse<any> => {
             }
         },
         getPreviousPageParam: (firstPage: any, allPages) => {
-            console.log(firstPage);
             return firstPage.data.pageNo - 1;
         },
     });
