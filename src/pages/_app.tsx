@@ -22,6 +22,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import MainLayout from '@components/layouts/MainLayout';
 import { NextPage } from 'next';
 import { Session } from 'next-auth';
+import { ProtectedLayout } from '@components/layouts/ProtectedLayouts';
+import { LayoutKeys, Layouts } from '@components/layouts';
 // import { useLoadScript } from '@react-google-maps/api';
 
 const progressBar = new ProgressBar({
@@ -37,31 +39,40 @@ Router.events.on('routeChangeError', progressBar.finish);
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode;
+    requireAuth?: boolean;
+    Layout?: LayoutKeys;
 };
 
-type AppPropsWithLayout = AppProps & {
-    Component: NextPageWithLayout;
+export type AppPropsWithLayout = AppProps & {
+    Component: NextPageWithLayout & { Layout: LayoutKeys };
     session?: Session;
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+    const Layout = Layouts[Component.Layout] || MainLayout;
     const [queryClient] = useState(() => new QueryClient());
     // const getLayout = Component.getLayout ?? ((page) => page);
     const SessionProps = pageProps as { session: Session };
     const renderWithLayout =
         Component.getLayout ||
         function (page) {
-            return <MainLayout>{page}</MainLayout>;
+            return <Layout>{page}</Layout>;
         };
+
     return (
-        <SessionProvider >
+        <SessionProvider>
             <ChakraProvider theme={theme}>
                 <ContextProvider>
                     <QueryClientProvider client={queryClient}>
                         <ReduxProvider store={store}>
                             <PersistGate loading={null} persistor={persistor}>
                                 {/* <Hydrate state={pageProps.dehydratedState}> */}
-                                {renderWithLayout(<Component {...pageProps} />)}
+                                {Component.requireAuth ? (
+                                    <ProtectedLayout>{renderWithLayout(<Component {...pageProps} />)}</ProtectedLayout>
+                                ) : (
+                                    renderWithLayout(<Component {...pageProps} />)
+                                )}
+
                                 <ReactQueryDevtools />
                                 {/* </Hydrate> */}
                             </PersistGate>

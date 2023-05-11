@@ -421,5 +421,4 @@ function Tours() {
         </Flex>
     );
 }
-
 export default Tours;

@@ -1,6 +1,5 @@
-
-import Footer from './Footer';
-import { Header } from './Header';
+import Footer from '../common/Footer';
+import { Header } from '../common/Header';
 
 const name = '[Your Name]';
 export const siteTitle = 'Next.js Sample Website';

@@ -19,7 +19,7 @@ const Main: React.FC = () => {
         fetchPreviousPage,
         hasNextPage,
         hasPreviousPage,
-    } = useGetAllTour();
+    } = useGetAllTour(10);
     const theme = useTheme();
     console.log(hasNextPage);
     return (
@@ -50,7 +50,6 @@ const Main: React.FC = () => {
                                     page?.data?.content?.map((result: ITours) => <CardItem className="h-[590px]" data={result} />),
                                 )}
                             </SimpleGrid>
-                            
                         </>
                     )}
                 </div>

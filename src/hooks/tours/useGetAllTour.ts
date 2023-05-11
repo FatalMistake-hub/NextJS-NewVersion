@@ -5,7 +5,7 @@ import { UseQueryInfinityResponse, UseQueryResponse } from 'src/types/axios.type
 import { IAllTours } from 'src/types/tours.type';
 import { getAllTours } from 'src/utils/apis/tours.api';
 
-const useGetAllTour = (): UseQueryInfinityResponse<any> => {
+const useGetAllTour = (pageSize: number): UseQueryInfinityResponse<any> => {
     const { ref, inView } = useInView({ threshold: 0 });
 
     const {
@@ -19,7 +19,7 @@ const useGetAllTour = (): UseQueryInfinityResponse<any> => {
         fetchPreviousPage,
         hasNextPage,
         hasPreviousPage,
-    } = useInfiniteQuery(['GET_ALL_TOURS'], async ({ pageParam = 1 }) => await getAllTours(pageParam, 2), {
+    } = useInfiniteQuery(['GET_ALL_TOURS'], async ({ pageParam = 1 }) => await getAllTours(pageParam, pageSize), {
         getNextPageParam: (lastPage: any, allPages) => {
             if (lastPage.data.pageNo < lastPage.data.totalPages) {
                 return lastPage.data.pageNo + 1;

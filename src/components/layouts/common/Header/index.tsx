@@ -12,7 +12,6 @@ import {
     useColorMode,
     useColorModeValue,
     useDisclosure,
-
 } from '@chakra-ui/react';
 import { FaAirbnb, FaGlobe, FaMoon, FaSearch, FaSun } from 'react-icons/fa';
 
@@ -163,10 +162,13 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                                 </MenuButton>
                                 <MenuList className="shadow-md" p={2}>
                                     <>
-                                        <MenuItem>Tin nhắn</MenuItem>
 
-                                        <MenuItem>Thông báo</MenuItem>
-                                        <MenuItem>Chuyến đi</MenuItem>
+                                        <MenuItem>
+                                            <Link href={'/guest/inbox'}> Tin nhắn</Link>
+                                        </MenuItem>
+                                        <MenuItem>
+                                            <Link href={'/trips'}>Chuyến đi</Link>
+                                        </MenuItem>
 
                                         <MenuItem>Danh sách yêu thích</MenuItem>
                                         <MenuDivider />

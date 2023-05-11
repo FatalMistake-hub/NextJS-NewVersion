@@ -12,8 +12,8 @@ import { formatGuests } from 'src/utils/guestsUtil';
 import { formatRangeDate } from 'src/utils/dateUntils';
 import Link from 'next/link';
 import CardItem from '@components/Card/CardItem';
-import { Header } from '@components/layouts/MainLayout/Header';
-import Footer from '@components/layouts/MainLayout/Footer';
+import { Header } from '@components/layouts/common/Header';
+import Footer from '@components/layouts/common/Footer';
 
 const Search = () => {
     const router = useRouter();
