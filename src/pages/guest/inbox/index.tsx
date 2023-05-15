@@ -15,19 +15,14 @@ const GuestInbox = () => {
 
     return (
         <Flex direction="column" justify="space-between" h="100vh">
-            <Container pt={'130px'} pb={8} px={8} maxW="full">
+            <Container pt={'130px'} pb={8} px={8} maxW="full" overflowY="hidden" overflowX="hidden">
                 <Stack maxH={{ base: 'calc(100vh - 150px )' }}>
                     <Stack align="center" direction="row" justifyContent="space-between">
                         <Stack direction="row" align="center">
                             <AnimatePresence key={'a'}>
                                 <motion.div animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }} initial={{ opacity: 0, y: -10 }}>
                                     <Stack spacing={0}>
-                                        <Heading
-                                            lineHeight={1.4}
-                                            as="h1"
-                                            fontSize={'22px'}
-                                            fontWeight={'700'}
-                                        >
+                                        <Heading lineHeight={1.4} as="h1" fontSize={'22px'} fontWeight={'700'}>
                                             Michelle & Michael
                                         </Heading>
 
@@ -66,7 +61,7 @@ const GuestInbox = () => {
                             </Box>
                         </Stack>
                     </Stack>
-                    <Stack mt={6} position="relative" minH={'calc(100vh - 225px )'} direction={'row'}>
+                    <Stack mt={6} position="relative" minH={'calc(100vh - 400px )'} direction={'row'}>
                         <Participants />
                         <Message />
                         {/* <ChatInput /> */}

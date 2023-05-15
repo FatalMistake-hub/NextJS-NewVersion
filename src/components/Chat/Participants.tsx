@@ -35,7 +35,7 @@ export default function Participants() {
                 px={4}
                 bg={mainBg}
                 overflowY="auto"
-                py={{ base: 3, sm: 6 }}
+                py={3}
                 borderBottomEndRadius="md"
                 borderBottomLeftRadius="md"
                 // display={{ base: 'flex', sm: 'inherit' }}
