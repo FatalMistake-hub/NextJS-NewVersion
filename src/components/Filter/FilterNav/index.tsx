@@ -17,11 +17,14 @@ import {
     Divider,
     PopoverFooter,
     ButtonGroup,
+    HStack,
 } from '@chakra-ui/react';
 import FilterModal from '@components/Modal/FilterModal';
+import { GetServerSideProps } from 'next';
 import { FC, JSXElementConstructor, ReactElement } from 'react';
 import { FaChevronDown, FaSlidersH } from 'react-icons/fa';
 import { IconType } from 'react-icons/lib';
+import useGetAllCatgory from 'src/hooks/category/useGetAllCategory';
 import LanguagePicker from '../FilterItem/LanguagePicker';
 import PriceRange from '../FilterItem/PriceRange';
 import TimeInDay from '../FilterItem/TimeInDay';
@@ -35,76 +38,56 @@ interface NavItem {
     href?: string;
     minWidth?: string;
 }
-const NAV_ITEMS: Array<NavItem> = [
-    {
-        type: 'Button',
-        label: 'Giá',
-        rightIcon: <FaChevronDown />,
-        children: <PriceRange />,
-        minWidth: '400px',
-    },
-    {
-        type: 'Button',
-        label: 'Ngôn ngữ có thể sử dụng',
-        rightIcon: <FaChevronDown />,
-        children: <LanguagePicker />,
-        minWidth: '500px',
-    },
-    {
-        type: 'Button',
-        label: 'Thời gian trong ngày',
-        rightIcon: <FaChevronDown />,
-        children: <TimeInDay />,
-        minWidth: '320px',
-    },
-    {
-        type: 'Divider',
-    },
-    {
-        type: 'Button',
-        label: 'Nghệ thuật và văn hoá',
-    },
-    {
-        type: 'Button',
-        label: 'Giải trí',
-    },
-    {
-        type: 'Button',
-        label: 'Thể thao',
-    },
-    {
-        type: 'Button',
-        label: 'Tour',
-    },
-    {
-        type: 'Button',
-        label: 'Tham quan',
-    },
-    {
-        type: 'Button',
-        label: 'Chăm sóc sức khỏe',
-    },
-    {
-        type: 'Button',
-        label: 'Thiên nhiên và hoạt động ngoài trời',
-    },
-    // {
-    //     type: 'Button',
-    //     label: 'Bộ lọc',
-    //     leftIcon: <FaSlidersH />,
-    // },
-];
+interface Props {
+    dataCategory: any;
+}
+const FilterNav = ({ dataCategory }: Props) => {
 
-const FilterNav: FC = () => {
-    const linkColor = useColorModeValue('gray.600', 'gray.200');
-    const linkHoverColor = useColorModeValue('gray.800', 'white');
-    const popoverContentBgColor = useColorModeValue('white', 'gray.800');
+    const NAV_ITEMS: Array<NavItem> = [
+        {
+            type: 'Button',
+            label: 'Giá',
+            rightIcon: <FaChevronDown />,
+            children: <PriceRange />,
+            minWidth: '400px',
+        },
+        {
+            type: 'Button',
+            label: 'Ngôn ngữ có thể sử dụng',
+            rightIcon: <FaChevronDown />,
+            children: <LanguagePicker />,
+            minWidth: '500px',
+        },
+        {
+            type: 'Button',
+            label: 'Thời gian trong ngày',
+            rightIcon: <FaChevronDown />,
+            children: <TimeInDay />,
+            minWidth: '320px',
+        },
+        {
+            type: 'Divider',
+        },
+        ...dataCategory,
+    ];
+
     const { isOpen: isFilterOpen, onClose: onFilterClose, onOpen: onFilterOpen } = useDisclosure();
     return (
         // <Stack direction={'row'} spacing={2} justifyContent="space-between" width="full" >
+        // <div className="flex flex-wrap items-center justify-between w-full pl-1 overflow-y-hidden h-14 ">
         <>
-            <div className="flex flex-wrap items-center justify-between w-full pl-1 overflow-y-hidden h-14 ">
-                {NAV_ITEMS.map((navItem,i) => (
+            <HStack
+                spacing="8px"
+                // w={'full'}
+                overflowY={'hidden'}
+                flexWrap={'wrap'}
+                h={14}
+                alignItems={'center'}
+                justifyContent={'end'}
+                pl={1}
+                
+            >
+                {NAV_ITEMS.map((navItem, i) => (
                     <Box key={i} className="py-2">
                         <Popover placement={'bottom-start'}>
                             <PopoverTrigger>
@@ -119,7 +102,7 @@ const FilterNav: FC = () => {
                                         {navItem.label}
                                     </Button>
                                 ) : (
-                                    <Divider orientation="vertical" />
+                                    <Divider orientation="vertical" borderColor={'black.200'} />
                                 )}
                             </PopoverTrigger>
                             {navItem.children ? (
@@ -142,7 +125,7 @@ const FilterNav: FC = () => {
                         </Popover>
                     </Box>
                 ))}
-            </div>
+            </HStack>
             <div className="flex items-center pr-1 ml-2">
                 <Button borderRadius="48px" leftIcon={<FaSlidersH />} colorScheme="black" variant="outline" onClick={onFilterOpen}>
                     Bộ lọc
@@ -153,4 +136,5 @@ const FilterNav: FC = () => {
         // </Stack>
     );
 };
+
 export default FilterNav;

@@ -21,7 +21,6 @@ const Search = () => {
     const [isFullMap, setIsFullMap] = useState<boolean>(false);
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
 
-    const [popupInfo, setPopupInfo] = useState<any>();
     const getCenterMap = () => {
         const coords = searchResults.map((result) => ({
             latitude: result.lat,
@@ -29,6 +28,7 @@ const Search = () => {
         }));
         return getCenter(coords) || { latitude: 0, longitude: 0 };
     };
+
     const getGuests = (guests: any) => {
         const totalGuests = formatGuests(guests, { noInfants: true });
         if (totalGuests) return `• ${totalGuests}`;
@@ -69,7 +69,7 @@ const Search = () => {
                             Instant Book
                         </button>
                         <button className="px-2 py-1 text-xs duration-300 border border-gray-300 border-opacity-50 rounded-full cursor-pointer md:px-4 md:py-2 lg:text-sm active:scale-90 hover:border-gray-500">
-                            More filters
+                            Xem thêm filters
                         </button>
                     </div>
                     {/* information */}
@@ -97,7 +97,7 @@ const Search = () => {
                         >
                             {isFullMap ? (
                                 <>
-                                    <BiChevronRight className="h-5" /> <span className="ml-2 text-sm font-semibold">Show list</span>
+                                    <BiChevronRight className="h-5" /> <span className="ml-2 text-sm font-semibold"> list</span>
                                 </>
                             ) : (
                                 <BiChevronLeft className="h-5" />
@@ -135,21 +135,6 @@ const Search = () => {
                                 </button>
                             </Marker>
                         ))}
-                        {/* {pins}
-                        {popupInfo && (
-                            <Popup anchor="top" longitude={popupInfo.long} latitude={popupInfo.lat} onClose={() => setPopupInfo(null)}>
-                                <div>
-                                    {popupInfo.city}, {popupInfo.state} |{' '}
-                                    <a
-                                        target="_new"
-                                        href={`http://en.wikipedia.org/w/index.php?title=Special:Search&search=${popupInfo.city}, ${popupInfo.state}`}
-                                    >
-                                        Wikipedia
-                                    </a>
-                                </div>
-                                <img width="100%" src={popupInfo.image} />
-                            </Popup>
-                        )} */}
                     </MapBase>
                 </section>
             </main>
@@ -160,7 +145,7 @@ const Search = () => {
 
 export const getServerSideProps = async () => {
     const searchResults = await getSearch();
-
+    console.log(searchResults);
     return {
         props: { searchResults },
     };

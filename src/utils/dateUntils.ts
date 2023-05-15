@@ -17,7 +17,7 @@ export const formatRangeDate = (startDate: any, endDate: any) => {
     }
     return template;
 };
-const test = () => {
+export const test = () => {
     const timeSlotLength = 180; // độ dài khung thời gian trong phút
     const startTime = new Date(2023, 4, 1, 8, 0); // thời gian bắt đầu
     const endTime = new Date(2023, 4, 1, 18, 0); // thời gian kết thúc
@@ -37,5 +37,5 @@ const test = () => {
         timeSlots.push({ start, end });
         currentTime = end;
     }
-    console.log(timeSlots);
+    console.log('a',timeSlots);
 };

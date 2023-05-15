@@ -82,3 +82,7 @@ export const getSearch = async () => {
     );
     return searchResponse.json();
 };
+export const getCategory = async () => {
+    const searchResponse = await fetch('https://221.132.33.161:9000/api/categories/');
+    return searchResponse.json();
+};

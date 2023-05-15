@@ -10,7 +10,7 @@ export const authOptions: AuthOptions = {
             authorize: async (credentials) => {
                 try {
                     // Authenticate user with credentials
-                    const user = await httpHost.post(process.env.NEXT_APP_BASE_URL + '/login', {
+                    const user = await httpHost.post(process.env.NEXT_APP_BASE_URL + '/auth/login', {
                         email: credentials?.email,
                         password: credentials?.password,
                     });

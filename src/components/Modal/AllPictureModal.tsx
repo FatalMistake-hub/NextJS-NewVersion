@@ -6,12 +6,14 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // import required modules
 import { EffectCoverflow, Pagination, Navigation, Keyboard } from 'swiper';
 import Image from 'next/image';
+import { IImageTour } from 'src/types/tours.type';
 interface AllPictureModalProps {
     isOpen: boolean;
     onClose: () => void;
+    data?: IImageTour[];
 }
 
-const AllPictureModal: FC<AllPictureModalProps> = ({ isOpen, onClose }) => {
+const AllPictureModal: FC<AllPictureModalProps> = ({ isOpen, onClose, data }) => {
     return (
         <>
             <Modal onClose={onClose} size={'full'} isOpen={isOpen}>
@@ -46,114 +48,20 @@ const AllPictureModal: FC<AllPictureModalProps> = ({ isOpen, onClose }) => {
                             }}
                             modules={[EffectCoverflow, Pagination, Navigation, Keyboard]}
                         >
-                            <SwiperSlide>
-                                <Image
-                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    alt={`Picture of `}
-                                    layout="responsive"
-                                    width={'300px'}
-                                    height={'300px'}
-                                    objectFit="cover"
-                                    placeholder="blur"
-                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Image
-                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    alt={`Picture of `}
-                                    layout="responsive"
-                                    width={'300px'}
-                                    height={'300px'}
-                                    objectFit="cover"
-                                    placeholder="blur"
-                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Image
-                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    alt={`Picture of `}
-                                    layout="responsive"
-                                    width={'300px'}
-                                    height={'300px'}
-                                    objectFit="cover"
-                                    placeholder="blur"
-                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Image
-                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    alt={`Picture of `}
-                                    layout="responsive"
-                                    width={'300px'}
-                                    height={'300px'}
-                                    objectFit="cover"
-                                    placeholder="blur"
-                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Image
-                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    alt={`Picture of `}
-                                    layout="responsive"
-                                    width={'300px'}
-                                    height={'300px'}
-                                    objectFit="cover"
-                                    placeholder="blur"
-                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Image
-                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    alt={`Picture of `}
-                                    layout="responsive"
-                                    width={'300px'}
-                                    height={'300px'}
-                                    objectFit="cover"
-                                    placeholder="blur"
-                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Image
-                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    alt={`Picture of `}
-                                    layout="responsive"
-                                    width={'300px'}
-                                    height={'300px'}
-                                    objectFit="cover"
-                                    placeholder="blur"
-                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Image
-                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    alt={`Picture of `}
-                                    layout="responsive"
-                                    width={'300px'}
-                                    height={'300px'}
-                                    objectFit="cover"
-                                    placeholder="blur"
-                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                />
-                            </SwiperSlide>
-                            <SwiperSlide>
-                                <Image
-                                    src={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                    alt={`Picture of `}
-                                    layout="responsive"
-                                    width={'300px'}
-                                    height={'300px'}
-                                    objectFit="cover"
-                                    placeholder="blur"
-                                    blurDataURL={'https://dimg04.c-ctrip.com/images/0M76g120009isqgqz2CE9_Q60.jpg_.webp'}
-                                />
-                            </SwiperSlide>
+                            {data?.map((image) => (
+                                <SwiperSlide>
+                                    <Image
+                                        src={image.link}
+                                        alt={`Picture of `}
+                                        layout="responsive"
+                                        width={'300px'}
+                                        height={'300px'}
+                                        objectFit="cover"
+                                        placeholder="blur"
+                                        blurDataURL={image.link}
+                                    />
+                                </SwiperSlide>
+                            ))}
                         </Swiper>
                     </ModalBody>
                 </ModalContent>

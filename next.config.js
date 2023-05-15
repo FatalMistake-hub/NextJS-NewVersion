@@ -21,6 +21,7 @@ module.exports = withPlugins([], {
         NEXTAUTH_URL: 'https://experience-travel.vercel.app',
         NEXTAUTH_SECRET: 'c8f18c19336ce5aa7fdb4aecab25feba',
     },
+    runtime: 'nodejs',
 });
 
 // module.exports = {

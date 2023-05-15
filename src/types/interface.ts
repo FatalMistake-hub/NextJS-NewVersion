@@ -3,3 +3,4 @@ export interface IExploreNearby {
     img: string;
     distance: string;
 }
+

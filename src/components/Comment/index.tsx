@@ -32,7 +32,7 @@ const Comment: FC = () => {
                     <Button size="sm" variant={'link'} onClick={() => handleToggle} mt="1rem" color={'black'}>
                         <Text mr={1} textDecoration={'underline'}>
                             {' '}
-                            Show {show ? 'Less' : 'More'}
+                            {show ? 'Ẩn bớt' : 'Xem thêm'}
                         </Text>{' '}
                         {'>'}
                     </Button>
@@ -57,7 +57,7 @@ const Comment: FC = () => {
                     <Button size="sm" variant={'link'} onClick={() => handleToggle} mt="1rem" color={'black'}>
                         <Text mr={1} textDecoration={'underline'}>
                             {' '}
-                            Show {show ? 'Less' : 'More'}
+                            {show ? 'Ẩn bớt' : 'Xem thêm'}
                         </Text>{' '}
                         {'>'}
                     </Button>
@@ -82,7 +82,7 @@ const Comment: FC = () => {
                     <Button size="sm" variant={'link'} onClick={() => handleToggle} mt="1rem" color={'black'}>
                         <Text mr={1} textDecoration={'underline'}>
                             {' '}
-                            Show {show ? 'Less' : 'More'}
+                            {show ? 'Ẩn bớt' : 'Xem thêm'}
                         </Text>{' '}
                         {'>'}
                     </Button>
@@ -107,7 +107,7 @@ const Comment: FC = () => {
                     <Button size="sm" variant={'link'} onClick={() => handleToggle} mt="1rem" color={'black'}>
                         <Text mr={1} textDecoration={'underline'}>
                             {' '}
-                            Show {show ? 'Less' : 'More'}
+                            {show ? 'Ẩn bớt' : 'Xem thêm'}
                         </Text>{' '}
                         {'>'}
                     </Button>

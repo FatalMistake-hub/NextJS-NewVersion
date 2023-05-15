@@ -1,7 +1,6 @@
-
 import { httpMap } from '../instance/http';
 
-export const searchLocation = async (query: string|undefined) =>
+export const searchLocation = async (query: string | undefined) =>
     await httpMap.get<any>('', {
         params: {
             q: query,

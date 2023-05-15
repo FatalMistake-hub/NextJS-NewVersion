@@ -9,9 +9,11 @@ import {
     MenuItem,
     MenuList,
     Stack,
+    toast,
     useColorMode,
     useColorModeValue,
     useDisclosure,
+    useToast,
 } from '@chakra-ui/react';
 import { FaAirbnb, FaGlobe, FaMoon, FaSearch, FaSun } from 'react-icons/fa';
 
@@ -28,6 +30,7 @@ import { selectSearch } from 'src/redux/slice/searchSlice';
 import { EHeaderOpions } from 'src/utils/constants/Enums';
 import { signOut, useSession } from 'next-auth/react';
 import LoginModal from '@components/Modal/LoginModal';
+import { Logout } from 'src/utils/apis/auths.api';
 
 interface HeaderProps {
     exploreNearby?: IExploreNearby[];
@@ -38,6 +41,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
     const { isOpen: isLoginOpen, onClose: onLoginClose, onOpen: onLoginOpen } = useDisclosure();
     const { isOpen: isSignUpOpen, onClose: onSignUpClose, onOpen: onSignUpOpen } = useDisclosure();
 
+    const toast = useToast();
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
 
     const logoColor = useColorModeValue('teal.500', 'teal.200');
@@ -178,8 +182,19 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                                         <MenuDivider />
 
                                         <MenuItem
-                                            onClick={() => {
-                                                signOut();
+                                            onClick={async () => {
+                                                const res = await Logout();
+                                                if (res.status === 202) {
+                                                    signOut();
+                                                } else {
+                                                    toast({
+                                                        title: 'Lỗi.',
+                                                        description: 'Đăng xuất thất bại',
+                                                        status: 'error',
+                                                        duration: 9000,
+                                                        isClosable: true,
+                                                    });
+                                                }
                                             }}
                                         >
                                             Đăng xuất

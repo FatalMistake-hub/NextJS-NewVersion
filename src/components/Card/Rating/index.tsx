@@ -2,9 +2,11 @@ import { Flex } from '@chakra-ui/react';
 import { FC } from 'react';
 import Link from 'next/link';
 import { ITours } from 'src/types/tours.type';
-type RatingProps = Pick<ITours, 'rating' | 'avgRating'>;
+type RatingProps = Pick<ITours, 'rating' | 'avgRating'> & {
+    location?: string;
+};
 
-const Rating: FC<RatingProps> = ({ rating, avgRating }) => {
+const Rating: FC<RatingProps> = ({ rating, avgRating, location }) => {
     return (
         <Flex justifyContent="space-between" alignContent="center" width="full">
             <div className="flex items-center w-full">
@@ -24,7 +26,11 @@ const Rating: FC<RatingProps> = ({ rating, avgRating }) => {
                     <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white">({rating})</p>
                 </Link>
                 <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white">-</p>
-                <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white">3 giờ</p>
+                {location ? (
+                    <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white underline">{ location}</p>
+                ) : (
+                    <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white">3 giờ</p>
+                )}
             </div>
         </Flex>
     );

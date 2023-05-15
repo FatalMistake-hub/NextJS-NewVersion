@@ -38,7 +38,8 @@ const CardItem: React.FC<CardItemProps> = ({ className, data }) => {
                     />
                 </Box>
                 <Box bg={useColorModeValue('white', 'gray.800')} width="full " rounded="lg" pt="2" cursor={'pointer'}>
-                    <Rating avgRating={data.avgRating} rating={data.rating} />
+                    <Rating avgRating={data.avgRating} rating={data.rating}  />
+                    
                     <Flex my="1" justifyContent="space-between" alignItems="center">
                         <Text className="text-ellipsis font-semibold text-[15px] text-left h-full overflow-hidden break-words">
                             {data.title}

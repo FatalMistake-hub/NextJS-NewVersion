@@ -10,9 +10,8 @@ export interface ITours {
     longitude: string;
     destination: string;
     destinationDescription: string;
-    categoryId: number;
-    categoryName: string;
     avgRating: number;
+    images: IImageTour[];
     userId: string;
 }
 export interface IAllTours {
@@ -21,4 +20,8 @@ export interface IAllTours {
     pageSize: number;
     totalElements: number;
     totalPages: number;
+}
+export interface IImageTour {
+    imageId: string;
+    link: string;
 }
