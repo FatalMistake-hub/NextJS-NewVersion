@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react';
 import { Avatar, Box, Button, IconButton, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import useBgGradient from 'src/hooks/style/useBgGradint';
+import useBgGradient from 'src/hooks/style/useBgGradient';
 import ChatInput from './ChatInput';
 import ScrollBtn from '@components/ScrollBtn';
 function ScrollBottom({ messages }: { messages: any }) {

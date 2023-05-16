@@ -222,3 +222,4 @@ const Payment = () => {
 };
 
 export default Payment;
+Payment.requireAuth = true;

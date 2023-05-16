@@ -18,6 +18,7 @@ import {
     PopoverFooter,
     ButtonGroup,
     HStack,
+    Center,
 } from '@chakra-ui/react';
 import FilterModal from '@components/Modal/FilterModal';
 import { GetServerSideProps } from 'next';
@@ -42,7 +43,6 @@ interface Props {
     dataCategory: any;
 }
 const FilterNav = ({ dataCategory }: Props) => {
-
     const NAV_ITEMS: Array<NavItem> = [
         {
             type: 'Button',
@@ -85,7 +85,7 @@ const FilterNav = ({ dataCategory }: Props) => {
                 alignItems={'center'}
                 justifyContent={'end'}
                 pl={1}
-                
+                pr={1}
             >
                 {NAV_ITEMS.map((navItem, i) => (
                     <Box key={i} className="py-2">
@@ -96,13 +96,16 @@ const FilterNav = ({ dataCategory }: Props) => {
                                         borderRadius="48px"
                                         rightIcon={navItem.rightIcon}
                                         leftIcon={navItem.leftIcon}
-                                        colorScheme="black"
+                                        colorScheme="blackAlpha"
                                         variant="outline"
+                                        // color={'black.100'}
                                     >
-                                        {navItem.label}
+                                        <Text color={'black'}>{navItem.label}</Text>
                                     </Button>
                                 ) : (
-                                    <Divider orientation="vertical" borderColor={'black.200'} />
+                                    <Center height="25px" px={2}>
+                                        <Divider orientation="vertical" borderColor="black.50" />
+                                    </Center>
                                 )}
                             </PopoverTrigger>
                             {navItem.children ? (
@@ -127,8 +130,8 @@ const FilterNav = ({ dataCategory }: Props) => {
                 ))}
             </HStack>
             <div className="flex items-center pr-1 ml-2">
-                <Button borderRadius="48px" leftIcon={<FaSlidersH />} colorScheme="black" variant="outline" onClick={onFilterOpen}>
-                    Bộ lọc
+                <Button borderRadius="48px" leftIcon={<FaSlidersH />} colorScheme="blackAlpha" variant="outline" onClick={onFilterOpen}>
+                    <Text color={'black'}> Bộ lọc</Text>
                 </Button>
             </div>
             <FilterModal isOpen={isFilterOpen} onClose={onFilterClose} />

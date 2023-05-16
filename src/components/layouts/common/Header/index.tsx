@@ -31,6 +31,7 @@ import { EHeaderOpions } from 'src/utils/constants/Enums';
 import { signOut, useSession } from 'next-auth/react';
 import LoginModal from '@components/Modal/LoginModal';
 import { Logout } from 'src/utils/apis/auths.api';
+import MenuBase from '../MenuBase';
 
 interface HeaderProps {
     exploreNearby?: IExploreNearby[];
@@ -153,55 +154,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                         </Link>
 
                         {session?.user ? (
-                            <Menu>
-                                <MenuButton
-                                    transition="all 0.2s"
-                                    borderRadius="full"
-                                    borderWidth="1px"
-                                    _hover={{ bg: 'gray.400' }}
-                                    _expanded={{ bg: 'teal.400' }}
-                                    _focus={{ boxShadow: 'outline' }}
-                                >
-                                    <Avatar name={session?.user.username} src="https://bit.ly/broken-link" size={'md'} />
-                                </MenuButton>
-                                <MenuList className="shadow-md" p={2}>
-                                    <>
-                                        <Link href={'/guest/inbox'}>
-                                            <MenuItem w={'full'}>Tin nhắn</MenuItem>
-                                        </Link>
-                                        <Link href={'/trips'}>
-                                            <MenuItem>Chuyến đi</MenuItem>
-                                        </Link>
-
-                                        <MenuItem>Danh sách yêu thích</MenuItem>
-                                        <MenuDivider />
-
-                                        <MenuItem>Quản lý trải nghiệm</MenuItem>
-                                        <MenuItem>Tài khoản</MenuItem>
-
-                                        <MenuDivider />
-
-                                        <MenuItem
-                                            onClick={async () => {
-                                                const res = await Logout();
-                                                if (res.status === 202) {
-                                                    signOut();
-                                                } else {
-                                                    toast({
-                                                        title: 'Lỗi.',
-                                                        description: 'Đăng xuất thất bại',
-                                                        status: 'error',
-                                                        duration: 9000,
-                                                        isClosable: true,
-                                                    });
-                                                }
-                                            }}
-                                        >
-                                            Đăng xuất
-                                        </MenuItem>
-                                    </>
-                                </MenuList>
-                            </Menu>
+                            <MenuBase />
                         ) : (
                             <Stack direction="row" spacing={4} align="center">
                                 <Button colorScheme="teal" variant="solid" onClick={onLoginOpen}>

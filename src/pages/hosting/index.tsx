@@ -3,3 +3,4 @@ const HostingPage = () => {
 };
 HostingPage.requireAuth = true;
 export default HostingPage;
+HostingPage.Layout = 'HostingLayout';
