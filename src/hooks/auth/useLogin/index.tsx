@@ -7,18 +7,15 @@ const useLogin = () => {
     const router = useRouter();
     const client = useQueryClient();
 
-    const {data, mutate, isLoading, isError, isSuccess } = useMutation({
+    const { data, mutate, isLoading, isError, isSuccess } = useMutation({
         mutationFn: Login,
         onSuccess: (data) => {
             // Set tokens
             // const { access_token, refresh_token } = data.data;
             // localStorageClient.setValue(ACCESS_TOKEN, access_token);
             // localStorageClient.setValue(REFRESH_TOKEN, refresh_token);
-           
-
             // Get user data
             // client.refetchQueries(QUERY_KEYS.GET_ME);
-
             // Navigate to prev page
             // if (window.history.state && window.history.state.idx > 0) {
             //     navigate(-1);
