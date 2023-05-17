@@ -20,14 +20,14 @@ const MenuHostingNav = () => {
             </MenuButton>
             <MenuList className="shadow-md" p={2}>
                 <>
-                    <Link href={'/account'}>
-                        <MenuItem>Tài khoản</MenuItem>
+                    <Link href={'/hosting/listings'}>
+                        <MenuItem>Quản lý trải nghiệm</MenuItem>
                     </Link>
-                    <Link href={'/account'}>
-                        <MenuItem>Tài khoản</MenuItem>
+                    <Link href={'/hosting/reservations'}>
+                        <MenuItem>Đặt trải nghiệm</MenuItem>
                     </Link>
-                    <Link href={'/account'}>
-                        <MenuItem>Tài khoản</MenuItem>
+                    <Link href={'/become-a-host'}>
+                        <MenuItem>Tạo mục trải nghiệm mới</MenuItem>
                     </Link>
 
                     <MenuDivider />

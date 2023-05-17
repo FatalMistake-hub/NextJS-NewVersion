@@ -24,7 +24,7 @@ import { NextPage } from 'next';
 import { Session } from 'next-auth';
 import { ProtectedLayout } from '@components/layouts/ProtectedLayouts';
 import { LayoutKeys, Layouts } from '@components/layouts';
-// import { useLoadScript } from '@react-google-maps/api';
+
 
 const progressBar = new ProgressBar({
     size: 2,

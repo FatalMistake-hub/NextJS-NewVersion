@@ -48,15 +48,15 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
 
     const headerBehavior = () => {
         let style = [];
-        if (!isSnapTop) style.push('bg-white shadow-lg');
-        if (!isActiveSearch) style.push('bg-white shadow-lg h-[86px] pb-5');
-        if (isActiveSearch) style.push('bg-white shadow-lg pb-8');
+        if (!isSnapTop) style.push('bg-white border border-b-gray-700 ');
+        if (!isActiveSearch) style.push('bg-white border border-b-gray-700  h-[86px] pb-5');
+        if (isActiveSearch) style.push('bg-white border border-b-gray-700  pb-8');
         return style.join(' ');
     };
     const { data: session } = useSession();
     return (
         <>
-            <header className={`${headerBehavior()} z-50 fixed top-0 w-full pt-5 duration-300 md:transition-none`}>
+            <header className={`${headerBehavior()} z-10 fixed top-0 w-full pt-5 duration-300 md:transition-none`}>
                 {/* header top */}
                 <div
                     className={`${
@@ -103,87 +103,179 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                                 >
                                     Hôm nay
                                 </Tab>
-                                <Tab
-                                    _hover={{
-                                        bg: 'blackAlpha.200',
-                                    }}
-                                    _selected={{
-                                        color: 'black',
-                                        // borderBottom: '3px solid black',
-                                        _before: {
-                                            width: '18px',
-                                            height: '2px',
-                                            bg: 'black',
-                                            left: '50%',
-                                            content: '""',
-                                            position: 'absolute',
-                                            bottom: '0px',
-                                            marginLeft: '-9px',
-                                            transform: 'scaleX(1)',
-                                            transition: 'transform 0.2s ease-in-out',
-                                        },
-                                    }}
-                                    className="rounded-3xl "
-                                    position={'relative'}
-                                    color={'blackAlpha.700'}
-                                >
-                                    Hộp thư đến
-                                </Tab>
+                                <Link href={'/hosting/inbox'}>
+                                    <Tab
+                                        _hover={{
+                                            bg: 'blackAlpha.200',
+                                        }}
+                                        _selected={{
+                                            color: 'black',
+                                            // borderBottom: '3px solid black',
+                                            _before: {
+                                                width: '18px',
+                                                height: '2px',
+                                                bg: 'black',
+                                                left: '50%',
+                                                content: '""',
+                                                position: 'absolute',
+                                                bottom: '0px',
+                                                marginLeft: '-9px',
+                                                transform: 'scaleX(1)',
+                                                transition: 'transform 0.2s ease-in-out',
+                                            },
+                                        }}
+                                        className="rounded-3xl "
+                                        position={'relative'}
+                                        color={'blackAlpha.700'}
+                                    >
+                                        Hộp thư đến
+                                    </Tab>
+                                </Link>
                                 <Link href={'/hosting/calendar'}>
-                                <Tab
-                                    _hover={{
-                                        bg: 'blackAlpha.200',
-                                    }}
-                                    _selected={{
-                                        color: 'black',
-                                        // borderBottom: '3px solid black',
-                                        _before: {
-                                            width: '18px',
-                                            height: '2px',
-                                            bg: 'black',
-                                            left: '50%',
-                                            content: '""',
-                                            position: 'absolute',
-                                            bottom: '0px',
-                                            marginLeft: '-9px',
-                                            transform: 'scaleX(1)',
-                                            transition: 'transform 0.2s ease-in-out',
-                                        },
-                                    }}
-                                    className="rounded-3xl "
-                                    position={'relative'}
-                                    color={'blackAlpha.700'}
-                                >
+                                    <Tab
+                                        _hover={{
+                                            bg: 'blackAlpha.200',
+                                        }}
+                                        _selected={{
+                                            color: 'black',
+                                            // borderBottom: '3px solid black',
+                                            _before: {
+                                                width: '18px',
+                                                height: '2px',
+                                                bg: 'black',
+                                                left: '50%',
+                                                content: '""',
+                                                position: 'absolute',
+                                                bottom: '0px',
+                                                marginLeft: '-9px',
+                                                transform: 'scaleX(1)',
+                                                transition: 'transform 0.2s ease-in-out',
+                                            },
+                                        }}
+                                        className="rounded-3xl "
+                                        position={'relative'}
+                                        color={'blackAlpha.700'}
+                                    >
                                         Lịch
-                                </Tab>
-                                    </Link>
-                                <Tab
-                                    _hover={{
-                                        bg: 'blackAlpha.200',
-                                    }}
-                                    _selected={{
-                                        color: 'black',
-                                        // borderBottom: '3px solid black',
-                                        _before: {
-                                            width: '18px',
-                                            height: '2px',
-                                            bg: 'black',
-                                            left: '50%',
-                                            content: '""',
-                                            position: 'absolute',
-                                            bottom: '0px',
-                                            marginLeft: '-9px',
-                                            transform: 'scaleX(1)',
-                                            transition: 'transform 0.2s ease-in-out',
-                                        },
-                                    }}
-                                    className="rounded-3xl "
-                                    position={'relative'}
-                                    color={'blackAlpha.700'}
-                                >
-                                    Thông tin phân tích
-                                </Tab>
-                                <MenuHostingNav />
+                                    </Tab>
+                                </Link>
+                                <Link href={'/hosting/performance'}>
+                                    <Tab
+                                        _hover={{
+                                            bg: 'blackAlpha.200',
+                                        }}
+                                        _selected={{
+                                            color: 'black',
+                                            // borderBottom: '3px solid black',
+                                            _before: {
+                                                width: '18px',
+                                                height: '2px',
+                                                bg: 'black',
+                                                left: '50%',
+                                                content: '""',
+                                                position: 'absolute',
+                                                bottom: '0px',
+                                                marginLeft: '-9px',
+                                                transform: 'scaleX(1)',
+                                                transition: 'transform 0.2s ease-in-out',
+                                            },
+                                        }}
+                                        className="rounded-3xl "
+                                        position={'relative'}
+                                        color={'blackAlpha.700'}
+                                    >
+                                        Thông tin phân tích
+                                    </Tab>
+                                </Link>
+
+                                <Link href={'/hosting/listings'}>
+                                    <Tab
+                                        _hover={{
+                                            bg: 'blackAlpha.200',
+                                        }}
+                                        _selected={{
+                                            color: 'black',
+                                            // borderBottom: '3px solid black',
+                                            _before: {
+                                                width: '18px',
+                                                height: '2px',
+                                                bg: 'black',
+                                                left: '50%',
+                                                content: '""',
+                                                position: 'absolute',
+                                                bottom: '0px',
+                                                marginLeft: '-9px',
+                                                transform: 'scaleX(1)',
+                                                transition: 'transform 0.2s ease-in-out',
+                                            },
+                                        }}
+                                        className="rounded-3xl "
+                                        position={'relative'}
+                                        color={'blackAlpha.700'}
+                                    >
+                                        Quản lý trải nghiệm
+                                    </Tab>
+                                </Link>
+                                <Link href={'/hosting/reservations'}>
+                                    <Tab
+                                        _hover={{
+                                            bg: 'blackAlpha.200',
+                                        }}
+                                        _selected={{
+                                            color: 'black',
+                                            // borderBottom: '3px solid black',
+                                            _before: {
+                                                width: '18px',
+                                                height: '2px',
+                                                bg: 'black',
+                                                left: '50%',
+                                                content: '""',
+                                                position: 'absolute',
+                                                bottom: '0px',
+                                                marginLeft: '-9px',
+                                                transform: 'scaleX(1)',
+                                                transition: 'transform 0.2s ease-in-out',
+                                            },
+                                        }}
+                                        className="rounded-3xl "
+                                        position={'relative'}
+                                        color={'blackAlpha.700'}
+                                    >
+                                        Đặt trải nghiệm
+                                    </Tab>
+                                </Link>
+                                <Link href={'/become-a-host'}>
+                                    <Tab
+                                        _hover={{
+                                            bg: 'blackAlpha.200',
+                                        }}
+                                        _selected={{
+                                            color: 'black',
+                                            // borderBottom: '3px solid black',
+                                            _before: {
+                                                width: '18px',
+                                                height: '2px',
+                                                bg: 'black',
+                                                left: '50%',
+                                                content: '""',
+                                                position: 'absolute',
+                                                bottom: '0px',
+                                                marginLeft: '-9px',
+                                                transform: 'scaleX(1)',
+                                                transition: 'transform 0.2s ease-in-out',
+                                            },
+                                        }}
+                                        className="rounded-3xl "
+                                        position={'relative'}
+                                        color={'blackAlpha.700'}
+                                    >
+                                        Tạo mục trải nghiệm mới
+                                    </Tab>
+                                </Link>
+
+                                <MenuDivider />
+
+                                {/* <MenuHostingNav /> */}
                             </TabList>
                         </Tabs>
                     </div>

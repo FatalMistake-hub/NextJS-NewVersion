@@ -28,8 +28,8 @@ import {
 } from 'src/redux/slice/searchSlice';
 import { formatGuests } from 'src/utils/guestsUtil';
 import LocationWrapper from './LocationWrapper';
-import usePlacesAutocomplete from 'use-places-autocomplete';
-import { useLoadScript } from '@react-google-maps/api';
+
+
 import { EHeaderOpions } from 'src/utils/constants/Enums';
 import useSearchLocation from 'src/hooks/map/useSearchLocation';
 import useDebounce from 'src/hooks/useDebounced';

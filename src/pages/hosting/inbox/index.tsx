@@ -2,6 +2,7 @@ import { Box, Menu, Text, Stack, Button, Heading, MenuList, MenuButton, useColor
 import ChatInput from '@components/Chat/ChatInput';
 import Message from '@components/Chat/Message';
 import Participants from '@components/Chat/Participants';
+import { HeaderHosting } from '@components/layouts/common/HeaderHosting';
 import { HeaderNoSearch } from '@components/layouts/common/HeaderNoSearch';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ReactElement } from 'react';
@@ -77,8 +78,8 @@ export default HostingInbox;
 HostingInbox.getLayout = function (page: ReactElement) {
     return (
         <>
-            <HeaderNoSearch />
+            <HeaderHosting />
             {page}
         </>
     );
-};
+}

@@ -24,7 +24,6 @@ import {
 } from '@chakra-ui/react';
 import { FaEnvelope, FaLock, FaRegEye, FaRegEyeSlash, FaUserNinja, FaUserSecret } from 'react-icons/fa';
 import React, { useState } from 'react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useRegister from 'src/hooks/auth/useRegister';

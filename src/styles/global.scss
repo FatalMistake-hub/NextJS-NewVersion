@@ -169,12 +169,14 @@ body {
 .fc-button-primary {
     background: #319795 !important;
     border: none !important;
+    border-radius: 100px !important;
+    margin-left: 6px !important;
 }
 .fc-button-primary:disabled {
     background: #3197959c !important;
 }
 .fc-toolbar-title {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 32px !important;
 }
 .fc-event-time {
@@ -198,3 +200,39 @@ body {
 .fc-multimonth-daygrid-table {
     height: 80vh !important;
 }
+.fc-multiMonthYear-view{
+    border: none !important;
+}
+.fc-multimonth-title{
+    float: left !important;
+    margin: 16px 0 24px 40px !important;
+    padding: 0 !important;
+}
+.fc-header-toolbar{
+    padding: 20px 40px 20px 40px;
+    margin-bottom: 0px !important;
+
+    background-color: #fff !important;
+}
+
+.fc-view-harness{
+    max-height: calc(100vh - 180px) !important;
+}
+.fc-col-header-cell{
+    border: none !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    font-weight: 400;
+}
+.fc-daygrid-more-link {
+    margin: 10px 0 0 10px !important;
+}
+.fc-event-title{
+    // display: none !important;
+    flex-grow: 0 !important;
+}
+.fc-event{
+    display: flex;
+    justify-content:flex-start;
+    margin-left: 50px !important;
+}
+
