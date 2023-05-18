@@ -41,7 +41,7 @@ const CardItem: React.FC<CardItemProps> = ({ className, data }) => {
                     <Rating avgRating={data.avgRating} rating={data.rating}  />
                     
                     <Flex my="1" justifyContent="space-between" alignItems="center">
-                        <Text className="text-ellipsis font-semibold text-[15px] text-left h-full overflow-hidden break-words">
+                        <Text className="text-ellipsis font-semibold text-[15px] text-left h-full " noOfLines={2}>
                             {data.title}
                         </Text>
                     </Flex>

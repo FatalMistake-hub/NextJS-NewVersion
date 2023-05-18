@@ -14,10 +14,10 @@ interface IAppDateRangeProps {
 }
 
 const DateRangeCP: FC<IAppDateRangeProps> = ({ months }) => {
-    const {  checkIn, checkOut } = useAppSelector((state) => state.search);
+    const { checkIn, checkOut } = useAppSelector((state) => state.search);
     const dispatch = useAppDispatch();
 
-    const selectionRange:any = {
+    const selectionRange: any = {
         startDate: checkIn,
         endDate: checkOut,
         key: 'selection',

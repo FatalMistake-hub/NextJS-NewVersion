@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { ITours } from 'src/types/tours.type';
 type RatingProps = Pick<ITours, 'rating' | 'avgRating'> & {
     location?: string;
+    isMore?: boolean;
 };
 
-const Rating: FC<RatingProps> = ({ rating, avgRating, location }) => {
+const Rating: FC<RatingProps> = ({ rating, avgRating, location, isMore = true }) => {
     return (
         <Flex justifyContent="space-between" alignContent="center" width="full">
             <div className="flex items-center w-full">
@@ -25,11 +26,16 @@ const Rating: FC<RatingProps> = ({ rating, avgRating, location }) => {
                 <Link href="#">
                     <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white">({rating})</p>
                 </Link>
-                <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white">-</p>
-                {location ? (
-                    <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white underline">{ location}</p>
-                ) : (
-                    <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white">3 giờ</p>
+
+                {isMore && (
+                    <>
+                        <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white">-</p>
+                        {location ? (
+                            <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white underline">{location}</p>
+                        ) : (
+                            <p className="ml-1 text-sm font-medium text-gray-400 dark:text-white">3 giờ</p>
+                        )}
+                    </>
                 )}
             </div>
         </Flex>
