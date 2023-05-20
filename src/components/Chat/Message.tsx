@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import useBgGradient from 'src/hooks/style/useBgGradient';
 import ChatInput from './ChatInput';
-import ScrollBtn from '@components/ScrollBtn';
+import ScrollBtn from '@components/GroupButton/ScrollBtn';
 function ScrollBottom({ messages }: { messages: any }) {
     const scrollRef = useRef<HTMLDivElement>(null);
     useEffect(() => {

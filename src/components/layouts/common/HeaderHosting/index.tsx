@@ -77,32 +77,34 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                     <div className="justify-center flex w-full">
                         <Tabs variant="unstyled" position="relative">
                             <TabList>
-                                <Tab
-                                    _hover={{
-                                        bg: 'blackAlpha.200',
-                                    }}
-                                    _selected={{
-                                        color: 'black',
-                                        // borderBottom: '3px solid black',
-                                        _before: {
-                                            width: '18px',
-                                            height: '2px',
-                                            bg: 'black',
-                                            left: '50%',
-                                            content: '""',
-                                            position: 'absolute',
-                                            bottom: '0px',
-                                            marginLeft: '-9px',
-                                            transform: 'scaleX(1)',
-                                            transition: 'transform 0.2s ease-in-out',
-                                        },
-                                    }}
-                                    className="rounded-3xl "
-                                    position={'relative'}
-                                    color={'blackAlpha.700'}
-                                >
-                                    Hôm nay
-                                </Tab>
+                                <Link href={'/hosting'}>
+                                    <Tab
+                                        _hover={{
+                                            bg: 'blackAlpha.200',
+                                        }}
+                                        _selected={{
+                                            color: 'black',
+                                            // borderBottom: '3px solid black',
+                                            _before: {
+                                                width: '18px',
+                                                height: '2px',
+                                                bg: 'black',
+                                                left: '50%',
+                                                content: '""',
+                                                position: 'absolute',
+                                                bottom: '0px',
+                                                marginLeft: '-9px',
+                                                transform: 'scaleX(1)',
+                                                transition: 'transform 0.2s ease-in-out',
+                                            },
+                                        }}
+                                        className="rounded-3xl "
+                                        position={'relative'}
+                                        color={'blackAlpha.700'}
+                                    >
+                                        Hôm nay
+                                    </Tab>
+                                </Link>
                                 <Link href={'/hosting/inbox'}>
                                     <Tab
                                         _hover={{

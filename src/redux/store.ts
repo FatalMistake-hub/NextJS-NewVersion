@@ -4,16 +4,17 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 // ...
 import storage from 'redux-persist/lib/storage';
 import searchSlice from './slice/searchSlice';
+import becomeHostSlice from './slice/becomeHostSlice';
 
 const persistConfig = {
     key: 'root',
     version: 1,
     storage,
-    blacklist: ['search'],
+    blacklist: ['search', 'becomeHost'],
 };
 const rootReducer = combineReducers({
     search: searchSlice,
-    
+    becomeHost:becomeHostSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

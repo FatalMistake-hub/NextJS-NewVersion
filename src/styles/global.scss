@@ -161,6 +161,24 @@ body {
     position: relative;
     height: 100%;
 }
+.wrapper {
+//   margin-bottom: -24px;
+}
+
+.container {
+    width: 100%;
+  background-color: pink;
+}
+
+.barCompleted {
+  background-color: lightblue;
+  width: 100%;
+}
+
+.label {
+  font-size: 20px;
+  color: green;
+}
 .fc-highlight {
     background: #08080800 !important;
 
@@ -193,32 +211,32 @@ body {
     ) !important;
     color: rgb(113, 113, 113) !important;
 }
-.fc-daygrid-day-top{
-    flex-direction: row!important;
+.fc-daygrid-day-top {
+    flex-direction: row !important;
     padding: 18px 0 0 18px;
 }
 .fc-multimonth-daygrid-table {
     height: 80vh !important;
 }
-.fc-multiMonthYear-view{
+.fc-multiMonthYear-view {
     border: none !important;
 }
-.fc-multimonth-title{
+.fc-multimonth-title {
     float: left !important;
     margin: 16px 0 24px 40px !important;
     padding: 0 !important;
 }
-.fc-header-toolbar{
+.fc-header-toolbar {
     padding: 20px 40px 20px 40px;
     margin-bottom: 0px !important;
 
     background-color: #fff !important;
 }
 
-.fc-view-harness{
+.fc-view-harness {
     max-height: calc(100vh - 180px) !important;
 }
-.fc-col-header-cell{
+.fc-col-header-cell {
     border: none !important;
     border-bottom: 1px solid #e2e8f0 !important;
     font-weight: 400;
@@ -226,13 +244,12 @@ body {
 .fc-daygrid-more-link {
     margin: 10px 0 0 10px !important;
 }
-.fc-event-title{
+.fc-event-title {
     // display: none !important;
     flex-grow: 0 !important;
 }
-.fc-event{
+.fc-event {
     display: flex;
-    justify-content:flex-start;
+    justify-content: flex-start;
     margin-left: 50px !important;
 }
-
