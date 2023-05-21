@@ -3,11 +3,12 @@ import { ButtonGroup, Flex, Button, toast, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
 import { selectBecomeHost, SET_STEP } from 'src/redux/slice/becomeHostSlice';
-
+const END_STEP = 9;
 const MultiStepBtn = () => {
     const { step } = useAppSelector(selectBecomeHost);
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoading1, setIsLoading1] = useState(false);
     const [progress, setProgress] = useState(0);
     const toast = useToast();
 
@@ -19,7 +20,7 @@ const MultiStepBtn = () => {
                 className="wrapper"
                 bgColor="black"
                 labelColor="black"
-                transitionDuration="2s"
+                transitionDuration="1.5s"
                 transitionTimingFunction="linear"
             />
 
@@ -28,15 +29,15 @@ const MultiStepBtn = () => {
                     <Flex>
                         {!(step === 0) && (
                             <Button
-                                isLoading={isLoading}
+                                isLoading={isLoading1}
                                 size={'lg'}
                                 onClick={() => {
                                     dispatch(SET_STEP(step - 1));
-                                    setProgress(progress - Number((100 / 3).toFixed(2)));
-                                    setIsLoading(true);
+                                    setProgress(progress - Number((100 / END_STEP).toFixed(2)));
+                                    setIsLoading1(true);
                                     setTimeout(() => {
-                                        setIsLoading(false);
-                                    }, 1500);
+                                        setIsLoading1(false);
+                                    }, 1000);
                                 }}
                                 color={'black'}
                                 variant="link"
@@ -45,7 +46,7 @@ const MultiStepBtn = () => {
                             </Button>
                         )}
                     </Flex>
-                    {step === 3 ? (
+                    {step === END_STEP ? (
                         <Button
                             size={'lg'}
                             colorScheme="teal"
@@ -66,18 +67,18 @@ const MultiStepBtn = () => {
                             isLoading={isLoading}
                             w="8rem"
                             size={'lg'}
-                            isDisabled={step === 3}
+                            isDisabled={step === END_STEP}
                             onClick={() => {
-                                dispatch(SET_STEP((step + 1)));
-                                if (step === 3) {
+                                dispatch(SET_STEP(step + 1));
+                                if (step === END_STEP) {
                                     setProgress(100);
                                 } else {
-                                    setProgress(progress + Number((100 / 3).toFixed(2)));
+                                    setProgress(progress + Number((100 / END_STEP).toFixed(2)));
                                 }
                                 setIsLoading(true);
                                 setTimeout(() => {
                                     setIsLoading(false);
-                                }, 1500);
+                                }, 1000);
                             }}
                             bgColor={!(step === 0) ? 'black' : ''}
                             colorScheme={step === 0 ? 'teal' : ''}

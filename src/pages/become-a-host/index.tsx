@@ -10,20 +10,35 @@ import BecomeHostStep3 from '@components/Hosting/BecomeHost/Step3';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
 import { selectBecomeHost, SET_STEP } from 'src/redux/slice/becomeHostSlice';
 import MultiStepBtn from '@components/GroupButton/MultiStepBtn';
+import LocationSt1 from '@components/Hosting/BecomeHost/Step1/Location';
 export default function BecomeHost() {
-     const { step } = useAppSelector(selectBecomeHost);
-     const dispatch = useAppDispatch();
-  const logoColor = useColorModeValue('teal.500', 'teal.200');
- 
+    const { step } = useAppSelector(selectBecomeHost);
+    const dispatch = useAppDispatch();
+    const logoColor = useColorModeValue('teal.500', 'teal.200');
+
     function renderSwitch(param: number) {
         switch (param) {
             case 0:
-                return <BecomeHostStep1 />;
+                return <BecomeHostStep1/>;
+
             case 1:
-                return <BecomeHostStep2 />;
+                return <LocationSt1/>;
             case 2:
-                return <BecomeHostStep3 />;
+                return 'kết thúc';
             case 3:
+                return <BecomeHostStep2/>;
+            case 4:
+                return 'kết thúc';
+            case 5:
+                return 'kết thúc';
+            case 6:
+                return 'kết thúc';
+            case 7:
+                return <BecomeHostStep3/>;
+            case 8:
+                return 'kết thúc';
+
+            case 9:
                 return 'kết thúc';
         }
     }
@@ -46,7 +61,7 @@ export default function BecomeHost() {
                     </div>
                 </div>
             </div>
-            <Box w={'full'} h={'full'} my={22}>
+            <Box w={'full'} h={'calc(100vh - 166px)'}>
                 {renderSwitch(step)}
                 <MultiStepBtn />
             </Box>

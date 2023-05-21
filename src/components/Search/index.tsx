@@ -27,8 +27,7 @@ import {
     SET_LOCATION,
 } from 'src/redux/slice/searchSlice';
 import { formatGuests } from 'src/utils/guestsUtil';
-import LocationWrapper from './LocationWrapper';
-
+import LocationWrapper from '../Wrapper/LocationWrapper';
 
 import { EHeaderOpions } from 'src/utils/constants/Enums';
 import useSearchLocation from 'src/hooks/map/useSearchLocation';
@@ -96,7 +95,6 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
 
     const dateRangeStyle = 'left-2 right-2 searchbar:left-auto searchbar:right-1/2 searchbar:translate-x-1/2 searchbar:w-[950px]';
 
-
     const { data, isSuccess, isLoading, setSearchTerm } = useSearchLocation();
     return (
         <>
@@ -130,8 +128,8 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                                 handleOnBlur();
                             }}
                         >
-                            <SearchOptionWrapper  className="left-0">
-                                <LocationWrapper status={isSuccess} response={data} loading={isLoading} />
+                            <SearchOptionWrapper className="left-0">
+                                <LocationWrapper status={isSuccess} response={data} loading={isLoading} onBlur={handleOnBlur} />
                             </SearchOptionWrapper>
                         </SearchOptionButton>
 

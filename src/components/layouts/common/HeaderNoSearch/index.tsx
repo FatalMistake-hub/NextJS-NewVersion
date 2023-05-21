@@ -69,13 +69,13 @@ export const HeaderNoSearch: FC<HeaderNoSearchProps> = ({ exploreNearby, searchP
                     {/* right side */}
                     {/* <HStack spacing={2}></HStack> */}
                     <div className="flex items-center justify-end min-w-[370px]">
-                        <Link href="/">
+                        <Link href="/become-a-host">
                             <a
                                 className={`${
                                     isSnapTop ? 'text-white hover: hover:bg-opacity-10' : 'text-gray-500 hover:bg-gray-100 '
-                                } flex items-center h-10 px-4 rounded-full font-medium tracking-wide text-sm min-w-fit`}
+                                } flex items-center h-10 px-4 rounded-full font-medium tracking-wide text-sm min-w-fit mr-2`}
                             >
-                                Become a host
+                                Đón tiếp khách
                             </a>
                         </Link>
 

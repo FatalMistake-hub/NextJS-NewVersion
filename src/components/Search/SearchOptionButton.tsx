@@ -44,9 +44,9 @@ const SearchOptionButton: FC<ISearchOptionButtonProps> = ({
         <span
             role="button"
             tabIndex={0}
-            className={`${active ? 'shadow-arround hover:bg-white' : 'hover:bg-gray-200 hover:bg-opacity-40'} ${
+            className={`${active ? 'shadow-arround hover:bg-white' : ''} ${
                 relative && 'relative'
-            } flex items-center rounded-2xl`}
+            } flex items-center rounded-2xl bg-white min-h-[64px] `}
             onFocus={onFocus}
             onBlur={onBlur}
         >

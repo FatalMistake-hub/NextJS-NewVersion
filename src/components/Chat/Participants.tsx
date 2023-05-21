@@ -7,7 +7,7 @@ import Participant from './Participant';
 import { motion } from 'framer-motion';
 
 export default function Participants() {
-    const mainBg = useColorModeValue('#EDEDED', '#272727');
+    const mainBg = useColorModeValue('#ededed99', '#ffffff5a');
 
     const { data: session } = useSession();
     const router = useRouter();
