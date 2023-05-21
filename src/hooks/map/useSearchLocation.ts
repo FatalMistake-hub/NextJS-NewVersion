@@ -6,7 +6,7 @@ import { searchLocation } from 'src/utils/apis/maps.api';
 import useDebounce from '../useDebounced';
 
 const useSearchLocation = () => {
-    const [searchTerm, setSearchTerm] = useState<string>();
+    const [searchTerm, setSearchTerm] = useState<string>('');
 
     const debouncedSearchTerm = useDebounce(searchTerm, 500);
     const { isLoading, error, data, isSuccess } = useQuery(

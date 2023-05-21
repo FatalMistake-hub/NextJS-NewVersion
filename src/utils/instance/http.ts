@@ -38,7 +38,6 @@ class HttpAuth {
             timeout: 10000,
             headers: {
                 'Content-Type': 'application/json',
-                
             },
         });
     }
@@ -55,8 +54,21 @@ class HttpMap {
         });
     }
 }
+class HttpMapAddress {
+    instance: AxiosInstance;
+    constructor() {
+        this.instance = axios.create({
+            baseURL: process.env.MAPBOX_ADDRESS_URL,
+            timeout: 10000,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    }
+}
 
 export const http = new Http().instance;
 export const httpAuth = new HttpAuth().instance;
 export const httpMap = new HttpMap().instance;
 export const httpHost = new HttpHost().instance;
+export const httpMapAddress = new HttpMapAddress().instance;

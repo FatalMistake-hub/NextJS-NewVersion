@@ -6,9 +6,13 @@ import SearchOptionWrapper from '@components/Search/SearchOptionWrapper';
 import AddressWrapper from '@components/Wrapper/AddressWrapper';
 import LocationWrapper from '@components/Wrapper/LocationWrapper';
 import React, { ChangeEvent, FC, FocusEvent, FormEvent, useState } from 'react';
-import useSearchLocation from 'src/hooks/map/useSearchLocation';
+import { BsGeoAltFill } from 'react-icons/bs';
+import { FaSearchLocation } from 'react-icons/fa';
+import { Marker } from 'react-map-gl';
+import useAddressLocation from 'src/hooks/map/useSearchAddress';
+
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
-import { selectSearch, SET_LOCATION } from 'src/redux/slice/searchSlice';
+import { selectBecomeHost, SET_COORDINATE, SET_DESTINATION } from 'src/redux/slice/becomeHostSlice';
 enum ESearchMenu {
     LOCATION = 'location',
     CHECK_IN = 'checkIn',
@@ -30,14 +34,16 @@ const LocationSt1 = () => {
         });
         if (!result) setSearchMenu(null);
     };
-    const { data, isSuccess, isLoading, setSearchTerm } = useSearchLocation();
-    const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
+    const { data, isSuccess, isLoading, setAddressTerm } = useAddressLocation();
+    const { tour } = useAppSelector(selectBecomeHost);
+
     const dispatch = useAppDispatch();
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
+
     return (
         <>
             <div className="w-full justify-center  flex h-full px-20">
-                <VStack w={'630px'} align={'left'} gap={1} mt={8}>
+                <VStack w={'1280px'} align={'left'} gap={1} mt={8}>
                     <Heading
                         lineHeight={'54px'}
                         as="h1"
@@ -53,8 +59,20 @@ const LocationSt1 = () => {
                         Địa chỉ được chia sẻ với khách sau khi họ đặt trải nghiệm thành công.
                     </Text>
                     <Box pb={12} pt={8} w={'full'} h={'full'} position={'relative'}>
-                        <MapLocation />
-                        <div className="w-[500px] absolute top-14 left-16 min-h-[64px]">
+                        <MapLocation>
+                            {tour.destination && (
+                                <Marker
+                                    latitude={tour.latitude}
+                                    longitude={tour.longitude}
+                                    // offsetLeft={-20}
+                                    // offsetTop={-10}
+                                    // offset={[-20, -10]}
+                                >
+                                    <BsGeoAltFill style={{ zIndex: 10 }} size={'2rem'} className=" text-[#3d9d9b] absolute top-0 right-1" />
+                                </Marker>
+                            )}
+                        </MapLocation>
+                        <div className="w-[500px] absolute top-14 left-[32%] min-h-[64px]">
                             <SearchOptionButton
                                 separator
                                 relative
@@ -62,18 +80,18 @@ const LocationSt1 = () => {
                                 title="Địa chỉ"
                                 placeholder="Nhập địa chỉ của bạn"
                                 active={searchMenu === ESearchMenu.LOCATION}
-                                value={location}
+                                value={tour.destination}
                                 onChange={(e) => {
-                                    dispatch(SET_LOCATION(e.target.value)), setSearchTerm(e.target.value);
+                                    dispatch(SET_DESTINATION(e.target.value)), setAddressTerm(e.target.value);
                                 }}
                                 onFocus={() => setSearchMenu(ESearchMenu.LOCATION)}
-                                onBlur={handleOnBlur}
+                                // onBlur={handleOnBlur}
                                 onClear={() => {
-                                    dispatch(SET_LOCATION(''));
+                                    dispatch(SET_DESTINATION(''));
                                     handleOnBlur();
                                 }}
                             >
-                                <SearchOptionWrapper className="left-0">
+                                <SearchOptionWrapper className="left-[-24px]">
                                     <AddressWrapper status={isSuccess} response={data} loading={isLoading} onBlur={handleOnBlur} />
                                 </SearchOptionWrapper>
                             </SearchOptionButton>

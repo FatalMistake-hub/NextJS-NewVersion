@@ -42,7 +42,6 @@ export default function BecomeHost() {
                 return 'kết thúc';
         }
     }
-    console.log((100 / 3).toFixed(2));
     return (
         <div className="min-h-screen w-full">
             <div className={`pt-8 z-50  w-full px-12 `}>

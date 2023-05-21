@@ -17,12 +17,12 @@ export const becomeHostSlice = createSlice({
             tourId: null,
             title: '',
             rating: 0,
-            city: 'Đà Lạt',
+            city: '',
             priceOnePerson: null,
             imageMain: '',
             working: '',
-            latitude: '',
-            longitude: '',
+            latitude: 12.047079,
+            longitude: 104.20623,
             destination: '',
             destinationDescription: '',
             userId: '',
@@ -38,10 +38,20 @@ export const becomeHostSlice = createSlice({
         SET_STEP: (state, action: PayloadAction<number>) => {
             state.step = action.payload;
         },
+        SET_COORDINATE: (state, action) => {
+            state.tour.latitude = action.payload.latitude;
+            state.tour.longitude = action.payload.longitude;
+        },
+        SET_DESTINATION: (state, action) => {
+            state.tour.destination = action.payload;
+        },
+        SET_CITY: (state, action) => {
+            state.tour.city = action.payload;
+        },
     },
 });
 // exporting the actions
-export const { SET_STEP } = becomeHostSlice.actions;
+export const { SET_STEP, SET_COORDINATE, SET_DESTINATION, SET_CITY } = becomeHostSlice.actions;
 
 export const selectBecomeHost = (state: RootState) => state.becomeHost;
 export default becomeHostSlice.reducer;
