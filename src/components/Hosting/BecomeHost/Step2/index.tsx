@@ -25,7 +25,7 @@ const BecomeHostStep2 = () => {
                         Làm cho trải nghiệm của bạn trở nên nổi bật
                     </Heading>
                     <Text fontSize={'18px'} fontWeight={'400'}>
-                        Ở bước này, bạn sẽ soạn tiêu đề và nội dung mô tả. Sau đó, bạn sẽ thêm các thông tin chi tiết (giá, thời gian,...) cùng với 5 bức ảnh trở lên .
+                        Ở bước này, bạn sẽ soạn tiêu đề và nội dung mô tả. Sau đó, bạn sẽ thêm một số  thông tin cùng với 5 bức ảnh trở lên .
                     </Text>
                 </VStack>
                 <Box w={'770px'}>

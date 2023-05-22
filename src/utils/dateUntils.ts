@@ -1,5 +1,7 @@
+import { ex } from '@fullcalendar/core/internal-common';
 import { format } from 'date-fns';
 import { es, ru } from 'date-fns/locale';
+import { min } from 'moment';
 export const formatCheckDate = (date: Date, dateFormat?: string) => {
     if (!date) return '';
     return format(date, dateFormat || 'MMM d');
@@ -37,5 +39,57 @@ export const test = () => {
         timeSlots.push({ start, end });
         currentTime = end;
     }
-    console.log('a',timeSlots);
+    console.log('a', timeSlots);
+};
+export const listTimeSlot = () => {
+    const start = 30;
+    const end = 1440;
+    const step = 30;
+    const length = 60;
+
+    const list = [];
+
+    for (let i = start; i <= end; i += step) {
+        list.push(i);
+    }
+
+    const renderedList = list.slice(0, length);
+    return renderedList;
+};
+export const numberToTime = (minutes: number) => {
+    const hours = minutes / 60;
+    const formattedTime = hours + ' giờ';
+    return formattedTime;
+};
+export const timeToMinute = (timePoint: any) => {
+    const totalMinutes = timePoint.hour * 60 + timePoint.minutes;
+    return totalMinutes;
+};
+export const minuteToTime = (totalMinutes: any) => {
+    const timePoint = {
+        hour: Math.floor(totalMinutes / 60),
+        minutes: totalMinutes % 60,
+    };
+    return timePoint;
+};
+export const TimeFrameList = (timestart = 0, timeSlotLength = 0) => {
+    const timePoints = [];
+
+    let minutes = 0 + timestart + timeSlotLength;
+    let totalMinutes = 1440;
+    while (minutes < totalMinutes) {
+        const hour = Math.floor(minutes / 60);
+        let minute = minutes % 60;
+
+        const timePoint = {
+            hour: hour,
+            minutes: minute,
+        };
+
+        timePoints.push(timePoint);
+
+        minutes += 30;
+    }
+
+    return timePoints;
 };

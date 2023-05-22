@@ -2,7 +2,7 @@ import { Box, ButtonGroup, Button, Flex, useColorModeValue } from '@chakra-ui/re
 import ProgressBar from '@ramonak/react-progress-bar';
 import { useToast } from '@chakra-ui/react';
 import Link from 'next/link';
-import {  useState } from 'react';
+import { useState } from 'react';
 import { FaAirbnb } from 'react-icons/fa';
 import BecomeHostStep1 from '@components/Hosting/BecomeHost/Step1';
 import BecomeHostStep2 from '@components/Hosting/BecomeHost/Step2';
@@ -15,7 +15,8 @@ import CategorySt1 from '@components/Hosting/BecomeHost/Step1/Category';
 import { GetServerSideProps } from 'next';
 import { getAllCategory } from 'src/utils/apis/category.api';
 import { IAllCategory } from 'src/types/category.type';
-import DescriptionSt1 from '@components/Hosting/BecomeHost/Step2/Description';
+import DescriptionSt2 from '@components/Hosting/BecomeHost/Step2/Description';
+import TimeFrameSt2 from '@components/Hosting/BecomeHost/Step2/TimeFrame';
 interface Props {
     dataCategory: IAllCategory;
 }
@@ -26,28 +27,30 @@ const BecomeHost = ({ dataCategory }: Props) => {
 
     function renderSwitch(param: number) {
         switch (param) {
-            case 0:
+            case 1:
                 return <BecomeHostStep1 />;
 
-            case 1:
-                return <LocationSt1 />;
             case 2:
-                return <CategorySt1 dataCategory={dataCategory} />;
+                return <LocationSt1 />;
             case 3:
-                return <BecomeHostStep2 />;
+                return <CategorySt1 dataCategory={dataCategory} />;
             case 4:
-                return <DescriptionSt1/>;
+                return <BecomeHostStep2 />;
             case 5:
-                return 'kết thúc';
+                return <DescriptionSt2 />;
             case 6:
-                return 'kết thúc';
+                return <TimeFrameSt2 />;
             case 7:
-                return <BecomeHostStep3 />;
-            case 8:
                 return 'kết thúc';
-
+            case 8:
+                return <BecomeHostStep3 />;
             case 9:
                 return 'kết thúc';
+
+            case 10:
+                return 'kết thúc';
+            default:
+                return null;
         }
     }
     console.log('reRender');
@@ -70,8 +73,8 @@ const BecomeHost = ({ dataCategory }: Props) => {
                     </div>
                 </div>
             </div>
-            <Box w={'full'} h={'calc(100vh - 166px)'}>
-                {renderSwitch(step)}
+            <Box w={'full'} h={'calc(100vh - 166px)'} mb={12}>
+                {step && renderSwitch(step)}
                 <MultiStepBtn />
             </Box>
         </div>
@@ -79,7 +82,7 @@ const BecomeHost = ({ dataCategory }: Props) => {
 };
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
     const { data } = await getAllCategory();
-    
+
     return {
         props: { dataCategory: data },
     };

@@ -3,7 +3,8 @@ import { ButtonGroup, Flex, Button, toast, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
 import { selectBecomeHost, SET_btnSTATUS, SET_STEP } from 'src/redux/slice/becomeHostSlice';
-const END_STEP = 9;
+const END_STEP = 10;
+const START_STEP = 1;
 const MultiStepBtn = () => {
     const { step, btnStatus } = useAppSelector(selectBecomeHost);
     const dispatch = useAppDispatch();
@@ -13,7 +14,7 @@ const MultiStepBtn = () => {
     const toast = useToast();
 
     return (
-        <div className="w-screen fixed bottom-0 ">
+        <div className="w-screen fixed bottom-0 bg-white ">
             <ProgressBar
                 completed={progress}
                 height={'6px'}
@@ -27,7 +28,7 @@ const MultiStepBtn = () => {
             <ButtonGroup w="100%" py={4} px={12}>
                 <Flex w="100%" justifyContent="space-between">
                     <Flex>
-                        {!(step === 0) && (
+                        {!(step === START_STEP) && (
                             <Button
                                 isLoading={isLoading1}
                                 size={'lg'}
@@ -83,10 +84,10 @@ const MultiStepBtn = () => {
                                     setIsLoading(false);
                                 }, 1000);
                             }}
-                            bgColor={!(step === 0) ? 'black' : ''}
-                            colorScheme={step === 0 ? 'teal' : ''}
+                            bgColor={!(step === START_STEP) ? 'black' : ''}
+                            colorScheme={step === START_STEP ? 'teal' : ''}
                         >
-                            {step === 0 ? 'Bắt đầu' : 'Tiếp theo'}
+                            {step === START_STEP ? 'Bắt đầu' : 'Tiếp theo'}
                         </Button>
                     )}
                 </Flex>

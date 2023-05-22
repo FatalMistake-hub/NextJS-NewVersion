@@ -14,12 +14,12 @@ const CategorySt1: FC<Props> = ({ dataCategory }) => {
     const dispatch = useAppDispatch();
 
     useMemo(() => {
-        if (tour.categories[0].categoryId === undefined) {
+        if (tour.categories[0].categoryId === undefined || tour.categories[0].categoryName === 'undefined') {
             dispatch(SET_btnSTATUS(true));
         } else {
             dispatch(SET_btnSTATUS(false));
         }
-    }, [tour.categories[0].categoryId]);
+    }, [tour.categories[0].categoryId, tour.categories[0].categoryName]);
     console.log(dataCategory);
     return (
         <>
@@ -44,12 +44,17 @@ const CategorySt1: FC<Props> = ({ dataCategory }) => {
                     </Button> */}
                     <RadioGroup
                         onChange={(e) => {
-                            dispatch(SET_CATEGORY(Number(e)));
+                            dispatch(
+                                SET_CATEGORY({
+                                    categoryId: Number(e),
+                                    categoryName: dataCategory.find((item) => item.categoryId === Number(e))?.categoryName,
+                                } as ICategory),
+                            );
                         }}
                         value={tour.categories[0].categoryId}
                     >
                         <SimpleGrid columns={2} spacing={16}>
-                            {dataCategory.map((result, index) => (
+                            {dataCategory.map((result:any, index) => (
                                 <Box
                                     key={result.categoryId}
                                     alignItems={'center'}

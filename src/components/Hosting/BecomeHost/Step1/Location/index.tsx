@@ -60,7 +60,7 @@ const LocationSt1 = () => {
                         noOfLines={2}
                         letterSpacing={'tight'}
                     >
-                        Nơi tổ chức của bạn nằm ở đâu?
+                        Khách đăng ký trải nghiệm có thể gặp bạn tại đâu?
                     </Heading>
                     <Text fontSize={'18px'} fontWeight={'400'}>
                         Địa chỉ được chia sẻ với khách sau khi họ đặt trải nghiệm thành công.

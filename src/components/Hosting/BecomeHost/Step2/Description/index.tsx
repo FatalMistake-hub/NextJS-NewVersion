@@ -1,32 +1,50 @@
 import { VStack, Text, Heading, UnorderedList, ListItem, Textarea, Select } from '@chakra-ui/react';
 
-import React, { FC, useMemo, useState } from 'react';
+import React, { ChangeEvent, ChangeEventHandler, FC, useMemo, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
-import { selectBecomeHost, SET_btnSTATUS } from 'src/redux/slice/becomeHostSlice';
+import {
+    selectBecomeHost,
+    SET_btnSTATUS,
+    SET_destinationDECRIPTION,
+    SET_TIMESLOTLENGTH,
+    SET_WORKING,
+} from 'src/redux/slice/becomeHostSlice';
+import { listTimeSlot, numberToTime } from 'src/utils/dateUntils';
 
-const DescriptionSt1: FC = () => {
+const DescriptionSt2: FC = () => {
     const { tour } = useAppSelector(selectBecomeHost);
 
     const dispatch = useAppDispatch();
 
     useMemo(() => {
-        if (tour.categories[0].categoryId === undefined) {
+        if (tour.destinationDescription === '' || tour.working === '' || tour.timeSlotLength === 0) {
             dispatch(SET_btnSTATUS(true));
         } else {
             dispatch(SET_btnSTATUS(false));
         }
-    }, [tour.categories[0].categoryId]);
-    let [value, setValue] = useState('');
+    }, [tour.destinationDescription, tour.working, tour.timeSlotLength]);
 
-    let handleInputChange = (e: any) => {
+    let handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let inputValue = e.target.value;
-        setValue(inputValue);
+
+        dispatch(SET_WORKING(inputValue));
     };
+    let handleInputChange1 = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        let inputValue = e.target.value;
+
+        dispatch(SET_destinationDECRIPTION(inputValue));
+    };
+    const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        //  setSelectedOption(event.target.value);
+        dispatch(SET_TIMESLOTLENGTH(Number(event.target.value)));
+    };
+    const lisTimeSlot = listTimeSlot();
+
     return (
         <>
             <div className="w-full justify-center  flex h-full px-20">
-                <VStack w={'630px'} align={'left'} gap={2} mt={8}>
+                <VStack w={'700px'} align={'left'} gap={2} mt={4}>
                     <Heading
                         lineHeight={1.2}
                         as="h1"
@@ -47,9 +65,12 @@ const DescriptionSt1: FC = () => {
                             <ListItem>Mô tả điều gì làm cho trải nghiệm của bạn trở nên đặc biệt</ListItem>
                         </UnorderedList>
                     </p>
-                    <Text mb="8px">Value: {value}</Text>
+                    <Text mb="8px"> </Text>
                     <Textarea
-                        value={value}
+                        focusBorderColor={'teal.500'}
+                        resize={'vertical'}
+                        p={4}
+                        value={tour.working}
                         onChange={handleInputChange}
                         placeholder="Kể cho khách nghe câu chuyện về những gì họ sẽ làm trong buổi trải nghiệm của bạn"
                         size="sm"
@@ -60,12 +81,23 @@ const DescriptionSt1: FC = () => {
                     <Text fontSize={'16px'} fontWeight={'500'} pt={4}>
                         Trải nghiệm của bạn diễn ra trong bao lâu?
                     </Text>
-                    <Select placeholder="large size" size="lg" rounded={'lg'} />
-                    <Text mb="8px">Value: {value}</Text>
+                    <Select size="lg" rounded={'lg'} focusBorderColor={'teal.500'} onChange={handleSelectChange}>
+                        {lisTimeSlot.map((rs) => (
+                            <option value={rs} selected={tour.timeSlotLength === rs}>
+                                {numberToTime(rs)}
+                            </option>
+                        ))}
+                    </Select>
+                    <Text fontSize={'16px'} fontWeight={'500'} pt={2}>
+                        Mô tả địa điểm tổ chức trải nghiệm của bạn
+                    </Text>
                     <Textarea
-                        value={value}
-                        onChange={handleInputChange}
-                        placeholder="Kể cho khách nghe câu chuyện về những gì họ sẽ làm trong buổi trải nghiệm của bạn"
+                        focusBorderColor={'teal.500'}
+                        p={4}
+                        resize={'vertical'}
+                        value={tour.destinationDescription}
+                        onChange={handleInputChange1}
+                        placeholder="Giới thiệu điều đặc biệt tại điểm đến của bạn, ví dụ như lịch sử, văn hóa, ..."
                         size="sm"
                         rounded={'lg'}
                         colorScheme={'teal'}
@@ -77,4 +109,4 @@ const DescriptionSt1: FC = () => {
     );
 };
 
-export default DescriptionSt1;
+export default DescriptionSt2;
