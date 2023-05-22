@@ -2,10 +2,10 @@ import ProgressBar from '@ramonak/react-progress-bar';
 import { ButtonGroup, Flex, Button, toast, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import { selectBecomeHost, SET_STEP } from 'src/redux/slice/becomeHostSlice';
+import { selectBecomeHost, SET_btnSTATUS, SET_STEP } from 'src/redux/slice/becomeHostSlice';
 const END_STEP = 9;
 const MultiStepBtn = () => {
-    const { step } = useAppSelector(selectBecomeHost);
+    const { step, btnStatus } = useAppSelector(selectBecomeHost);
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
     const [isLoading1, setIsLoading1] = useState(false);
@@ -33,6 +33,8 @@ const MultiStepBtn = () => {
                                 size={'lg'}
                                 onClick={() => {
                                     dispatch(SET_STEP(step - 1));
+                                    dispatch(SET_btnSTATUS(false));
+
                                     setProgress(progress - Number((100 / END_STEP).toFixed(2)));
                                     setIsLoading1(true);
                                     setTimeout(() => {
@@ -67,9 +69,10 @@ const MultiStepBtn = () => {
                             isLoading={isLoading}
                             w="8rem"
                             size={'lg'}
-                            isDisabled={step === END_STEP}
+                            isDisabled={btnStatus}
                             onClick={() => {
                                 dispatch(SET_STEP(step + 1));
+                                dispatch(SET_btnSTATUS(false));
                                 if (step === END_STEP) {
                                     setProgress(100);
                                 } else {

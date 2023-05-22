@@ -8,10 +8,11 @@ export const becomeHostSlice = createSlice({
     name: 'becomeHost',
     initialState: {
         step: 0,
+        btnStatus: false,
         tour: {
             categories: [
                 {
-                    categoryId: 3,
+                    categoryId: undefined,
                 },
             ],
             tourId: null,
@@ -21,22 +22,25 @@ export const becomeHostSlice = createSlice({
             priceOnePerson: null,
             imageMain: '',
             working: '',
-            latitude: 12.047079,
-            longitude: 104.20623,
+            latitude: 18.0583,
+            longitude: 107.20623,
             destination: '',
             destinationDescription: '',
             userId: '',
+            imageList: [
+                {
+                    // link: '',
+                    // tourId: null,
+                },
+            ],
         },
-        imageList: [
-            {
-                // link: '',
-                // tourId: null,
-            },
-        ],
     },
     reducers: {
         SET_STEP: (state, action: PayloadAction<number>) => {
             state.step = action.payload;
+        },
+        SET_btnSTATUS: (state, action) => {
+            state.btnStatus = action.payload;
         },
         SET_COORDINATE: (state, action) => {
             state.tour.latitude = action.payload.latitude;
@@ -48,10 +52,14 @@ export const becomeHostSlice = createSlice({
         SET_CITY: (state, action) => {
             state.tour.city = action.payload;
         },
+        SET_CATEGORY: (state, action) => { 
+            state.tour.categories[0].categoryId = action.payload;
+
+        }
     },
 });
 // exporting the actions
-export const { SET_STEP, SET_COORDINATE, SET_DESTINATION, SET_CITY } = becomeHostSlice.actions;
+export const { SET_STEP, SET_COORDINATE, SET_DESTINATION, SET_CITY, SET_btnSTATUS, SET_CATEGORY } = becomeHostSlice.actions;
 
 export const selectBecomeHost = (state: RootState) => state.becomeHost;
 export default becomeHostSlice.reducer;

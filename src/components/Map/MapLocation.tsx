@@ -8,21 +8,14 @@ interface IMap extends PropsWithChildren<any> {
 
 const MapLocation: FC = ({children}) => {
     const { tour } = useAppSelector(selectBecomeHost);
-
-    // const [viewport, setViewport] = React.useState({
-    //     latitude: 16.047079,
-    //     longitude: 108.20623,
-    //     zoom: 12,
-    //     // bearing: 0,
-    //     // pitch: 0,
-    // });
     const viewport = {
         latitude: tour.latitude,
         longitude: tour.longitude,
-        zoom: tour.destination ? 16 : 10,
+        zoom: tour.destination ? 16 : 5,
     };
     return (
         <ReactMapGL
+        
             {...viewport}
             mapStyle={process.env.MAPBOX_STYLE}
             mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}

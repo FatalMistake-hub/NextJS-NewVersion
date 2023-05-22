@@ -198,7 +198,7 @@ const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson }) => {
                             <Text mb={1} fontSize={'14px'} fontWeight={600}>
                                 Từ $35<span className="font-normal">/nhóm</span>
                             </Text>
-                            <Button size={'sm'} colorScheme="teal">
+                            <Button size={'sm'} colorScheme="teal" >
                                 <Link href={'/payment/1'}>Chọn</Link>
                             </Button>
                         </div>
