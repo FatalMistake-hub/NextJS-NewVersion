@@ -23,7 +23,7 @@ const CategorySt1: FC<Props> = ({ dataCategory }) => {
     console.log(dataCategory);
     return (
         <>
-            <div className="w-full justify-center  flex h-full px-20">
+            <div className="w-full justify-center  flex min-h-[calc(100vh-176px)] px-20">
                 <VStack w={'700px'} align={'left'} gap={2} mt={8}>
                     <Heading
                         lineHeight={1.2}
@@ -54,7 +54,7 @@ const CategorySt1: FC<Props> = ({ dataCategory }) => {
                         value={tour.categories[0].categoryId}
                     >
                         <SimpleGrid columns={2} spacing={16}>
-                            {dataCategory.map((result:any, index) => (
+                            {dataCategory.map((result: any, index) => (
                                 <Box
                                     key={result.categoryId}
                                     alignItems={'center'}

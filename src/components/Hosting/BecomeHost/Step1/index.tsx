@@ -7,7 +7,7 @@ const BecomeHostStep1 = () => {
     const locationRef = useRef<LottieRefCurrentProps | null>(null);
     return (
         <>
-            <div className="w-full justify-center items-center flex h-full px-20">
+            <div className="w-full justify-center items-center flex min-h-[calc(100vh-176px)] px-20">
                 <VStack w={'575px'} align={'left'} gap={2}>
                     <Text fontSize={'18px'} fontWeight={'600'}>
                         Bước 1
@@ -25,7 +25,8 @@ const BecomeHostStep1 = () => {
                         Chia sẻ thông tin về vị trí tổ chức của bạn cho chúng tôi
                     </Heading>
                     <Text fontSize={'18px'} fontWeight={'400'}>
-                        Trong bước này, chúng tôi sẽ hỏi vị trí bạn sẽ tổ chức trải nghiệm ở đâu. Sau đó, hãy cho chúng tôi biết thể loại và số lượng khách có thể tham gia trải nghiệm của bạn.
+                        Trong bước này, chúng tôi sẽ hỏi vị trí bạn sẽ tổ chức trải nghiệm ở đâu. Sau đó, hãy cho chúng tôi biết thể loại và
+                        số lượng khách có thể tham gia trải nghiệm của bạn.
                     </Text>
                 </VStack>
                 <Box w={'770px'}>

@@ -10,11 +10,11 @@ const MultiStepBtn = () => {
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
     const [isLoading1, setIsLoading1] = useState(false);
-    const [progress, setProgress] = useState(0);
+    const [progress, setProgress] = useState((step)/END_STEP*100);
     const toast = useToast();
 
     return (
-        <div className="w-screen fixed bottom-0 bg-white ">
+        <div className="w-screen fixed bottom-0 bg-white h-fit ">
             <ProgressBar
                 completed={progress}
                 height={'6px'}
@@ -52,6 +52,7 @@ const MultiStepBtn = () => {
                     {step === END_STEP ? (
                         <Button
                             size={'lg'}
+                            isDisabled={btnStatus}
                             colorScheme="teal"
                             onClick={() => {
                                 toast({

@@ -2,10 +2,49 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { type } from 'os';
 import { ICategory } from 'src/types/category.type';
 import { RootState } from '../store';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { s } from '@fullcalendar/core/internal-common';
+interface Category {
+    categoryId: number | undefined;
+    categoryName: string;
+}
 
+interface Time {
+    hour: number | undefined;
+    minutes: number | undefined;
+}
+
+interface Tour {
+    categories: Category[];
+    title: string;
+    rating: number;
+    city: string;
+    priceOnePerson: number | null;
+    imageMain: string;
+    working: string;
+    latitude: number;
+    longitude: number;
+    destination: string;
+    timeSlotLength: number;
+    destinationDescription: string;
+    imageDtoList: { link: string }[];
+    timeBookStart: Time;
+    timeBookEnd: Time;
+    checkIn: string;
+    checkOut: string;
+    startDay: string;
+    endDay: string;
+}
+
+interface InitialState {
+    step: number;
+    btnStatus: boolean;
+    tour: Tour;
+}
 // declaring the types for our state
 // Ngày hiện tại
 const today = new Date();
+
 const formattedToday = today.toISOString().slice(0, 10);
 
 // Ngày sau đó 6 tháng
@@ -13,10 +52,29 @@ const sixMonthsLater = new Date();
 sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
 const formattedSixMonthsLater = sixMonthsLater.toISOString().slice(0, 10);
 
+// export const addListImageAsync = createAsyncThunk('tour/addListImageAsync', async (payload: any, { getState, dispatch }) => {
+//     // Logic để thêm danh sách ảnh
+//     try {
+//         const state: any = getState();
+//         console.log('state', state);
+//         const imageDtoList = state.becomeHost.tour.imageDtoList;
+
+//         const updatedImageDtoList = [...imageDtoList, ...payload];
+//         let imageMain = '';
+//         if (updatedImageDtoList.length > 0) {
+//             imageMain = updatedImageDtoList[0]?.link || '';
+//         }
+
+//         dispatch(ADD_LISTIMAGE({ updatedImageDtoList, imageMain }));
+//     } catch (error) {
+//         console.log(error);
+//     }
+// });
+
 export const becomeHostSlice = createSlice({
     name: 'becomeHost',
     initialState: {
-        step: 1,
+        step: 10,
         btnStatus: false,
         tour: {
             categories: [
@@ -39,10 +97,9 @@ export const becomeHostSlice = createSlice({
             destinationDescription: '',
 
             imageDtoList: [
-                {
-                    // link: '',
-                    // tourId: null,
-                },
+                // {
+                //     link: '',
+                // },
             ],
             timeBookStart: {
                 hour: undefined,
@@ -57,7 +114,7 @@ export const becomeHostSlice = createSlice({
             startDay: formattedToday,
             endDay: formattedSixMonthsLater,
         },
-    },
+    } as InitialState,
     reducers: {
         SET_STEP: (state, action: PayloadAction<number>) => {
             state.step = action.payload;
@@ -83,6 +140,12 @@ export const becomeHostSlice = createSlice({
         SET_CITY: (state, action) => {
             state.tour.city = action.payload;
         },
+        SET_TITLE: (state, action) => {
+            state.tour.title = action.payload;
+        },
+        SET_priceOnePerson: (state, action) => {
+            state.tour.priceOnePerson = action.payload;
+        },
         SET_WORKING: (state, action) => {
             state.tour.working = action.payload.replace(/\n/g, '<br/>');
         },
@@ -96,8 +159,18 @@ export const becomeHostSlice = createSlice({
         SET_TIMESLOTLENGTH: (state, action) => {
             state.tour.timeSlotLength = action.payload;
         },
+        ADD_LISTIMAGE: (state, action) => {
+            state.tour.imageDtoList = [...state.tour.imageDtoList, ...action.payload];
+            state.tour.imageMain = state.tour.imageDtoList[0].link;
+            // state.tour.imageDtoList = action.payload.updatedImageDtoList;
+            // state.tour.imageMain = action.payload.imageMain;
+        },
+        DELETE_IMAGE: (state, action) => {
+            state.tour.imageDtoList.splice(action.payload, 1);
+        },
     },
 });
+
 // exporting the actions
 export const {
     SET_STEP,
@@ -107,10 +180,14 @@ export const {
     SET_btnSTATUS,
     SET_CATEGORY,
     SET_WORKING,
+    SET_TITLE,
     SET_destinationDECRIPTION,
     SET_TIMESLOTLENGTH,
     SET_TIMEBOOKSTART,
     SET_TIMEBOOKEND,
+    ADD_LISTIMAGE,
+    DELETE_IMAGE,
+    SET_priceOnePerson,
 } = becomeHostSlice.actions;
 
 export const selectBecomeHost = (state: RootState) => state.becomeHost;

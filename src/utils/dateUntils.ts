@@ -72,7 +72,28 @@ export const minuteToTime = (totalMinutes: any) => {
     };
     return timePoint;
 };
-export const TimeFrameList = (timestart = 0, timeSlotLength = 0) => {
+export const TimeFrameListStart = ( timeSlotLength = 0) => {
+    const timePoints = [];
+
+    let minutes = 0 ;
+    let totalMinutes = 1440 - timeSlotLength;
+    while (minutes < totalMinutes) {
+        const hour = Math.floor(minutes / 60);
+        let minute = minutes % 60;
+
+        const timePoint = {
+            hour: hour,
+            minutes: minute,
+        };
+
+        timePoints.push(timePoint);
+
+        minutes += 30;
+    }
+
+    return timePoints;
+};
+export const TimeFrameListEnd = (timestart = 0, timeSlotLength = 0) => {
     const timePoints = [];
 
     let minutes = 0 + timestart + timeSlotLength;

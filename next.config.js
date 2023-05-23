@@ -2,11 +2,7 @@ const withPlugins = require('next-compose-plugins');
 module.exports = withPlugins([], {
     images: {
         domains: [
-            'www.google.com',
-            'dimg04.c-ctrip.com',
-            'links.papareact.com',
-            'airbnb-web-clone.vercel.app',
-            'upload.wikimedia.org',
+            'res.cloudinary.com',
             'a0.muscache.com',
         ],
     },

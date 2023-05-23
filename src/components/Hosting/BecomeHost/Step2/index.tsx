@@ -7,7 +7,7 @@ const BecomeHostStep2 = () => {
     const locationRef = useRef<LottieRefCurrentProps | null>(null);
     return (
         <>
-            <div className="w-full justify-center items-center flex h-full px-20">
+            <div className="w-full justify-center items-center flex min-h-[calc(100vh-176px)] px-20">
                 <VStack w={'575px'} align={'left'} gap={2}>
                     <Text fontSize={'18px'} fontWeight={'600'}>
                         Bước 2
@@ -25,7 +25,7 @@ const BecomeHostStep2 = () => {
                         Làm cho trải nghiệm của bạn trở nên nổi bật
                     </Heading>
                     <Text fontSize={'18px'} fontWeight={'400'}>
-                        Ở bước này, bạn sẽ soạn tiêu đề và nội dung mô tả. Sau đó, bạn sẽ thêm một số  thông tin cùng với 5 bức ảnh trở lên .
+                        Ở bước này, bạn sẽ soạn tiêu đề và nội dung mô tả. Sau đó, bạn sẽ thêm một số thông tin cùng với 5 bức ảnh trở lên .
                     </Text>
                 </VStack>
                 <Box w={'770px'}>

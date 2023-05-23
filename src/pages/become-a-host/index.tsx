@@ -17,6 +17,9 @@ import { getAllCategory } from 'src/utils/apis/category.api';
 import { IAllCategory } from 'src/types/category.type';
 import DescriptionSt2 from '@components/Hosting/BecomeHost/Step2/Description';
 import TimeFrameSt2 from '@components/Hosting/BecomeHost/Step2/TimeFrame';
+import ImageListSt2 from '@components/Hosting/BecomeHost/Step2/ImageList';
+import TittleSt3 from '@components/Hosting/BecomeHost/Step3/Tittle';
+import PriceSt3 from '@components/Hosting/BecomeHost/Step3/Price';
 interface Props {
     dataCategory: IAllCategory;
 }
@@ -41,14 +44,13 @@ const BecomeHost = ({ dataCategory }: Props) => {
             case 6:
                 return <TimeFrameSt2 />;
             case 7:
-                return 'kết thúc';
+                return <ImageListSt2 />;
             case 8:
                 return <BecomeHostStep3 />;
             case 9:
-                return 'kết thúc';
-
+                return <TittleSt3 />;
             case 10:
-                return 'kết thúc';
+                return <PriceSt3 />;
             default:
                 return null;
         }
@@ -73,8 +75,8 @@ const BecomeHost = ({ dataCategory }: Props) => {
                     </div>
                 </div>
             </div>
-            <Box w={'full'} h={'calc(100vh - 166px)'} mb={12}>
-                {step && renderSwitch(step)}
+            <Box w={'full'} h={'calc(100vh - 166px)'}>
+                <div className="pb-24">{step && renderSwitch(step)}</div>
                 <MultiStepBtn />
             </Box>
         </div>

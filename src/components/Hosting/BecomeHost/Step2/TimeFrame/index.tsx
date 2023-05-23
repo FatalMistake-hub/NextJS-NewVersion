@@ -4,7 +4,7 @@ import React, { ChangeEvent, FC, useMemo, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import { selectBecomeHost, SET_btnSTATUS, SET_CATEGORY, SET_TIMEBOOKEND, SET_TIMEBOOKSTART } from 'src/redux/slice/becomeHostSlice';
-import { minuteToTime, TimeFrameList, timeToMinute } from 'src/utils/dateUntils';
+import { minuteToTime, TimeFrameListStart, TimeFrameListEnd, timeToMinute } from 'src/utils/dateUntils';
 
 const TimeFrameSt2: FC = () => {
     const { tour } = useAppSelector(selectBecomeHost);
@@ -30,7 +30,7 @@ const TimeFrameSt2: FC = () => {
         dispatch(SET_TIMEBOOKEND(minuteToTime(event.target.value)));
     };
 
-    const timeListStart = TimeFrameList(0, tour.timeSlotLength);
+    const timeListStart = TimeFrameListStart( tour.timeSlotLength);
 
     let timeListEnd = [
         {
@@ -39,13 +39,13 @@ const TimeFrameSt2: FC = () => {
         },
     ];
     if (tour.timeBookStart.hour !== undefined && tour.timeBookStart.minutes !== undefined) {
-        timeListEnd = TimeFrameList(timeToMinute(tour.timeBookStart), tour.timeSlotLength);
+        timeListEnd = TimeFrameListEnd(timeToMinute(tour.timeBookStart), tour.timeSlotLength);
         console.log(timeListEnd);
     }
     console.log('start', timeListStart);
     return (
         <>
-            <div className="w-full justify-center  flex h-full px-20">
+            <div className="w-full justify-center  flex min-h-[calc(100vh-176px)] px-20">
                 <VStack w={'700px'} align={'left'} gap={2} mt={8}>
                     <Heading
                         lineHeight={1.2}

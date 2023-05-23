@@ -49,7 +49,7 @@ const LocationSt1 = () => {
     }, [tour.destination, tour.latitude, tour.longitude]);
     return (
         <>
-            <div className="w-full justify-center  flex h-full px-20">
+            <div className="w-full justify-center  flex min-h-[calc(100vh-176px)] px-20">
                 <VStack w={'1280px'} align={'left'} gap={1} mt={8}>
                     <Heading
                         lineHeight={'54px'}
