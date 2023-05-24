@@ -1,3 +1,5 @@
+import { ICategory } from "./category.type";
+
 export interface ITours {
     tourId: number;
     title: string;
@@ -10,8 +12,10 @@ export interface ITours {
     longitude: string;
     destination: string;
     destinationDescription: string;
+    timeSlotLength: number;
     avgRating: number;
     images: IImageTour[];
+    isDeleted: boolean;
     userId: string;
 }
 export interface IAllTours {
@@ -22,6 +26,31 @@ export interface IAllTours {
     totalPages: number;
 }
 export interface IImageTour {
-    imageId: string;
+    imageId?: string;
     link: string;
+}
+export interface TourPost {
+    categories: ICategory[];
+    title: string;
+    rating: number;
+    city: string;
+    priceOnePerson: number | null;
+    imageMain: string;
+    working: string;
+    latitude: number;
+    longitude: number;
+    destination: string;
+    timeSlotLength: number;
+    destinationDescription: string;
+    imageDtoList: { link: string }[];
+    timeBookStart: Time;
+    timeBookEnd: Time;
+    checkIn: string;
+    checkOut: string;
+    startDay: string;
+    endDay: string;
+}
+interface Time {
+    hour: number | undefined;
+    minutes: number | undefined;
 }

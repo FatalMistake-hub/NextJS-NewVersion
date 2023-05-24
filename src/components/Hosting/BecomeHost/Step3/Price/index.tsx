@@ -1,17 +1,19 @@
 import { VStack, Text, Heading, Box, useNumberInput, Button, HStack, Input } from '@chakra-ui/react';
 
-import { ChangeEvent, useMemo } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import { selectBecomeHost, SET_btnSTATUS, SET_priceOnePerson, SET_TITLE } from 'src/redux/slice/becomeHostSlice';
+import { selectBecomeHost, SET_btnSTATUS, SET_imageMain, SET_priceOnePerson, SET_TITLE } from 'src/redux/slice/becomeHostSlice';
 const PriceSt3 = () => {
     const { tour } = useAppSelector(selectBecomeHost);
     const dispatch = useAppDispatch();
-    useMemo(() => {
+    useEffect(() => {
         if (tour.priceOnePerson === null) {
             dispatch(SET_btnSTATUS(true));
         } else {
             dispatch(SET_btnSTATUS(false));
+            dispatch(SET_imageMain(tour.imageDtoList[0].link));
         }
+        return () => {};
     }, [tour.priceOnePerson]);
 
     const { getInputProps, getIncrementButtonProps, getDecrementButtonProps, value } = useNumberInput({
@@ -21,18 +23,22 @@ const PriceSt3 = () => {
         max: 1000000000,
         precision: 0,
     });
-    useMemo(() => {
+    useEffect(() => {
         dispatch(SET_priceOnePerson(Number(value)));
+        return () => {};
     }, [value]);
-  
+
     const inc = getIncrementButtonProps();
     const dec = getDecrementButtonProps();
     const input = getInputProps();
+
+    const formattedValue = `${value.toLocaleString()}₫`;
+    console.log(input);
     return (
         <>
             <div className="w-full justify-center items-center flex min-h-[calc(100vh-176px)] px-20">
                 <VStack w={'700px'} align={'left'} gap={2}>
-                    <Heading lineHeight={1.2} as="h1" fontSize={'32px'} fontWeight={'600'} width={'full'}  letterSpacing={'tight'}>
+                    <Heading lineHeight={1.2} as="h1" fontSize={'32px'} fontWeight={'600'} width={'full'} letterSpacing={'tight'}>
                         Cuối cùng, hãy đặt mức giá mà bạn muốn
                     </Heading>
                     <Text fontSize={'18px'} fontWeight={'400'} pb={4} color={'gray.600'}>
@@ -72,7 +78,8 @@ const PriceSt3 = () => {
                                     fontWeight={600}
                                     p={12}
                                     rounded={'xl'}
-                                    {...input}
+                                    value={formattedValue}
+                                    // {...input}
                                 />
                                 <Button
                                     className="py-6"

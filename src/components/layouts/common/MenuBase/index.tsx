@@ -36,9 +36,7 @@ const MenuBase = () => {
                             <MenuItem>Quản lý trải nghiệm</MenuItem>
                         </Link>
                     )}
-                    <Link href={'/hosting'}>
-                        <MenuItem>Quản lý trải nghiệm</MenuItem>
-                    </Link>
+                    
                     <Link href={'/account'}>
                         <MenuItem>Tài khoản</MenuItem>
                     </Link>

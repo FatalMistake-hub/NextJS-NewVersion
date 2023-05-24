@@ -5,7 +5,7 @@ import SearchOptionButton from '@components/Search/SearchOptionButton';
 import SearchOptionWrapper from '@components/Search/SearchOptionWrapper';
 import AddressWrapper from '@components/Wrapper/AddressWrapper';
 import LocationWrapper from '@components/Wrapper/LocationWrapper';
-import React, { ChangeEvent, FC, FocusEvent, FormEvent, useMemo, useState } from 'react';
+import React, { ChangeEvent, FC, FocusEvent, FormEvent, useEffect, useState } from 'react';
 import { BsGeoAltFill } from 'react-icons/bs';
 import { FaSearchLocation } from 'react-icons/fa';
 import { Marker } from 'react-map-gl';
@@ -39,13 +39,13 @@ const LocationSt1 = () => {
 
     const dispatch = useAppDispatch();
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
-    useMemo(() => {
+    useEffect(() => {
         if (tour.destination === '' || tour.latitude === 18.0583 || tour.longitude === 107.20623) {
             dispatch(SET_btnSTATUS(true));
         } else {
             dispatch(SET_btnSTATUS(false));
-            
         }
+        return () => {};
     }, [tour.destination, tour.latitude, tour.longitude]);
     return (
         <>

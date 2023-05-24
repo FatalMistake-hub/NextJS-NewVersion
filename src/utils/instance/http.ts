@@ -5,7 +5,7 @@ class Http {
     constructor() {
         this.instance = axios.create({
             baseURL: process.env.NEXT_APP_BASE_URL,
-            timeout: 10000,
+            timeout: 100000,
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -20,7 +20,7 @@ class HttpHost {
     constructor() {
         this.instance = axios.create({
             baseURL: process.env.NEXT_APP_BASE_URL,
-            timeout: 10000,
+            timeout: 100000,
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -35,7 +35,7 @@ class HttpAuth {
     constructor() {
         this.instance = axios.create({
             baseURL: process.env.NEXT_APP_BASE_URL,
-            timeout: 10000,
+            timeout: 100000,
             headers: {
                 'Content-Type': 'application/json',
             },

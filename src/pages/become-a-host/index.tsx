@@ -8,7 +8,7 @@ import BecomeHostStep1 from '@components/Hosting/BecomeHost/Step1';
 import BecomeHostStep2 from '@components/Hosting/BecomeHost/Step2';
 import BecomeHostStep3 from '@components/Hosting/BecomeHost/Step3';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import { selectBecomeHost, SET_STEP } from 'src/redux/slice/becomeHostSlice';
+import { selectBecomeHost, SET_imageMain, SET_STEP } from 'src/redux/slice/becomeHostSlice';
 import MultiStepBtn from '@components/GroupButton/MultiStepBtn';
 import LocationSt1 from '@components/Hosting/BecomeHost/Step1/Location';
 import CategorySt1 from '@components/Hosting/BecomeHost/Step1/Category';
@@ -20,11 +20,12 @@ import TimeFrameSt2 from '@components/Hosting/BecomeHost/Step2/TimeFrame';
 import ImageListSt2 from '@components/Hosting/BecomeHost/Step2/ImageList';
 import TittleSt3 from '@components/Hosting/BecomeHost/Step3/Tittle';
 import PriceSt3 from '@components/Hosting/BecomeHost/Step3/Price';
+import FinalSt3 from '@components/Hosting/BecomeHost/Step3/Final';
 interface Props {
     dataCategory: IAllCategory;
 }
 const BecomeHost = ({ dataCategory }: Props) => {
-    const { step } = useAppSelector(selectBecomeHost);
+    const { step,tour } = useAppSelector(selectBecomeHost);
     const dispatch = useAppDispatch();
     const logoColor = useColorModeValue('teal.500', 'teal.200');
 
@@ -51,6 +52,8 @@ const BecomeHost = ({ dataCategory }: Props) => {
                 return <TittleSt3 />;
             case 10:
                 return <PriceSt3 />;
+            case 11:
+                return <FinalSt3 />;
             default:
                 return null;
         }

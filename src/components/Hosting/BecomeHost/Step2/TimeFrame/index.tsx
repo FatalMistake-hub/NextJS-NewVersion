@@ -1,6 +1,6 @@
 import { Box, VStack, Text, Heading, Button, SimpleGrid, RadioGroup, Radio, Select } from '@chakra-ui/react';
 
-import React, { ChangeEvent, FC, useMemo, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import { selectBecomeHost, SET_btnSTATUS, SET_CATEGORY, SET_TIMEBOOKEND, SET_TIMEBOOKSTART } from 'src/redux/slice/becomeHostSlice';
@@ -11,7 +11,7 @@ const TimeFrameSt2: FC = () => {
 
     const dispatch = useAppDispatch();
 
-    useMemo(() => {
+    useEffect(() => {
         if (
             tour.timeBookStart.hour === undefined ||
             tour.timeBookStart.minutes === undefined ||
@@ -22,6 +22,7 @@ const TimeFrameSt2: FC = () => {
         } else {
             dispatch(SET_btnSTATUS(false));
         }
+        return () => {};
     }, [tour.timeBookStart.hour, tour.timeBookStart.minutes, tour.timeBookEnd.hour, tour.timeBookEnd.minutes]);
     const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
         dispatch(SET_TIMEBOOKSTART(minuteToTime(event.target.value)));
@@ -30,7 +31,7 @@ const TimeFrameSt2: FC = () => {
         dispatch(SET_TIMEBOOKEND(minuteToTime(event.target.value)));
     };
 
-    const timeListStart = TimeFrameListStart( tour.timeSlotLength);
+    const timeListStart = TimeFrameListStart(tour.timeSlotLength);
 
     let timeListEnd = [
         {

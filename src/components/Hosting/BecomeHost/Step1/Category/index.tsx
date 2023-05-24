@@ -1,6 +1,6 @@
 import { Box, VStack, Text, Heading, Button, SimpleGrid, RadioGroup, Radio } from '@chakra-ui/react';
 
-import React, { FC, useMemo, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import { selectBecomeHost, SET_btnSTATUS, SET_CATEGORY, SET_DESTINATION } from 'src/redux/slice/becomeHostSlice';
@@ -13,12 +13,13 @@ const CategorySt1: FC<Props> = ({ dataCategory }) => {
 
     const dispatch = useAppDispatch();
 
-    useMemo(() => {
+    useEffect(() => {
         if (tour.categories[0].categoryId === undefined || tour.categories[0].categoryName === 'undefined') {
             dispatch(SET_btnSTATUS(true));
         } else {
             dispatch(SET_btnSTATUS(false));
         }
+        return () => {};
     }, [tour.categories[0].categoryId, tour.categories[0].categoryName]);
     console.log(dataCategory);
     return (

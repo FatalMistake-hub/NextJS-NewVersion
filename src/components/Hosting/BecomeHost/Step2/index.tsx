@@ -2,13 +2,13 @@ import { Box, VStack, Text, Heading } from '@chakra-ui/react';
 import MultiStepBtn from '@components/GroupButton/MultiStepBtn';
 import Lottie, { LottieRefCurrentProps } from 'lottie-react';
 import { useRef } from 'react';
-import animationData from '@public/assets/animation/26540-blogging-writing-typing.json';
+import animationData from '@public/assets/animation/75249-blog-post-animation.json';
 const BecomeHostStep2 = () => {
     const locationRef = useRef<LottieRefCurrentProps | null>(null);
     return (
         <>
             <div className="w-full justify-center items-center flex min-h-[calc(100vh-176px)] px-20">
-                <VStack w={'575px'} align={'left'} gap={2}>
+                <VStack w={'575px'} align={'left'} gap={2} className="ml-[180px]">
                     <Text fontSize={'18px'} fontWeight={'600'}>
                         Bước 2
                     </Text>
@@ -28,7 +28,7 @@ const BecomeHostStep2 = () => {
                         Ở bước này, bạn sẽ soạn tiêu đề và nội dung mô tả. Sau đó, bạn sẽ thêm một số thông tin cùng với 5 bức ảnh trở lên .
                     </Text>
                 </VStack>
-                <Box w={'770px'}>
+                <Box w={'770px'} className="ml-[-180px]">
                     <Lottie
                         lottieRef={locationRef}
                         animationData={animationData}

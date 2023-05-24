@@ -7,6 +7,11 @@ export enum ERole {
     ADMIN = "ADMIN",
     OWNER= "OWNER",
 }
+export enum EErrorType {
+    NotBlank = 'NotBlank',
+    NotNull = 'NotNull',
+    OWNER = 'OWNER',
+}
 export enum ESearchMenu {
     LOCATION = 'location',
     CHECK_IN = 'checkIn',

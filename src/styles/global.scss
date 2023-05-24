@@ -162,22 +162,22 @@ body {
     height: 100%;
 }
 .wrapper {
-//   margin-bottom: -24px;
+    //   margin-bottom: -24px;
 }
 
 .container {
     width: 100%;
-  background-color: pink;
+    background-color: pink;
 }
 
 .barCompleted {
-  background-color: lightblue;
-  width: 100%;
+    background-color: lightblue;
+    width: 100%;
 }
 
 .label {
-  font-size: 20px;
-  color: green;
+    font-size: 20px;
+    color: green;
 }
 .fc-highlight {
     background: #08080800 !important;
@@ -252,4 +252,26 @@ body {
     display: flex;
     justify-content: flex-start;
     margin-left: 50px !important;
+}
+@keyframes progressAnimation {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.progress-animation {
+    animation-name: progressAnimation;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    transition: width 0.5s ease-in-out;
+}
+.progress-animation--increase {
+    transform: scaleX(1);
+}
+
+.progress-animation--decrease {
+    transform: scaleX(0);
 }

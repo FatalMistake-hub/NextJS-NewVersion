@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useDropzone } from 'react-dropzone';
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { BiPlus, BiX } from 'react-icons/bi';
 
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
@@ -29,12 +29,13 @@ const ImageListSt2: FC = () => {
     const [loading, setLoading] = useState(false);
     const dispatch = useAppDispatch();
 
-    useMemo(() => {
+    useEffect(() => {
         if (tour.imageDtoList.length < 5) {
             dispatch(SET_btnSTATUS(true));
         } else {
             dispatch(SET_btnSTATUS(false));
         }
+        return () => {};
     }, [tour.imageDtoList.length]);
     const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, open } = useDropzone({
         accept: {
@@ -78,7 +79,7 @@ const ImageListSt2: FC = () => {
                                     // height="300px"
                                     {...getRootProps({ className: 'dropzone' })}
                                     p={10}
-                                    className="flex flex-col items-center justify-center w-full h-[65vh] border-dashed border-black border mb-12 "
+                                    className="flex flex-col items-center justify-center w-full h-[60vh] border-dashed border-black border mb-12 "
                                 >
                                     <svg
                                         viewBox="0 0 64 64"
@@ -107,21 +108,21 @@ const ImageListSt2: FC = () => {
                                     </VStack>
                                 </Box>
                             ) : (
-                                <Wrap spacing="16px" _first={{ width: '700px', height: '480px' }}>
+                                <Wrap spacing="16px" _first={{ width: '700px', height: '480px' }} pb={12}>
                                     <WrapItem>
-                                        <Center w="700px" h="240px" position={'relative'}>
+                                        <Center w="700px" h="300px" position={'relative'}>
                                             <Skeleton height={'full'} width={'full'} />
                                         </Center>
                                     </WrapItem>
 
                                     <WrapItem>
-                                        <Center w="342px" h="115px" position={'relative'}>
+                                        <Center w="342px" h="200px" position={'relative'}>
                                             <Skeleton height={'full'} width={'full'} />
                                         </Center>
                                     </WrapItem>
 
                                     <WrapItem>
-                                        <Center w="342px" h="115px" position={'relative'}>
+                                        <Center w="342px" h="200px" position={'relative'}>
                                             <Skeleton height={'full'} width={'full'} />
                                         </Center>
                                     </WrapItem>

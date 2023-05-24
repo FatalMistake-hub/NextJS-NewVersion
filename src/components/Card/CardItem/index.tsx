@@ -38,8 +38,8 @@ const CardItem: React.FC<CardItemProps> = ({ className, data }) => {
                     />
                 </Box>
                 <Box bg={useColorModeValue('white', 'gray.800')} width="full " rounded="lg" pt="2" cursor={'pointer'}>
-                    <Rating avgRating={data.avgRating} rating={data.rating}  />
-                    
+                    <Rating avgRating={data.avgRating} rating={data.rating} />
+
                     <Flex my="1" justifyContent="space-between" alignItems="center">
                         <Text className="text-ellipsis font-semibold text-[15px] text-left h-full " noOfLines={2}>
                             {data.title}
@@ -58,7 +58,7 @@ const CardItem: React.FC<CardItemProps> = ({ className, data }) => {
                                 Từ
                             </Box>
                             <Box as="span" color={'gray.600'} fontSize="md" mr={'4px'}>
-                                ${data.priceOnePerson}
+                               {data.priceOnePerson?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                             </Box>
                             <Box as="span" color={'gray.600'} fontSize="md">
                                 /người

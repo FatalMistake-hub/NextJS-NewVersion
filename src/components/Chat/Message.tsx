@@ -10,6 +10,9 @@ function ScrollBottom({ messages }: { messages: any }) {
     const scrollRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         scrollRef?.current?.scrollIntoView();
+        return () => {
+            
+        }
     }, [messages]);
     return <div ref={scrollRef} />;
 }

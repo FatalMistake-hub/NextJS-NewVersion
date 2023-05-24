@@ -18,7 +18,8 @@ type Props = {
 
 export const ProtectedLayout = ({ children }: any): JSX.Element => {
     const router = useRouter();
-    const { status: sessionStatus } = useSession();
+    const { status: sessionStatus, data: session } = useSession();
+    console.log('session', session);
     const authorized = sessionStatus === 'authenticated';
     const unAuthorized = sessionStatus === 'unauthenticated';
     const loading = sessionStatus === 'loading';
@@ -47,6 +48,7 @@ export const ProtectedLayout = ({ children }: any): JSX.Element => {
                 duration: 9000,
             });
         }
+        return () => {};
     }, [loading, unAuthorized, sessionStatus, router]);
 
     // if the user refreshed the page or somehow navigated to the protected page

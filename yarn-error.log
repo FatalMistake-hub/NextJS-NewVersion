@@ -1,0 +1,87 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\rumra\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add --dev react-devtools
+
+PATH: 
+  C:\Users\rumra\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\opt\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\libnvvp;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\Java\jdk-17.0.1\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\hadoop\hadoop-2.6.0;C:\hadoop\hadoop-2.6.0\bin;C:\hadoop\hadoop-2.6.0\sbin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;D:\ITstd\XLtinhieu\bin;C:\Program Files\dotnet;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn;C:\Program Files\Microsoft SQL Server\150\Tools\Binn;C:\Program Files\Microsoft SQL Server\150\DTS\Binn;C:\Program Files\Azure Data Studio\bin;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn;C:\Program Files\Microsoft SQL Server\120\Tools\Binn;C:\Program Files\Microsoft SQL Server\120\DTS\Binn;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\ManagementStudio;C:\Program Files (x86)\Microsoft SQL Server\120\DTS\Binn;C:\Users\rumra\AppData\Local\Programs\Python\Python311;C:\Users\rumra\AppData\Local\Programs\Python\Python311\Scripts;C:\Program Files\nodejs;C:\Users\rumra\.cargo\bin;C:\Users\rumra\.local\share\solana\install\active_release\bin;C:\Users\rumra\AppData\Local\Microsoft\WindowsApps;C:\Users\rumra\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\rumra\AppData\Local\GitHubDesktop\bin;C:\Users\rumra\.dotnet\tools;C:\Program Files\heroku\bin;C:\Users\rumra\AppData\Roaming\npm;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
+
+Yarn version: 
+  1.22.17
+
+Node version: 
+  18.15.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'C:\Capstone\ExperienceTravel\node_modules\@next\swc-win32-x64-msvc\next-swc.win32-x64-msvc.node'
+
+npm manifest: 
+  {
+    "name": "tourApp",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start"
+    },
+    "dependencies": {
+      "@badrap/bar-of-progress": "^0.2.2",
+      "@chakra-ui/react": "^1.8.9",
+      "@emotion/react": "^11.10.6",
+      "@emotion/styled": "^11.10.6",
+      "@fullcalendar/core": "^6.1.7",
+      "@fullcalendar/interaction": "^6.1.7",
+      "@fullcalendar/multimonth": "^6.1.7",
+      "@fullcalendar/react": "^6.1.7",
+      "@ramonak/react-progress-bar": "^5.0.3",
+      "@reach/combobox": "^0.18.0",
+      "@reduxjs/toolkit": "^1.9.3",
+      "@tanstack/react-query": "^4.28.0",
+      "axios": "^1.3.5",
+      "deck.gl": "^8.9.8",
+      "formik": "^2.2.9",
+      "framer-motion": "^3.10.6",
+      "geolib": "^3.3.3",
+      "jwt-decode": "^3.1.2",
+      "lottie-react": "^2.4.0",
+      "moment": "^2.29.4",
+      "next": "^12.1.6",
+      "next-auth": "^4.22.1",
+      "next-compose-plugins": "^2.2.1",
+      "react": "17.0.2",
+      "react-date-range": "^1.4.0",
+      "react-dom": "17.0.2",
+      "react-dropzone": "^14.2.3",
+      "react-icons": "^4.8.0",
+      "react-intersection-observer": "^9.4.3",
+      "react-map-gl": "^6.1.16",
+      "react-redux": "^8.0.5",
+      "redux-persist": "^6.0.0",
+      "sass": "^1.32.5",
+      "swiper": "^9.2.0",
+      "use-places-autocomplete": "^4.0.0",
+      "yup": "^1.1.1"
+    },
+    "devDependencies": {
+      "@tanstack/react-query-devtools": "^4.29.0",
+      "@types/mapbox-gl": "^2.7.10",
+      "@types/node": "^14.14.13",
+      "@types/react": "^17.0.0",
+      "@types/react-date-range": "^1.4.4",
+      "@types/react-dom": "^17.0.0",
+      "@types/react-redux": "^7.1.25",
+      "autoprefixer": "^10.4.14",
+      "eslint-plugin-import": "^2.25.3",
+      "postcss": "^8.4.21",
+      "tailwindcss": "^3.3.1",
+      "typescript": "^4.9.5"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

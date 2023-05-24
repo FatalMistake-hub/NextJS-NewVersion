@@ -1,18 +1,19 @@
 import ProgressBar from '@ramonak/react-progress-bar';
-import { ButtonGroup, Flex, Button, toast, useToast } from '@chakra-ui/react';
+import { ButtonGroup, Flex, Button, useToast, Progress } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import { selectBecomeHost, SET_btnSTATUS, SET_STEP } from 'src/redux/slice/becomeHostSlice';
-const END_STEP = 10;
+import { selectBecomeHost, SET_btnSTATUS, SET_imageMain, SET_STEP } from 'src/redux/slice/becomeHostSlice';
+import useCreateTour from 'src/hooks/tours/useCreateTour';
+const END_STEP = 11;
 const START_STEP = 1;
 const MultiStepBtn = () => {
-    const { step, btnStatus } = useAppSelector(selectBecomeHost);
+    const { step, btnStatus, tour } = useAppSelector(selectBecomeHost);
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
     const [isLoading1, setIsLoading1] = useState(false);
-    const [progress, setProgress] = useState((step)/END_STEP*100);
+    const [progress, setProgress] = useState((step / END_STEP) * 100);
     const toast = useToast();
-
+    const { postTours, isLoadingPost, isSuccess, isError } = useCreateTour();
     return (
         <div className="w-screen fixed bottom-0 bg-white h-fit ">
             <ProgressBar
@@ -24,7 +25,7 @@ const MultiStepBtn = () => {
                 transitionDuration="1.5s"
                 transitionTimingFunction="linear"
             />
-
+            {/* <Progress value={progress} size="xs" colorScheme="teal" className={progress > 0 ? 'progress-animation' : ''} /> */}
             <ButtonGroup w="100%" py={4} px={12}>
                 <Flex w="100%" justifyContent="space-between">
                     <Flex>
@@ -50,18 +51,16 @@ const MultiStepBtn = () => {
                         )}
                     </Flex>
                     {step === END_STEP ? (
+                        
                         <Button
                             size={'lg'}
                             isDisabled={btnStatus}
+                            isLoading={isLoadingPost}
                             colorScheme="teal"
-                            onClick={() => {
-                                toast({
-                                    title: 'Account created.',
-                                    description: "We've created your account for you.",
-                                    status: 'success',
-                                    duration: 3000,
-                                    isClosable: true,
-                                });
+                            onClick={async () => {
+                                
+                                await postTours(tour);
+                                console.log(tour);
                             }}
                         >
                             Hoàn tất

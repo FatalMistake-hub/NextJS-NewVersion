@@ -1,20 +1,5 @@
-import React, { FC, useEffect, useState } from 'react';
-import {
-    Avatar,
-    Box,
-    Button,
-    Menu,
-    MenuButton,
-    MenuDivider,
-    MenuItem,
-    MenuList,
-    Stack,
-    toast,
-    useColorMode,
-    useColorModeValue,
-    useDisclosure,
-    useToast,
-} from '@chakra-ui/react';
+import React, { FC, useState } from 'react';
+import { Box, Button, Stack, toast, useColorMode, useColorModeValue, useDisclosure, useToast } from '@chakra-ui/react';
 import { FaAirbnb, FaGlobe, FaMoon, FaSearch, FaSun } from 'react-icons/fa';
 
 import Link from 'next/link';

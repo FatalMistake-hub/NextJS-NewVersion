@@ -70,7 +70,8 @@ const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson }) => {
                     <div className="flex justify-between items-center">
                         <section>
                             <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
-                                Từ ${priceOnePerson} <span className="text-base font-normal ">/người</span>
+                                Từ {priceOnePerson?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}{' '}
+                                <span className="text-base font-normal ">/người</span>
                             </Heading>
                             <Text className="text-base font-normal underline text-gray-300 hover:text-gray-400 ">Hiển thị tất cả giá</Text>
                         </section>
@@ -198,7 +199,7 @@ const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson }) => {
                             <Text mb={1} fontSize={'14px'} fontWeight={600}>
                                 Từ $35<span className="font-normal">/nhóm</span>
                             </Text>
-                            <Button size={'sm'} colorScheme="teal" >
+                            <Button size={'sm'} colorScheme="teal">
                                 <Link href={'/payment/1'}>Chọn</Link>
                             </Button>
                         </div>

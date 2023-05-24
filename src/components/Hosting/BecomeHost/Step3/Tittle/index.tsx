@@ -1,18 +1,19 @@
-import {  VStack, Text, Heading, Textarea } from '@chakra-ui/react';
+import { VStack, Text, Heading, Textarea } from '@chakra-ui/react';
 
-import { ChangeEvent, useMemo, useRef } from 'react';
+import { ChangeEvent, useEffect, useRef } from 'react';
 
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
 import { selectBecomeHost, SET_btnSTATUS, SET_TITLE } from 'src/redux/slice/becomeHostSlice';
 const TittleSt3 = () => {
     const { tour } = useAppSelector(selectBecomeHost);
     const dispatch = useAppDispatch();
-    useMemo(() => {
+    useEffect(() => {
         if (tour.title === '') {
             dispatch(SET_btnSTATUS(true));
         } else {
             dispatch(SET_btnSTATUS(false));
         }
+        return () => {};
     }, [tour.title]);
     let handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         let inputValue = e.target.value;
