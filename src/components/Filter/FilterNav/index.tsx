@@ -25,7 +25,7 @@ import { GetServerSideProps } from 'next';
 import { FC, JSXElementConstructor, ReactElement } from 'react';
 import { FaChevronDown, FaSlidersH } from 'react-icons/fa';
 import { IconType } from 'react-icons/lib';
-import useGetAllCatgory from 'src/hooks/category/useGetAllCategory';
+import useGetAllCatgory from 'src/hooks/guest/category/useGetAllCategory';
 import LanguagePicker from '../FilterItem/LanguagePicker';
 import PriceRange from '../FilterItem/PriceRange';
 import TimeInDay from '../FilterItem/TimeInDay';

@@ -2,7 +2,7 @@ import { Box, VStack, Text, Heading, Center, Code } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useMemo } from 'react';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import { selectBecomeHost, SET_btnSTATUS } from 'src/redux/slice/becomeHostSlice';
+import { selectBecomeHost, SET_btnSTATUS, SET_imageMain } from 'src/redux/slice/becomeHostSlice';
 const FinalSt3 = () => {
     const { tour } = useAppSelector(selectBecomeHost);
     const dispatch = useAppDispatch();
@@ -10,6 +10,8 @@ const FinalSt3 = () => {
         if (tour.priceOnePerson === null) {
             dispatch(SET_btnSTATUS(true));
         } else {
+            dispatch(SET_imageMain(tour.imageDtoList[0].link));
+
             dispatch(SET_btnSTATUS(false));
         }
     }, [tour.priceOnePerson]);
@@ -50,8 +52,7 @@ const FinalSt3 = () => {
                                     {tour.title}
                                 </Text>
                                 <Text fontSize={'16px'} fontWeight={'500'}>
-                                    {tour.priceOnePerson?.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })} /{' '}
-                                    <span className="text-base font-normal">người</span>
+                                    {tour.priceOnePerson?.toLocaleString('vi-VN')}₫ / <span className="text-base font-normal">người</span>
                                 </Text>
                             </Box>
                         </div>

@@ -20,6 +20,7 @@ import ImageList from './ImageList';
 
 interface IDetailTourProps {
     onClose: () => void;
+    tourId: number|undefined;
 }
 const DetailTour = ({ onClose }: IDetailTourProps) => {
     return (

@@ -3,7 +3,7 @@ import { ButtonGroup, Flex, Button, useToast, Progress } from '@chakra-ui/react'
 import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
 import { selectBecomeHost, SET_btnSTATUS, SET_imageMain, SET_STEP } from 'src/redux/slice/becomeHostSlice';
-import useCreateTour from 'src/hooks/tours/useCreateTour';
+import useCreateTour from 'src/hooks/guest/tours/useCreateTour';
 const END_STEP = 11;
 const START_STEP = 1;
 const MultiStepBtn = () => {
@@ -51,14 +51,12 @@ const MultiStepBtn = () => {
                         )}
                     </Flex>
                     {step === END_STEP ? (
-                        
                         <Button
                             size={'lg'}
                             isDisabled={btnStatus}
                             isLoading={isLoadingPost}
                             colorScheme="teal"
                             onClick={async () => {
-                                
                                 await postTours(tour);
                                 console.log(tour);
                             }}

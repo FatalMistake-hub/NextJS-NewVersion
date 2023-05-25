@@ -25,7 +25,7 @@ interface Props {
     dataCategory: IAllCategory;
 }
 const BecomeHost = ({ dataCategory }: Props) => {
-    const { step,tour } = useAppSelector(selectBecomeHost);
+    const { step, tour } = useAppSelector(selectBecomeHost);
     const dispatch = useAppDispatch();
     const logoColor = useColorModeValue('teal.500', 'teal.200');
 
@@ -92,5 +92,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
         props: { dataCategory: data },
     };
 };
+BecomeHost.requireAuth = true;
 export default BecomeHost;
 BecomeHost.Layout = 'BlankLayout';

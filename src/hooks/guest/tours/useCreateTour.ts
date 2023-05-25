@@ -6,7 +6,7 @@ import { becomeHostInitState } from 'src/redux/initState/becomeHostInitState';
 import { SET_INITSTATE } from 'src/redux/slice/becomeHostSlice';
 import { ITours, TourPost } from 'src/types/tours.type';
 import { postTours } from 'src/utils/apis/tours.api';
-import useAxiosAuth from '../auth/useAxiosAuth';
+import useAxiosAuth from '../../auth/useAxiosAuth';
 
 const useCreateTour = () => {
     const dispatch = useAppDispatch();

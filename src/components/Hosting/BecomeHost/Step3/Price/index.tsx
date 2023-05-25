@@ -2,7 +2,7 @@ import { VStack, Text, Heading, Box, useNumberInput, Button, HStack, Input } fro
 
 import { ChangeEvent, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import { selectBecomeHost, SET_btnSTATUS, SET_imageMain, SET_priceOnePerson, SET_TITLE } from 'src/redux/slice/becomeHostSlice';
+import { selectBecomeHost, SET_btnSTATUS, SET_priceOnePerson, SET_TITLE } from 'src/redux/slice/becomeHostSlice';
 const PriceSt3 = () => {
     const { tour } = useAppSelector(selectBecomeHost);
     const dispatch = useAppDispatch();
@@ -11,7 +11,6 @@ const PriceSt3 = () => {
             dispatch(SET_btnSTATUS(true));
         } else {
             dispatch(SET_btnSTATUS(false));
-            dispatch(SET_imageMain(tour.imageDtoList[0].link));
         }
         return () => {};
     }, [tour.priceOnePerson]);
@@ -24,7 +23,7 @@ const PriceSt3 = () => {
         precision: 0,
     });
     useEffect(() => {
-        dispatch(SET_priceOnePerson(Number(value)));
+        if (Number(value) < 100000000) dispatch(SET_priceOnePerson(Number(value)));
         return () => {};
     }, [value]);
 
@@ -33,7 +32,7 @@ const PriceSt3 = () => {
     const input = getInputProps();
 
     const formattedValue = `${value.toLocaleString()}₫`;
-    console.log(input);
+    console.log(value);
     return (
         <>
             <div className="w-full justify-center items-center flex min-h-[calc(100vh-176px)] px-20">
@@ -78,8 +77,9 @@ const PriceSt3 = () => {
                                     fontWeight={600}
                                     p={12}
                                     rounded={'xl'}
+                                    {...input}
                                     value={formattedValue}
-                                    // {...input}
+                                    max={100000000}
                                 />
                                 <Button
                                     className="py-6"

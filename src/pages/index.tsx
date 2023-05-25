@@ -2,13 +2,13 @@ import MainLayout from '@components/layouts/MainLayout';
 import React, { ReactElement } from 'react';
 import { NextPageWithLayout } from './_app';
 import { Box, Button, Center, Flex, Heading, Image, Link, SimpleGrid, Spacer, Text, useTheme } from '@chakra-ui/react';
-import CardItem from '@components/Card/CardItem';
+import CardItem, { CardItemSkeleton } from '@components/Card/CardItem';
 
-import useGetAllTour from 'src/hooks/tours/useGetAllTour';
+import useGetAllTour from 'src/hooks/guest/tours/useGetAllTour';
 import { ITours } from 'src/types/tours.type';
 import FilterNav from '@components/Filter/FilterNav';
 import { GetServerSideProps } from 'next';
-import useGetAllCatgory from 'src/hooks/category/useGetAllCategory';
+import useGetAllCatgory from 'src/hooks/guest/category/useGetAllCategory';
 import { getCategory, getSearch } from 'src/utils/data';
 import { getAllCategory } from 'src/utils/apis/category.api';
 import { test } from 'src/utils/dateUntils';
@@ -30,7 +30,7 @@ const Home = ({ dataCategory }: Props) => {
         hasPreviousPage,
     } = useGetAllTour(10);
     const theme = useTheme();
-    
+
     return (
         <>
             <Flex display="flex" flexDirection="column" justifyContent="center" alignItems="center" px={'80px'}>
@@ -44,7 +44,19 @@ const Home = ({ dataCategory }: Props) => {
                     </Heading>
 
                     {status === 'loading' ? (
-                        <p>Loading...</p>
+                        <SimpleGrid minChildWidth={'300px'} gap="12" py={12}>
+                            <CardItemSkeleton />
+                            <CardItemSkeleton />
+                            <CardItemSkeleton />
+                            <CardItemSkeleton />
+                            <CardItemSkeleton />
+                            <CardItemSkeleton />
+                            <CardItemSkeleton />
+                            <CardItemSkeleton />
+                            <CardItemSkeleton />
+                            <CardItemSkeleton />
+                            <CardItemSkeleton />
+                        </SimpleGrid>
                     ) : status === 'error' ? (
                         <span>Error: {error?.message}</span>
                     ) : (
@@ -62,18 +74,20 @@ const Home = ({ dataCategory }: Props) => {
                         </>
                     )}
                 </div>
-                <Button
-                    onClick={() => fetchNextPage()}
-                    disabled={!hasNextPage || isFetchingNextPage}
-                    isLoading={isFetchingNextPage}
-                    // ref={ref}
-                    colorScheme="black"
-                    color={'white'}
-                    p={6}
-                    className="my-8 bg-black"
-                >
-                    {isFetchingNextPage ? 'Loading more...' : hasNextPage ? 'Load new' : 'Nothing more to load'}
-                </Button>
+                {hasNextPage && (
+                    <Button
+                        onClick={() => fetchNextPage()}
+                        disabled={!hasNextPage || isFetchingNextPage}
+                        isLoading={isFetchingNextPage}
+                        // ref={ref}
+                        colorScheme="black"
+                        color={'white'}
+                        p={6}
+                        className="my-8 bg-black"
+                    >
+                        {isFetchingNextPage ? 'Đang tải...' : hasNextPage ? 'Tải thêm' : 'Tải thêm'}
+                    </Button>
+                )}
             </Flex>
         </>
     );

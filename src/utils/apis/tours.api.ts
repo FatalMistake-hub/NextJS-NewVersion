@@ -11,3 +11,4 @@ export const getAllTours = async (pageNo: number, pageSize: number) =>
     });
 export const getDetailTours = async (index: string | string[] | undefined) => await http.get<ITours>(`/tour/tour-detail/${index}`);
 export const postTours = async (tours: TourPost, axiosAuth: AxiosInstance) => await axiosAuth.post<ITours>(`/tour/create/`, tours);
+export const getAllHostTours = async (axiosAuth: AxiosInstance) => await axiosAuth.get<IAllTours>('/tour/all');

@@ -1,4 +1,4 @@
-import { ICategory } from "./category.type";
+import { ICategory } from './category.type';
 
 export interface ITours {
     tourId: number;
@@ -11,6 +11,8 @@ export interface ITours {
     latitude: string;
     longitude: string;
     destination: string;
+    categoryName: string;
+    categoryId: number;
     destinationDescription: string;
     timeSlotLength: number;
     avgRating: number;

@@ -31,7 +31,8 @@ import { FiMoreVertical } from 'react-icons/fi';
 import AllPictureModal from '@components/Modal/AllPictureModal';
 import CardSelectDay from '@components/Card/CardSelectDay';
 import AllDayModal from '@components/Modal/AllDayModal';
-import useGetDetailTour from 'src/hooks/tours/useGetDetailTour';
+import useGetDetailTour from 'src/hooks/guest/tours/useGetDetailTour';
+import { numberToTime } from 'src/utils/dateUntils';
 function Tours() {
     const router = useRouter();
     const { id } = router.query;
@@ -50,15 +51,11 @@ function Tours() {
                     <div className="w-full py-8 underline">
                         <Breadcrumb spacing="8px" separator={<BiChevronRight color="gray.500" />}>
                             <BreadcrumbItem>
-                                <BreadcrumbLink href="#">Home</BreadcrumbLink>
+                                <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
                             </BreadcrumbItem>
 
                             <BreadcrumbItem>
                                 <BreadcrumbLink href="#">About</BreadcrumbLink>
-                            </BreadcrumbItem>
-
-                            <BreadcrumbItem isCurrentPage>
-                                <BreadcrumbLink href="#">Contact</BreadcrumbLink>
                             </BreadcrumbItem>
                         </Breadcrumb>
                     </div>
@@ -70,14 +67,14 @@ function Tours() {
                         <div className="mt-1">
                             <Rating rating={data.rating} avgRating={data.avgRating} location={data.city} />
                         </div>
-                        <div className="flex items-center">
+                        {/* <div className="flex items-center">
                             <Button leftIcon={<BiShare />} color={'black'} variant={'ghost'} className="hover:bg-slate-100 underline ">
                                 Chia sẻ
                             </Button>
                             <Button leftIcon={<BsHeart />} color={'black'} variant={'ghost'} className="hover:bg-slate-100 underline ">
                                 Lưu
                             </Button>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="w-full h-full mt-8 rounded-lg max-h-[415px] overflow-hidden relative">
                         <Grid
@@ -183,7 +180,7 @@ function Tours() {
                                                 >
                                                     Trải nghiệm do An tổ chức
                                                 </Heading>
-                                                <Text>2,5 giờ - Ngôn ngữ: Tiếng Anh, Tiếng Đức, Tiếng Pháp và Tiếng Hàn Quốc</Text>
+                                                <Text>{numberToTime(data.timeSlotLength)} - Ngôn ngữ: Tiếng Anh, Tiếng Việt</Text>
                                             </section>
                                             <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
                                         </div>
@@ -241,13 +238,6 @@ function Tours() {
                                             một số quốc gia và nhận ra rằng không nơi nào có thể đánh bại thành phố của tôi khi thảo luận về
                                             sự đa dạng của thực phẩm thuần chay. <br />
                                             <br />
-                                            Hãy tham gia trải nghiệm này, chúng tôi hứa rằng nhóm của chúng tôi sẽ kích hoạt năm giác quan
-                                            của bạn. Chúng tôi ngửi, chúng tôi chạm vào, chúng tôi nhìn, chúng tôi nghe và chúng tôi nếm thử
-                                            những ảnh hưởng đa văn hóa tại Hội An.
-                                            <br />
-                                            <br />
-                                            Tất cả những nơi chúng tôi sẽ ghé thăm đều được người dân địa phương lựa chọn thủ công. Tham gia
-                                            với chúng tôi để tận hưởng trái tim của bạn với Món ăn thuần chay Hội An!
                                         </Collapse>
                                         <Button size="sm" variant={'link'} onClick={() => handleToggle('cp2')} mt="1rem">
                                             {show.cp2 ? 'Ẩn bớt' : 'Xem thêm'}
@@ -271,19 +261,19 @@ function Tours() {
                                                     <BiNotification className="w-4 h-4 " />
                                                 </div>
                                                 Để bảo vệ khoản thanh toán của bạn, tuyệt đối không chuyển tiền hoặc liên lạc bên ngoài
-                                                trang web hoặc ứng dụng Airbnb.
+                                                trang web .
                                             </Text>
                                         </div>
                                     </Box>
                                 </VStack>
                             </div>
                             <div className="relative w-[33.33333333333%] ml-[8.33333333332%]">
-                                <CardBooking priceOnePerson={data?.priceOnePerson} />
+                                <CardBooking priceOnePerson={data?.priceOnePerson} tourId={data.tourId} />
                             </div>
                         </Box>
                         <Box py={12}>
                             <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={6}>
-                                Nơi bạn sẽ đến
+                                Nơi bạn sẽ đến {data.longitude} - {data.latitude}
                             </Heading>
                             <Text className="pt-6">
                                 <div dangerouslySetInnerHTML={{ __html: `${data?.destinationDescription}` }}></div>
@@ -349,7 +339,7 @@ function Tours() {
                                 </Button>
                             </section>
                         </Box>
-                        <Box py={12}>
+                        {/* <Box py={12}>
                             <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={6}>
                                 Những điều cần biết
                             </Heading>
@@ -427,7 +417,7 @@ function Tours() {
                                     </div>
                                 </div>
                             </div>
-                        </Box>
+                        </Box> */}
                         <Box py={12}>
                             <section>
                                 <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1}>
