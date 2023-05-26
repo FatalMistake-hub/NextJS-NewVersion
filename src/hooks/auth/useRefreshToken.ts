@@ -1,27 +1,59 @@
 import { useToast } from '@chakra-ui/react';
-import { signOut, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useRef } from 'react';
 import { http } from 'src/utils/instance/http';
 
 export const useRefreshToken = () => {
-    const { data: session } = useSession();
-const toast = useToast();
-    const refreshToken = async () => {
-        const res = await http.post('/refreshToken', {
-            refresh: session?.user.refreshToken,
-        });
+    const { data: session, status } = useSession();
+    const toast = useToast();
+    const router = useRouter();
+    const refreshTokenCalledRef = useRef(false);
 
-        if (session) session.user.token = res.data.token;
-        else {
-            toast({
-                title: 'Phiên đăng nhập đã hết hạn.',
-                description: `Vui lòng đăng nhập lại.`,
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-                position: 'top',
-            });
-            signOut();
+    const refreshToken = async () => {
+        try {
+            if (!refreshTokenCalledRef.current) {
+                refreshTokenCalledRef.current = true;
+                return;
+            }
+
+            if (status === 'loading') {
+                return;
+            }
+
+            if (session && session.user && session.user.refreshToken) {
+                const res = await http.post('/refresh_token/', {
+                    refreshToken: session.user.refreshToken,
+                });
+
+                session.user.token = res.data.token;
+            } else {
+                await toast({
+                    title: 'Bạn chưa đăng nhập.',
+                    description: 'Vui lòng đăng nhập.',
+                    status: 'warning',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                });
+                await router.push('/');
+                // await signIn();
+            }
+        } catch (error: any) {
+            if (error.response && error.response.status === 401) {
+                await toast({
+                    title: 'Phiên đăng nhập đã hết hạn.',
+                    description: 'Vui lòng đăng nhập lại.',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                });
+                await signOut({ redirect: false, callbackUrl: '/' });
+                // await router.push('/');
+            }
         }
     };
+
     return refreshToken;
 };

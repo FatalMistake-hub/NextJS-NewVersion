@@ -1,14 +1,20 @@
 import { AxiosInstance } from 'axios';
 import { useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { httpAuth } from 'src/utils/instance/http';
 import { useRefreshToken } from './useRefreshToken';
 
 const useAxiosAuth = (): AxiosInstance => {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const refreshToken = useRefreshToken();
+    const requestInterceptorRef = useRef<number | null>(null);
+    const responseInterceptorRef = useRef<number | null>(null);
 
     useEffect(() => {
+        if (status === 'loading') {
+            return;
+        }
+
         const requestIntercept = httpAuth.interceptors.request.use(
             (config) => {
                 if (!config.headers['Authorization']) {
@@ -26,18 +32,25 @@ const useAxiosAuth = (): AxiosInstance => {
                 if (error?.response?.status === 401 && !prevRequest?.sent) {
                     prevRequest.sent = true;
                     await refreshToken();
-                    prevRequest.headers['Authorization'] = `Bearer ${session?.user.token}`;
+                    prevRequest.headers['Authorization'] = `Bearer ${session?.user?.token}`;
                     return httpAuth(prevRequest);
                 }
                 return Promise.reject(error);
             },
         );
 
+        requestInterceptorRef.current = requestIntercept;
+        responseInterceptorRef.current = responseIntercept;
+
         return () => {
-            httpAuth.interceptors.request.eject(requestIntercept);
-            httpAuth.interceptors.response.eject(responseIntercept);
+            if (requestInterceptorRef.current) {
+                httpAuth.interceptors.request.eject(requestInterceptorRef.current);
+            }
+            if (responseInterceptorRef.current) {
+                httpAuth.interceptors.response.eject(responseInterceptorRef.current);
+            }
         };
-    }, [session, refreshToken]);
+    }, [session, refreshToken, status]);
 
     return httpAuth;
 };

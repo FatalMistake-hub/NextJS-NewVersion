@@ -1,22 +1,53 @@
-
-import { useQuery } from '@tanstack/react-query';
+import { GetPreviousPageParamFunction, useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 import useAxiosAuth from 'src/hooks/auth/useAxiosAuth';
-import { UseQueryResponse } from 'src/types/axios.type';
+import { UseQueryInfinityResponse, UseQueryResponse } from 'src/types/axios.type';
 import { IAllTours } from 'src/types/tours.type';
 import { getAllHostTours } from 'src/utils/apis/tours.api';
 
-
-const useGetAllHostTour = (): UseQueryResponse<IAllTours> => {
-  const httpJWT = useAxiosAuth();
-    const { data, isLoading, isError, isSuccess } = useQuery(['GET_HOST_TOURS'], () => getAllHostTours(httpJWT));
-
+const useGetAllHostTour = (pageSize: number): UseQueryInfinityResponse<any> => {
+    const { ref, inView } = useInView({ threshold: 0 });
+    const httpJWT = useAxiosAuth();
+    const {
+        status,
+        data,
+        error,
+        isFetching,
+        isFetchingNextPage,
+        isFetchingPreviousPage,
+        fetchNextPage,
+        fetchPreviousPage,
+        hasNextPage,
+        hasPreviousPage,
+    } = useInfiniteQuery(['GET_ALL_HOST_TOURS'], async ({ pageParam = 1 }) => await getAllHostTours(pageParam, pageSize, httpJWT), {
+        getNextPageParam: (lastPage: any, allPages) => {
+            if (lastPage.data.pageNo < lastPage.data.totalPages) {
+                return lastPage.data.pageNo + 1;
+            }
+        },
+        getPreviousPageParam: (firstPage: any, allPages) => {
+            return firstPage.data.pageNo - 1;
+        },
+    });
+    useEffect(() => {
+        if (inView) {
+            fetchNextPage();
+        }
+    }, [inView]);
     return {
-        data: data?.data,
-        isLoading,
-        isError,
-        isSuccess,
+        status,
+        ref,
+        data: data,
+        error,
+        isFetching,
+        isFetchingNextPage,
+        isFetchingPreviousPage,
+        fetchNextPage,
+        fetchPreviousPage,
+        hasNextPage,
+        hasPreviousPage,
     };
 };
 
 export default useGetAllHostTour;
-

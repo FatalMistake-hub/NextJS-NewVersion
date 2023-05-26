@@ -16,6 +16,7 @@ export interface ITours {
     destinationDescription: string;
     timeSlotLength: number;
     avgRating: number;
+    imageDtoList: IImageTour[];
     images: IImageTour[];
     isDeleted: boolean;
     userId: string;
