@@ -1,14 +1,19 @@
 import { GetPreviousPageParamFunction, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
-import useAxiosAuth from 'src/hooks/auth/useAxiosAuth';
 import { UseQueryInfinityResponse, UseQueryResponse } from 'src/types/axios.type';
-import { IAllTours } from 'src/types/tours.type';
-import { getAllHostTours } from 'src/utils/apis/tours.api';
+import { getAllTimeByRange } from 'src/utils/apis/timeBooking.api';
 
-const useGetAllHostTour = (pageSize: number): UseQueryInfinityResponse<any> => {
+import { getAllTours } from 'src/utils/apis/tours.api';
+
+const useGetAllTimeBookingByRange = (
+    start_time: string,
+    end_time: string,
+    pageSize: number,
+    tourId: string | string[] | undefined,
+): UseQueryInfinityResponse<any> => {
     const { ref, inView } = useInView({ threshold: 0 });
-    const httpJWT = useAxiosAuth();
+
     const {
         status,
         data,
@@ -18,19 +23,22 @@ const useGetAllHostTour = (pageSize: number): UseQueryInfinityResponse<any> => {
         isFetchingPreviousPage,
         fetchNextPage,
         fetchPreviousPage,
-        isSuccess,
         hasNextPage,
         hasPreviousPage,
-    } = useInfiniteQuery(['GET_ALL_HOST_TOURS'], async ({ pageParam = 1 }) => await getAllHostTours(pageParam, pageSize, httpJWT), {
-        getNextPageParam: (lastPage: any, allPages) => {
-            if (lastPage.data.pageNo < lastPage.data.totalPages) {
-                return lastPage.data.pageNo + 1;
-            }
+    } = useInfiniteQuery(
+        ['GET_ALL_TIME_BOOK_RANGE'],
+        async ({ pageParam = 1 }) => await getAllTimeByRange(start_time, end_time, pageParam, pageSize, tourId),
+        {
+            getNextPageParam: (lastPage: any, allPages) => {
+                if (lastPage.data.pageNo < lastPage.data.totalPages) {
+                    return lastPage.data.pageNo + 1;
+                }
+            },
+            getPreviousPageParam: (firstPage: any, allPages) => {
+                return firstPage.data.pageNo - 1;
+            },
         },
-        getPreviousPageParam: (firstPage: any, allPages) => {
-            return firstPage.data.pageNo - 1;
-        },
-    });
+    );
     useEffect(() => {
         if (inView) {
             fetchNextPage();
@@ -43,7 +51,6 @@ const useGetAllHostTour = (pageSize: number): UseQueryInfinityResponse<any> => {
         error,
         isFetching,
         isFetchingNextPage,
-        isSuccess,
         isFetchingPreviousPage,
         fetchNextPage,
         fetchPreviousPage,
@@ -52,4 +59,4 @@ const useGetAllHostTour = (pageSize: number): UseQueryInfinityResponse<any> => {
     };
 };
 
-export default useGetAllHostTour;
+export default useGetAllTimeBookingByRange;

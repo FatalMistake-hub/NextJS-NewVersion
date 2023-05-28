@@ -22,11 +22,12 @@ export const useRefreshToken = () => {
             }
 
             if (session && session.user && session.user.refreshToken) {
-                const res = await http.post('/refresh_token/', {
+                const res = await http.post('/auth/refresh_token/', {
                     refreshToken: session.user.refreshToken,
                 });
 
-                session.user.token = res.data.token;
+                session.user.token = res.data.accessToken;
+                session.user.refreshToken = res.data.refreshToken;
             } else {
                 await toast({
                     title: 'Bạn chưa đăng nhập.',
@@ -41,15 +42,18 @@ export const useRefreshToken = () => {
             }
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
-                await toast({
-                    title: 'Phiên đăng nhập đã hết hạn.',
-                    description: 'Vui lòng đăng nhập lại.',
-                    status: 'error',
-                    duration: 3000,
-                    isClosable: true,
-                    position: 'top',
+                // await toast({
+                //     title: 'Phiên đăng nhập đã hết hạn.',
+                //     description: 'Vui lòng đăng nhập lại.',
+                //     status: 'error',
+                //     duration: 3000,
+                //     isClosable: true,
+                //     position: 'top',
+                // });
+                await signOut({
+                    redirect: false,
+                    // , callbackUrl: '/'
                 });
-                await signOut({ redirect: false, callbackUrl: '/' });
                 // await router.push('/');
             }
         }

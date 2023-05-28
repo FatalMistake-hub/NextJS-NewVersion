@@ -16,156 +16,30 @@ import {
     Text,
 } from '@chakra-ui/react';
 import { BiX, BiCheck, BiMinus, BiPlus } from 'react-icons/bi';
-import { useState } from 'react';
+import { useEffect, useState, useMemo, memo } from 'react';
 import { DateTimeToString } from 'src/utils/dateUntils';
+import { IDayBookResponse } from 'src/types/timeBooking.type';
+import useGetAllTimeBookingByRange from 'src/hooks/guest/timeBooking/useGetAllTimeBookingByRange';
+import { useAppDispatch, useAppSelector } from 'src/redux/hook';
+import { selectCalendarHost } from 'src/redux/slice/calendarHostSlice';
+import { useRouter } from 'next/router';
 
 const DaySection = () => {
-    const DateBookView = {
-        content: [
-            {
-                dayBookId: 'd4e2b70b-bddf-4108-833f-6774cbe43802',
-                date_name: '2023-05-25T17:00:00.000+00:00',
-                tourId: 187676437,
-                status: 'AVAILABLE',
-                is_deleted: true,
-                timeBookViewDtoList: [
-                    {
-                        timeId: '451f66f7-6dea-4055-a6ba-481d34e88e18',
-                        start_time: '02:30:00',
-                        end_time: '04:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: 'f2cf0d91-52b5-4128-85e0-5e3c75587939',
-                        start_time: '04:30:00',
-                        end_time: '06:30:00',
-                        is_deleted: true,
-                    },
-                    {
-                        timeId: 'ec655326-3030-4233-9eb6-18a28d518792',
-                        start_time: '06:30:00',
-                        end_time: '08:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: '0e76b51e-ef62-45c3-903d-45a79872ea4b',
-                        start_time: '08:30:00',
-                        end_time: '10:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: '0cf001c1-812e-41b1-92f8-d1de80451241',
-                        start_time: '10:30:00',
-                        end_time: '12:30:00',
-                        is_deleted: true,
-                    },
-                    {
-                        timeId: '27eded44-da3c-4e38-9cde-13ae52df6880',
-                        start_time: '12:30:00',
-                        end_time: '14:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: '72b6d498-9a02-4137-86bf-729fa2260c1b',
-                        start_time: '14:30:00',
-                        end_time: '16:30:00',
-                        is_deleted: true,
-                    },
-                    {
-                        timeId: '7a55b563-0b8c-4afa-93ca-47b715ed1c51',
-                        start_time: '16:30:00',
-                        end_time: '18:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: '61e982f4-686b-4e5e-890a-300c297d53d0',
-                        start_time: '18:30:00',
-                        end_time: '20:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: '1911863d-c4b2-450a-8b71-a7b33ead4bb3',
-                        start_time: '20:30:00',
-                        end_time: '22:30:00',
-                        is_deleted: false,
-                    },
-                ],
-            },
-            {
-                dayBookId: '2a4e9182-3ec2-4cd8-9773-cf79f38b3299',
-                date_name: '2023-05-26T17:00:00.000+00:00',
-                tourId: 187676437,
-                status: 'AVAILABLE',
-                is_deleted: false,
-                timeBookViewDtoList: [
-                    {
-                        timeId: 'd2b187e4-8358-4059-b9fa-cc5a4c46fedc',
-                        start_time: '02:30:00',
-                        end_time: '04:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: '77f6a425-fed0-448f-906c-b1415ca66ac0',
-                        start_time: '04:30:00',
-                        end_time: '06:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: '115e6104-14a8-46ca-bf52-1230c38d0c75',
-                        start_time: '06:30:00',
-                        end_time: '08:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: '8dcadb51-6c96-4352-94ba-3d78928a6cea',
-                        start_time: '08:30:00',
-                        end_time: '10:30:00',
-                        is_deleted: true,
-                    },
-                    {
-                        timeId: '2659ea6c-791d-4e19-8d62-e2916f3e85d9',
-                        start_time: '10:30:00',
-                        end_time: '12:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: '9e0e1086-9597-49a2-b56c-f6b78bd745d1',
-                        start_time: '12:30:00',
-                        end_time: '14:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: '51d609f2-29a5-4739-8c02-20bda594f722',
-                        start_time: '14:30:00',
-                        end_time: '16:30:00',
-                        is_deleted: true,
-                    },
-                    {
-                        timeId: 'eb5b6f28-7f9a-428d-98b4-ba95a4ab4314',
-                        start_time: '16:30:00',
-                        end_time: '18:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: '481d4446-0acd-475e-80c1-457799a067d8',
-                        start_time: '18:30:00',
-                        end_time: '20:30:00',
-                        is_deleted: false,
-                    },
-                    {
-                        timeId: '28b057d7-4648-466d-9f6f-d633a441b386',
-                        start_time: '20:30:00',
-                        end_time: '22:30:00',
-                        is_deleted: true,
-                    },
-                ],
-            },
-        ],
-    };
+    const [postValue, setPostValue] = useState<any>();
+    const dispatch = useAppDispatch();
+    const { dateRange } = useAppSelector(selectCalendarHost);
+    const router = useRouter();
+    const { id } = router.query;
+    // const [res, setRes] = useState<IDayBookResponse>();
+    const tourId = useMemo(() => id, [id]);
+    
+    const { data } = useGetAllTimeBookingByRange(dateRange.startDate, dateRange.endDate, 1000, tourId);
+    const res = data?.pages[0].data;
 
-    const [response, setResponse] = useState<any>(DateBookView);
+    console.log(res);
+    console.log('rểnder', id);
     const handleStatusDay = (status: boolean, id: string) => {
-        const newTime = response.content.map((date: any) => {
+        const newTime = res?.content.map((date: any) => {
             if (date.dayBookId === id) {
                 return {
                     ...date,
@@ -174,13 +48,12 @@ const DaySection = () => {
             }
             return date;
         });
-      setResponse({ content: newTime });
+        setPostValue({ content: newTime });
         console.log({ content: newTime });
-      
     };
     const handleChecked = (isActive: boolean, id: string, dayBookId: string) => {
         console.log(isActive, !isActive);
-        const newTime = response.content.map((date: any) => {
+        const newTime = res?.content.map((date: any) => {
             if (date.dayBookId === dayBookId) {
                 const updatedTimeBookViewDtoList = date.timeBookViewDtoList.map((time: any) => {
                     if (time.timeId === id) {
@@ -198,15 +71,28 @@ const DaySection = () => {
             }
             return date;
         });
-        setResponse({ content: newTime });
-
-        console.log({ content: newTime });
+        setPostValue({ content: newTime });
     };
     return (
-        <VStack divider={<StackDivider borderColor="black.200" />} py={6} align="stretch" width={'full'}>
+        <VStack
+            divider={<StackDivider borderColor="black.200" />}
+            py={6}
+            align="stretch"
+            width={'full'}
+            overflowY={'scroll'}
+            maxH={'calc(100vh - 89px)'}
+        >
             <Box p={6}>
                 <Heading lineHeight={1.4} as="h2" fontSize={'26px'} fontWeight={'600'} width={'full'} noOfLines={2} pb={12}>
-                    Ngày 22 - Ngày 30 tháng 6
+                    {dateRange.startDate === dateRange.endDate
+                        ? 'Ngày ' + dateRange.startDate.slice(-2) + ' tháng ' + dateRange.endDate.slice(5, 7)
+                        : 'Ngày ' +
+                          dateRange.startDate.slice(-2) +
+                          ' - Ngày ' +
+                          dateRange.endDate.slice(-2) +
+                          ' tháng ' +
+                          dateRange.endDate.slice(5, 7)}
+                    {/* Ngày 22 - Ngày 30 tháng 6 */}
                 </Heading>
                 <Flex justifyContent={'space-between'}>
                     <Text fontSize={'18px'} fontWeight={600}>
@@ -242,7 +128,7 @@ const DaySection = () => {
                 </Heading>
                 <Flex justifyContent={'space-between'}>
                     <Accordion allowToggle w={'full'}>
-                        {response.content?.map((date: any) => (
+                        {res?.content?.map((date: any) => (
                             <AccordionItem px={2} border={'0px'}>
                                 {({ isExpanded }: any) => (
                                     <>
@@ -312,7 +198,7 @@ const DaySection = () => {
                                                 <Button
                                                     colorScheme={'teal'}
                                                     onClick={() =>
-                                                        console.log(response.content.find((res: any) => res.dayBookId === date.dayBookId))
+                                                        console.log(res.content.find((res: any) => res.dayBookId === date.dayBookId))
                                                     }
                                                 >
                                                     Lưu
@@ -330,4 +216,4 @@ const DaySection = () => {
     );
 };
 
-export default DaySection;
+export default memo(DaySection);

@@ -1,9 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import {
-
     Box,
     Button,
-
     Stack,
     Tab,
     TabIndicator,
@@ -71,7 +69,7 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
             default:
                 return 0;
         }
-    }
+    };
     return (
         <>
             <header className={`${headerBehavior()} z-10 fixed top-0 w-full pt-5 duration-300 md:transition-none`}>
@@ -119,7 +117,6 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                                         className="rounded-3xl "
                                         position={'relative'}
                                         color={'blackAlpha.700'}
-
                                     >
                                         Hôm nay
                                     </Tab>
@@ -152,7 +149,7 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                                         Hộp thư đến
                                     </Tab>
                                 </Link>
-                                <Link href={'/hosting/calendar'}>
+                                <Link href={'/hosting/calendar-router'}>
                                     <Tab
                                         _hover={{
                                             bg: 'blackAlpha.200',
@@ -293,8 +290,6 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                                         Tạo mục trải nghiệm mới
                                     </Tab>
                                 </Link>
-
-                             
 
                                 {/* <MenuHostingNav /> */}
                             </TabList>

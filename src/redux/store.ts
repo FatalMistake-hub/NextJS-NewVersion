@@ -5,16 +5,18 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import searchSlice from './slice/searchSlice';
 import becomeHostSlice from './slice/becomeHostSlice';
+import calendarHostSlice from './slice/calendarHostSlice';
 
 const persistConfig = {
     key: 'root',
     version: 1,
     storage,
-    blacklist: ['search', 'becomeHost'],
+    blacklist: ['search', 'becomeHost', 'calendarHost'],
 };
 const rootReducer = combineReducers({
     search: searchSlice,
-    becomeHost:becomeHostSlice,
+    becomeHost: becomeHostSlice,
+    calendarHost: calendarHostSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -28,7 +30,6 @@ export const store = configureStore({
             },
         }),
 });
-
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -119,7 +119,7 @@ export const DateTimeToString = (dateString: any) => {
     const month = date.toLocaleString('vi-VN', { month: 'long' });
     const day = date.getDate();
 
-    const result = `${day - 1}  ${month}`;
+    const result = `${day}  ${month}`;
     return result;
 };
 

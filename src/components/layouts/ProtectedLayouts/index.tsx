@@ -45,7 +45,7 @@ export const ProtectedLayout = ({ children }: any): JSX.Element => {
                 containerStyle: {
                     padding: '2rem',
                 },
-                duration: 9000,
+                duration: 3000,
             });
         }
         return () => {};

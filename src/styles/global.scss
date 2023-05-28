@@ -220,8 +220,8 @@ body {
     content: 'Hôm nay';
     position: absolute;
     color: #000;
-    top: 22px;
-    left: 52px;
+    top: 60px;
+    left: 40px;
     // font-weight: 700;
     font-style: italic;
     color: #000;
@@ -238,14 +238,14 @@ body {
     color: rgb(113, 113, 113) !important;
 }
 .fc-day-today{
-    background: repeating-linear-gradient(
-        -45deg,
-        rgb(255, 255, 255),
-        rgb(255, 255, 255) 8px,
-        rgb(221, 221, 221) 8px,
-        rgb(221, 221, 221) 9px
-    ) !important;
-    color: rgb(113, 113, 113) !important;
+    // background: repeating-linear-gradient(
+    //     -45deg,
+    //     rgb(255, 255, 255),
+    //     rgb(255, 255, 255) 8px,
+    //     rgb(221, 221, 221) 8px,
+    //     rgb(221, 221, 221) 9px
+    // ) !important;
+    // color: rgb(113, 113, 113) !important;
 }
 
 
@@ -294,6 +294,10 @@ body {
     justify-content: flex-start;
     margin-left: 50px !important;
 }
+.fc-multimonth-month{
+    z-index: 1;
+}
+
 @keyframes progressAnimation {
     from {
         width: 0;
