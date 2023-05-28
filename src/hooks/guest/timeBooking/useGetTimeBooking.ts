@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { UseQueryResponse } from 'src/types/axios.type';
 import { ITours } from 'src/types/tours.type';
-import { getTimeBooking } from 'src/utils/apis/timeBooking.api';
+
 
 
 // const useGetTimeBooking = (tourId: number| undefined): UseQueryResponse<any> => {
