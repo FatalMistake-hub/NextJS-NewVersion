@@ -76,7 +76,7 @@ const SearchOptionButton: FC<ISearchOptionButtonProps> = ({
                     } flex items-center justify-center m-2 ml-0 px-3 h-12  rounded-2xl bg-primary  hover:saturate-200`}
                 >
                     <FaSearch className="h-5 text-white" />
-                    <span className={`${isSearch ? 'inline-block' : 'hidden'} ml-2 font-medium text-white`}>Search</span>
+                    <span className={`${isSearch ? 'inline-block' : 'hidden'} min-w-[70px] ml-2 font-medium text-white`}>Tìm kiếm</span>
                 </button>
             )}
             <div className={`${active ? 'block' : 'hidden'} mt-16`}>{children}</div>

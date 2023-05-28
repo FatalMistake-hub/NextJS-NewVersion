@@ -4,6 +4,7 @@ import { DateRange } from 'react-date-range';
 import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import { SET_CHECK_IN, SET_CHECK_OUT } from 'src/redux/slice/searchSlice';
+import vi from 'date-fns/locale/vi';
 
 // import { useDataContext } from 'hooks/useDataContext';
 
@@ -41,6 +42,7 @@ const DateRangeCP: FC<IAppDateRangeProps> = ({ months }) => {
                 minDate={new Date()}
                 showDateDisplay={false}
                 monthDisplayFormat="MMMM YYY"
+                locale={vi}
             />
         </div>
     );

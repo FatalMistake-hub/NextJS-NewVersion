@@ -190,6 +190,7 @@ const Listings = () => {
 };
 
 export default Listings;
+Listings.requireAuth = true;
 Listings.getLayout = function (page: ReactElement) {
     return (
         <>

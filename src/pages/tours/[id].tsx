@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { BiCheck, BiChevronRight, BiNotification, BiShare, BiStar } from 'react-icons/bi';
 import Rating from '@components/Card/Rating';
-import { BsHeart, BsShieldFillCheck, BsStar } from 'react-icons/bs';
+import { BsGeoAltFill, BsHeart, BsShieldFillCheck, BsStar } from 'react-icons/bs';
 import Image from 'next/image';
 import { useState } from 'react';
 import CardBooking from '@components/Card/CardBooking';
@@ -33,6 +33,9 @@ import CardSelectDay from '@components/Card/CardSelectDay';
 import AllDayModal from '@components/Modal/AllDayModal';
 import useGetDetailTour from 'src/hooks/guest/tours/useGetDetailTour';
 import { numberToTime } from 'src/utils/dateUntils';
+import MapTrip from '@components/Map/MapTrip';
+import { Marker } from 'react-map-gl';
+import MapLocation from '@components/Map/MapLocation';
 function Tours() {
     const router = useRouter();
     const { id } = router.query;
@@ -273,8 +276,42 @@ function Tours() {
                         </Box>
                         <Box py={12}>
                             <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={6}>
-                                Nơi bạn sẽ đến {data.longitude} - {data.latitude}
+                                Nơi bạn sẽ đến
                             </Heading>
+                            <Box pb={2} pt={2} w={'full'} className={`h-[500px] relative`}>
+                                {/* <MapTrip center={{ longitude: Number(data.longitude), latitude: Number(data.latitude) }}>
+                                    <Marker
+                                        latitude={Number(data.latitude)}
+                                        longitude={Number(data.longitude)}
+                                        // offsetLeft={-20}
+                                        // offsetTop={-10}
+                                        // offset={[-20, -10]}
+                                    >
+                                        <BsGeoAltFill
+                                            style={{ zIndex: 10 }}
+                                            size={'3rem'}
+                                            className=" text-[#3d9d9b] absolute top-0 right-1"
+                                        />
+                                    </Marker>
+                                </MapTrip> */}
+                                <Box
+                                    bgColor={'white'}
+                                    position={'absolute'}
+                                    bottom={4}
+                                    left={'50%'}
+                                    transform={'translateX(-50%)'}
+                                    py={3}
+                                    px={4}
+                                    rounded={'lg'}
+                                >
+                                    <Text fontWeight={500} fontSize={'16px'}>
+                                        Nơi chúng ta sẽ gặp nhau
+                                    </Text>
+                                    <Text fontWeight={400} fontSize={'14px'}>
+                                        {data.destination}
+                                    </Text>
+                                </Box>
+                            </Box>
                             <Text className="pt-6">
                                 <div dangerouslySetInnerHTML={{ __html: `${data?.destinationDescription}` }}></div>
                             </Text>

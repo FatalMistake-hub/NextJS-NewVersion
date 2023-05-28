@@ -1,13 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
 import {
-    Avatar,
+
     Box,
     Button,
-    Menu,
-    MenuButton,
-    MenuDivider,
-    MenuItem,
-    MenuList,
+
     Stack,
     Tab,
     TabIndicator,
@@ -31,6 +27,7 @@ import LoginModal from '@components/Modal/LoginModal';
 import MenuBase from '../MenuBase';
 import MenuHosting from '../MenuHosting';
 import MenuHostingNav from '../MenuHostingNav/MenuHostingNav';
+import { useRouter } from 'next/router';
 
 interface HeaderHostingProps {
     exploreNearby?: IExploreNearby[];
@@ -54,6 +51,27 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
         return style.join(' ');
     };
     const { data: session } = useSession();
+    const router = useRouter();
+    const handleRouter = (path: string) => {
+        switch (path) {
+            case '/hosting':
+                return 0;
+            case '/hosting/inbox':
+                return 1;
+            case '/hosting/calendar':
+                return 2;
+            case '/hosting/performance':
+                return 3;
+            case '/hosting/listings':
+                return 4;
+            case '/hosting/reservations':
+                return 5;
+            case '/become-a-host':
+                return 0;
+            default:
+                return 0;
+        }
+    }
     return (
         <>
             <header className={`${headerBehavior()} z-10 fixed top-0 w-full pt-5 duration-300 md:transition-none`}>
@@ -75,7 +93,7 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                     </div>
                     {/*  bar */}
                     <div className="justify-center flex w-full">
-                        <Tabs variant="unstyled" position="relative">
+                        <Tabs variant="unstyled" position="relative" defaultIndex={handleRouter(router.pathname)}>
                             <TabList>
                                 <Link href={'/hosting'}>
                                     <Tab
@@ -101,6 +119,7 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                                         className="rounded-3xl "
                                         position={'relative'}
                                         color={'blackAlpha.700'}
+
                                     >
                                         Hôm nay
                                     </Tab>
@@ -275,7 +294,7 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                                     </Tab>
                                 </Link>
 
-                                <MenuDivider />
+                             
 
                                 {/* <MenuHostingNav /> */}
                             </TabList>

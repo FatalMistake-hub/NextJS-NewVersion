@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Box, Button, Stack, toast, useColorMode, useColorModeValue, useDisclosure, useToast } from '@chakra-ui/react';
+import { Box, Button, Stack, useColorMode, useColorModeValue, useDisclosure, useToast, Text } from '@chakra-ui/react';
 import { FaAirbnb, FaGlobe, FaMoon, FaSearch, FaSun } from 'react-icons/fa';
 
 import Link from 'next/link';
@@ -73,14 +73,14 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                         {searchPage ? (
                             <span className="flex-grow text-sm font-medium tracking-wide text-gray-500">
                                 <span className="px-4 py-1 border-r border-gay-200">
-                                    {location || <span className="font-normal text-gray-300">Location</span>}
+                                    {location || <span className="font-normal text-gray-300">Địa điểm</span>}
                                 </span>
                                 <span className="px-4 py-1 border-r border-gay-200">
-                                    {formatRangeDate(checkIn, checkOut) || <span className="font-normal text-gray-300">Add dates</span>}
+                                    {formatRangeDate(checkIn, checkOut) || <span className="font-normal text-gray-300">Thêm ngày</span>}
                                 </span>
                                 <span className="px-4 py-1">
                                     {formatGuests(guests, { noInfants: true }) || (
-                                        <span className="font-normal text-gray-300">Add guests</span>
+                                        <span className="font-normal text-gray-300">Thêm khách</span>
                                     )}
                                 </span>
                             </span>
@@ -101,29 +101,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                     </button>
                     {/* middle side navigation */}
                     <div className="relative flex flex-col items-center justify-center order-last col-span-2 xl:order-none xl:col-span-1">
-                        <div className="text-white">
-                            <HeaderOption
-                                isSnap={isSnapTop}
-                                isActiveHeader={isActiveSearch}
-                                active={activeMenu === EHeaderOpions.PLACES_TO_STAY}
-                                onClick={() => setActiveMenu(EHeaderOpions.PLACES_TO_STAY)}
-                            >
-                                Places to stay
-                            </HeaderOption>
-                            <HeaderOption
-                                isSnap={isSnapTop}
-                                isActiveHeader={isActiveSearch}
-                                active={activeMenu === EHeaderOpions.FIND_EXPERIENCES}
-                                onClick={() => setActiveMenu(EHeaderOpions.FIND_EXPERIENCES)}
-                            >
-                                Experiences
-                            </HeaderOption>
-                            <HeaderOption isSnap={isSnapTop} isActiveHeader={isActiveSearch}>
-                                <Link href="/">
-                                    <a>Online Experiences</a>
-                                </Link>
-                            </HeaderOption>
-                        </div>
+                        <Text as={'h2'} fontSize={'18px'} fontWeight={500} className={`${isActiveSearch?'':'hidden'} `}>Hãy khám phá và trải nghiệm ngay bây giờ!</Text>
                     </div>
                     {/* right side */}
                     {/* <HStack spacing={2}></HStack> */}

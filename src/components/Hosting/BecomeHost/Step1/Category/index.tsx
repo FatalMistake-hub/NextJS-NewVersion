@@ -52,7 +52,7 @@ const CategorySt1: FC<Props> = ({ dataCategory }) => {
                                 } as ICategory),
                             );
                         }}
-                        value={tour.categories[0].categoryId}
+                        value={`${tour.categories[0].categoryId}`}
                     >
                         <SimpleGrid columns={2} spacing={16}>
                             {dataCategory.map((result: any, index) => (
@@ -67,7 +67,7 @@ const CategorySt1: FC<Props> = ({ dataCategory }) => {
                                     <Text fontSize={'16px'} fontWeight={'500'}>
                                         {result.categoryName}
                                     </Text>
-                                    <Radio value={result.categoryId} size={'lg'}></Radio>
+                                    <Radio value={`${result.categoryId}`} size={'lg'}></Radio>
                                 </Box>
                             ))}
                         </SimpleGrid>

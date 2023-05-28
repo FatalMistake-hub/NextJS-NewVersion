@@ -125,7 +125,7 @@ const TripDetail = () => {
                 w={'full'}
                 className={`block fixed left-0 right-0 bottom-0 top-0 sm:block sm:sticky top-[86px]  h-map flex-grow bg-teal-900 bg-opacity-10   duration-100`}
             >
-                <MapTrip></MapTrip>
+                {/* <MapTrip></MapTrip> */}
             </Stack>
         </Box>
     );

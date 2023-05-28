@@ -29,8 +29,11 @@ export interface IAllTours {
     totalPages: number;
 }
 export interface IImageTour {
-    imageId?: string;
+    imageId: string;
     link: string;
+}
+export interface ImagePatch extends IImageTour {
+    tourId?: number;
 }
 export interface TourPost {
     categories: ICategory[];

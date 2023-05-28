@@ -130,6 +130,9 @@ input {
     .h-map {
         height: calc(100vh - 86px);
     }
+    .h-map-sm {
+        height: calc(100vh - 86px);
+    }
 }
 .swiper {
     width: 100%;
@@ -201,6 +204,29 @@ body {
     font-weight: 600;
     font-size: 16px !important;
 }
+.fc .fc-daygrid-day.fc-day-today {
+    position: relative;
+    font-weight: 700;
+}
+.fc-day-past {
+    -moz-user-select: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    -ms-user-select: none !important;
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+}
+.fc .fc-daygrid-day.fc-day-today::after {
+    content: 'Hôm nay';
+    position: absolute;
+    color: #000;
+    top: 22px;
+    left: 52px;
+    // font-weight: 700;
+    font-style: italic;
+    color: #000;
+    z-index: 2;
+}
 .fc-daygrid-day-frame:not(:has(.fc-daygrid-event-harness)) {
     background: repeating-linear-gradient(
         -45deg,
@@ -210,6 +236,21 @@ body {
         rgb(221, 221, 221) 9px
     ) !important;
     color: rgb(113, 113, 113) !important;
+}
+.fc-day-today{
+    background: repeating-linear-gradient(
+        -45deg,
+        rgb(255, 255, 255),
+        rgb(255, 255, 255) 8px,
+        rgb(221, 221, 221) 8px,
+        rgb(221, 221, 221) 9px
+    ) !important;
+    color: rgb(113, 113, 113) !important;
+}
+
+
+.fc-daygrid-event-harness {
+    display: none !important;
 }
 .fc-daygrid-day-top {
     flex-direction: row !important;

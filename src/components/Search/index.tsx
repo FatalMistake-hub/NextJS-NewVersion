@@ -114,8 +114,8 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                             separator
                             relative
                             type="inputText"
-                            title="Location"
-                            placeholder="Where are you going?"
+                            title="Địa điểm"
+                            placeholder="Tìm kiếm điểm đến"
                             active={searchMenu === ESearchMenu.LOCATION}
                             value={location}
                             onChange={(e) => {
@@ -136,8 +136,8 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                         <SearchOptionButton
                             // withSearch
                             separator
-                            title="Date"
-                            placeholder="Add when you want to go"
+                            title="Ngày"
+                            placeholder="Thêm ngày bạn muốn đi"
                             active={searchMenu === ESearchMenu.CHECK_OUT}
                             value={formatRangeDate(checkIn, checkOut)}
                             onFocus={() => setSearchMenu(ESearchMenu.CHECK_OUT)}
@@ -156,8 +156,8 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                         <SearchOptionButton
                             relative
                             withSearch
-                            title="Guests"
-                            placeholder="Add guests"
+                            title="Khách"
+                            placeholder="Thêm khách bạn đi cùng"
                             active={searchMenu === ESearchMenu.GUESTS}
                             value={formatGuests(guests)}
                             onFocus={() => setSearchMenu(ESearchMenu.GUESTS)}
@@ -174,8 +174,8 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                                 <div>
                                     <div className="flex py-4 border-b border-gray-200 border-opacity-70">
                                         <div className="flex-grow">
-                                            <h2 className="font-medium">Adults</h2>
-                                            <p className="text-sm leading-4 text-gray-300">Ages 13 or above</p>
+                                            <h2 className="font-medium">Người lớn</h2>
+                                            <p className="text-sm leading-4 text-gray-300">Từ 13 tuổi trở lên</p>
                                         </div>
                                         <Counter
                                             type="adults"
@@ -189,8 +189,8 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                                 <div>
                                     <div className="flex py-4 border-b border-gray-200 border-opacity-70">
                                         <div className="flex-grow">
-                                            <h2 className="font-medium">Children</h2>
-                                            <p className="text-sm leading-4 text-gray-300">Ages 2-12</p>
+                                            <h2 className="font-medium">Trẻ em</h2>
+                                            <p className="text-sm leading-4 text-gray-300">Độ tuổi 2 - 12</p>
                                         </div>
                                         <Counter
                                             type="children"
@@ -204,8 +204,8 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                                 <div>
                                     <div className="flex py-4">
                                         <div className="flex-grow">
-                                            <h2 className="font-medium">Infants</h2>
-                                            <p className="text-sm leading-4 text-gray-300">Under 2</p>
+                                            <h2 className="font-medium">Em bé</h2>
+                                            <p className="text-sm leading-4 text-gray-300">Dưới 2 tuổi</p>
                                         </div>
                                         <Counter
                                             type="infants"

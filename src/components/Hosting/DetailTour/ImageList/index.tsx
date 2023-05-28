@@ -1,18 +1,21 @@
-import { SimpleGrid, Box, Text, IconButton, Tag, TagLabel } from '@chakra-ui/react';
+import { SimpleGrid, Box, Text, IconButton, Tag, TagLabel, useToast } from '@chakra-ui/react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { BiX } from 'react-icons/bi';
+import { BiUpload, BiX } from 'react-icons/bi';
+import useMutateTourImg from 'src/hooks/guest/tours/mutateImg/useMutateTourImg';
 import usePostToCloudinary from 'src/hooks/imageCloudinary/usePostToCloudinary';
 
 import { IImageTour, ITours } from 'src/types/tours.type';
 type Props = {
     data: IImageTour[] | undefined;
     imageMain: string | undefined;
+    tourId: number | undefined;
 };
-const ImageList = ({ data, imageMain }: Props) => {
+const ImageList = ({ data, imageMain, tourId }: Props) => {
     const [loading, setLoading] = useState(false);
-
+    const toast = useToast();
+    const { mutationAdd, mutationDel, mutationUpdate } = useMutateTourImg(tourId);
     const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, open } = useDropzone({
         accept: {
             'image/*': ['.jpeg', '.png'],
@@ -25,14 +28,36 @@ const ImageList = ({ data, imageMain }: Props) => {
                     return link;
                 }),
             );
+            const transformedData = await listLink.map((item) => ({
+                link: item.link as string,
+                tourId: tourId,
+            }));
+            console.log(transformedData);
+            await mutationAdd.mutateAsync(transformedData);
+            setLoading(false);
+        },
+    });
+    const DropMain = useDropzone({
+        accept: {
+            'image/*': ['.jpeg', '.png'],
+            // 'count': 1,
+        },
+        onDrop: async (acceptedFiles) => {
+            setLoading(true);
+            const listLink = await Promise.all(
+                acceptedFiles.map(async (file) => {
+                    const link = await usePostToCloudinary(file);
+                    return link;
+                }),
+            );
 
-            // await dispatch(ADD_LISTIMAGE(listLink));
+            // await mutationAdd.mutateAsync(listLink[0]);
             setLoading(false);
         },
     });
     return (
-        <SimpleGrid minChildWidth="210px" spacing="40px" mt={4}>
-            <Box key={imageMain} height="140px" position={'relative'}>
+        <SimpleGrid minChildWidth="300px" spacing="40px" mt={4}>
+            <Box key={imageMain} height="200px" position={'relative'}>
                 {imageMain && (
                     <Image
                         src={imageMain}
@@ -44,16 +69,17 @@ const ImageList = ({ data, imageMain }: Props) => {
                         className={'rounded-[12px]'}
                     />
                 )}
+                <input {...DropMain.getInputProps()} />
                 <IconButton
                     aria-label="del"
-                    icon={<BiX />}
+                    icon={<BiUpload />}
                     position={'absolute'}
                     top={3}
                     right={3}
                     rounded={'full'}
                     size={'sm'}
                     bgColor={'white'}
-                    // onClick={() => dispatch(DELETE_IMAGE(0))}
+                    onClick={open}
                 />
                 <Tag
                     size={'md'}
@@ -73,7 +99,7 @@ const ImageList = ({ data, imageMain }: Props) => {
             {data?.map(
                 (item) =>
                     item.link != imageMain && (
-                        <Box height="140px" position={'relative'}>
+                        <Box height="200px" position={'relative'}>
                             <Image
                                 src={item.link}
                                 alt={`Picture of `}
@@ -83,6 +109,17 @@ const ImageList = ({ data, imageMain }: Props) => {
                                 blurDataURL={item.link}
                                 className={'rounded-[12px]'}
                             />
+                            {/* <IconButton
+                                aria-label="del"
+                                icon={<BiUpload />}
+                                position={'absolute'}
+                                top={3}
+                                right={3}
+                                rounded={'full'}
+                                size={'sm'}
+                                bgColor={'white'}
+                                // onClick={() => )}
+                            /> */}
                             <IconButton
                                 aria-label="del"
                                 icon={<BiX />}
@@ -92,13 +129,25 @@ const ImageList = ({ data, imageMain }: Props) => {
                                 rounded={'full'}
                                 size={'sm'}
                                 bgColor={'white'}
-                                // onClick={() => dispatch(DELETE_IMAGE(0))}
+                                onClick={() => {
+                                    if (data.length <= 5) {
+                                        toast({
+                                            title: 'Cảnh báo',
+                                            description: 'Phải có ít nhất 5 ảnh',
+                                            status: 'warning',
+                                            duration: 5000,
+                                            isClosable: true,
+                                        });
+                                    } else {
+                                        mutationDel.mutate(item.imageId);
+                                    }
+                                }}
                             />
                         </Box>
                     ),
             )}
 
-            <Box height="140px" position={'relative'}>
+            <Box height="200px" position={'relative'}>
                 <Box
                     onClick={open}
                     {...getRootProps({ className: 'dropzone' })}

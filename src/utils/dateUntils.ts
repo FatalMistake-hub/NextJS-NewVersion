@@ -72,10 +72,10 @@ export const minuteToTime = (totalMinutes: any) => {
     };
     return timePoint;
 };
-export const TimeFrameListStart = ( timeSlotLength = 0) => {
+export const TimeFrameListStart = (timeSlotLength = 0) => {
     const timePoints = [];
 
-    let minutes = 0 ;
+    let minutes = 0;
     let totalMinutes = 1440 - timeSlotLength;
     while (minutes < totalMinutes) {
         const hour = Math.floor(minutes / 60);
@@ -114,3 +114,12 @@ export const TimeFrameListEnd = (timestart = 0, timeSlotLength = 0) => {
 
     return timePoints;
 };
+export const DateTimeToString = (dateString: any) => {
+    const date = new Date(dateString);
+    const month = date.toLocaleString('vi-VN', { month: 'long' });
+    const day = date.getDate();
+
+    const result = `${day - 1}  ${month}`;
+    return result;
+};
+

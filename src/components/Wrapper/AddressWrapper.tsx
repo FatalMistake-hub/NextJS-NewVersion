@@ -56,7 +56,7 @@ const AddressWrapper: FC<ILocationProps> = ({ className, status, response, loadi
                                 <FaSearchLocation className="w-6 h-6" />
                             </div>
                             <div className="flex flex-col">
-                                <p className="flex text-base font-medium items-center justify-start text-base text-left">
+                                <p className="flex text-base  font-medium items-center justify-start text-base text-left">
                                     {data.properties.name}
                                 </p>
                                 <p className="flex text-sm items-center justify-start text-base text-left">

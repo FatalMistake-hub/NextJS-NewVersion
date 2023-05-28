@@ -5,6 +5,7 @@ import {
     AccordionItem,
     AccordionPanel,
     Box,
+    Button,
     Flex,
     Heading,
     IconButton,
@@ -18,6 +19,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { BiX } from 'react-icons/bi';
 import { BsEyeFill } from 'react-icons/bs';
+import useDelTour from 'src/hooks/guest/tours/useDelTour';
 
 import useGetDetailHostTour from 'src/hooks/hosting/tours/useGetDetailHostTour';
 import ImageList from './ImageList';
@@ -28,8 +30,9 @@ interface IDetailTourProps {
 }
 const DetailTour = ({ onClose, tourId }: IDetailTourProps) => {
     const { data, isLoading, isError, isSuccess } = useGetDetailHostTour(tourId);
+    const { deleteTours } = useDelTour();
     return (
-        <div className="px-2">
+        <div className="px-2 relative">
             <Flex px={6} py={8} alignItems={'center'} justifyContent={'space-between'}>
                 <Heading lineHeight={1.4} as="h2" fontSize={'26px'} fontWeight={'600'} width={'full'} noOfLines={2}>
                     {data?.title}
@@ -78,7 +81,7 @@ const DetailTour = ({ onClose, tourId }: IDetailTourProps) => {
                         <AccordionIcon />
                     </AccordionButton>
                     <AccordionPanel pb={4}>
-                        <ImageList data={data?.images} imageMain={data?.imageMain} />
+                        <ImageList data={data?.images} imageMain={data?.imageMain} tourId={data?.tourId} />
                     </AccordionPanel>
                 </AccordionItem>
                 <AccordionItem py={4}>
@@ -101,6 +104,22 @@ const DetailTour = ({ onClose, tourId }: IDetailTourProps) => {
                     </AccordionPanel>
                 </AccordionItem>
             </Accordion>
+            <Button
+                colorScheme={'red'}
+                right={12}
+                bottom={-24}
+                position={'absolute'}
+                onClick={() => {
+                    if (tourId) {
+                        deleteTours(tourId);
+                    }
+                    if (isSuccess) {
+                        onClose();
+                    }
+                }}
+            >
+                Xoá{' '}
+            </Button>
         </div>
     );
 };

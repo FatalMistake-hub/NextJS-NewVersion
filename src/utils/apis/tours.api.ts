@@ -9,9 +9,19 @@ export const getAllTours = async (pageNo: number, pageSize: number) =>
             pageSize: pageSize,
         },
     });
+
 export const getDetailTours = async (index: string | string[] | undefined) => await http.get<ITours>(`/tour/tour-detail/${index}`);
+
 export const getDetailHostTours = async (index: number | undefined) => await http.get<ITours>(`/tour/tour-detail/${index}`);
+
 export const postTours = async (tours: TourPost, axiosAuth: AxiosInstance) => await axiosAuth.post<ITours>(`/tour/create/`, tours);
+
+export const patchTours = async (tours: Omit<ITours, 'tourId'>, tourId: number, axiosAuth: AxiosInstance) =>
+    await axiosAuth.patch<ITours>(`/tour/tour-update/${tourId}`, tours);
+
+export const deleteTours = async (tourId: number, axiosAuth: AxiosInstance) =>
+    await axiosAuth.delete<ITours>(`/tour/tour-delete/${tourId}`);
+
 export const getAllHostTours = async (pageNo: number, pageSize: number, axiosAuth: AxiosInstance) =>
     await axiosAuth.get<IAllTours>('/tour/tour-owner/', {
         params: {

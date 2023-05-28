@@ -15,7 +15,6 @@ const MapLocation: FC = ({children}) => {
     };
     return (
         <ReactMapGL
-        
             {...viewport}
             mapStyle={process.env.MAPBOX_STYLE}
             mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
@@ -25,6 +24,8 @@ const MapLocation: FC = ({children}) => {
             // onViewportChange={(viewport: any) => setViewport(viewport)}
             className="relative rounded-3xl"
         >
+            <NavigationControl className="top-3 right-3" />
+            <ScaleControl className="bottom-3 left-3" />
             {children}
         </ReactMapGL>
     );

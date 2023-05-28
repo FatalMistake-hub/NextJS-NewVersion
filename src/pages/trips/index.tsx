@@ -33,9 +33,9 @@ const Trips = () => {
                     </Button>
                 </Box> */}
                 <Box pt={6} pb={9}>
-                    <Text fontSize={'14px'} fontWeight={'400'} width={'full'} mt={1}>
+                    {/* <Text fontSize={'14px'} fontWeight={'400'} width={'full'} mt={1}>
                         Bạn không tìm thấy đặt phòng/đặt chỗ của mình ở đây?Truy cập Trung tâm trợ giúp
-                    </Text>
+                    </Text> */}
                 </Box>
             </VStack>
         </div>
