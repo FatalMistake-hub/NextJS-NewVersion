@@ -5,6 +5,8 @@ export interface UseQueryResponse<T> {
     isLoading: boolean;
     isError: boolean;
     isSuccess: boolean;
+    isRefetching?: boolean;
+    isFetching?: boolean;
 }
 export interface UseQueryInfinityResponse<T> {
     data?: T;

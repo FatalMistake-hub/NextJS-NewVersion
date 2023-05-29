@@ -14,6 +14,7 @@ import {
     Checkbox,
     Button,
     Text,
+    SkeletonText,
 } from '@chakra-ui/react';
 import { BiX, BiCheck, BiMinus, BiPlus } from 'react-icons/bi';
 import { useEffect, useState, useMemo, memo } from 'react';
@@ -31,7 +32,7 @@ const DaySection = () => {
     const router = useRouter();
     const { id } = router.query;
     const [resValue, setResValue] = useState<IDayBookResponse>();
-    const { data, refetch } = useGetAllTimeBookingByRange(dateRange.startDate, dateRange.endDate, 1000, id, setResValue);
+    const { ref, refetch, isFetching } = useGetAllTimeBookingByRange(dateRange.startDate, dateRange.endDate, 1000, id, setResValue);
     const { isLoading, isError, isSuccess, mutateDayTime } = usePatchDayTimeBook(Number(id), refetch);
     console.log(resValue);
     const handleStatusDay = (status: boolean, id: string) => {
@@ -119,6 +120,7 @@ const DaySection = () => {
                             colorScheme={!statusList ? 'blackAlpha' : ''}
                             textColor={!statusList ? 'black' : 'white'}
                             backgroundColor={!statusList ? 'white' : 'black'}
+                            isLoading={isFetching}
                             size="sm"
                             icon={<BiX />}
                             onClick={() => handleListStatusDay(true)}
@@ -133,6 +135,7 @@ const DaySection = () => {
                             textColor={statusList ? 'black' : 'white'}
                             backgroundColor={statusList ? 'white' : 'black'}
                             size="sm"
+                            isLoading={isFetching}
                             icon={<BiCheck />}
                             onClick={() => handleListStatusDay(false)}
                         />
@@ -145,94 +148,101 @@ const DaySection = () => {
                 </Heading>
                 <Flex justifyContent={'space-between'}>
                     <Accordion allowToggle w={'full'}>
-                        {resValue?.content
-                            ?.sort((a: any, b: any) => a.date_name.localeCompare(b.date_name))
-                            .map((date: IDayBook) => (
-                                <AccordionItem key={date.dayBookId} px={2} border={'0px'}>
-                                    {({ isExpanded }: any) => (
-                                        <>
-                                            <AccordionButton>
-                                                {/* <AccordionIcon /> */}
-                                                {isExpanded ? <BiMinus fontSize="12px" /> : <BiPlus fontSize="12px" />}
+                        {isFetching ? (
+                            <Stack w={'full'} float={'right'} className="relative justify-start flex items-center ">
+                                <SkeletonText w={'full'} mt={2}  px={6} noOfLines={10} spacing="4" skeletonHeight="8" />
+                                
+                            </Stack>
+                        ) : (
+                            resValue?.content
+                                ?.sort((a: any, b: any) => a.date_name.localeCompare(b.date_name))
+                                .map((date: IDayBook) => (
+                                    <AccordionItem key={date.dayBookId} px={2} border={'0px'}>
+                                        {({ isExpanded }: any) => (
+                                            <>
+                                                <AccordionButton>
+                                                    {/* <AccordionIcon /> */}
+                                                    {isExpanded ? <BiMinus fontSize="12px" /> : <BiPlus fontSize="12px" />}
 
-                                                <Text fontSize={'18px'} fontWeight={600} as="span" flex="1" textAlign="left" pl={4}>
-                                                    {DateTimeToString(date.date_name)}
-                                                </Text>
-                                                <Stack spacing={4} direction="row" align="center">
-                                                    <IconButton
-                                                        rounded={'full'}
-                                                        fontSize="20px"
-                                                        aria-label="x"
-                                                        variant={!date.isDeleted ? 'outline' : ''}
-                                                        colorScheme={!date.isDeleted ? 'blackAlpha' : ''}
-                                                        textColor={!date.isDeleted ? 'black' : 'white'}
-                                                        backgroundColor={!date.isDeleted ? 'white' : 'black'}
-                                                        size="sm"
-                                                        icon={<BiX />}
-                                                        // isDisabled={!date.isDeleted}
-                                                        onClick={() => {
-                                                            if (date.isDeleted === false) {
-                                                                handleStatusDay(true, date.dayBookId);
-                                                            }
-                                                        }}
-                                                    />
+                                                    <Text fontSize={'18px'} fontWeight={600} as="span" flex="1" textAlign="left" pl={4}>
+                                                        {DateTimeToString(date.date_name)}
+                                                    </Text>
+                                                    <Stack spacing={4} direction="row" align="center">
+                                                        <IconButton
+                                                            rounded={'full'}
+                                                            fontSize="20px"
+                                                            aria-label="x"
+                                                            variant={!date.isDeleted ? 'outline' : ''}
+                                                            colorScheme={!date.isDeleted ? 'blackAlpha' : ''}
+                                                            textColor={!date.isDeleted ? 'black' : 'white'}
+                                                            backgroundColor={!date.isDeleted ? 'white' : 'black'}
+                                                            size="sm"
+                                                            icon={<BiX />}
+                                                            // isDisabled={!date.isDeleted}
+                                                            onClick={() => {
+                                                                if (date.isDeleted === false) {
+                                                                    handleStatusDay(true, date.dayBookId);
+                                                                }
+                                                            }}
+                                                        />
 
-                                                    <IconButton
-                                                        rounded={'full'}
-                                                        fontSize="20px"
-                                                        aria-label="v"
-                                                        variant={date.isDeleted ? 'outline' : ''}
-                                                        colorScheme={date.isDeleted ? 'blackAlpha' : ''}
-                                                        textColor={date.isDeleted ? 'black' : 'white'}
-                                                        backgroundColor={date.isDeleted ? 'white' : 'black'}
-                                                        size="sm"
-                                                        icon={<BiCheck />}
-                                                        // isDisabled={date.isDeleted}
-                                                        onClick={() => {
-                                                            if (date.isDeleted === true) {
-                                                                handleStatusDay(false, date.dayBookId);
-                                                            }
-                                                        }}
-                                                    />
-                                                </Stack>
-                                            </AccordionButton>
-                                            <AccordionPanel pb={4}>
-                                                <SimpleGrid columns={2} spacing={4} p={2}>
-                                                    {date.timeBookDetailList.map((time: TimeBookViewDtoList) => (
-                                                        <Checkbox
-                                                            fontSize={'14px'}
-                                                            fontWeight={600}
-                                                            colorScheme="teal"
-                                                            size={'md'}
-                                                            key={time.timeId}
-                                                            isChecked={!time.isDeleted}
-                                                            value={`${time.isDeleted}`}
-                                                            onChange={(e) => handleChecked(time.isDeleted, time.timeId, date.dayBookId)}
+                                                        <IconButton
+                                                            rounded={'full'}
+                                                            fontSize="20px"
+                                                            aria-label="v"
+                                                            variant={date.isDeleted ? 'outline' : ''}
+                                                            colorScheme={date.isDeleted ? 'blackAlpha' : ''}
+                                                            textColor={date.isDeleted ? 'black' : 'white'}
+                                                            backgroundColor={date.isDeleted ? 'white' : 'black'}
+                                                            size="sm"
+                                                            icon={<BiCheck />}
+                                                            // isDisabled={date.isDeleted}
+                                                            onClick={() => {
+                                                                if (date.isDeleted === true) {
+                                                                    handleStatusDay(false, date.dayBookId);
+                                                                }
+                                                            }}
+                                                        />
+                                                    </Stack>
+                                                </AccordionButton>
+                                                <AccordionPanel pb={4}>
+                                                    <SimpleGrid columns={2} spacing={4} p={2}>
+                                                        {date.timeBookDetailList.map((time: TimeBookViewDtoList) => (
+                                                            <Checkbox
+                                                                fontSize={'14px'}
+                                                                fontWeight={600}
+                                                                colorScheme="teal"
+                                                                size={'md'}
+                                                                key={time.timeId}
+                                                                isChecked={!time.isDeleted}
+                                                                value={`${time.isDeleted}`}
+                                                                onChange={(e) => handleChecked(time.isDeleted, time.timeId, date.dayBookId)}
+                                                            >
+                                                                {time.start_time.substring(0, 5)} - {time.end_time.substring(0, 5)}
+                                                            </Checkbox>
+                                                        ))}
+                                                    </SimpleGrid>
+                                                    <Flex justifyContent={'flex-end'} p={'2'}>
+                                                        <Button
+                                                            colorScheme={'teal'}
+                                                            onClick={() => {
+                                                                const value = resValue.content.find(
+                                                                    (res: any) => res.dayBookId === date.dayBookId,
+                                                                );
+                                                                if (value) {
+                                                                    mutateDayTime([value]);
+                                                                }
+                                                            }}
                                                         >
-                                                            {time.start_time.substring(0, 5)} - {time.end_time.substring(0, 5)}
-                                                        </Checkbox>
-                                                    ))}
-                                                </SimpleGrid>
-                                                <Flex justifyContent={'flex-end'} p={'2'}>
-                                                    <Button
-                                                        colorScheme={'teal'}
-                                                        onClick={() => {
-                                                            const value = resValue.content.find(
-                                                                (res: any) => res.dayBookId === date.dayBookId,
-                                                            );
-                                                            if (value) {
-                                                                mutateDayTime([value]);
-                                                            }
-                                                        }}
-                                                    >
-                                                        Lưu
-                                                    </Button>
-                                                </Flex>
-                                            </AccordionPanel>
-                                        </>
-                                    )}
-                                </AccordionItem>
-                            ))}
+                                                            Lưu
+                                                        </Button>
+                                                    </Flex>
+                                                </AccordionPanel>
+                                            </>
+                                        )}
+                                    </AccordionItem>
+                                ))
+                        )}
                     </Accordion>
                 </Flex>
             </Box>
