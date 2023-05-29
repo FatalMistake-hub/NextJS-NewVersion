@@ -46,7 +46,7 @@ function Tours() {
 
     const { isOpen: isModalOpen, onClose: onModalClose, onOpen: onModalOpen } = useDisclosure();
     const { isOpen: isModalOpen2, onClose: onModalClose2, onOpen: onModalOpen2 } = useDisclosure();
-
+console.log('data');
     return (
         <>
             {data ? (

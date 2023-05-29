@@ -25,7 +25,6 @@ import { Session } from 'next-auth';
 import { ProtectedLayout } from '@components/layouts/ProtectedLayouts';
 import { LayoutKeys, Layouts } from '@components/layouts';
 
-
 const progressBar = new ProgressBar({
     size: 2,
     color: '#00b0b3',
@@ -66,14 +65,12 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                     <QueryClientProvider client={queryClient}>
                         <ReduxProvider store={store}>
                             <PersistGate loading={null} persistor={persistor}>
-                                {/* <Hydrate state={pageProps.dehydratedState}> */}
                                 {Component.requireAuth ? (
                                     <ProtectedLayout>{renderWithLayout(<Component {...pageProps} />)}</ProtectedLayout>
                                 ) : (
                                     renderWithLayout(<Component {...pageProps} />)
                                 )}
                                 <ReactQueryDevtools />
-                                {/* </Hydrate> */}
                             </PersistGate>
                         </ReduxProvider>
                     </QueryClientProvider>

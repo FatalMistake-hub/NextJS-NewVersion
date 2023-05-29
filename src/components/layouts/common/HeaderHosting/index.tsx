@@ -56,7 +56,9 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                 return 0;
             case '/hosting/inbox':
                 return 1;
-            case '/hosting/calendar':
+            case `/hosting/calendar/[id]`:
+                return 2;
+            case `/hosting/calendar-router`:
                 return 2;
             case '/hosting/performance':
                 return 3;

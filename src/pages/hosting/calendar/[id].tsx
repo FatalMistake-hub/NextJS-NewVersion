@@ -30,23 +30,12 @@ import { RESET, selectCalendarHost, SET_TOURID, SET_VIEW } from 'src/redux/slice
 import { ITours } from 'src/types/tours.type';
 import { useRouter } from 'next/router';
 const CalendarHosting = () => {
-    const { status, ref, data, isSuccess, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useGetAllHostTour(1000);
+    const { data, ref, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useGetAllHostTour(1000);
     const dispatch = useAppDispatch();
     const { view } = useAppSelector(selectCalendarHost);
     const router = useRouter();
     const { id } = router.query;
     const tourId = Number(id);
-    useEffect(() => {
-        const handleRouteChange = () => {
-            window.location.reload();
-        };
-
-        router.events.on('routeChangeComplete', handleRouteChange);
-
-        return () => {
-            router.events.off('routeChangeComplete', handleRouteChange);
-        };
-    }, []);
 
     return (
         <div className="pt-[86px] flex relative   ">
@@ -109,7 +98,7 @@ const CalendarHosting = () => {
                                     )}
                                 </RadioGroup>
 
-                                {/* <div ref={ref}></div> */}
+                                <div ref={ref}></div>
                             </PopoverBody>
                         </PopoverContent>
                     </Popover>
@@ -162,7 +151,7 @@ const CalendarHosting = () => {
     );
 };
 
-// CalendarHosting.requireAuth = true;
+CalendarHosting.requireAuth = true;
 export default CalendarHosting;
 
 CalendarHosting.getLayout = function (page: ReactElement) {

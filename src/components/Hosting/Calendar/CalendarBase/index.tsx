@@ -18,22 +18,34 @@ const headerToolbar = {
 };
 const CalendarBase = () => {
     const toast = useToast();
-    const [res, setRes] = useState<IDayBook[]>();
+    // const [res, setRes] = useState<IDayBook[]>();
     const dispatch = useAppDispatch();
     const { view } = useAppSelector(selectCalendarHost);
     const router = useRouter();
     const { id } = router.query;
     const tourId = Number(id);
-    const { data } = useGetAllDayBookingById(tourId);
 
-    useEffect(() => {
-        if (tourId !== 0) {
-            setRes(data);
-        }
-        return () => {
-            setRes(undefined);
-        };
-    }, [tourId, data]);
+    let res: IDayBook[] | undefined = undefined;
+    if (typeof tourId === 'number') {
+        const { data } = useGetAllDayBookingById(tourId);
+        res = data
+    }
+    ;
+
+    // useEffect(() => {
+    //     if (tourId !== 0) {
+    //         setRes(data);
+    //     }
+    //     return () => {
+    //         setRes(undefined);
+    //     };
+    // }, [tourId, data]);
+// {
+//                 title: 'Đã đặt',
+//                 start: item.date_name.replace(' ', 'T'),
+//                 end: item.date_name.replace(' ', 'T'),
+//                 display: 'list-item',
+//             }
 
     return (
         <FullCalendar
@@ -42,12 +54,25 @@ const CalendarBase = () => {
             // }}
             lazyFetching={true}
             headerToolbar={headerToolbar}
-            events={res?.map((item) => ({
-                title: 'Đã đặt',
-                start: item.date_name.replace(' ', 'T'),
-                end: item.date_name.replace(' ', 'T'),
-                display: 'list-item',
-            }))}
+            events={
+                res?.map((item) => {
+                    if (item.isDeleted === false) {
+                        return {
+                            title: 'Đã đặt',
+                            start: item.date_name.replace(' ', 'T'),
+                            end: item.date_name.replace(' ', 'T'),
+                            display: 'list-item',
+                        };
+                    }
+                    else {
+                        return {
+                            title: 'Đã đặt',
+                            start: item.date_name.replace(' ', 'T'),
+                            end: item.date_name.replace(' ', 'T'),
+                            display: 'none',
+                        };
+                    }
+                })}
             selectable={true}
             unselectAuto={false}
             // dateClick={function (info) {

@@ -16,11 +16,13 @@ const CalendarRouter = () => {
     }
     return (
         <div className="pt-[86px] flex relative   ">
-            <Stack w={'full'} className="relative">
-                <SkeletonText mt="4" noOfLines={4} spacing="4" skeletonHeight="4" />
+            <Stack w={'full'} className="relative justify-center flex items-center">
+                <SkeletonText w={'80%'} mt="20" noOfLines={2} spacing="4" skeletonHeight="8" />
+                <SkeletonText w={'80%'} pt="20" noOfLines={4} spacing="4" skeletonHeight="8" />
             </Stack>
-            <Stack w={'430px'} float={'right'} className="border-l border-l-gray-700  ">
-                <SkeletonText mt="4" noOfLines={4} spacing="4" skeletonHeight="4" />
+            <Stack w={'430px'} float={'right'} className="relative justify-start flex items-center ">
+                <SkeletonText w={'80%'} mt="20" noOfLines={2} spacing="4" skeletonHeight="8" />
+                <SkeletonText w={'80%'} pt="20" noOfLines={4} spacing="4" skeletonHeight="8" />
             </Stack>
         </div>
     );

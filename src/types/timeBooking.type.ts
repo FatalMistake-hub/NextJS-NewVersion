@@ -8,13 +8,13 @@ export interface IDayBook {
     date_name: string;
     tourId: number;
     status: string;
-    is_deleted: boolean;
-    timeBookViewDtoList: TimeBookViewDtoList[];
+    isDeleted: boolean;
+    timeBookDetailList: TimeBookViewDtoList[];
 }
 
 export interface TimeBookViewDtoList {
     timeId: string;
     start_time: string;
     end_time: string;
-    is_deleted: boolean;
+    isDeleted: boolean;
 }

@@ -42,17 +42,17 @@ export const useRefreshToken = () => {
             }
         } catch (error: any) {
             if (error.response && error.response.status === 401) {
-                // await toast({
-                //     title: 'Phiên đăng nhập đã hết hạn.',
-                //     description: 'Vui lòng đăng nhập lại.',
-                //     status: 'error',
-                //     duration: 3000,
-                //     isClosable: true,
-                //     position: 'top',
-                // });
+                await toast({
+                    title: 'Phiên đăng nhập đã hết hạn.',
+                    description: 'Vui lòng đăng nhập lại.',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                });
                 await signOut({
                     redirect: false,
-                    // , callbackUrl: '/'
+                     callbackUrl: '/'
                 });
                 // await router.push('/');
             }

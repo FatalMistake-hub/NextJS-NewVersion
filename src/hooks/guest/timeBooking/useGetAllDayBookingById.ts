@@ -5,7 +5,11 @@ import { getAllDayTimeById } from 'src/utils/apis/timeBooking.api';
 
 
 const useGetAllDayBookingById = (tourId: number): UseQueryResponse<IDayBook[]> => {
-    const { data, isLoading, isError, isSuccess } = useQuery(['GET_ALL_DAYBOOKING_TOURS', tourId], async() => await getAllDayTimeById(tourId));
+    const { data, isLoading, isError, isSuccess } = useQuery(
+        ['GET_ALL_DAYBOOKING_TOURS', tourId],
+        async () => await getAllDayTimeById(tourId),
+        { refetchOnWindowFocus: false },
+    );
 
     return {
         data: data?.data,
