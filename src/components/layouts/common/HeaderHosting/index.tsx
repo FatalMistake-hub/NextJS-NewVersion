@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import {
     Box,
     Button,
+    SkeletonCircle,
     Stack,
     Tab,
     TabIndicator,
@@ -48,7 +49,7 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
         if (isActiveSearch) style.push('bg-white border border-b-gray-700  pb-8');
         return style.join(' ');
     };
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const router = useRouter();
     const handleRouter = (path: string) => {
         switch (path) {
@@ -302,6 +303,8 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                     <div className="flex items-center justify-end min-w-[370px]">
                         {session?.user ? (
                             <MenuHosting />
+                        ) : status === 'loading' ? (
+                            <SkeletonCircle size="12" />
                         ) : (
                             <Stack direction="row" spacing={4} align="center">
                                 <Button colorScheme="teal" variant="solid" onClick={onLoginOpen}>

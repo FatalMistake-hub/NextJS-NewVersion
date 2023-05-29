@@ -16,12 +16,13 @@ import {
     selectSearch,
 } from 'src/redux/slice/searchSlice';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import { formatRangeDate } from 'src/utils/dateUntils';
+import { DateTimeToStringBooking, formatRangeDate } from 'src/utils/dateUntils';
 import DateRangeCP from '@components/Search/DateRange';
 import Counter from '@components/Search/Counter';
 import { formatGuests, formatGuestsMinimal } from 'src/utils/guestsUtil';
 import Link from 'next/link';
 import { ITours } from 'src/types/tours.type';
+import { TimeBookViewDtoList } from 'src/types/timeBooking.type';
 enum ESearchMenu {
     LOCATION = 'location',
     CHECK_IN = 'checkIn',
@@ -32,8 +33,9 @@ enum ESearchMenu {
 interface CardsBookingProps {
     priceOnePerson: number | undefined;
     tourId: number | undefined;
+    dataTimeBooking: any;
 }
-const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson, tourId }) => {
+const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson, tourId, dataTimeBooking }) => {
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
 
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
@@ -73,7 +75,7 @@ const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson, tourId }) => {
                             <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
                                 Từ {priceOnePerson?.toLocaleString('vi-VN')}₫<span className="text-base font-normal ">/người</span>
                             </Heading>
-                            <Text className="text-base font-normal underline text-gray-300 hover:text-gray-400 ">Hiển thị tất cả giá</Text>
+                            {/* <Text className="text-base font-normal underline text-gray-300 hover:text-gray-400 ">Hiển thị tất cả giá</Text> */}
                         </section>
                     </div>
                     <div
@@ -166,45 +168,30 @@ const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson, tourId }) => {
                             </SearchOptionButton>
                         </form>
                     </div>
-                    <div className="py-6 flex items-start justify-between w-full">
-                        <div>
-                            <Text mb={1} fontSize={'14px'} fontWeight={600}>
-                                Th 6, 28 thg 4
-                            </Text>
-                            <Text mb={1} fontSize={'12px'} color={'black.500'}>
-                                18:00–20:30
-                            </Text>
-                        </div>
-                        <div className="flex flex-col items-end">
-                            <Text mb={1} fontSize={'14px'} fontWeight={600}>
-                                Từ $35<span className="font-normal">/nhóm</span>
-                            </Text>
-                            <Button size={'sm'} colorScheme="teal">
-                                Chọn
-                            </Button>
-                        </div>
-                    </div>
+                    <VStack divider={<StackDivider borderColor="black.200" />} align="stretch" width={'full'}>
+                        {dataTimeBooking.slice(0, 3).map((time: any) => (
+                            <div key={time?.timeId} className="py-6 flex items-start justify-between w-full">
+                                <div>
+                                    <Text mb={1} fontSize={'14px'} fontWeight={600}>
+                                        {DateTimeToStringBooking(time?.day)}
+                                    </Text>
+                                    <Text mb={1} fontSize={'12px'} color={'black.500'}>
+                                        {time?.start_time.slice(0, 5)}–{time?.end_time.slice(0, 5)}
+                                    </Text>
+                                </div>
+                                <div className="flex flex-col items-end">
+                                    <Text mb={2} fontSize={'14px'} fontWeight={600}>
+                                        Từ {priceOnePerson?.toLocaleString('vi-VN')}₫<span className="font-normal">/người</span>
+                                    </Text>
+                                    <Button size={'sm'} colorScheme="teal">
+                                        <Link href={'/payment/1'}>Chọn</Link>
+                                    </Button>
+                                </div>
+                            </div>
+                        ))}
+                    </VStack>
                 </Box>
-                <Box>
-                    <div className="py-6 flex items-start justify-between w-full">
-                        <div>
-                            <Text mb={1} fontSize={'14px'} fontWeight={600}>
-                                Th 6, 28 thg 4
-                            </Text>
-                            <Text mb={1} fontSize={'12px'} color={'black.500'}>
-                                18:00–20:30
-                            </Text>
-                        </div>
-                        <div className="flex flex-col items-end">
-                            <Text mb={1} fontSize={'14px'} fontWeight={600}>
-                                Từ $35<span className="font-normal">/nhóm</span>
-                            </Text>
-                            <Button size={'sm'} colorScheme="teal">
-                                <Link href={'/payment/1'}>Chọn</Link>
-                            </Button>
-                        </div>
-                    </div>
-                </Box>
+
                 <Box>
                     <Button
                         border={'1px solid #000000'}

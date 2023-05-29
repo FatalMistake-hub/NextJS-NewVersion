@@ -28,14 +28,20 @@ import {
 } from 'src/redux/slice/searchSlice';
 // Import Swiper React components
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import { formatRangeDate } from 'src/utils/dateUntils';
+import { DateTimeToStringBooking, formatRangeDate } from 'src/utils/dateUntils';
 import DateRangeCP from '@components/Search/DateRange';
 import Counter from '@components/Search/Counter';
 import { formatGuests } from 'src/utils/guestsUtil';
 import { BiUpload } from 'react-icons/bi';
+import { useRouter } from 'next/router';
+import useGetAllTimeBookingByRange from 'src/hooks/guest/timeBooking/useGetAllTimeBookingByRange';
+import { time } from 'console';
+import { IDayBook, TimeBookViewDtoList } from 'src/types/timeBooking.type';
+import moment from 'moment';
 interface AllDayModalProps {
     isOpen: boolean;
     onClose: () => void;
+    price:number
 }
 enum ESearchMenu {
     LOCATION = 'location',
@@ -43,7 +49,7 @@ enum ESearchMenu {
     CHECK_OUT = 'checkOut',
     GUESTS = 'guests',
 }
-const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose }) => {
+const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose,price }) => {
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
 
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
@@ -72,6 +78,23 @@ const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose }) => {
 
         setSearchMenu(null);
     };
+
+    
+    const router = useRouter();
+    const { id } = router.query;
+    const {
+        status,
+        data,
+        ref,
+        isFetching,
+        isFetchingNextPage,
+        isFetchingPreviousPage,
+        fetchNextPage,
+        fetchPreviousPage,
+        refetch,
+        hasNextPage,
+        hasPreviousPage,
+    } = useGetAllTimeBookingByRange(moment(checkIn).format('YYYY-MM-DD'), moment(checkOut).format('YYYY-MM-DD'), 2, id);
     const dateRangeStyle = 'left-2 right-2 searchbar:left-auto searchbar:right-1/4 searchbar:translate-x-1/4 searchbar:w-[800px] ';
     return (
         <>
@@ -192,110 +215,60 @@ const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose }) => {
                                     </div>
                                 </div>
                                 <div className="w-[50%] relative">
-                                    <Heading as="h4" fontSize={'18px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
-                                        Th 4, 10 thg 5
-                                    </Heading>
-                                    <div className="mb-4 border rounded-lg ">
-                                        <div className="p-6 flex flex-col">
-                                            <div className=" flex justify-between items-start  ">
-                                                <div className="">
-                                                    <Text mb={1} fontSize={'16px'} color={'black.500'}>
-                                                        18:00–20:30
-                                                    </Text>
-                                                    <Text mb={4} fontSize={'16px'} fontWeight={600}>
-                                                        Từ $35<span className="font-normal">/người</span>
-                                                    </Text>
-                                                </div>
-                                                <Button colorScheme={'teal'}>Chọn</Button>
-                                            </div>
-                                            <Text mt={6} fontSize={'14px'} color={'black.500'}>
-                                                Được tổ chức bằng Tiếng Anh, Tiếng Hàn Quốc và Tiếng Nhật Bản
-                                            </Text>
-                                        </div>
-                                        <div className="pl-6 bg-gray-100 w-full py-2 px-1">
-                                            <Button leftIcon={<BiUpload />} variant={'link'} color={'black'} fontWeight={400}>
-                                                Chia sẻ
-                                            </Button>
-                                        </div>
-                                    </div>
-                                    <Heading as="h4" fontSize={'18px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
-                                        Th 4, 10 thg 5
-                                    </Heading>
-                                    <div className="mb-4 border rounded-lg ">
-                                        <div className="p-6 flex flex-col">
-                                            <div className=" flex justify-between items-start  ">
-                                                <div className="">
-                                                    <Text mb={1} fontSize={'16px'} color={'black.500'}>
-                                                        18:00–20:30
-                                                    </Text>
-                                                    <Text mb={4} fontSize={'16px'} fontWeight={600}>
-                                                        Từ $35<span className="font-normal">/người</span>
-                                                    </Text>
-                                                </div>
-                                                <Button colorScheme={'teal'}>Chọn</Button>
-                                            </div>
-                                            <Text mt={6} fontSize={'14px'} color={'black.500'}>
-                                                Được tổ chức bằng Tiếng Anh, Tiếng Hàn Quốc và Tiếng Nhật Bản
-                                            </Text>
-                                        </div>
-                                        <div className="pl-6 bg-gray-100 w-full py-2 px-1">
-                                            <Button leftIcon={<BiUpload />} variant={'link'} color={'black'} fontWeight={400}>
-                                                Chia sẻ
-                                            </Button>
-                                        </div>
-                                    </div>
-                                    <Heading as="h4" fontSize={'18px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
-                                        Th 4, 10 thg 5
-                                    </Heading>
-                                    <div className="mb-4 border rounded-lg ">
-                                        <div className="p-6 flex flex-col">
-                                            <div className=" flex justify-between items-start  ">
-                                                <div className="">
-                                                    <Text mb={1} fontSize={'16px'} color={'black.500'}>
-                                                        18:00–20:30
-                                                    </Text>
-                                                    <Text mb={4} fontSize={'16px'} fontWeight={600}>
-                                                        Từ $35<span className="font-normal">/người</span>
-                                                    </Text>
-                                                </div>
-                                                <Button colorScheme={'teal'}>Chọn</Button>
-                                            </div>
-                                            <Text mt={6} fontSize={'14px'} color={'black.500'}>
-                                                Được tổ chức bằng Tiếng Anh, Tiếng Hàn Quốc và Tiếng Nhật Bản
-                                            </Text>
-                                        </div>
-                                        <div className="pl-6 bg-gray-100 w-full py-2 px-1">
-                                            <Button leftIcon={<BiUpload />} variant={'link'} color={'black'} fontWeight={400}>
-                                                Chia sẻ
-                                            </Button>
-                                        </div>
-                                    </div>
-                                    <Heading as="h4" fontSize={'18px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={4}>
-                                        Th 4, 10 thg 5
-                                    </Heading>
-                                    <div className="mb-4 border rounded-lg ">
-                                        <div className="p-6 flex flex-col">
-                                            <div className=" flex justify-between items-start  ">
-                                                <div className="">
-                                                    <Text mb={1} fontSize={'16px'} color={'black.500'}>
-                                                        18:00–20:30
-                                                    </Text>
-                                                    <Text mb={4} fontSize={'16px'} fontWeight={600}>
-                                                        Từ $35<span className="font-normal">/người</span>
-                                                    </Text>
-                                                </div>
-                                                <Button colorScheme={'teal'}>Chọn</Button>
-                                            </div>
-                                            <Text mt={6} fontSize={'14px'} color={'black.500'}>
-                                                Được tổ chức bằng Tiếng Anh, Tiếng Hàn Quốc và Tiếng Nhật Bản
-                                            </Text>
-                                        </div>
-                                        <div className="pl-6 bg-gray-100 w-full py-2 px-1">
-                                            <Button leftIcon={<BiUpload />} variant={'link'} color={'black'} fontWeight={400}>
-                                                Chia sẻ
-                                            </Button>
-                                        </div>
-                                    </div>
+                                    {data?.pages.map((page: any) =>
+                                        page.data.content.map(
+                                            (day: IDayBook) =>
+                                                day.isDeleted === false &&
+                                                day.timeBookDetailList.map(
+                                                    (time: TimeBookViewDtoList) =>
+                                                        time.isDeleted === false && (
+                                                            <>
+                                                                <Heading
+                                                                    as="h4"
+                                                                    fontSize={'18px'}
+                                                                    fontWeight={'600'}
+                                                                    width={'full'}
+                                                                    noOfLines={1}
+                                                                    mb={4}
+                                                                >
+                                                                    {DateTimeToStringBooking(day.date_name)}
+                                                                </Heading>
+                                                                <div className="mb-4 border rounded-lg ">
+                                                                    <div className="p-6 flex flex-col">
+                                                                        <div className=" flex justify-between items-start  ">
+                                                                            <div className="">
+                                                                                <Text mb={1} fontSize={'16px'} color={'black.500'}>
+                                                                                    {time.start_time?.slice(0, 5)}–
+                                                                                    {time.end_time?.slice(0, 5)}
+                                                                                </Text>
+                                                                                <Text mb={4} fontSize={'16px'} fontWeight={600}>
+                                                                                    Từ {price?.toLocaleString('vi-VN')}₫
+                                                                                    <span className="font-normal">/người</span>
+                                                                                </Text>
+                                                                            </div>
+                                                                            <Button colorScheme={'teal'}>Chọn</Button>
+                                                                        </div>
+                                                                        <Text mt={6} fontSize={'14px'} color={'black.500'}>
+                                                                            Được tổ chức bằng Tiếng Anh, Tiếng Hàn Quốc và Tiếng Nhật Bản
+                                                                        </Text>
+                                                                    </div>
+                                                                    <div className="pl-6 bg-gray-100 w-full py-2 px-1">
+                                                                        <Button
+                                                                            leftIcon={<BiUpload />}
+                                                                            variant={'link'}
+                                                                            color={'black'}
+                                                                            fontWeight={400}
+                                                                        >
+                                                                            Chia sẻ
+                                                                        </Button>
+                                                                    </div>
+                                                                </div>
+                                                            </>
+                                                        ),
+                                                ),
+                                        ),
+                                    )}
+                                    <div ref={ref}></div>
                                 </div>
                             </div>
                         </div>

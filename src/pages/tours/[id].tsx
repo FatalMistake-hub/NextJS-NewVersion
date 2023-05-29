@@ -20,7 +20,7 @@ import { BiCheck, BiChevronRight, BiNotification, BiShare, BiStar } from 'react-
 import Rating from '@components/Card/Rating';
 import { BsGeoAltFill, BsHeart, BsShieldFillCheck, BsStar } from 'react-icons/bs';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CardBooking from '@components/Card/CardBooking';
 import { FaStar, FaUser } from 'react-icons/fa';
 import Comment from '@components/Comment';
@@ -36,17 +36,57 @@ import { numberToTime } from 'src/utils/dateUntils';
 import MapTrip from '@components/Map/MapTrip';
 import { Marker } from 'react-map-gl';
 import MapLocation from '@components/Map/MapLocation';
+import useGetAllTimeBookingByRange from 'src/hooks/guest/timeBooking/useGetAllTimeBookingByRange';
+import { IDayBook, TimeBookViewDtoList } from 'src/types/timeBooking.type';
+import { useAppSelector } from 'src/redux/hook';
+import { selectSearch } from 'src/redux/slice/searchSlice';
+import moment from 'moment';
 function Tours() {
     const router = useRouter();
     const { id } = router.query;
     const { data, isLoading, isError, isSuccess } = useGetDetailTour(id);
+    const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
     const [show, setShow] = useState<any>({ cp1: false, cp2: false, cp3: false, cp4: false });
 
     const handleToggle = (name: string) => setShow((prevState: any) => ({ ...prevState, [name]: !prevState[name] }));
 
     const { isOpen: isModalOpen, onClose: onModalClose, onOpen: onModalOpen } = useDisclosure();
     const { isOpen: isModalOpen2, onClose: onModalClose2, onOpen: onModalOpen2 } = useDisclosure();
-console.log('data');
+
+    // Ngày hiện tại
+
+    const {
+        data: dataTime,
+        isFetching,
+        isSuccess: isTimeSuccess,
+    } = useGetAllTimeBookingByRange(moment(checkIn).format('YYYY-MM-DD'), moment(checkOut).format('YYYY-MM-DD'), 20, id);
+
+    const [jsxCardBookTime, setJsxCardBookTime] = useState<any>([]);
+
+    useEffect(() => {
+        if (dataTime) {
+            const updatedJsxMoreTime = dataTime.pages.flatMap((page: any) =>
+                page.data.content.reduce((accumulator: any, day: IDayBook) => {
+                    if (!day.isDeleted) {
+                        const filteredTimes = day.timeBookDetailList.filter((time: TimeBookViewDtoList) => !time.isDeleted);
+                        if (filteredTimes.length > 0) {
+                            const timesWithDay = filteredTimes.map((time: TimeBookViewDtoList) => ({
+                                ...time,
+                                day: day.date_name,
+                            }));
+                            accumulator.push(...timesWithDay);
+                        }
+                    }
+                    return accumulator;
+                }, []),
+            );
+
+            const sortedJsxMoreTime = updatedJsxMoreTime.sort((a: any, b: any) => a.day.localeCompare(b.day));
+
+            setJsxCardBookTime(sortedJsxMoreTime);
+        }
+    }, [dataTime]);
+    console.log(jsxCardBookTime);
     return (
         <>
             {data ? (
@@ -204,7 +244,7 @@ console.log('data');
                                             <div dangerouslySetInnerHTML={{ __html: `${data?.working}` }}></div>
                                         </Collapse>
                                         <Button size="sm" variant={'link'} onClick={() => handleToggle('cp1')} mt="1rem">
-                                            {show.cp1 ? 'Ẩn bớt' : 'Xem thêm'}
+                                            {show.cp1 ? 'Xem thêm' : 'Ẩn bớt'}
                                         </Button>
                                     </Box>
                                     <Box py={12}>
@@ -243,7 +283,7 @@ console.log('data');
                                             <br />
                                         </Collapse>
                                         <Button size="sm" variant={'link'} onClick={() => handleToggle('cp2')} mt="1rem">
-                                            {show.cp2 ? 'Ẩn bớt' : 'Xem thêm'}
+                                            {show.cp2 ? 'Xem thêm' : 'Ẩn bớt'}
                                         </Button>
                                         <div className="flex w-full mt-8 items-center">
                                             <Box
@@ -271,7 +311,7 @@ console.log('data');
                                 </VStack>
                             </div>
                             <div className="relative w-[33.33333333333%] ml-[8.33333333332%]">
-                                <CardBooking priceOnePerson={data?.priceOnePerson} tourId={data.tourId} />
+                                <CardBooking dataTimeBooking={jsxCardBookTime} priceOnePerson={data?.priceOnePerson} tourId={data.tourId} />
                             </div>
                         </Box>
                         <Box py={12}>
@@ -338,24 +378,16 @@ console.log('data');
                                         modules={[Pagination]}
                                         className="min-h-[240px]"
                                     >
-                                        <SwiperSlide>
-                                            <CardSelectDay />
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <CardSelectDay />
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <CardSelectDay />
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <CardSelectDay />
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <CardSelectDay />
-                                        </SwiperSlide>
-                                        <SwiperSlide>
-                                            <CardSelectDay />
-                                        </SwiperSlide>
+                                        {jsxCardBookTime.slice(0, 15).map((time: any, index: number) => (
+                                            <SwiperSlide key={time?.timeId}>
+                                                <CardSelectDay
+                                                    start_time={time?.start_time}
+                                                    end_time={time?.end_time}
+                                                    day={time?.day}
+                                                    price={data?.priceOnePerson}
+                                                />
+                                            </SwiperSlide>
+                                        ))}
                                     </Swiper>
                                 </div>
                                 <Button
@@ -480,7 +512,7 @@ console.log('data');
                         </Box>
                     </VStack>
                     <AllPictureModal isOpen={isModalOpen} onClose={onModalClose} data={data?.images} />
-                    <AllDayModal isOpen={isModalOpen2} onClose={onModalClose2} />
+                    <AllDayModal isOpen={isModalOpen2} onClose={onModalClose2} price={data.priceOnePerson} />
                 </Flex>
             ) : (
                 <div></div>

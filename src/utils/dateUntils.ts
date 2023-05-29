@@ -123,3 +123,15 @@ export const DateTimeToString = (dateString: any) => {
     return result;
 };
 
+export const DateTimeToStringBooking = (dateString: any) => {
+    const date = new Date(dateString);
+    const weekdays = ['CN', 'Th 2', 'Th 3', 'Th 4', 'Th 5', 'Th 6', 'Th 7'];
+    const weekday = weekdays[date.getDay()];
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+
+    // Tạo chuỗi định dạng thứ 6, 28 tháng 4
+    return weekday + ', ' + day + ' th ' + month;
+};
+
+// var datetimeString = "2023-05-31T17:00:00.000Z";

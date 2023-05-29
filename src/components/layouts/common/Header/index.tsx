@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { Box, Button, Stack, useColorMode, useColorModeValue, useDisclosure, useToast, Text } from '@chakra-ui/react';
+import { Box, Button, Stack, useColorMode, useColorModeValue, useDisclosure, useToast, Text, SkeletonCircle } from '@chakra-ui/react';
 import { FaAirbnb, FaGlobe, FaMoon, FaSearch, FaSun } from 'react-icons/fa';
 
 import Link from 'next/link';
@@ -43,7 +43,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
         if (isActiveSearch) style.push('bg-white shadow-lg pb-8');
         return style.join(' ');
     };
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     return (
         <>
             <header className={`${headerBehavior()} z-50 fixed top-0 w-full pt-5 duration-300 md:transition-none`}>
@@ -101,7 +101,9 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                     </button>
                     {/* middle side navigation */}
                     <div className="relative flex flex-col items-center justify-center order-last col-span-2 xl:order-none xl:col-span-1">
-                        <Text as={'h2'} fontSize={'18px'} fontWeight={500} className={`${isActiveSearch?'':'hidden'} `}>Hãy khám phá và trải nghiệm ngay bây giờ!</Text>
+                        <Text as={'h2'} fontSize={'18px'} fontWeight={500} className={`${isActiveSearch ? '' : 'hidden'} `}>
+                            Hãy khám phá và trải nghiệm ngay bây giờ!
+                        </Text>
                     </div>
                     {/* right side */}
                     {/* <HStack spacing={2}></HStack> */}
@@ -118,6 +120,8 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
 
                         {session?.user ? (
                             <MenuBase />
+                        ) : status === 'loading' ? (
+                            <SkeletonCircle size="12" />
                         ) : (
                             <Stack direction="row" spacing={4} align="center">
                                 <Button colorScheme="teal" variant="solid" onClick={onLoginOpen}>

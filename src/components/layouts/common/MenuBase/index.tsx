@@ -5,13 +5,14 @@ import { Logout } from 'src/utils/apis/auths.api';
 
 const MenuBase = () => {
     const toast = useToast();
-    const { data: session } = useSession();
+    const { data: session,status } = useSession();
     return (
         <Menu>
             <MenuButton
                 transition="all 0.2s"
                 borderRadius="full"
                 borderWidth="1px"
+                
                 _hover={{ bg: 'gray.400' }}
                 _expanded={{ bg: 'teal.400' }}
                 _focus={{ boxShadow: 'outline' }}

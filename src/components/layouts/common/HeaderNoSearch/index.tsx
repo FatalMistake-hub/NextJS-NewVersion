@@ -8,6 +8,7 @@ import {
     MenuDivider,
     MenuItem,
     MenuList,
+    SkeletonCircle,
     Stack,
     useColorMode,
     useColorModeValue,
@@ -44,7 +45,7 @@ export const HeaderNoSearch: FC<HeaderNoSearchProps> = ({ exploreNearby, searchP
         if (isActiveSearch) style.push('bg-white shadow-lg pb-8');
         return style.join(' ');
     };
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     return (
         <>
             <header className={`${headerBehavior()} z-50 fixed top-0 w-full pt-5 duration-300 md:transition-none`}>
@@ -81,6 +82,8 @@ export const HeaderNoSearch: FC<HeaderNoSearchProps> = ({ exploreNearby, searchP
 
                         {session?.user ? (
                             <MenuBase />
+                        ) : status === 'loading' ? (
+                            <SkeletonCircle size="12" />
                         ) : (
                             <Stack direction="row" spacing={4} align="center">
                                 <Button colorScheme="teal" variant="solid" onClick={onLoginOpen}>

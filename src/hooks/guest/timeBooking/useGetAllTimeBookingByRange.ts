@@ -12,7 +12,7 @@ const useGetAllTimeBookingByRange = (
     end_time: string,
     pageSize: number,
     tourId: string | string[] | undefined,
-    setRes: Dispatch<SetStateAction<IDayBookResponse | undefined>>,
+    setRes?: Dispatch<SetStateAction<IDayBookResponse | undefined>>,
 ): UseQueryInfinityResponse<any> => {
     const { ref, inView } = useInView({ threshold: 0 });
 
@@ -29,7 +29,7 @@ const useGetAllTimeBookingByRange = (
         hasNextPage,
         hasPreviousPage,
     } = useInfiniteQuery(
-        ['GET_ALL_TIME_BOOK_RANGE', tourId, start_time, end_time],
+        ['GET_ALL_TIME_BOOK_RANGE', tourId, start_time, end_time, pageSize],
         async ({ pageParam = 1 }) => await getAllTimeByRange(start_time, end_time, pageParam, pageSize, tourId),
         {
             getNextPageParam: (lastPage: any, allPages) => {
@@ -42,7 +42,7 @@ const useGetAllTimeBookingByRange = (
             },
             refetchOnWindowFocus: false,
             onSuccess: (res) => {
-                setRes(res.pages[0].data);
+                if (setRes) setRes(res.pages[0].data);
             },
         },
     );

@@ -66,7 +66,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                                 <LanguagePicker />
                             </Collapse>
                             <Button size="sm" onClick={() => handleToggle('cp1')} mt="1rem">
-                                {show.cp1 ? 'Ẩn bớt' : 'Xem thêm'}
+                                {show.cp1 ? 'Xem thêm' : 'Ẩn bớt'}
                             </Button>
                         </div>
 
@@ -85,7 +85,7 @@ export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
                                 <LanguagePicker />
                             </Collapse>
                             <Button size="sm" onClick={() => handleToggle('cp2')} mt="1rem">
-                                {show.cp2 ? 'Ẩn bớt' : 'Xem thêm'}
+                                {show.cp2 ? 'Xem thêm' : 'Ẩn bớt'}
                             </Button>
                         </div>
 

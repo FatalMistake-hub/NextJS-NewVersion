@@ -15,13 +15,18 @@ interface IGuests {
     children: number;
     infants: number;
 }
+// Ngày hiện tại
+    const today = new Date();
 
+    // Ngày sau đó 1 tháng
+    const monthsLater = new Date();
+    monthsLater.setMonth(monthsLater.getMonth() + 1);
 export const searchSlice = createSlice({
     name: 'search',
     initialState: {
         location: '',
-        checkIn: null,
-        checkOut: null,
+        checkIn: today,
+        checkOut: monthsLater,
         guests: { adults: 0, children: 0, infants: 0 },
     } as ISearchState,
     reducers: {
