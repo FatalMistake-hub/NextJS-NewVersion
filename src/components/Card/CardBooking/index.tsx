@@ -81,7 +81,11 @@ const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson, tourId, dataTimeBo
                     <div
                         className={`min-h-[65px] mt-6 mb-4 min-w-full rounded-xl bg-white border border-gray-300 duration-300 hidden md:flex`}
                     >
-                        <form action="/search" className={'max-w-full  lg:grid-cols-[1fr,1fr,auto] grid flex-grow'} onSubmit={handleOnSubmit}>
+                        <form
+                            action="/search"
+                            className={'max-w-full  lg:grid-cols-[1fr,1fr,auto] grid flex-grow'}
+                            onSubmit={handleOnSubmit}
+                        >
                             <SearchOptionButton
                                 // withSearch
                                 separator

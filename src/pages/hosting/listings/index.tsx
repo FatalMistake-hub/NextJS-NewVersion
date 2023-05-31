@@ -49,7 +49,16 @@ const Listings = () => {
                 <Box w={'full'}>
                     <Flex alignItems={'center'} justifyContent={'space-between'} pt={8} px={8} pb={4}>
                         <Heading lineHeight={1.4} as="h1" fontSize={'26px'} fontWeight={'600'} width={'full'} noOfLines={2}>
-                            {data?.pages[0].data.totalElements} trải nghiệm cho thuê
+                            {data?.pages.reduce((acc: number, page: any) => {
+                                const countTour = page.data.content.reduce((tours: number, tour: ITours) => {
+                                    if (!tour.isDeleted) {
+                                        return tours + 1;
+                                    }
+                                    return tours;
+                                }, 0);
+                                return acc + countTour;
+                            }, 0)}{' '}
+                            trải nghiệm cho thuê
                         </Heading>
                         {isOpen ? (
                             <IconButton
@@ -161,20 +170,20 @@ const Listings = () => {
                                 )}
                             </Tbody>
                         </Table>
-                    {hasNextPage && (
-                        <Button
-                            onClick={() => fetchNextPage()}
-                            disabled={!hasNextPage || isFetchingNextPage}
-                            isLoading={isFetchingNextPage}
-                            // ref={ref}
-                            colorScheme="black"
-                            color={'white'}
-                            p={6}
-                            className="my-8 bg-black  "
-                        >
-                            {isFetchingNextPage ? 'Đang tải...' : hasNextPage ? 'Tải thêm' : 'Tải thêm'}
-                        </Button>
-                    )}
+                        {hasNextPage && (
+                            <Button
+                                onClick={() => fetchNextPage()}
+                                disabled={!hasNextPage || isFetchingNextPage}
+                                isLoading={isFetchingNextPage}
+                                // ref={ref}
+                                colorScheme="black"
+                                color={'white'}
+                                p={6}
+                                className="my-8 bg-black  "
+                            >
+                                {isFetchingNextPage ? 'Đang tải...' : hasNextPage ? 'Tải thêm' : 'Tải thêm'}
+                            </Button>
+                        )}
                     </TableContainer>
                 </Box>
             </VStack>

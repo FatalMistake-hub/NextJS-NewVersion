@@ -16,7 +16,7 @@ export const getDetailHostTours = async (index: number | undefined) => await htt
 
 export const postTours = async (tours: TourPost, axiosAuth: AxiosInstance) => await axiosAuth.post<ITours>(`/tour/create/`, tours);
 
-export const patchTours = async (tours: Omit<ITours, 'tourId'>, tourId: number, axiosAuth: AxiosInstance) =>
+export const patchTours = async (tours: Partial<ITours>, tourId: number | undefined, axiosAuth: AxiosInstance) =>
     await axiosAuth.patch<ITours>(`/tour/tour-update/${tourId}`, tours);
 
 export const deleteTours = async (tourId: number, axiosAuth: AxiosInstance) =>

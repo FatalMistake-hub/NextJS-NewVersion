@@ -46,9 +46,7 @@ const TimeFrameSt2: FC = () => {
     if (tour.timeBookStart.hour !== undefined && tour.timeBookStart.minutes !== undefined) {
         timeListEnd = TimeFrameListEnd(timeToMinute(tour.timeBookStart), tour.timeSlotLength);
 
-        console.log(timeListEnd[0]);
     }
-    console.log('start', timeListStart);
     return (
         <>
             <div className="w-full justify-center  flex min-h-[calc(100vh-176px)] px-20">

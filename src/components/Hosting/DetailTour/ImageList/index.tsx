@@ -4,18 +4,20 @@ import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { BiUpload, BiX } from 'react-icons/bi';
 import useMutateTourImg from 'src/hooks/guest/tours/mutateImg/useMutateTourImg';
+import usePatchTour from 'src/hooks/hosting/tours/useUpdateTour';
 import usePostToCloudinary from 'src/hooks/imageCloudinary/usePostToCloudinary';
 
 import { IImageTour, ITours } from 'src/types/tours.type';
 type Props = {
     data: IImageTour[] | undefined;
     imageMain: string | undefined;
-    tourId: number | undefined;
+    tourId: number|undefined;
 };
 const ImageList = ({ data, imageMain, tourId }: Props) => {
     const [loading, setLoading] = useState(false);
     const toast = useToast();
     const { mutationAdd, mutationDel, mutationUpdate } = useMutateTourImg(tourId);
+    const { patchTours, isLoadingPost, isError, isSuccess } = usePatchTour(tourId);
     const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, open } = useDropzone({
         accept: {
             'image/*': ['.jpeg', '.png'],
@@ -32,15 +34,14 @@ const ImageList = ({ data, imageMain, tourId }: Props) => {
                 link: item.link as string,
                 tourId: tourId,
             }));
-            console.log(transformedData);
             await mutationAdd.mutateAsync(transformedData);
             setLoading(false);
         },
     });
     const DropMain = useDropzone({
+        maxFiles: 1,
         accept: {
             'image/*': ['.jpeg', '.png'],
-            // 'count': 1,
         },
         onDrop: async (acceptedFiles) => {
             setLoading(true);
@@ -50,13 +51,16 @@ const ImageList = ({ data, imageMain, tourId }: Props) => {
                     return link;
                 }),
             );
-
-            // await mutationAdd.mutateAsync(listLink[0]);
+            if (listLink.length > 0) {
+                await patchTours({
+                    imageMain: listLink[0].link,
+                });
+            }
             setLoading(false);
         },
     });
     return (
-        <SimpleGrid minChildWidth="300px" spacing="40px" mt={4}>
+        <SimpleGrid minChildWidth="240px" spacing="40px" mt={4}>
             <Box key={imageMain} height="200px" position={'relative'}>
                 {imageMain && (
                     <Image
@@ -79,7 +83,7 @@ const ImageList = ({ data, imageMain, tourId }: Props) => {
                     rounded={'full'}
                     size={'sm'}
                     bgColor={'white'}
-                    onClick={open}
+                    onClick={DropMain.open}
                 />
                 <Tag
                     size={'md'}
@@ -130,7 +134,7 @@ const ImageList = ({ data, imageMain, tourId }: Props) => {
                                 size={'sm'}
                                 bgColor={'white'}
                                 onClick={() => {
-                                    if (data.length <= 5) {
+                                    if (data.length <= 4) {
                                         toast({
                                             title: 'Cảnh báo',
                                             description: 'Phải có ít nhất 5 ảnh',

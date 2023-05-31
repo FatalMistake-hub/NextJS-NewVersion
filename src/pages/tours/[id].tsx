@@ -132,6 +132,17 @@ function Tours() {
                             borderRadius={'xl'}
                         >
                             <>
+                                <GridItem area={'pic4'} position="relative">
+                                    <Image
+                                        src={data?.imageMain}
+                                        alt={`Picture of `}
+                                        layout="fill"
+                                        objectFit="cover"
+                                        placeholder="blur"
+                                        blurDataURL={data?.imageMain}
+                                        className=""
+                                    />
+                                </GridItem>
                                 <GridItem area={'pic'} position="relative">
                                     <Image
                                         src={data?.images[0].link}
@@ -173,17 +184,6 @@ function Tours() {
                                         objectFit="cover"
                                         placeholder="blur"
                                         blurDataURL={data?.images[3].link}
-                                        className=""
-                                    />
-                                </GridItem>
-                                <GridItem area={'pic4'} position="relative">
-                                    <Image
-                                        src={data?.images[4].link}
-                                        alt={`Picture of `}
-                                        layout="fill"
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={data?.images[4].link}
                                         className=""
                                     />
                                 </GridItem>

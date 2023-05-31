@@ -14,15 +14,18 @@ import {
     Text,
     VStack,
 } from '@chakra-ui/react';
-import TourTittleForm from '@components/Hosting/DetailTour/TourTittleForm';
+import TourFormWrapper from '@components/Wrapper/TourFormWrapper';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BiX } from 'react-icons/bi';
 import { BsEyeFill } from 'react-icons/bs';
-import useDelTour from 'src/hooks/guest/tours/useDelTour';
+import useDelTour from 'src/hooks/hosting/tours/useDelTour';
 
 import useGetDetailHostTour from 'src/hooks/hosting/tours/useGetDetailHostTour';
+import BasicInfo from './BasicInfo';
 import ImageList from './ImageList';
+import Location from './Location';
+import PriceTime from './PriceTime';
 
 interface IDetailTourProps {
     onClose: () => void;
@@ -32,7 +35,7 @@ const DetailTour = ({ onClose, tourId }: IDetailTourProps) => {
     const { data, isLoading, isError, isSuccess } = useGetDetailHostTour(tourId);
     const { deleteTours } = useDelTour();
     return (
-        <div className="px-2 relative">
+        <div className="px-8  relative">
             <Flex px={6} py={8} alignItems={'center'} justifyContent={'space-between'}>
                 <Heading lineHeight={1.4} as="h2" fontSize={'26px'} fontWeight={'600'} width={'full'} noOfLines={2}>
                     {data?.title}
@@ -100,26 +103,63 @@ const DetailTour = ({ onClose, tourId }: IDetailTourProps) => {
                         <AccordionIcon />
                     </AccordionButton>
                     <AccordionPanel pb={4}>
-                        <TourTittleForm />
+                        <BasicInfo />
+                    </AccordionPanel>
+                </AccordionItem>
+                <AccordionItem py={4}>
+                    <AccordionButton>
+                        <Heading
+                            lineHeight={1.4}
+                            as="h3"
+                            fontSize={'20px'}
+                            fontWeight={'600'}
+                            width={'full'}
+                            noOfLines={2}
+                            textAlign="left"
+                        >
+                            Định giá và lịch trình
+                        </Heading>
+                        <AccordionIcon />
+                    </AccordionButton>
+                    <AccordionPanel pb={4}>
+                        <PriceTime />
+                    </AccordionPanel>
+                </AccordionItem>
+                <AccordionItem py={4}>
+                    <AccordionButton>
+                        <Heading
+                            lineHeight={1.4}
+                            as="h3"
+                            fontSize={'20px'}
+                            fontWeight={'600'}
+                            width={'full'}
+                            noOfLines={2}
+                            textAlign="left"
+                        >
+                            Vị trí
+                        </Heading>
+                        <AccordionIcon />
+                    </AccordionButton>
+                    <AccordionPanel pb={4}>
+                        <Location />
                     </AccordionPanel>
                 </AccordionItem>
             </Accordion>
-            <Button
-                colorScheme={'red'}
-                right={12}
-                bottom={-24}
-                position={'absolute'}
-                onClick={() => {
-                    if (tourId) {
-                        deleteTours(tourId);
-                    }
-                    if (isSuccess) {
-                        onClose();
-                    }
-                }}
-            >
-                Xoá{' '}
-            </Button>
+            <div className="absolute right-12 bottom-[-100px] pb-8">
+                <Button
+                    colorScheme={'red'}
+                    onClick={() => {
+                        if (tourId) {
+                            deleteTours(tourId);
+                        }
+                        if (isSuccess) {
+                            onClose();
+                        }
+                    }}
+                >
+                    Xoá{' '}
+                </Button>
+            </div>
         </div>
     );
 };
