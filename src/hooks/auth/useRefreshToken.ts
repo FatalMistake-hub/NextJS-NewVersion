@@ -2,6 +2,8 @@ import { useToast } from '@chakra-ui/react';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
+import { useAppDispatch } from 'src/redux/hook';
+import { SET_isLogin_FALSE } from 'src/redux/slice/authSlice';
 import { http } from 'src/utils/instance/http';
 
 export const useRefreshToken = () => {
@@ -9,7 +11,7 @@ export const useRefreshToken = () => {
     const toast = useToast();
     const router = useRouter();
     const refreshTokenCalledRef = useRef(false);
-
+    const dispatch = useAppDispatch();
     const refreshToken = async () => {
         try {
             if (!refreshTokenCalledRef.current) {
@@ -52,8 +54,9 @@ export const useRefreshToken = () => {
                 });
                 await signOut({
                     redirect: false,
-                     callbackUrl: '/'
+                    //  callbackUrl: '/'
                 });
+                dispatch(SET_isLogin_FALSE());
                 // await router.push('/');
             }
         }

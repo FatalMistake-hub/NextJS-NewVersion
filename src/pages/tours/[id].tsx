@@ -86,7 +86,6 @@ function Tours() {
             setJsxCardBookTime(sortedJsxMoreTime);
         }
     }, [dataTime]);
-    console.log(jsxCardBookTime);
     return (
         <>
             {data ? (
@@ -206,7 +205,7 @@ function Tours() {
                     </div>
                     <VStack divider={<StackDivider borderColor="black.200" />} align="stretch">
                         <Box display={'flex'} width={'100%'}>
-                            <div className="relative w-[58.33333333336%]">
+                            <div className="relative w-[60%]">
                                 <VStack divider={<StackDivider borderColor="black.200" />} align="stretch">
                                     <Box pt={12} pb={6}>
                                         <div className="flex justify-between items-center">
@@ -310,7 +309,7 @@ function Tours() {
                                     </Box>
                                 </VStack>
                             </div>
-                            <div className="relative w-[33.33333333333%] ml-[8.33333333332%]">
+                            <div className="relative w-[38%] ml-[12%]">
                                 <CardBooking dataTimeBooking={jsxCardBookTime} priceOnePerson={data?.priceOnePerson} tourId={data.tourId} />
                             </div>
                         </Box>

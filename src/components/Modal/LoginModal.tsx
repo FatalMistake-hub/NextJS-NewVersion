@@ -23,12 +23,16 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { signIn } from 'next-auth/react';
 import { http } from 'src/utils/instance/http';
+import { useAppDispatch, useAppSelector } from 'src/redux/hook';
+import { selectAuth, SET_isLogin_TRUE } from 'src/redux/slice/authSlice';
 interface LoginModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+    const { isLogin } = useAppSelector(selectAuth);
+    const dispatch = useAppDispatch();
     const Login = useFormik({
         initialValues: {
             email: '',
@@ -46,20 +50,26 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 ),
         }),
         onSubmit: async (values) => {
-
             const res = await signIn('credentials', {
                 email: values.email,
                 password: values.password,
                 redirect: false,
             });
-            
+
             if (res?.status === 200) {
                 onClose();
+                dispatch(SET_isLogin_TRUE());
             }
         },
     });
+    console.log(isOpen || isLogin);
     return (
-        <Modal onClose={onClose} isOpen={isOpen}>
+        <Modal
+            onClose={() => {
+                onClose(), dispatch(SET_isLogin_TRUE());
+            }}
+            isOpen={isOpen || isLogin}
+        >
             <ModalOverlay />
             <ModalContent>
                 {/* <ModalHeader>

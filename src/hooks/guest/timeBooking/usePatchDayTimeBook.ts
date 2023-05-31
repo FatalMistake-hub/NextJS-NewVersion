@@ -9,7 +9,7 @@ import { patchDayTimeBook } from 'src/utils/apis/timeBooking.api';
 const usePatchDayTimeBook = (
     tourId: number | undefined,
     refetch:
-         (<TPageData>(
+        | (<TPageData>(
               options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined,
           ) => Promise<QueryObserverResult<InfiniteData<any>, unknown>>)
         | undefined,
@@ -26,7 +26,6 @@ const usePatchDayTimeBook = (
             // client.invalidateQueries(['GET_ALL_TIME_BOOK_RANGE', tourId]);
             if (refetch) refetch();
 
-            console.log(tourId, dateRange.startDate, dateRange.endDate);
             toast({
                 // title: 'Thành công.',
                 description: 'Đã cập nhật tình trạng trải nghiệm.',
@@ -37,6 +36,8 @@ const usePatchDayTimeBook = (
                 position: 'bottom-right',
             });
         },
+
+        
     });
 
     return {

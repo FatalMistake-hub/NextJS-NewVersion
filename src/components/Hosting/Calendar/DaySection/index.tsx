@@ -25,6 +25,7 @@ import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import { selectCalendarHost } from 'src/redux/slice/calendarHostSlice';
 import { useRouter } from 'next/router';
 import usePatchDayTimeBook from 'src/hooks/guest/timeBooking/usePatchDayTimeBook';
+import { set } from 'immer/dist/internal';
 
 const DaySection = () => {
     const dispatch = useAppDispatch();
@@ -34,7 +35,6 @@ const DaySection = () => {
     const [resValue, setResValue] = useState<IDayBookResponse>();
     const { ref, refetch, isFetching } = useGetAllTimeBookingByRange(dateRange.startDate, dateRange.endDate, 1000, id, setResValue);
     const { isLoading, isError, isSuccess, mutateDayTime } = usePatchDayTimeBook(Number(id), refetch);
-    console.log(resValue);
     const handleStatusDay = (status: boolean, id: string) => {
         const newTime = resValue?.content.find((date: IDayBook) => {
             if (date.dayBookId === id) {
@@ -59,13 +59,14 @@ const DaySection = () => {
             mutateDayTime(newTime);
         }
     };
-    const statusList = useMemo(() => {
+    const [statusList, setStatusList] = useState<boolean>(false);
+    useEffect(() => {
         const status = resValue?.content.some((date: IDayBook) => {
             return date.isDeleted === true;
         });
+        if (isSuccess && status !== undefined) setStatusList(status);
         console.log(status);
-        return status;
-    }, [resValue?.content]);
+    });
     const handleChecked = (isActive: boolean, id: string, dayBookId: string) => {
         const newTime = resValue?.content.map((date: IDayBook) => {
             if (date.dayBookId === dayBookId) {
@@ -120,7 +121,7 @@ const DaySection = () => {
                             colorScheme={!statusList ? 'blackAlpha' : ''}
                             textColor={!statusList ? 'black' : 'white'}
                             backgroundColor={!statusList ? 'white' : 'black'}
-                            isLoading={isFetching}
+                            isLoading={isFetching ||isLoading}
                             size="sm"
                             icon={<BiX />}
                             onClick={() => handleListStatusDay(true)}
@@ -135,7 +136,7 @@ const DaySection = () => {
                             textColor={statusList ? 'black' : 'white'}
                             backgroundColor={statusList ? 'white' : 'black'}
                             size="sm"
-                            isLoading={isFetching}
+                            isLoading={isFetching ||isLoading}
                             icon={<BiCheck />}
                             onClick={() => handleListStatusDay(false)}
                         />
@@ -148,10 +149,9 @@ const DaySection = () => {
                 </Heading>
                 <Flex justifyContent={'space-between'}>
                     <Accordion allowToggle w={'full'}>
-                        {isFetching ? (
+                        {isFetching ||isLoading ? (
                             <Stack w={'full'} float={'right'} className="relative justify-start flex items-center ">
-                                <SkeletonText w={'full'} mt={2}  px={6} noOfLines={10} spacing="4" skeletonHeight="8" />
-                                
+                                <SkeletonText w={'full'} mt={2} px={6} noOfLines={10} spacing="4" skeletonHeight="8" />
                             </Stack>
                         ) : (
                             resValue?.content

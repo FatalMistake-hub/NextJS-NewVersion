@@ -49,7 +49,19 @@ export type AppPropsWithLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const Layout = Layouts[Component.Layout] || MainLayout;
-    const [queryClient] = useState(() => new QueryClient());
+    const [queryClient] = useState(
+        () =>
+            new QueryClient({
+                defaultOptions: {
+                    queries: {
+                        // staleTime: Infinity,
+                        refetchOnWindowFocus: false,
+                        retry:2,
+                    },
+                    mutations: {},
+                },
+            }),
+    );
     // const getLayout = Component.getLayout ?? ((page) => page);
     const SessionProps = pageProps as { session: Session };
     const renderWithLayout =

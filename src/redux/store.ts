@@ -6,17 +6,19 @@ import storage from 'redux-persist/lib/storage';
 import searchSlice from './slice/searchSlice';
 import becomeHostSlice from './slice/becomeHostSlice';
 import calendarHostSlice from './slice/calendarHostSlice';
+import authSlice from './slice/authSlice';
 
 const persistConfig = {
     key: 'root',
     version: 1,
     storage,
-    blacklist: ['search', 'becomeHost', 'calendarHost'],
+    blacklist: ['search', 'becomeHost', 'calendarHost','auth'],
 };
 const rootReducer = combineReducers({
     search: searchSlice,
     becomeHost: becomeHostSlice,
     calendarHost: calendarHostSlice,
+    auth: authSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

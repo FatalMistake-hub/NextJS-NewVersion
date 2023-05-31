@@ -7,7 +7,7 @@ const useGetAllDayBookingById = (tourId: number): UseQueryResponse<IDayBook[]> =
     const { data, isLoading, isError, isSuccess, isRefetching, isFetching } = useQuery(
         ['GET_ALL_DAYBOOKING_TOURS', tourId],
         async () => await getAllDayTimeById(tourId),
-        { refetchOnWindowFocus: false },
+        {  enabled: !!tourId && tourId !== 0},
     );
 
     return {

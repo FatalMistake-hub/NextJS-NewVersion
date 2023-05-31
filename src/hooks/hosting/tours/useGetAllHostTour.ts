@@ -30,7 +30,7 @@ const useGetAllHostTour = (pageSize: number): UseQueryInfinityResponse<any> => {
         getPreviousPageParam: (firstPage: any, allPages) => {
             return firstPage.data.pageNo - 1;
         },
-        refetchOnWindowFocus: false,
+        retry: 2,
     });
     useEffect(() => {
         if (inView) {
