@@ -11,7 +11,6 @@ import { GetServerSideProps } from 'next';
 import useGetAllCatgory from 'src/hooks/guest/category/useGetAllCategory';
 import { getCategory, getSearch } from 'src/utils/data';
 import { getAllCategory } from 'src/utils/apis/category.api';
-import { test } from 'src/utils/dateUntils';
 interface Props {
     dataCategory: any;
 }
