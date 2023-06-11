@@ -85,11 +85,11 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                     {/* left side - logo */}
                     <div className="flex items-center h-12">
                         <Link href="/">
-                            <Box color={logoColor}>
-                                <Link href={'/'}>
+                            <a>
+                                <Box color={logoColor}>
                                     <FaAirbnb size={'48'} />
-                                </Link>
-                            </Box>
+                                </Box>
+                            </a>
                         </Link>
                     </div>
                     {/*  bar */}

@@ -17,6 +17,7 @@ import { signOut, useSession } from 'next-auth/react';
 import LoginModal from '@components/Modal/LoginModal';
 import { Logout } from 'src/utils/apis/auths.api';
 import MenuBase from '../MenuBase';
+import Head from 'next/head';
 
 interface HeaderProps {
     exploreNearby?: IExploreNearby[];
@@ -38,14 +39,15 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
 
     const headerBehavior = () => {
         let style = [];
-        if (!isSnapTop) style.push('bg-white shadow-lg');
-        if (!isActiveSearch) style.push('bg-white shadow-lg h-[86px] pb-5');
-        if (isActiveSearch) style.push('bg-white shadow-lg pb-8');
+        if (!isSnapTop) style.push('bg-white border border-b-gray-700');
+        if (!isActiveSearch) style.push('bg-white border border-b-gray-700 h-[86px] pb-5');
+        if (isActiveSearch) style.push('bg-white border border-b-gray-700 pb-8');
         return style.join(' ');
     };
     const { data: session, status } = useSession();
     return (
         <>
+           
             <header className={`${headerBehavior()} z-50 fixed top-0 w-full pt-5 duration-300 md:transition-none`}>
                 {/* header top */}
                 <div
@@ -56,11 +58,11 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                     {/* left side - logo */}
                     <div className="flex items-center h-12">
                         <Link href="/">
-                            <Box color={logoColor}>
-                                <Link href={'/'}>
+                            <a>
+                                <Box color={logoColor}>
                                     <FaAirbnb size={'48'} />
-                                </Link>
-                            </Box>
+                                </Box>
+                            </a>
                         </Link>
                     </div>
                     {/* small search bar */}

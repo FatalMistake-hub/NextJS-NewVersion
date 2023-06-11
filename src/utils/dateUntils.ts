@@ -37,14 +37,16 @@ export const listTimeSlot = () => {
     const renderedList = list.slice(0, length);
     return renderedList;
 };
-export const numberToTime = (minutes: number) => {
+export const numberToTime = (minutes:any) => {
     const hours = minutes / 60;
     const formattedTime = hours + ' giờ';
     return formattedTime;
 };
 export const timeToMinute = (timePoint: any) => {
-    const totalMinutes = timePoint.hour * 60 + timePoint.minutes;
-    return totalMinutes;
+   if (timePoint) {
+       const totalMinutes = timePoint.hour * 60 + timePoint.minutes;
+       return totalMinutes;
+   }
 };
 export const minuteToTime = (totalMinutes: any) => {
     const timePoint = {

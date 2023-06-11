@@ -13,57 +13,72 @@ import {
     Select,
 } from '@chakra-ui/react';
 import TourFormWrapper from '@components/Wrapper/TourFormWrapper';
-import { useEffect, ChangeEvent } from 'react';
+import { useEffect, ChangeEvent, useState, useMemo } from 'react';
 import { SET_priceOnePerson } from 'src/redux/slice/becomeHostSlice';
-import { listTimeSlot, numberToTime, TimeFrameListStart, timeToMinute, TimeFrameListEnd } from 'src/utils/dateUntils';
+import { ITours } from 'src/types/tours.type';
+import { listTimeSlot, numberToTime, TimeFrameListStart, timeToMinute, TimeFrameListEnd, minuteToTime } from 'src/utils/dateUntils';
+type Props = {
+    value: Partial<ITours>;
+    tourId?: string;
+};
+const PriceTime = ({ tourId, value: valueTour }: Props) => {
+    const [priceOnePerson, setPriceOnePerson] = useState<any>(valueTour.priceOnePerson);
+    const [timeSlotLength, setTimeSlotLength] = useState<number | undefined>(valueTour.timeSlotLength);
+    const [timeBookStart, setTimeBookStart] = useState(valueTour.timeBookStart);
+    const [timeBookEnd, setTimeBookEnd] = useState(valueTour.timeBookEnd);
 
-const PriceTime = () => {
     const { isOpen, onToggle } = useDisclosure();
     const Disclosure1 = useDisclosure();
     const Disclosure2 = useDisclosure();
     const { getInputProps, getIncrementButtonProps, getDecrementButtonProps, value } = useNumberInput({
         step: 10000,
-        defaultValue: 200000,
+        defaultValue: priceOnePerson,
         min: 10000,
         max: 1000000000,
         precision: 0,
     });
     useEffect(() => {
-        // if (Number(value) < 100000000) dispatch(SET_priceOnePerson(Number(value)));
-        // return () => {};
+        if (Number(value) < 100000000) setPriceOnePerson(Number(value));
+        return () => {};
     }, [value]);
 
     const inc = getIncrementButtonProps();
     const dec = getDecrementButtonProps();
     const input = getInputProps();
     const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        //  setSelectedOption(event.target.value);
-        // dispatch(SET_TIMESLOTLENGTH(Number(event.target.value)));
+        setTimeSlotLength(Number(event.target.value));
     };
     const handleSelectChange2 = (event: ChangeEvent<HTMLSelectElement>) => {
         if (event.target.value !== '0') {
-            // dispatch(SET_TIMEBOOKSTART(minuteToTime(event.target.value)));
+            setTimeBookStart(minuteToTime(event.target.value));
         }
     };
     const handleSelectChange1 = (event: ChangeEvent<HTMLSelectElement>) => {
         if (event.target.value !== '0') {
-            // dispatch(SET_TIMEBOOKEND(minuteToTime(event.target.value)));
+            setTimeBookEnd(minuteToTime(event.target.value));
         }
     };
     const lisTimeSlot = listTimeSlot();
     const formattedValue = `${value.toLocaleString()}₫`;
 
-    const timeListStart = TimeFrameListStart(120);
-    // const timeListStart = TimeFrameListStart(tour.timeSlotLength);
+    const timeListStart = TimeFrameListStart(timeSlotLength);
     let timeListEnd = [
         {
             hour: 0,
             minutes: 0,
         },
     ];
-    // if (tour.timeBookStart.hour !== undefined && tour.timeBookStart.minutes !== undefined) {
-    //     timeListEnd = TimeFrameListEnd(timeToMinute(tour.timeBookStart), tour.timeSlotLength);
-    // }
+
+    if (timeBookStart?.hour !== undefined && timeBookStart?.minutes !== undefined) {
+        timeListEnd = TimeFrameListEnd(timeToMinute(timeBookStart), timeSlotLength);
+    }
+    const timeStatus = useMemo(() => {
+        if (timeSlotLength) {
+            if (timeToMinute(timeBookEnd) - timeToMinute(timeBookStart) < timeSlotLength) return false;
+            return true;
+        }
+    }, [timeBookStart, timeBookEnd, timeSlotLength]);
+    console.log(timeBookStart, timeBookEnd, timeSlotLength, timeStatus);
     return (
         <>
             <VStack divider={<StackDivider borderColor="black.200" />} align="stretch" width={'full'} spacing={6}>
@@ -74,7 +89,7 @@ const PriceTime = () => {
                                 Định giá
                             </Text>
                             <Text mb={1} fontSize={'14px'} color={'gray.600'}>
-                                ₫234475
+                                ₫{valueTour.priceOnePerson?.toLocaleString('vi-VN')}
                             </Text>
                         </div>
                         <div className="flex flex-col items-end">
@@ -92,7 +107,7 @@ const PriceTime = () => {
                     </div>
                     <Fade in={isOpen}>
                         <Box display={isOpen ? 'block' : 'none'}>
-                            <TourFormWrapper>
+                            <TourFormWrapper value={{ priceOnePerson: priceOnePerson }} tourId={tourId}>
                                 <Text
                                     fontSize={'16px'}
                                     fontWeight={'600'}
@@ -168,32 +183,41 @@ const PriceTime = () => {
                         </Box>
                     </Fade>
                 </Box>
-                <Box>
-                    <div className="py-2 flex items-start justify-between w-full">
-                        <div>
-                            <Text mb={1} fontSize={'16px'} fontWeight={400}>
-                                Thời gian trải nghiệm
-                            </Text>
-                            <Text mb={1} fontSize={'14px'} color={'gray.600'}>
-                                1 đêm.
-                            </Text>
+                <TourFormWrapper
+                    value={{ timeBookStart: timeBookStart, timeBookEnd: timeBookEnd, timeSlotLength: timeSlotLength }}
+                    tourId={tourId}
+                    type="time"
+                    isActive={timeStatus}
+                >
+                    <Box>
+                        <div className="py-2 flex items-start justify-between w-full">
+                            <div>
+                                <Text mb={1} fontSize={'16px'} fontWeight={400}>
+                                    Thời gian trải nghiệm
+                                </Text>
+                                <Text mb={1} fontSize={'14px'} color={'gray.600'}>
+                                    {numberToTime(valueTour.timeSlotLength)}
+                                </Text>
+                            </div>
+                            <div className="flex flex-col items-end">
+                                <Button
+                                    size={'sm'}
+                                    variant={'ghost'}
+                                    textDecoration={'underline'}
+                                    color={'black'}
+                                    rounded={'lg'}
+                                    onClick={Disclosure1.onToggle}
+                                >
+                                    {!Disclosure1.isOpen ? 'Chỉnh sửa' : 'Thu gọn'}
+                                </Button>
+                            </div>
                         </div>
-                        <div className="flex flex-col items-end">
-                            <Button
-                                size={'sm'}
-                                variant={'ghost'}
-                                textDecoration={'underline'}
-                                color={'black'}
-                                rounded={'lg'}
-                                onClick={Disclosure1.onToggle}
+                        <Fade in={Disclosure1.isOpen} className="flex justify-center">
+                            <Box
+                                display={Disclosure1.isOpen ? 'block' : 'none'}
+                                className=" border border-gray-800 rounded-2xl w-1/2 self-center h-full bg-white p-8 relative"
                             >
-                                {!Disclosure1.isOpen ? 'Chỉnh sửa' : 'Thu gọn'}
-                            </Button>
-                        </div>
-                    </div>
-                    <Fade in={Disclosure1.isOpen}>
-                        <Box display={Disclosure1.isOpen ? 'block' : 'none'}>
-                            <TourFormWrapper>
+                                {/* <TourFormWrapper value={{ timeSlotLength: timeSlotLength }} tourId={tourId}> */}
                                 <Text
                                     fontSize={'16px'}
                                     fontWeight={'600'}
@@ -210,50 +234,57 @@ const PriceTime = () => {
                                     rounded={'lg'}
                                     focusBorderColor={'teal.500'}
                                     onChange={handleSelectChange}
-                                    defaultValue={lisTimeSlot[3]}
-                                    w={'40%'}
+                                    // defaultValue={lisTimeSlot[3]}
+                                    w={'90%'}
                                 >
                                     {lisTimeSlot.map((rs) => (
-                                        <option
-                                            value={rs}
-                                            // selected={tour.timeSlotLength === rs}
-                                        >
+                                        <option value={rs} selected={timeSlotLength === rs}>
                                             {numberToTime(rs)}
                                         </option>
                                     ))}
                                 </Select>
-                            </TourFormWrapper>
-                        </Box>
-                    </Fade>
-                </Box>
-                <Box>
-                    <div className="py-2 flex items-start justify-between w-full">
-                        <div>
-                            <Text mb={1} fontSize={'16px'} fontWeight={400}>
-                                Khung giờ khả dụng
-                            </Text>
-                            <Text mb={1} fontSize={'14px'} color={'gray.600'}>
-                                13:00 - 14:00
-                            </Text>
+                                {/* </TourFormWrapper> */}
+                            </Box>
+                        </Fade>
+                    </Box>
+                    <Box>
+                        <div className="py-2 flex items-start justify-between w-full">
+                            <div>
+                                <Text mb={1} fontSize={'16px'} fontWeight={400}>
+                                    Khung giờ khả dụng
+                                </Text>
+                                <Text mb={1} fontSize={'14px'} color={'gray.600'}>
+                                    {valueTour.timeBookStart?.hour}:
+                                    {valueTour.timeBookStart?.minutes === 0 ? '00' : valueTour.timeBookStart?.minutes} -{' '}
+                                    {valueTour.timeBookEnd?.hour}:
+                                    {valueTour.timeBookEnd?.minutes === 0 ? '00' : valueTour.timeBookEnd?.minutes}
+                                </Text>
+                            </div>
+                            <div className="flex flex-col items-end">
+                                <Button
+                                    size={'sm'}
+                                    variant={'ghost'}
+                                    textDecoration={'underline'}
+                                    color={'black'}
+                                    rounded={'lg'}
+                                    onClick={Disclosure2.onToggle}
+                                >
+                                    {!Disclosure2.isOpen ? 'Chỉnh sửa' : 'Thu gọn'}
+                                </Button>
+                            </div>
                         </div>
-                        <div className="flex flex-col items-end">
-                            <Button
-                                size={'sm'}
-                                variant={'ghost'}
-                                textDecoration={'underline'}
-                                color={'black'}
-                                rounded={'lg'}
-                                onClick={Disclosure2.onToggle}
+                        <Fade in={Disclosure2.isOpen} className="flex justify-center">
+                            <Box
+                                display={Disclosure2.isOpen ? 'block' : 'none'}
+                                className=" border border-gray-800 rounded-2xl w-1/2 self-center h-full bg-white p-8 relative"
                             >
-                                {!Disclosure2.isOpen ? 'Chỉnh sửa' : 'Thu gọn'}
-                            </Button>
-                        </div>
-                    </div>
-                    <Fade in={Disclosure2.isOpen}>
-                        <Box display={Disclosure2.isOpen ? 'block' : 'none'}>
-                            <TourFormWrapper>
+                                {/* <TourFormWrapper
+                                    value={{ timeBookStart: timeBookStart, timeBookEnd: timeBookEnd }}
+                                    tourId={tourId}
+                                    type="time"
+                                > */}
                                 <Text
-                                pb={4}
+                                    pb={4}
                                     fontSize={'16px'}
                                     fontWeight={'600'}
                                     width={'full'}
@@ -263,20 +294,20 @@ const PriceTime = () => {
                                     Thời gian trải nghiệm bắt đầu
                                 </Text>
 
-                                <Select w={'50%'} size="lg" rounded={'lg'} focusBorderColor={'teal.500'} onChange={handleSelectChange1}>
+                                <Select w={'90%'} size="lg" rounded={'lg'} focusBorderColor={'teal.500'} onChange={handleSelectChange2}>
                                     <option value={0}>--Chọn giờ bắt đầu--</option>
 
                                     {timeListStart.map((rs) => (
                                         <option
                                             value={timeToMinute(rs)}
-                                            // selected={timeToMinute(rs) === timeToMinute(tour.timeBookStart)}
+                                            selected={timeToMinute(rs) === timeToMinute(timeBookStart)}
                                         >
                                             {rs.hour}:{rs.minutes === 0 ? '00' : rs.minutes}
                                         </option>
                                     ))}
                                 </Select>
                                 <Text
-                                py={4}
+                                    py={4}
                                     fontSize={'16px'}
                                     fontWeight={'600'}
                                     width={'full'}
@@ -286,27 +317,28 @@ const PriceTime = () => {
                                     Thời gian trải nghiệm kết thúc
                                 </Text>
                                 <Select
-                                    w={'50%'}
+                                    w={'90%'}
                                     size="lg"
                                     rounded={'lg'}
                                     focusBorderColor={'teal.500'}
-                                    onChange={handleSelectChange2}
-                                    // isDisabled={!(tour.timeBookStart.hour !== undefined && tour.timeBookStart.minutes !== undefined)}
+                                    onChange={handleSelectChange1}
+                                    isDisabled={!(timeBookStart?.hour !== undefined && timeBookStart?.minutes !== undefined)}
                                 >
                                     <option value={0}>--Chọn giờ kết thúc--</option>
                                     {timeListEnd?.map((rs) => (
                                         <option
                                             value={timeToMinute(rs)}
-                                            // selected={timeToMinute(rs) === timeToMinute(tour.timeBookEnd)}
+                                            selected={timeToMinute(rs) === timeToMinute(timeBookEnd)}
                                         >
                                             {rs.hour}:{rs.minutes === 0 ? '00' : rs.minutes}
                                         </option>
                                     ))}
                                 </Select>
-                            </TourFormWrapper>
-                        </Box>
-                    </Fade>
-                </Box>
+                                {/* </TourFormWrapper> */}
+                            </Box>
+                        </Fade>
+                    </Box>
+                </TourFormWrapper>
             </VStack>
         </>
     );

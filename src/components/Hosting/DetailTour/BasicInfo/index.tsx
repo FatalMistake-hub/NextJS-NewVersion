@@ -1,9 +1,16 @@
 import { VStack, StackDivider, Button, Text, useDisclosure, Fade, Box, Textarea } from '@chakra-ui/react';
 import TourFormWrapper from '@components/Wrapper/TourFormWrapper';
-
-const BasicInfo = () => {
+import { useState } from 'react';
+import { ITours } from 'src/types/tours.type';
+type Props = {
+    value: Partial<ITours>;
+    tourId?: string;
+};
+const BasicInfo = ({ tourId, value }: Props) => {
     const { isOpen, onToggle } = useDisclosure();
     const Disclosure1 = useDisclosure();
+    const [title, setTitle] = useState(value.title);
+    const [working, setWorking] = useState(value.working);
     return (
         <>
             <VStack divider={<StackDivider borderColor="black.200" />} align="stretch" width={'full'} spacing={6}>
@@ -14,7 +21,7 @@ const BasicInfo = () => {
                                 Tiêu đề trải nghiệm
                             </Text>
                             <Text mb={1} fontSize={'14px'} color={'gray.600'}>
-                                Hello
+                                {value?.title}
                             </Text>
                         </div>
                         <div className="flex flex-col items-end">
@@ -32,7 +39,7 @@ const BasicInfo = () => {
                     </div>
                     <Fade in={isOpen}>
                         <Box display={isOpen ? 'block' : 'none'}>
-                            <TourFormWrapper>
+                            <TourFormWrapper value={{ title: title }} tourId={tourId}>
                                 <Text
                                     fontSize={'16px'}
                                     fontWeight={'600'}
@@ -50,9 +57,9 @@ const BasicInfo = () => {
                                     resize={'vertical'}
                                     p={4}
                                     mt={4}
-                                    // value={tour.title}
-                                    // onChange={handleInputChange}
-                                    placeholder="Những viên ngọc ẩn giấu của Hội An xưa"
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    placeholder={title ? title : 'Những viên ngọc ẩn giấu của Hội An xưa'}
                                     fontSize={'base'}
                                     size="sm"
                                     rounded={'lg'}
@@ -72,8 +79,8 @@ const BasicInfo = () => {
                             <Text mb={1} fontSize={'16px'} fontWeight={400}>
                                 Mô tả trải nghiệm cho thuê
                             </Text>
-                            <Text mb={1} fontSize={'14px'} color={'gray.600'}>
-                                Nghỉ ngơi và thư giãn tại ốc đảo yên bình này.
+                            <Text mb={1} fontSize={'14px'} color={'gray.600'} noOfLines={2} maxW={'50%'}>
+                                {value?.working}
                             </Text>
                         </div>
                         <div className="flex flex-col items-end">
@@ -91,7 +98,7 @@ const BasicInfo = () => {
                     </div>
                     <Fade in={Disclosure1.isOpen}>
                         <Box display={Disclosure1.isOpen ? 'block' : 'none'}>
-                            <TourFormWrapper>
+                            <TourFormWrapper value={{ working: working }} tourId={tourId}>
                                 <Text
                                     fontSize={'16px'}
                                     fontWeight={'600'}
@@ -109,9 +116,13 @@ const BasicInfo = () => {
                                     resize={'vertical'}
                                     p={4}
                                     mt={4}
-                                    // value={tour.title}
-                                    // onChange={handleInputChange}
-                                    placeholder="Kể cho khách nghe câu chuyện về những gì họ sẽ làm trong buổi trải nghiệm của bạn"
+                                    value={working?.replace(/<br\/>/g, '\n')}
+                                    onChange={(e) => setWorking(e.target.value.replace(/\n/g, '<br/>'))}
+                                    placeholder={
+                                        working
+                                            ? working
+                                            : 'Kể cho khách nghe câu chuyện về những gì họ sẽ làm trong buổi trải nghiệm của bạn'
+                                    }
                                     fontSize={'base'}
                                     size="sm"
                                     rounded={'lg'}

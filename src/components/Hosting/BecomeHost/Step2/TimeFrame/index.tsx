@@ -45,7 +45,6 @@ const TimeFrameSt2: FC = () => {
     ];
     if (tour.timeBookStart.hour !== undefined && tour.timeBookStart.minutes !== undefined) {
         timeListEnd = TimeFrameListEnd(timeToMinute(tour.timeBookStart), tour.timeSlotLength);
-
     }
     return (
         <>
@@ -67,14 +66,7 @@ const TimeFrameSt2: FC = () => {
                     <Text fontSize={'16px'} fontWeight={'500'} pt={4}>
                         Thời gian trải nghiệm bắt đầu
                     </Text>
-                    <Select
-                        w={'50%'}
-                        size="lg"
-                        rounded={'lg'}
-                       
-                        focusBorderColor={'teal.500'}
-                        onChange={handleSelectChange}
-                    >
+                    <Select w={'50%'} size="lg" rounded={'lg'} focusBorderColor={'teal.500'} onChange={handleSelectChange}>
                         <option value={0}>--Chọn giờ bắt đầu--</option>
 
                         {timeListStart.map((rs) => (
@@ -93,7 +85,6 @@ const TimeFrameSt2: FC = () => {
                         focusBorderColor={'teal.500'}
                         onChange={handleSelectChange1}
                         isDisabled={!(tour.timeBookStart.hour !== undefined && tour.timeBookStart.minutes !== undefined)}
-                       
                     >
                         <option value={0}>--Chọn giờ kết thúc--</option>
                         {timeListEnd?.map((rs) => (

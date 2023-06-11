@@ -20,6 +20,8 @@ export interface ITours {
     images: IImageTour[];
     isDeleted: boolean;
     userId: string;
+    timeBookStart: Time;
+    timeBookEnd: Time;
 }
 export interface IAllTours {
     content: ITours[];

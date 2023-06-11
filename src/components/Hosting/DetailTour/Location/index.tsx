@@ -1,9 +1,16 @@
 import { VStack, StackDivider, Button, Text, useDisclosure, Fade, Box, Textarea } from '@chakra-ui/react';
 import LocationModal from '@components/Modal/LocationModal';
 import TourFormWrapper from '@components/Wrapper/TourFormWrapper';
-const Location = () => {
+import { useState } from 'react';
+import { ITours } from 'src/types/tours.type';
+type Props = {
+    value: Partial<ITours>;
+    tourId?: string;
+};
+const Location = ({ tourId, value }: Props) => {
     const Disclosure1 = useDisclosure();
     const { isOpen, onToggle, onClose, onOpen } = useDisclosure();
+    const [destinationDescription, setDestinationDescription] = useState(value?.destinationDescription);
 
     return (
         <>
@@ -15,7 +22,7 @@ const Location = () => {
                                 Địa chỉ
                             </Text>
                             <Text mb={1} fontSize={'14px'} color={'gray.600'}>
-                                87 Mai Chí Thọ, Hoà Xuân, Cẩm Lệ, Đà Nẵng 550000, Vietnam
+                                {value?.destination}
                             </Text>
                         </div>
                         <div className="flex flex-col items-end">
@@ -31,8 +38,7 @@ const Location = () => {
                             </Button>
                         </div>
                     </div>
-                    <LocationModal isOpen={isOpen} onClose={onClose} />
-                  
+                    <LocationModal value={value} isOpen={isOpen} onClose={onClose} />
                 </Box>
                 <Box>
                     <div className="py-2 flex items-start justify-between w-full">
@@ -41,7 +47,7 @@ const Location = () => {
                                 Mô tả địa điểm tổ chức trải nghiệm
                             </Text>
                             <Text mb={1} fontSize={'14px'} color={'gray.600'}>
-                                Nghỉ ngơi và thư giãn tại ốc đảo yên bình này.
+                                {value?.destinationDescription}
                             </Text>
                         </div>
                         <div className="flex flex-col items-end">
@@ -59,7 +65,7 @@ const Location = () => {
                     </div>
                     <Fade in={Disclosure1.isOpen}>
                         <Box display={Disclosure1.isOpen ? 'block' : 'none'}>
-                            <TourFormWrapper>
+                            <TourFormWrapper value={{ destinationDescription: destinationDescription }} tourId={tourId}>
                                 <Text
                                     fontSize={'16px'}
                                     fontWeight={'600'}
@@ -77,9 +83,13 @@ const Location = () => {
                                     resize={'vertical'}
                                     p={4}
                                     mt={4}
-                                    // value={tour.title}
-                                    // onChange={handleInputChange}
-                                    placeholder="Giới thiệu điều đặc biệt tại điểm đến của bạn, ví dụ như lịch sử, văn hóa, ..."
+                                    value={destinationDescription}
+                                    onChange={(e) => setDestinationDescription(e.target.value)}
+                                    placeholder={
+                                        destinationDescription
+                                            ? destinationDescription
+                                            : 'Giới thiệu điều đặc biệt tại điểm đến của bạn, ví dụ như lịch sử, văn hóa, ...'
+                                    }
                                     fontSize={'base'}
                                     size="sm"
                                     rounded={'lg'}

@@ -45,7 +45,7 @@ const Listings = () => {
 
     return (
         <div className=" pt-[86px] flex relative min-h-screen ">
-            <VStack w={`${isOpen ? '500px' : '100%'} `} float={'left'} className="border-r border-r-gray-700 min-h-[100vh-86px] ">
+            <VStack w={`${isOpen ? '500px' : '100%'} `} float={'left'} className="border-r border-r-gray-700  min-h-[100vh-86px] ">
                 <Box w={'full'}>
                     <Flex alignItems={'center'} justifyContent={'space-between'} pt={8} px={8} pb={4}>
                         <Heading lineHeight={1.4} as="h1" fontSize={'26px'} fontWeight={'600'} width={'full'} noOfLines={2}>

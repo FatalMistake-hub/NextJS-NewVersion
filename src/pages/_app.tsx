@@ -24,6 +24,7 @@ import { NextPage } from 'next';
 import { Session } from 'next-auth';
 import { ProtectedLayout } from '@components/layouts/ProtectedLayouts';
 import { LayoutKeys, Layouts } from '@components/layouts';
+import Head from 'next/head';
 
 const progressBar = new ProgressBar({
     size: 2,
@@ -67,7 +68,37 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const renderWithLayout =
         Component.getLayout ||
         function (page) {
-            return <Layout>{page}</Layout>;
+            return (
+                <Layout>
+                    {' '}
+                    <Head>
+                        <title>Du lịch & trải nghiệm</title>
+                        <meta name="description" content="" />
+                        <meta property="og:type" content="website" />
+                        <meta name="og:title" property="og:title" content="" />
+                        <meta name="og:description" property="og:description" content="" />
+                        <meta property="og:site_name" content="" />
+                        <meta property="og:url" content="" />
+                        <meta name="twitter:card" content="summary" />
+                        <meta name="twitter:title" content="" />
+                        <meta name="twitter:description" content="hello" />
+                        <meta name="twitter:site" content="" />
+                        <meta name="twitter:creator" content="" />
+                        <link
+                            rel="icon"
+                            type="image/png"
+                            href="https://res.cloudinary.com/sacchidananad-utech/image/upload/v1686421474/logo-search_eo6gdq.png"
+                        />
+                        <link rel="apple-touch-icon" href="@public/assets/image/logo-search.png" />
+                        <link rel="stylesheet" href="" />
+                        <meta property="og:image" content="" />
+                        <meta name="twitter:image" content="" />
+                        <link rel="canonical" href="" />
+                        <script type="text/javascript" src=""></script>
+                    </Head>
+                    {page}
+                </Layout>
+            );
         };
 
     return (

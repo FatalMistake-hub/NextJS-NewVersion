@@ -1,3 +1,5 @@
+import { ERole } from "./constants/Enums";
+
 interface IFormatGuestOptions {
     noInfants?: boolean;
 }
@@ -24,3 +26,10 @@ export const formatGuestsMinimal = (guests: any, options?: IFormatGuestOptions) 
     // if (infants && !noInfants) template += `, ${infants} infant`;
     return template;
 };
+export const formatRole = (role: ERole|undefined) => {
+    if (!role) return false;
+    if (role === 'ADMIN') return 'Quản trị viên';
+    if (role === 'OWNER') return 'Chủ nhà/Người tổ chức mới';
+    if (role === 'USER') return 'Khách';
+    return false;
+}

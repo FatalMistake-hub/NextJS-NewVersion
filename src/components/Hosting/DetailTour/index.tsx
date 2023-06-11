@@ -102,9 +102,7 @@ const DetailTour = ({ onClose, tourId }: IDetailTourProps) => {
                         </Heading>
                         <AccordionIcon />
                     </AccordionButton>
-                    <AccordionPanel pb={4}>
-                        <BasicInfo />
-                    </AccordionPanel>
+                    <AccordionPanel pb={4}>{data && <BasicInfo value={data} tourId={`${data?.tourId}`} />}</AccordionPanel>
                 </AccordionItem>
                 <AccordionItem py={4}>
                     <AccordionButton>
@@ -121,9 +119,7 @@ const DetailTour = ({ onClose, tourId }: IDetailTourProps) => {
                         </Heading>
                         <AccordionIcon />
                     </AccordionButton>
-                    <AccordionPanel pb={4}>
-                        <PriceTime />
-                    </AccordionPanel>
+                    <AccordionPanel pb={4}>{data && <PriceTime value={data} tourId={`${data?.tourId}`} />}</AccordionPanel>
                 </AccordionItem>
                 <AccordionItem py={4}>
                     <AccordionButton>
@@ -140,9 +136,7 @@ const DetailTour = ({ onClose, tourId }: IDetailTourProps) => {
                         </Heading>
                         <AccordionIcon />
                     </AccordionButton>
-                    <AccordionPanel pb={4}>
-                        <Location />
-                    </AccordionPanel>
+                    <AccordionPanel pb={4}>{data && <Location value={data} tourId={`${data?.tourId}`} />}</AccordionPanel>
                 </AccordionItem>
             </Accordion>
             <div className="absolute right-12 bottom-[-100px] pb-8">

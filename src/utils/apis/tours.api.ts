@@ -18,6 +18,8 @@ export const postTours = async (tours: TourPost, axiosAuth: AxiosInstance) => aw
 
 export const patchTours = async (tours: Partial<ITours>, tourId: number | undefined, axiosAuth: AxiosInstance) =>
     await axiosAuth.patch<ITours>(`/tour/tour-update/${tourId}`, tours);
+export const patchToursFrameTime = async (tours: Partial<ITours>, tourId: number | undefined, axiosAuth: AxiosInstance) =>
+    await axiosAuth.patch<ITours>(`/tour/tour-update-time/${tourId}`, tours);
 
 export const deleteTours = async (tourId: number, axiosAuth: AxiosInstance) =>
     await axiosAuth.delete<ITours>(`/tour/tour-delete/${tourId}`);

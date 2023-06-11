@@ -1,18 +1,27 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren, ReactNode } from 'react';
 import ReactMapGL, { GeolocateControl, FullscreenControl, NavigationControl, ScaleControl } from 'react-map-gl';
 import { selectBecomeHost } from 'src/redux/slice/becomeHostSlice';
 import { useAppSelector } from 'src/redux/hook';
-interface IMap extends PropsWithChildren<any> {
-    center: { longitude: number; latitude: number };
+interface IMap {
+    longitude?: number;
+    latitude?: number;
+    children?: any;
 }
 
-const MapLocation: FC = ({children}) => {
+const MapLocation = ({ latitude, longitude, children }: IMap) => {
     const { tour } = useAppSelector(selectBecomeHost);
-    const viewport = {
-        latitude: tour.latitude,
-        longitude: tour.longitude,
-        zoom: tour.destination ? 16 : 5,
-    };
+    const viewport =
+        longitude && latitude
+            ? {
+                  latitude: latitude,
+                  longitude: longitude,
+                  zoom: 16,
+              }
+            : {
+                  latitude: tour.latitude,
+                  longitude: tour.longitude,
+                  zoom: tour.destination ? 16 : 5,
+              };
     return (
         <ReactMapGL
             {...viewport}
