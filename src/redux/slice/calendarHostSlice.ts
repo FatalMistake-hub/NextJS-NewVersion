@@ -1,16 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import moment from 'moment';
 
 import { RootState } from '../store';
 
 // declaring the types for our state
-const today = new Date();
+// const today = new Date();
+const today = moment().format('YYYY-MM-DD');
 export const calendarHostSlice = createSlice({
     name: 'calendarHost',
     initialState: {
         view: 'month',
         dateRange: {
-            startDate: today.toISOString().slice(0, 10),
-            endDate: today.toISOString().slice(0, 10),
+            startDate: today,
+            endDate: today,
         },
         tourId: 0,
     },
@@ -27,8 +29,8 @@ export const calendarHostSlice = createSlice({
         RESET: (state) => {
 
             state.dateRange = {
-                startDate: today.toISOString().slice(0, 10),
-                endDate: today.toISOString().slice(0, 10),
+                startDate: today,
+                endDate: today,
             };
             state.tourId = 0;
         }

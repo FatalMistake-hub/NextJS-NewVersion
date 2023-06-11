@@ -65,7 +65,6 @@ const DaySection = () => {
             return date.isDeleted === true;
         });
         if (isSuccess && status !== undefined) setStatusList(status);
-        console.log(status);
     });
     const handleChecked = (isActive: boolean, id: string, dayBookId: string) => {
         const newTime = resValue?.content.map((date: IDayBook) => {

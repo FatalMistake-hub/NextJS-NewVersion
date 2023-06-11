@@ -1,12 +1,9 @@
-// declaring the types for our state
-// Ngày hiện tại
-const today = new Date();
-const formattedToday = today.toISOString().slice(0, 10);
+import moment from 'moment';
 
+// Ngày hiện tại
+const today = moment().format('YYYY-MM-DD');
 // Ngày sau đó 6 tháng
-const sixMonthsLater = new Date();
-sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
-const formattedSixMonthsLater = sixMonthsLater.toISOString().slice(0, 10);
+const sixMonthsLater = moment().add(6, 'months').format('YYYY-MM-DD');
 export const becomeHostInitState = {
     step: 1,
     btnStatus: false,
@@ -45,7 +42,7 @@ export const becomeHostInitState = {
         },
         checkIn: '',
         checkOut: '',
-        startDay: formattedToday,
-        endDay: formattedSixMonthsLater,
+        startDay: today,
+        endDay: sixMonthsLater,
     },
 };

@@ -17,7 +17,6 @@ import Footer from '@components/layouts/common/Footer';
 
 const Search = () => {
     const router = useRouter();
-    console.log(router.query);
     const [isFullMap, setIsFullMap] = useState<boolean>(false);
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
 
@@ -145,7 +144,6 @@ const Search = () => {
 
 export const getServerSideProps = async () => {
     const searchResults = await getSearch();
-    console.log(searchResults);
     return {
         props: { searchResults },
     };

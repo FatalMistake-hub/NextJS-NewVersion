@@ -8,7 +8,6 @@ import { SET_isLogin_FALSE } from 'src/redux/slice/authSlice';
 export const ProtectedLayout = ({ children }: any): JSX.Element => {
     const router = useRouter();
     const { status: sessionStatus, data: session } = useSession();
-    console.log('session', session);
     const authorized = sessionStatus === 'authenticated';
     const unAuthorized = sessionStatus === 'unauthenticated';
     const loading = sessionStatus === 'loading';

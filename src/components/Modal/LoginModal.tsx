@@ -62,7 +62,6 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             }
         },
     });
-    console.log(isOpen || isLogin);
     return (
         <Modal
             onClose={() => {

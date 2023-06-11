@@ -37,13 +37,13 @@ const Home = ({ dataCategory }: Props) => {
                     <FilterNav dataCategory={dataCategory} />
                 </div>
 
-                <div className="max-w-[1760px] w-full pt-10">
-                    <Heading lineHeight={1.4} as="h2" size="lg" noOfLines={1}>
+                <div className="max-w-[1640px] w-full pt-10">
+                    <Heading lineHeight={1.4} as="h2" size="lg" noOfLines={1} pb={8}>
                         Tất cả trải nghiệm
                     </Heading>
 
                     {status === 'loading' ? (
-                        <SimpleGrid minChildWidth={'304px'} gap="12" py={12}>
+                        <SimpleGrid minChildWidth={'304px'} columnGap="4" py={12}>
                             <CardItemSkeleton />
                             <CardItemSkeleton />
                             <CardItemSkeleton />
@@ -65,9 +65,12 @@ const Home = ({ dataCategory }: Props) => {
                                     {isFetchingPreviousPage ? 'Loading more...' : hasPreviousPage ? 'Load Older' : 'Nothing more to load'}
                                 </button>
                             </div> */}
-                            <SimpleGrid minChildWidth={'304px'} gap="4">
+                                    <SimpleGrid minChildWidth={'304px'} gap="6"
+                                    >
                                 {data?.pages?.map((page: any) =>
-                                    page?.data?.content?.map((result: ITours) => <CardItem className="h-[590px]" data={result} />),
+                                    page?.data?.content?.map((result: ITours) => (
+                                        <CardItem className="h-full min-h-[450px]" data={result} key={result.tourId} />
+                                    )),
                                 )}
                             </SimpleGrid>
                         </>

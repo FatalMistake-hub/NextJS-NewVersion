@@ -222,7 +222,7 @@ const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose,price }) => {
                                                 day.timeBookDetailList.map(
                                                     (time: TimeBookViewDtoList) =>
                                                         time.isDeleted === false && (
-                                                            <>
+                                                            <div  key={time.timeId}>
                                                                 <Heading
                                                                     as="h4"
                                                                     fontSize={'18px'}
@@ -263,7 +263,7 @@ const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose,price }) => {
                                                                         </Button>
                                                                     </div>
                                                                 </div>
-                                                            </>
+                                                            </div>
                                                         ),
                                                 ),
                                         ),

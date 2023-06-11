@@ -86,7 +86,7 @@ const DescriptionSt2: FC = () => {
                     </Text>
                     <Select size="lg" rounded={'lg'} focusBorderColor={'teal.500'} onChange={handleSelectChange} defaultValue={lisTimeSlot[3]}>
                         {lisTimeSlot.map((rs) => (
-                            <option value={rs} selected={tour.timeSlotLength === rs}>
+                            <option key={rs} value={rs} selected={tour.timeSlotLength === rs}>
                                 {numberToTime(rs)}
                             </option>
                         ))}

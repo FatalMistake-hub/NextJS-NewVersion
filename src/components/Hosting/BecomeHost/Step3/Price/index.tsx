@@ -32,7 +32,6 @@ const PriceSt3 = () => {
     const input = getInputProps();
 
     const formattedValue = `${value.toLocaleString()}₫`;
-    console.log(value);
     return (
         <>
             <div className="w-full justify-center items-center flex min-h-[calc(100vh-176px)] px-20">

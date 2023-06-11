@@ -69,8 +69,8 @@ const TimeFrameSt2: FC = () => {
                     <Select w={'50%'} size="lg" rounded={'lg'} focusBorderColor={'teal.500'} onChange={handleSelectChange}>
                         <option value={0}>--Chọn giờ bắt đầu--</option>
 
-                        {timeListStart.map((rs) => (
-                            <option value={timeToMinute(rs)} selected={timeToMinute(rs) === timeToMinute(tour.timeBookStart)}>
+                        {timeListStart.map((rs, index) => (
+                            <option key={index} value={timeToMinute(rs)} selected={timeToMinute(rs) === timeToMinute(tour.timeBookStart)}>
                                 {rs.hour}:{rs.minutes === 0 ? '00' : rs.minutes}
                             </option>
                         ))}
@@ -87,8 +87,8 @@ const TimeFrameSt2: FC = () => {
                         isDisabled={!(tour.timeBookStart.hour !== undefined && tour.timeBookStart.minutes !== undefined)}
                     >
                         <option value={0}>--Chọn giờ kết thúc--</option>
-                        {timeListEnd?.map((rs) => (
-                            <option value={timeToMinute(rs)} selected={timeToMinute(rs) === timeToMinute(tour.timeBookEnd)}>
+                        {timeListEnd?.map((rs, index) => (
+                            <option key={index} value={timeToMinute(rs)} selected={timeToMinute(rs) === timeToMinute(tour.timeBookEnd)}>
                                 {rs.hour}:{rs.minutes === 0 ? '00' : rs.minutes}
                             </option>
                         ))}

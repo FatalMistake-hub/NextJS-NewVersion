@@ -103,7 +103,7 @@ const ImageList = ({ data, imageMain, tourId }: Props) => {
             {data?.map(
                 (item) =>
                     item.link != imageMain && (
-                        <Box height="200px" position={'relative'}>
+                        <Box key={item.imageId} height="200px" position={'relative'}>
                             <Image
                                 src={item.link}
                                 alt={`Picture of `}

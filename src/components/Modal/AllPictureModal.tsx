@@ -48,9 +48,10 @@ const AllPictureModal: FC<AllPictureModalProps> = ({ isOpen, onClose, data }) =>
                             }}
                             modules={[EffectCoverflow, Pagination, Navigation, Keyboard]}
                         >
-                            {data?.map((image) => (
+                            {data?.map((image, index) => (
                                 <SwiperSlide>
                                     <Image
+                                        key={index}
                                         src={image.link}
                                         alt={`Picture of `}
                                         layout="responsive"

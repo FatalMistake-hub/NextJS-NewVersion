@@ -32,9 +32,9 @@ const AddressWrapper: FC<ILocationProps> = ({ className, status, response, loadi
             ) : null}
             {tour.destination && response && !loading && status ? (
                 <div className={`py-2  ${response?.data.features[0] ? '' : 'hidden'}`}>
-                    {(response?.data.features).splice(0, 5).map((data: any) => (
+                    {(response?.data.features).splice(0, 5).map((data: any, index: any) => (
                         <button
-                            key={data?.id}
+                            key={index}
                             className="flex w-[500px] px-4 py-3 rounded-2xl items-center hover:bg-gray-100  "
                             onClick={() => {
                                 dispatch(

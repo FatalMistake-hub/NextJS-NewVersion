@@ -30,7 +30,6 @@ interface AccountModalProps {
 export default function AccountModal({ isOpen, onClose, title, value, keyData }: AccountModalProps) {
     const [inputValue, setInputValue] = useState(value);
     const { patchInfoAccount, isLoading, isError, isSuccess } = usePatchProfile();
-    console.log(title, value, keyData);
     useEffect(() => {
         setInputValue(value);
     }, [title]);

@@ -29,37 +29,19 @@ const BecomeHost = ({ dataCategory }: Props) => {
     const dispatch = useAppDispatch();
     const logoColor = useColorModeValue('teal.500', 'teal.200');
 
-    function renderSwitch(param: number) {
-        switch (param) {
-            case 1:
-                return <BecomeHostStep1 />;
-
-            case 2:
-                return <LocationSt1 />;
-            case 3:
-                return <CategorySt1 dataCategory={dataCategory} />;
-            case 4:
-                return <BecomeHostStep2 />;
-            case 5:
-                return <DescriptionSt2 />;
-            case 6:
-                return <TimeFrameSt2 />;
-            case 7:
-                return <ImageListSt2 />;
-            case 8:
-                return <BecomeHostStep3 />;
-            case 9:
-                return <TittleSt3 />;
-            case 10:
-                return <PriceSt3 />;
-            case 11:
-                return <FinalSt3 />;
-            default:
-                return null;
-        }
-    }
     console.log('reRender');
-
+    const componentRender = [
+        <BecomeHostStep1 />,
+    <LocationSt1 />,
+        <CategorySt1 dataCategory={dataCategory} />,
+        <BecomeHostStep2 />,
+        <DescriptionSt2 />,
+        <TimeFrameSt2 />,
+        <ImageListSt2 />,
+        <TittleSt3 />,
+        <PriceSt3 />,
+        <FinalSt3 />,
+    ];
     return (
         <div className="min-h-screen w-full">
             <div className={`pt-8 z-50  w-full px-12 `}>
@@ -79,12 +61,39 @@ const BecomeHost = ({ dataCategory }: Props) => {
                 </div>
             </div>
             <Box w={'full'} h={'calc(100vh - 166px)'}>
-                <div className="pb-24">{step && renderSwitch(step)}</div>
+                <div className="pb-24">
+                    {step === 1 ? (
+                        <BecomeHostStep1 />
+                    ) : step === 2 ? (
+                        <LocationSt1 />
+                    ) : step === 3 ? (
+                        <CategorySt1 dataCategory={dataCategory} />
+                    ) : step === 4 ? (
+                        <BecomeHostStep2 />
+                    ) : step === 5 ? (
+                        <DescriptionSt2 />
+                    ) : step === 6 ? (
+                        <TimeFrameSt2 />
+                    ) : step === 7 ? (
+                        <ImageListSt2 />
+                    ) : step === 8 ? (
+                        <BecomeHostStep3 />
+                    ) : step === 9 ? (
+                        <TittleSt3 />
+                    ) : step === 10 ? (
+                        <PriceSt3 />
+                    ) : step === 11 ? (
+                        <FinalSt3 />
+                    ) : null}
+                    {/* {componentRender[step-1]} */}
+
+                </div>
                 <MultiStepBtn />
             </Box>
         </div>
     );
 };
+
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
     const { data } = await getAllCategory();
 

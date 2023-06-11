@@ -74,7 +74,7 @@ const CalendarHosting = () => {
                                         page?.data?.content?.map(
                                             (rs: ITours) =>
                                                 !rs.isDeleted && (
-                                                    <Flex alignItems={'center'} p={6} justifyContent="space-between">
+                                                    <Flex key={rs.tourId} alignItems={'center'} p={6} justifyContent="space-between">
                                                         <Flex alignItems={'center'}>
                                                             <Box mr={3} position={'relative'} w={24} h={16}>
                                                                 <Image

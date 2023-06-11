@@ -6,7 +6,6 @@ import {
     useDisclosure,
     Fade,
     Box,
-    Textarea,
     HStack,
     Input,
     useNumberInput,
@@ -14,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import TourFormWrapper from '@components/Wrapper/TourFormWrapper';
 import { useEffect, ChangeEvent, useState, useMemo } from 'react';
-import { SET_priceOnePerson } from 'src/redux/slice/becomeHostSlice';
 import { ITours } from 'src/types/tours.type';
 import { listTimeSlot, numberToTime, TimeFrameListStart, timeToMinute, TimeFrameListEnd, minuteToTime } from 'src/utils/dateUntils';
 type Props = {
@@ -78,7 +76,6 @@ const PriceTime = ({ tourId, value: valueTour }: Props) => {
             return true;
         }
     }, [timeBookStart, timeBookEnd, timeSlotLength]);
-    console.log(timeBookStart, timeBookEnd, timeSlotLength, timeStatus);
     return (
         <>
             <VStack divider={<StackDivider borderColor="black.200" />} align="stretch" width={'full'} spacing={6}>
@@ -238,7 +235,7 @@ const PriceTime = ({ tourId, value: valueTour }: Props) => {
                                     w={'90%'}
                                 >
                                     {lisTimeSlot.map((rs) => (
-                                        <option value={rs} selected={timeSlotLength === rs}>
+                                        <option key={rs} value={rs} selected={timeSlotLength === rs}>
                                             {numberToTime(rs)}
                                         </option>
                                     ))}
@@ -278,11 +275,6 @@ const PriceTime = ({ tourId, value: valueTour }: Props) => {
                                 display={Disclosure2.isOpen ? 'block' : 'none'}
                                 className=" border border-gray-800 rounded-2xl w-1/2 self-center h-full bg-white p-8 relative"
                             >
-                                {/* <TourFormWrapper
-                                    value={{ timeBookStart: timeBookStart, timeBookEnd: timeBookEnd }}
-                                    tourId={tourId}
-                                    type="time"
-                                > */}
                                 <Text
                                     pb={4}
                                     fontSize={'16px'}
@@ -297,8 +289,9 @@ const PriceTime = ({ tourId, value: valueTour }: Props) => {
                                 <Select w={'90%'} size="lg" rounded={'lg'} focusBorderColor={'teal.500'} onChange={handleSelectChange2}>
                                     <option value={0}>--Chọn giờ bắt đầu--</option>
 
-                                    {timeListStart.map((rs) => (
+                                    {timeListStart.map((rs, index) => (
                                         <option
+                                            key={index}
                                             value={timeToMinute(rs)}
                                             selected={timeToMinute(rs) === timeToMinute(timeBookStart)}
                                         >
@@ -325,8 +318,9 @@ const PriceTime = ({ tourId, value: valueTour }: Props) => {
                                     isDisabled={!(timeBookStart?.hour !== undefined && timeBookStart?.minutes !== undefined)}
                                 >
                                     <option value={0}>--Chọn giờ kết thúc--</option>
-                                    {timeListEnd?.map((rs) => (
+                                    {timeListEnd?.map((rs, index) => (
                                         <option
+                                            key={index}
                                             value={timeToMinute(rs)}
                                             selected={timeToMinute(rs) === timeToMinute(timeBookEnd)}
                                         >
@@ -334,7 +328,6 @@ const PriceTime = ({ tourId, value: valueTour }: Props) => {
                                         </option>
                                     ))}
                                 </Select>
-                                {/* </TourFormWrapper> */}
                             </Box>
                         </Fade>
                     </Box>

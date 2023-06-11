@@ -32,7 +32,6 @@ const Message = () => {
     async function handleScroll() {
         if (elContainer) {
             const { scrollHeight, scrollTop, clientHeight } = elContainer;
-            console.log(scrollHeight, scrollTop, clientHeight);
             const showScroll = scrollTop + clientHeight <= scrollHeight / 1.2;
             if (showScroll && !showScrollArrow) {
                 setShowScrollArrow(true);

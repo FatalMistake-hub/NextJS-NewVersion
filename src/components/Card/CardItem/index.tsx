@@ -19,10 +19,16 @@ const CardItem: React.FC<CardItemProps> = ({ className, data }) => {
     return (
         <>
             {!data.isDeleted && (
-                <Link href={`/tours/${data.tourId}`} className="cursor-pointer" target="_blank">
+                <Link href={`/tours/${data.tourId}`} className="cursor-pointer  " target="_blank">
                     {/* <a target="_blank" > */}
-                    <Flex py={10} w="full" alignItems="self-start" justifyContent="flex-start" flexDirection="column" className={className}>
-                        <Box w="100%" minHeight="200px" height={'100%'} maxHeight={'405px'} position="relative">
+                    <Flex
+                        w="full"
+                        alignItems="self-start"
+                        justifyContent="flex-start"
+                        flexDirection="column"
+                        className={`${className} rounded-xl hover:-translate-y-3 hover:shadow-3xl transition-all duration-300 ease-in-out  `}
+                    >
+                        <Box w="100%" minHeight={'405px'} position="relative">
                             {true && (
                                 <Box zIndex={1} boxSize="20px" position="absolute" top={4} right={4} bg="transparent">
                                     <BsHeart className="w-5 h-5 " />
@@ -36,17 +42,26 @@ const CardItem: React.FC<CardItemProps> = ({ className, data }) => {
                                 objectFit="cover"
                                 placeholder="blur"
                                 blurDataURL={data.imageMain}
-                                className="rounded-xl"
+                                className="rounded-t-xl"
                             />
                         </Box>
-                        <Box bg={useColorModeValue('white', 'gray.800')} width="full " rounded="lg" pt="2" cursor={'pointer'}>
-                            <Rating avgRating={data.avgRating} rating={data.rating} />
+                        <Box
+                            bg={useColorModeValue('white', 'gray.800')}
+                            width="full "
+                            rounded="lg"
+                            p={3}
+                            cursor={'pointer'}
+                            className="flex flex-col justify-between h-full"
+                        >
+                            <div>
+                                <Rating avgRating={data.avgRating} rating={data.rating} />
 
-                            <Flex my="1" justifyContent="space-between" alignItems="center">
-                                <Text className="text-ellipsis font-semibold text-[15px] text-left h-full " noOfLines={2}>
-                                    {data.title}
-                                </Text>
-                            </Flex>
+                                <Flex my="1" justifyContent="space-between" alignItems="center">
+                                    <Text className="text-ellipsis font-semibold text-[15px] text-left h-full " noOfLines={2}>
+                                        {data.title}
+                                    </Text>
+                                </Flex>
+                            </div>
 
                             <Flex justifyContent={'flex-start'} alignItems="center">
                                 <Box
@@ -80,7 +95,7 @@ export const CardItemSkeleton = () => {
         <>
             {/*  */}
             <Box py={12} w="full" alignItems="self-start" justifyContent="flex-start" flexDirection="column" h={'fit-content'}>
-                <Skeleton w="100%" minHeight="300px" height={'100%'} maxHeight={'405px'} position="relative" rounded={'xl'}></Skeleton>
+                <Skeleton w="100%" minHeight="405px" height={'100%'} maxHeight={'405px'} position="relative" rounded={'xl'}></Skeleton>
                 <SkeletonText mt="4" noOfLines={3} spacing="4" skeletonHeight="3" />
             </Box>
         </>

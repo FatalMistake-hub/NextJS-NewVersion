@@ -26,7 +26,6 @@ const TourFormWrapper = ({ children, value, tourId, onClose, type, isActive=true
                     colorScheme={'teal'}
                     rounded={'lg'}
                     onClick={() => {
-                        console.log(tourId, value, type);
                         type === 'time' ? patchToursFrameTime(value) : patchTours(value);
                         if (onClose && isSuccess) onClose();
                     }}
