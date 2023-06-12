@@ -25,12 +25,12 @@ const TimeFrameSt2: FC = () => {
         return () => {};
     }, [tour.timeBookStart.hour, tour.timeBookStart.minutes, tour.timeBookEnd.hour, tour.timeBookEnd.minutes]);
     const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        if (event.target.value !== '0') {
+        if (event.target.value !== 'default') {
             dispatch(SET_TIMEBOOKSTART(minuteToTime(event.target.value)));
         }
     };
     const handleSelectChange1 = (event: ChangeEvent<HTMLSelectElement>) => {
-        if (event.target.value !== '0') {
+        if (event.target.value !== 'default') {
             dispatch(SET_TIMEBOOKEND(minuteToTime(event.target.value)));
         }
     };
@@ -67,7 +67,7 @@ const TimeFrameSt2: FC = () => {
                         Thời gian trải nghiệm bắt đầu
                     </Text>
                     <Select w={'50%'} size="lg" rounded={'lg'} focusBorderColor={'teal.500'} onChange={handleSelectChange}>
-                        <option value={0}>--Chọn giờ bắt đầu--</option>
+                        <option value={'default'}>--Chọn giờ bắt đầu--</option>
 
                         {timeListStart.map((rs, index) => (
                             <option key={index} value={timeToMinute(rs)} selected={timeToMinute(rs) === timeToMinute(tour.timeBookStart)}>
@@ -86,7 +86,7 @@ const TimeFrameSt2: FC = () => {
                         onChange={handleSelectChange1}
                         isDisabled={!(tour.timeBookStart.hour !== undefined && tour.timeBookStart.minutes !== undefined)}
                     >
-                        <option value={0}>--Chọn giờ kết thúc--</option>
+                        <option value={'default'}>--Chọn giờ kết thúc--</option>
                         {timeListEnd?.map((rs, index) => (
                             <option key={index} value={timeToMinute(rs)} selected={timeToMinute(rs) === timeToMinute(tour.timeBookEnd)}>
                                 {rs.hour}:{rs.minutes === 0 ? '00' : rs.minutes}

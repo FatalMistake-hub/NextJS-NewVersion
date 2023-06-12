@@ -61,7 +61,7 @@ const GuestInbox = () => {
                             </Box>
                         </Stack>
                     </Stack>
-                    <Stack mt={6} position="relative" minH={'calc(100vh - 400px )'} direction={'row'}>
+                    <Stack mt={6} position="relative" height={'calc(100vh - 200px)'} direction={'row'}>
                         <Participants />
                         <Message />
                         {/* <ChatInput /> */}

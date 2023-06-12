@@ -21,13 +21,15 @@ const useCreateTour = () => {
         },
         onError: (error: any) => {
             console.log(error);
-            toast({
-                title: 'Account created.',
-                description: `${error}`,
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-            });
+            if (error.response.status !== 401) {
+                toast({
+                    title: 'Account created.',
+                    description: `${error}`,
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                });
+            }
         },
         onMutate: (tours: TourPost) => {
             toast({

@@ -32,12 +32,13 @@ const BecomeHost = ({ dataCategory }: Props) => {
     console.log('reRender');
     const componentRender = [
         <BecomeHostStep1 />,
-    <LocationSt1 />,
+        <LocationSt1 />,
         <CategorySt1 dataCategory={dataCategory} />,
         <BecomeHostStep2 />,
         <DescriptionSt2 />,
         <TimeFrameSt2 />,
         <ImageListSt2 />,
+        <BecomeHostStep3 />,
         <TittleSt3 />,
         <PriceSt3 />,
         <FinalSt3 />,
@@ -82,11 +83,15 @@ const BecomeHost = ({ dataCategory }: Props) => {
                         <TittleSt3 />
                     ) : step === 10 ? (
                         <PriceSt3 />
-                    ) : step === 11 ? (
+                    ) : step === 11 && (
                         <FinalSt3 />
-                    ) : null}
-                    {/* {componentRender[step-1]} */}
-
+                    ) }
+                    {/* {componentRender.map((item, index) => (
+                        <div key={index} className={`${index + 1 === step ? '' : 'hidden'} ${index + 1}`}>
+                            {item}
+                        </div>
+                    )) */}
+                    {/* } */}
                 </div>
                 <MultiStepBtn />
             </Box>

@@ -10,7 +10,7 @@ const FinalSt3 = () => {
         if (tour.priceOnePerson === null) {
             dispatch(SET_btnSTATUS(true));
         } else {
-            dispatch(SET_imageMain(tour.imageDtoList[0].link));
+            dispatch(SET_imageMain(tour.imageDtoList[0]?.link));
 
             dispatch(SET_btnSTATUS(false));
         }

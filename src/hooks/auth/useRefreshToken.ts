@@ -14,14 +14,14 @@ export const useRefreshToken = () => {
     const dispatch = useAppDispatch();
     const refreshToken = async () => {
         try {
-            if (!refreshTokenCalledRef.current) {
-                refreshTokenCalledRef.current = true;
-                return;
-            }
+            // if (!refreshTokenCalledRef.current) {
+            //     refreshTokenCalledRef.current = true;
+            //     return;
+            // }
 
-            if (status === 'loading') {
-                return;
-            }
+            // if (status === 'loading') {
+            //     return;
+            // }
 
             if (session && session.user && session.user.refreshToken) {
                 const res = await http.post('/auth/refresh_token/', {

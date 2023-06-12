@@ -26,7 +26,7 @@ export default function ScrollBtn({ isVisible, container }: ScrollArrowProps) {
                 style={{
                     zIndex: 1,
                     right: '1.25rem',
-                    bottom: '4.5rem',
+                    top: '-2rem',
                     position: 'absolute',
                 }}
             >
