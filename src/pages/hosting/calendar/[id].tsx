@@ -38,7 +38,7 @@ const CalendarHosting = () => {
     const tourId = Number(id);
 
     return (
-        <div className="pt-[86px] flex relative   ">
+        <div className="pt-[76px] flex relative   ">
             <Stack w={'full'} className="relative">
                 <CalendarBase />
                 <HStack spacing="12px" h={14} position="absolute" className="right-[18%] top-2">

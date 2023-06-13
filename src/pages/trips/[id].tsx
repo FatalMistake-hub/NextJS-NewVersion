@@ -7,7 +7,7 @@ import { ReactElement } from 'react';
 
 const TripDetail = () => {
     return (
-        <Box className="min-h-screen w-full flex pt-[86px]" backgroundColor={'gray.50'}>
+        <Box className="min-h-screen w-full flex pt-[76px]" backgroundColor={'gray.50'}>
             <Stack
                 position="relative"
                 spacing={0}
@@ -123,7 +123,7 @@ const TripDetail = () => {
                 // position="relative"
 
                 w={'full'}
-                className={`block fixed left-0 right-0 bottom-0 top-0 sm:block sm:sticky top-[86px]  h-map flex-grow bg-teal-900 bg-opacity-10   duration-100`}
+                className={`block fixed left-0 right-0 bottom-0 top-0 sm:block sm:sticky top-[76px]  h-map flex-grow bg-teal-900 bg-opacity-10   duration-100`}
             >
                 {/* <MapTrip></MapTrip> */}
             </Stack>

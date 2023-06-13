@@ -6,7 +6,7 @@ export default function HostingLayout({ children }: { children: React.ReactNode 
     return (
         <>
             <HeaderHosting />
-            <div className="pt-[86px] min-h-screen">{children}</div>
+            <div className="pt-[76px] min-h-screen">{children}</div>
             <Footer />
         </>
     );

@@ -1,5 +1,7 @@
+import { s } from '@fullcalendar/core/internal-common';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { type } from 'os';
+import { ICategory } from 'src/types/category.type';
 import { RootState } from '../store';
 
 // declaring the types for our state
@@ -9,6 +11,7 @@ interface ISearchState {
     checkIn: Date | null;
     checkOut: Date | null;
     guests: IGuests;
+    categoryList: ICategory[];
 }
 interface IGuests {
     adults: number;
@@ -16,20 +19,34 @@ interface IGuests {
     infants: number;
 }
 // Ngày hiện tại
-    const today = new Date();
+const today = new Date();
 
-    // Ngày sau đó 1 tháng
-    const monthsLater = new Date();
-    monthsLater.setMonth(monthsLater.getMonth() + 1);
+// Ngày sau đó 1 tháng
+const monthsLater = new Date();
+monthsLater.setMonth(monthsLater.getMonth() + 1);
 export const searchSlice = createSlice({
     name: 'search',
     initialState: {
+        categoryList: [],
         location: '',
-        checkIn: today,
-        checkOut: monthsLater,
+        checkIn: null,
+        checkOut: null,
         guests: { adults: 0, children: 0, infants: 0 },
     } as ISearchState,
     reducers: {
+        SET_CATEGORY: (state, action: PayloadAction<ICategory[]>) => {
+            state.categoryList = action.payload;
+        },
+        ADD_CATEGORY: (state, action: PayloadAction<ICategory>) => {
+            if (state.categoryList.find((item) => item.categoryId === action.payload.categoryId)) {
+                state.categoryList = state.categoryList.filter((item) => item.categoryId !== action.payload.categoryId);
+            } else {
+                state.categoryList.push(action.payload);
+            }
+        },
+        REMOVE_CATEGORY: (state, action: PayloadAction<number>) => {
+            state.categoryList = state.categoryList.filter((item) => item.categoryId !== action.payload);
+        },
         SET_LOCATION: (state, action: PayloadAction<string>) => {
             state.location = action.payload;
         },
@@ -100,6 +117,9 @@ export const {
     SET_LOCATION,
     SET_CHECK_IN,
     SET_CHECK_OUT,
+    SET_CATEGORY,
+    ADD_CATEGORY,
+    REMOVE_CATEGORY,
     SET_GUESTS,
     RESET_DATES,
     RESET_GUESTS,

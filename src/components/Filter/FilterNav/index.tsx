@@ -29,9 +29,12 @@ import useGetAllCatgory from 'src/hooks/guest/category/useGetAllCategory';
 import LanguagePicker from '../FilterItem/LanguagePicker';
 import PriceRange from '../FilterItem/PriceRange';
 import TimeInDay from '../FilterItem/TimeInDay';
+import { useAppDispatch, useAppSelector } from 'src/redux/hook';
+import { ADD_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
 interface NavItem {
+    id?: number;
     type?: string;
-    label?: string;
+    label: string;
     rightIcon?: ReactElement<any, string | JSXElementConstructor<any>>;
     leftIcon?: ReactElement<any, string | JSXElementConstructor<any>>;
     subLabel?: string;
@@ -72,6 +75,8 @@ const FilterNav = ({ dataCategory }: Props) => {
     ];
 
     const { isOpen: isFilterOpen, onClose: onFilterClose, onOpen: onFilterOpen } = useDisclosure();
+    const dispatch = useAppDispatch();
+    const { categoryList } = useAppSelector(selectSearch);
     return (
         // <Stack direction={'row'} spacing={2} justifyContent="space-between" width="full" >
         // <div className="flex flex-wrap items-center justify-between w-full pl-1 overflow-y-hidden h-14 ">
@@ -98,7 +103,23 @@ const FilterNav = ({ dataCategory }: Props) => {
                                         leftIcon={navItem.leftIcon}
                                         colorScheme="blackAlpha"
                                         variant="outline"
+                                        isActive={
+                                            i < 3 ? false : categoryList.find((item: any) => item.categoryId === navItem.id) ? true : false
+                                        }
                                         // color={'black.100'}
+                                        borderWidth={
+                                            i < 3 ? false : categoryList.find((item: any) => item.categoryId === navItem.id) ? 2 : 1
+                                        }
+                                        onClick={() => {
+                                            navItem &&
+                                                dispatch(
+                                                    ADD_CATEGORY({
+                                                        categoryId: navItem.id,
+                                                        label: navItem.label,
+                                                        // type: navItem.type,
+                                                    }),
+                                                );
+                                        }}
                                     >
                                         <Text color={'black'}>{navItem.label}</Text>
                                     </Button>

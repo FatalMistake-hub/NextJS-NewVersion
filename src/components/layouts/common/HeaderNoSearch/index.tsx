@@ -41,19 +41,19 @@ export const HeaderNoSearch: FC<HeaderNoSearchProps> = ({ exploreNearby, searchP
     const headerBehavior = () => {
         let style = [];
         if (!isSnapTop) style.push('bg-white border border-b-gray-700');
-        if (!isActiveSearch) style.push('bg-white border border-b-gray-700 h-[86px] pb-5');
-        if (isActiveSearch) style.push('bg-white border border-b-gray-700 pb-8');
+        if (!isActiveSearch) style.push('bg-white border border-b-gray-700 h-[76px]');
+        if (isActiveSearch) style.push('bg-white border border-b-gray-700 ');
         return style.join(' ');
     };
     const { data: session, status } = useSession();
     return (
         <>
-            <header className={`${headerBehavior()} z-50 fixed top-0 w-full pt-5 duration-300 md:transition-none`}>
+            <header className={`${headerBehavior()}   z-50 fixed top-0 w-full  duration-300 md:transition-none`}>
                 {/* header top */}
                 <div
                     className={`${
                         searchPage ? 'px-10' : 'container'
-                    } hidden md:grid md:grid-cols-[auto,auto] xl:grid-cols-[1.5fr,1.5fr] 2xl:grid-cols-[1fr,0.75fr] items-start`}
+                    } hidden h-full md:grid md:grid-cols-[auto,auto] xl:grid-cols-[1.5fr,1.5fr] 2xl:grid-cols-[1fr,0.75fr] items-center`}
                 >
                     {/* left side - logo */}
                     <div className="flex items-center h-12">

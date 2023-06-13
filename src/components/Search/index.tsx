@@ -2,11 +2,8 @@ import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 
 import React, { ChangeEvent, FC, FocusEvent, FormEvent, memo, useCallback, useEffect, useState } from 'react';
-
 import Counter from './Counter';
-import { DATA_ACTION_TYPES } from 'src/context/actionTypes';
 import DateRangeCP from './DateRange';
-
 import { FaChevronRight } from 'react-icons/fa';
 import SearchOptionButton from './SearchOptionButton';
 import SearchOptionWrapper from './SearchOptionWrapper';
@@ -122,7 +119,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                                 dispatch(SET_LOCATION(e.target.value)), setSearchTerm(e.target.value);
                             }}
                             onFocus={() => setSearchMenu(ESearchMenu.LOCATION)}
-                            // onBlur={handleOnBlur}
+                            onBlur={handleOnBlur}
                             onClear={() => {
                                 dispatch(SET_LOCATION(''));
                                 handleOnBlur();

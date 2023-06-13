@@ -39,21 +39,20 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
 
     const headerBehavior = () => {
         let style = [];
-        if (!isSnapTop) style.push('bg-white border border-b-gray-700');
-        if (!isActiveSearch) style.push('bg-white border border-b-gray-700 h-[86px] pb-5');
-        if (isActiveSearch) style.push('bg-white border border-b-gray-700 pb-8');
+        if (!isSnapTop) style.push('bg-white ');
+        if (!isActiveSearch) style.push('bg-white  h-[76px] ');
+        if (isActiveSearch) style.push('bg-white border border-b-gray-700 pt-3 pb-6');
         return style.join(' ');
     };
     const { data: session, status } = useSession();
     return (
         <>
-           
-            <header className={`${headerBehavior()} z-50 fixed top-0 w-full pt-5 duration-300 md:transition-none`}>
+            <header className={`${headerBehavior()} z-50 fixed top-0 w-full  duration-300 md:transition-none`}>
                 {/* header top */}
                 <div
                     className={`${
                         searchPage ? 'px-10' : 'container'
-                    } hidden md:grid md:grid-cols-[auto,1fr,auto] xl:grid-cols-[1.5fr,3fr,1.5fr] 2xl:grid-cols-[1fr,3fr,0.75fr] items-start`}
+                    } hidden h-full md:grid md:grid-cols-[auto,1fr,auto] xl:grid-cols-[1.5fr,3fr,1.5fr] 2xl:grid-cols-[1fr,3fr,0.75fr] items-center`}
                 >
                     {/* left side - logo */}
                     <div className="flex items-center h-12">

@@ -13,9 +13,10 @@ interface CardItemProps {
     // numReviews: number;
     className?: string;
     data: ITours;
+    minImgHeight?: string;
 }
 
-const CardItem: React.FC<CardItemProps> = ({ className, data }) => {
+const CardItem: React.FC<CardItemProps> = ({ className, data, minImgHeight = '405px' }) => {
     return (
         <>
             {!data.isDeleted && (
@@ -28,7 +29,7 @@ const CardItem: React.FC<CardItemProps> = ({ className, data }) => {
                         flexDirection="column"
                         className={`${className} rounded-xl hover:-translate-y-3 hover:shadow-3xl transition-all duration-300 ease-in-out  `}
                     >
-                        <Box w="100%" minHeight={'405px'} position="relative">
+                        <Box w="100%" maxH={'405px'} h="full" minHeight={minImgHeight} position="relative">
                             {true && (
                                 <Box zIndex={1} boxSize="20px" position="absolute" top={4} right={4} bg="transparent">
                                     <BsHeart className="w-5 h-5 " />
@@ -90,12 +91,19 @@ const CardItem: React.FC<CardItemProps> = ({ className, data }) => {
         </>
     );
 };
-export const CardItemSkeleton = () => {
+export const CardItemSkeleton = ({ minImgHeight = '405px' }) => {
     return (
         <>
             {/*  */}
             <Box py={12} w="full" alignItems="self-start" justifyContent="flex-start" flexDirection="column" h={'fit-content'}>
-                <Skeleton w="100%" minHeight="405px" height={'100%'} maxHeight={'405px'} position="relative" rounded={'xl'}></Skeleton>
+                <Skeleton
+                    w="100%"
+                    minHeight={minImgHeight}
+                    height={'100%'}
+                    maxHeight={'405px'}
+                    position="relative"
+                    rounded={'xl'}
+                ></Skeleton>
                 <SkeletonText mt="4" noOfLines={3} spacing="4" skeletonHeight="3" />
             </Box>
         </>

@@ -15,7 +15,7 @@ const CalendarRouter = () => {
         });
     }
     return (
-        <div className="pt-[86px] flex relative   ">
+        <div className="pt-[76px] flex relative   ">
             <Stack w={'full'} className="relative justify-center flex items-center">
                 <SkeletonText w={'90%'} mt="20" noOfLines={2} spacing="8" skeletonHeight="8" />
                 <SkeletonText w={'90%'} pt="32" noOfLines={4} spacing="8" skeletonHeight="8" />

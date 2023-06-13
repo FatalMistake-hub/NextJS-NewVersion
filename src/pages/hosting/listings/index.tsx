@@ -44,8 +44,8 @@ const Listings = () => {
     const { status, ref, data, error, isFetchingNextPage, fetchNextPage, hasNextPage } = useGetAllHostTour(10);
 
     return (
-        <div className=" pt-[86px] flex relative min-h-screen ">
-            <VStack w={`${isOpen ? '500px' : '100%'} `} float={'left'} className="border-r border-r-gray-700  min-h-[100vh-86px] ">
+        <div className=" pt-[76px] flex relative min-h-screen ">
+            <VStack w={`${isOpen ? '500px' : '100%'} `} float={'left'} className="border-r border-r-gray-700  min-h-[100vh-76px] ">
                 <Box w={'full'}>
                     <Flex alignItems={'center'} justifyContent={'space-between'} pt={8} px={8} pb={4}>
                         <Heading lineHeight={1.4} as="h1" fontSize={'26px'} fontWeight={'600'} width={'full'} noOfLines={2}>
@@ -57,7 +57,8 @@ const Listings = () => {
                                     return tours;
                                 }, 0);
                                 return acc + countTour;
-                            }, 0)}{' '}
+                            }, 0)}
+                            {' '}
                             trải nghiệm cho thuê
                         </Heading>
                         {isOpen ? (

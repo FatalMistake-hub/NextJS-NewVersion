@@ -6,9 +6,12 @@ interface IMap extends PropsWithChildren<any> {
 
 const MapBase: FC<IMap> = ({ children, center }) => {
     const [viewport, setViewport] = React.useState({
-        latitude: center.latitude,
-        longitude: center.longitude,
-        zoom: 14,
+        // latitude: center.latitude,
+        // longitude: center.longitude,
+        // zoom: 14,
+        latitude: 18.0583,
+        longitude: 107.20623,
+        zoom: 5,
         // bearing: 0,
         // pitch: 0,
     });
