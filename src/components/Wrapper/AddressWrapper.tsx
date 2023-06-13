@@ -5,6 +5,7 @@ import { FaChevronRight, FaSearchLocation } from 'react-icons/fa';
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import { selectBecomeHost, SET_CITY, SET_COORDINATE, SET_DESTINATION } from 'src/redux/slice/becomeHostSlice';
 
+
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 interface ILocationProps extends PropsWithChildren<any> {
     status?: boolean;
@@ -49,6 +50,7 @@ const AddressWrapper: FC<ILocationProps> = ({ className, status, response, loadi
                                     }),
                                 );
                                 dispatch(SET_CITY(data.properties.state));
+                                
                                 onBlur();
                             }}
                         >

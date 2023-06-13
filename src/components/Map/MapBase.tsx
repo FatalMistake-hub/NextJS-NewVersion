@@ -1,24 +1,23 @@
-import React, { FC, PropsWithChildren } from 'react';
+import React, { FC, PropsWithChildren, useEffect } from 'react';
 import ReactMapGL, { GeolocateControl, FullscreenControl, NavigationControl, ScaleControl } from 'react-map-gl';
+import { useAppSelector } from 'src/redux/hook';
+import { selectSearch } from 'src/redux/slice/searchSlice';
+import { calculateZoomVP } from 'src/utils/mapUntil';
 interface IMap extends PropsWithChildren<any> {
     center: { longitude: number; latitude: number };
 }
 
 const MapBase: FC<IMap> = ({ children, center }) => {
+    const { viewport: view, latitude, longitude } = useAppSelector(selectSearch);
     const [viewport, setViewport] = React.useState({
-        // latitude: center.latitude,
-        // longitude: center.longitude,
-        // zoom: 14,
-        latitude: 18.0583,
-        longitude: 107.20623,
-        zoom: 5,
-        // bearing: 0,
-        // pitch: 0,
+        latitude: center.latitude,
+        longitude: center.longitude,
     });
 
     return (
         <ReactMapGL
             {...viewport}
+            zoom={calculateZoomVP(view.southWestLatitude, view.northEastLatitude, view.southWestLongtitude, view.northEastLongtitude)}
             mapStyle={process.env.MAPBOX_STYLE}
             mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
             // style={{ width: '100vw', height: '100vh' }}

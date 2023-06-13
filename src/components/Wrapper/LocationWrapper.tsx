@@ -3,7 +3,7 @@ import { FC, PropsWithChildren, useEffect, FocusEvent } from 'react';
 import { FaChevronRight, FaSearchLocation } from 'react-icons/fa';
 
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
-import { selectSearch, SET_LOCATION } from 'src/redux/slice/searchSlice';
+import { selectSearch, SET_LOCATION, SET_VIEWPORT } from 'src/redux/slice/searchSlice';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 interface ILocationProps extends PropsWithChildren<any> {
     status?: boolean;
@@ -36,6 +36,14 @@ const LocationWrapper: FC<ILocationProps> = ({ status, response, loading, onBlur
                             className="flex w-[350px] px-4 py-3 rounded-2xl items-center center hover:bg-gray-100  "
                             onClick={() => {
                                 dispatch(SET_LOCATION(`${data.properties.name} `));
+                                dispatch(
+                                    SET_VIEWPORT({
+                                        northEastLongtitude: data.properties.bbox[0],
+                                        northEastLatitude: data.properties.bbox[1],
+                                        southWestLongtitude: data.properties.bbox[2],
+                                        southWestLatitude: data.properties.bbox[3],
+                                    }),
+                                );
                                 onBlur();
                             }}
                         >
@@ -43,8 +51,8 @@ const LocationWrapper: FC<ILocationProps> = ({ status, response, loading, onBlur
                                 <FaSearchLocation className="w-6 h-6" />
                             </div>
                             <div className="flex items-center font-medium justify-center text-base text-left">
-                                {data.properties.name}{data.properties.place_formatted.length > 9 ? ',' : ''}{' '}
-                                {data.properties.place_formatted.slice(0, -8)}
+                                {data.properties.name}
+                                {data.properties.place_formatted?.length > 9 ? ',' : ''} {data.properties.place_formatted?.slice(0, -8)}
                             </div>
                         </span>
                     ))}

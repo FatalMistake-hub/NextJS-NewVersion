@@ -12,6 +12,14 @@ interface ISearchState {
     checkOut: Date | null;
     guests: IGuests;
     categoryList: ICategory[];
+    longitude: number;
+    latitude: number;
+    viewport: {
+        northEastLongtitude: number;
+        northEastLatitude: number;
+        southWestLongtitude: number;
+        southWestLatitude: number;
+    };
 }
 interface IGuests {
     adults: number;
@@ -27,6 +35,14 @@ monthsLater.setMonth(monthsLater.getMonth() + 1);
 export const searchSlice = createSlice({
     name: 'search',
     initialState: {
+        viewport: {
+            northEastLatitude: 23.388698,
+            northEastLongtitude: 109.46971,
+            southWestLatitude: 8.177667,
+            southWestLongtitude: 102.144576,
+        },
+        longitude: 107.20623,
+        latitude: 18.0583,
         categoryList: [],
         location: '',
         checkIn: null,
@@ -34,6 +50,10 @@ export const searchSlice = createSlice({
         guests: { adults: 0, children: 0, infants: 0 },
     } as ISearchState,
     reducers: {
+        SET_VIEWPORT: (state, action: PayloadAction<ISearchState['viewport']>) => {
+            state.viewport = action.payload;
+        },
+
         SET_CATEGORY: (state, action: PayloadAction<ICategory[]>) => {
             state.categoryList = action.payload;
         },
@@ -129,6 +149,7 @@ export const {
     DECREASE_ADULTS,
     DECREASE_CHILDREN,
     DECREASE_INFANTS,
+    SET_VIEWPORT,
 } = searchSlice.actions;
 
 export const selectSearch = (state: RootState) => state.search;

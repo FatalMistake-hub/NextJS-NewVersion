@@ -134,6 +134,24 @@ input {
         height: calc(100vh - 160px);
     }
 }
+// .mapboxgl-marker {
+//     z-index: 0 !important;
+// }
+.loader div {
+  animation-duration: 0.5s;
+}
+
+.loader div:first-child {
+  animation-delay: 0.1s;
+}
+
+.loader div:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.loader div:nth-child(3) {
+  animation-delay: 0.6s;
+}
 .swiper {
     width: 100%;
     height: 100%;
