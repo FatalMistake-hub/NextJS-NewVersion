@@ -100,7 +100,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                             <meta name="msapplication-TileColor" content="#ffffff" />
                             <meta name="msapplication-TileImage" content="pwa/ms-icon-144x144.png" />
                             <meta name="theme-color" content="#0F172A" />
-                            <meta name="description" content="Travel Application for your easy mobilities" />
+                            <meta name="description" content="Cùng đặt và trải nghiệm tour tại ExpTravel" />
                             <title>Du lịch & trải nghiệm</title>
                             <link
                                 rel="icon"
