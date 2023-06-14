@@ -45,8 +45,8 @@ export const searchSlice = createSlice({
         latitude: 18.0583,
         categoryList: [],
         location: '',
-        checkIn: null,
-        checkOut: null,
+        checkIn: today,
+        checkOut: monthsLater,
         guests: { adults: 0, children: 0, infants: 0 },
     } as ISearchState,
     reducers: {

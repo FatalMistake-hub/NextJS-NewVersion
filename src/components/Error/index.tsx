@@ -1,5 +1,6 @@
 const ErrorNotify = (props: any) => {
     const { error, resetErrorBoundary } = props;
+    console.log(error, resetErrorBoundary);
     return (
         <div className="error-page min-h-screen flex items-center justify-center">
             <div className="text-center">

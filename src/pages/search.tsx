@@ -3,7 +3,7 @@ import { Marker, Popup } from 'react-map-gl';
 import { getCenter } from 'geolib';
 import { getSearch, searchResults } from 'src/utils/data';
 import Image from 'next/image';
-import { BiChevronLeft, BiChevronRight, BiClipboard, BiFoodMenu, BiMap, BiX } from 'react-icons/bi';
+import { BiChevronLeft, BiChevronRight, BiClipboard, BiDrink, BiFoodMenu, BiMap, BiMusic, BiRun, BiX } from 'react-icons/bi';
 import MapBase from '@components/Map/MapBase';
 import { useRouter } from 'next/router';
 import { useAppSelector } from 'src/redux/hook';
@@ -33,13 +33,33 @@ import {
     useColorModeValue,
 } from '@chakra-ui/react';
 import Rating from '@components/Card/Rating';
+import { FaPlane, FaTheaterMasks } from 'react-icons/fa';
+import { BsCameraFill } from 'react-icons/bs';
 interface Props {
     dataCategory: any;
 }
 const Search = ({ dataCategory }: Props) => {
+    function renderIcon(categoryName: string, classname: string, size: number) {
+        switch (categoryName) {
+            case 'Thể thao':
+                return <BiRun className={classname} size={size} />;
+            case 'Tham quan':
+                return <BsCameraFill className={classname} size={size} />;
+            case 'Nghệ thuật và văn hóa':
+                return <FaTheaterMasks className={classname} size={size} />;
+            case 'Giải trí':
+                return <BiMusic className={classname} size={size} />;
+            case 'Thức ăn và đồ uống':
+                return <BiDrink className={classname} size={size} />;
+            case 'Tour':
+                return <FaPlane className={classname} size={size} />;
+            default:
+                return <BiRun className={classname} size={size} />;
+        }
+    }
     const router = useRouter();
     const [isFullMap, setIsFullMap] = useState<boolean>(false);
-    const { location, checkIn, checkOut, guests, viewport } = useAppSelector(selectSearch);
+    // const { location, checkIn, checkOut, guests, viewport } = useAppSelector(selectSearch);
 
     const getGuests = (guests: any) => {
         const totalGuests = formatGuests(guests, { noInfants: true });
@@ -57,17 +77,8 @@ const Search = ({ dataCategory }: Props) => {
     const handleMouseLeave = () => {
         setIsHovered({ status: false, id: undefined });
     };
-    const [isSelect, setIsSelect] = useState<{ status: boolean; id: number | undefined }>({
-        status: false,
-        id: undefined,
-    });
-    const handleSelect = (id: number) => {
-        setIsSelect({ status: true, id: id });
-    };
-    const handleUnSelect = () => {
-        setIsSelect({ status: false, id: undefined });
-    };
 
+ 
     const getDates = (startDate: any, endDate: any) => {
         const dates = formatRangeDate(startDate, endDate);
         if (dates) return `• ${dates}`;
@@ -99,15 +110,10 @@ const Search = ({ dataCategory }: Props) => {
             latitude: result.lat,
             longitude: result.long,
         }));
-        // console.log(
-        //     coords,
-        //     searchResults.map((result) => ({
-        //         latitude: result.lat,
-        //         longitude: result.long,
-        //     })),
-        // );
         return getCenter(coords) || { latitude: 0, longitude: 0 };
     };
+    const viewportString = router.query.viewport as string | undefined;
+
     return (
         <>
             <div className=" w-full   overflow-x-clip fixed top-[76px]  flex justify-center pr-10 bg-white z-10 border border-b-gray-700 py-3">
@@ -190,14 +196,18 @@ const Search = ({ dataCategory }: Props) => {
                     <section
                         className={`block fixed left-0 right-0 bottom-0 top-[158px] sm:block sm:sticky top-[158px] h-map flex-grow bg-teal-900 bg-opacity-10   duration-100`}
                     >
-                        <MapBase center={getCenterMap()} className="relative top-[76px] ">
+                        <MapBase
+                            center={getCenterMap()}
+                            viewportBbox={viewportString && JSON.parse(viewportString)}
+                            className="relative top-[76px] "
+                        >
                             <button
                                 className="absolute  top-1 items-center hidden p-3 m-4 text-gray-500 duration-300 bg-white border border-gray-200 rounded-lg shadow-lg sm:flex active:scale-90"
                                 onClick={() => (isFullMap ? setIsFullMap(false) : setIsFullMap(true))}
                             >
                                 {isFullMap ? (
                                     <>
-                                        <BiChevronRight className="h-5" /> <span className="ml-2 text-sm font-semibold"> list</span>
+                                        <BiChevronRight className="h-5" /> <span className="ml-2 text-sm font-semibold"> Hiển thị danh sách</span>
                                     </>
                                 ) : (
                                     <BiChevronLeft className="h-5" />
@@ -221,122 +231,33 @@ const Search = ({ dataCategory }: Props) => {
                                         offsetLeft={-20}
                                         offsetTop={-10}
                                         // offset={[-20, -10]}
+                                        
                                     >
-                                        {/* <button className="relative ">
-                                            <button
-                                                className={`p-2 ${
-                                                    isHovered.status === true && isHovered.id === result.tourId
-                                                        ? 'bg-black '
-                                                        : 'bg-white '
-                                                }     duration-300  rounded-full shadow-md cursor-pointer `}
-                                                onClick={() => handleSelect(result.tourId)}
-                                            >
-                                                <BiFoodMenu
-                                                    size={22}
-                                                    className={`${
-                                                        isHovered.status === true && isHovered.id === result.tourId
-                                                            ? 'bg-black text-white'
-                                                            : 'bg-white text-black '
-                                                    }`}
-                                                />
-                                            </button>
-                                            <Link href={`tours/${result.tourId}`} className="z-0">
-                                                <div
-                                                    onBlur={() => { handleUnSelect }}
-                                                    className={` absolute drop-shadow-2xl ${
-                                                        isSelect.id === result.tourId && isSelect.status === true ? 'block' : 'hidden'
-                                                    }   w-[327px] max-h-[340px]   text-left bg-white border border-gray-200 rounded-xl cursor-pointer bottom-2 -translate-x-[43%] -translate-y-[12%] `}
-                                                >
-                                                    <div className="relative  w-full h-[216px] mb-2">
-                                                        <IconButton
-                                                            aria-label="close"
-                                                            icon={<BiX />}
-                                                            rounded="full"
-                                                            colorScheme={'blackAlpha'}
-                                                            size="xs"
-                                                            className="absolute z-50  top-2 left-2  "
-                                                            onClick={() => {
-                                                                handleUnSelect;
-                                                            }}
-                                                        />
-                                                        <Image
-                                                            src={result.imageMain}
-                                                            alt={result.title}
-                                                            layout="fill"
-                                                            objectFit="cover"
-                                                            className="rounded-t-xl z-40"
-                                                            placeholder="blur"
-                                                            blurDataURL={result.imageMain}
-                                                        />
-                                                    </div>
-                                                    <Box
-                                                        bg={useColorModeValue('white', 'gray.800')}
-                                                        width="full "
-                                                        rounded="lg"
-                                                        p={3}
-                                                        cursor={'pointer'}
-                                                        className="flex z-40 flex-col justify-between h-full"
-                                                    >
-                                                        <div>
-                                                            <Rating avgRating={result.avgRating} rating={result.rating} />
-
-                                                            <Flex my="1" justifyContent="space-between" alignItems="center">
-                                                                <Text
-                                                                    className="text-ellipsis font-semibold text-[15px] text-left h-full "
-                                                                    noOfLines={2}
-                                                                >
-                                                                    {result.title}
-                                                                </Text>
-                                                            </Flex>
-                                                        </div>
-
-                                                        <Flex justifyContent={'flex-start'} alignItems="center">
-                                                            <Box
-                                                                display={'flex'}
-                                                                justifyContent={'flex-start'}
-                                                                fontSize="xl"
-                                                                color={useColorModeValue('gray.800', 'white')}
-                                                                width="full"
-                                                            >
-                                                                <Box as="span" color={'gray.600'} fontSize="md" mr={'4px'}>
-                                                                    Từ
-                                                                </Box>
-                                                                <Box as="span" color={'gray.600'} fontSize="md" mr={'4px'}>
-                                                                    {result.priceOnePerson?.toLocaleString('vi-VN')}₫
-                                                                </Box>
-                                                                <Box as="span" color={'gray.600'} fontSize="md">
-                                                                    /người
-                                                                </Box>
-                                                            </Box>
-                                                        </Flex>
-                                                    </Box>
-                                                </div>
-                                            </Link>
-                                        </button> */}
+                                       
                                         <Popover>
                                             <PopoverTrigger>
                                                 <IconButton
                                                     aria-label="item"
                                                     variant={'blackAlpha'}
                                                     rounded="full"
+                                                    className='drop-shadow-xl '
                                                     bgColor={
                                                         isHovered.status === true && isHovered.id === result.tourId ? 'black ' : 'white '
                                                     }
-                                                    icon={
-                                                        <BiFoodMenu
-                                                            size={22}
-                                                            className={`${
-                                                                isHovered.status === true && isHovered.id === result.tourId
-                                                                    ? 'bg-black text-white'
-                                                                    : 'bg-white text-black '
-                                                            }`}
-                                                        />
-                                                    }
+                                                    icon={renderIcon(
+                                                        result.categoryName,
+                                                        `${
+                                                            isHovered.status === true && isHovered.id === result.tourId
+                                                                ? 'bg-black text-white z-50'
+                                                                : 'bg-white text-black '
+                                                        } rounded-full`,
+                                                        22,
+                                                    )}
                                                 />
                                             </PopoverTrigger>
-                                            <PopoverContent rounded={'2xl'} border={'none'} boxShadow={'dark-lg'} zIndex={'tooltip'}>
+                                            <PopoverContent rounded={'2xl'} border={'none'} boxShadow={'dark-lg'} zIndex={500} >
                                                 <Link href={`tours/${result.tourId}`}>
-                                                    <PopoverBody p={0} bgColor="transparent" rounded={'3xl'} zIndex={'popover'}>
+                                                    <PopoverBody p={0} bgColor="transparent" rounded={'3xl'}  >
                                                         <div className="relative rounded-xl  w-full h-[216px] mb-2">
                                                             <Image
                                                                 src={result.imageMain}

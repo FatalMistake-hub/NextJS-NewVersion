@@ -48,7 +48,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
     const router = useRouter();
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
 
-    const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
+    const { location, checkIn, checkOut, guests, viewport } = useAppSelector(selectSearch);
     const dispatch = useAppDispatch();
     // handler
     const handleOnBlur = (event?: FocusEvent<HTMLElement>) => {
@@ -86,6 +86,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                 checkIn: checkIn?.toISOString(),
                 checkOut: checkOut?.toISOString(),
                 guests: JSON.stringify(guests),
+                viewport: JSON.stringify(viewport),
             },
         });
     };

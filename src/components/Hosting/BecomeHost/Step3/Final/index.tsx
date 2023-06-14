@@ -35,7 +35,7 @@ const FinalSt3 = () => {
                         Dưới đây là những thông tin mà chúng tôi sẽ hiển thị cho khách. Hãy đảm bảo mọi thứ đều ổn thỏa.
                     </Text>
                     <Box w={'full'} h={'full'} display="flex">
-                        <div className="min-w-[356px] max-h-[420px] p-4 shadow-2xl rounded-xl">
+                        <div className="min-w-[356px] max-h-[440px] p-4 shadow-2xl rounded-xl">
                             <Center w="full" minH="320px" position={'relative'}>
                                 <Image
                                     src={tour.imageDtoList[0]?.link}
@@ -47,8 +47,8 @@ const FinalSt3 = () => {
                                     className="rounded-xl"
                                 />
                             </Center>
-                            <Box w="full" mt={4}>
-                                <Text fontSize={'16px'} fontWeight={'500'}>
+                            <Box w="full" mt={4} minH={'fit-content'}>
+                                <Text fontSize={'16px'} fontWeight={'500'} noOfLines={2}>
                                     {tour.title}
                                 </Text>
                                 <Text fontSize={'16px'} fontWeight={'500'}>

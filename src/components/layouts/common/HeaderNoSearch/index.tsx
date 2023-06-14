@@ -48,7 +48,7 @@ export const HeaderNoSearch: FC<HeaderNoSearchProps> = ({ exploreNearby, searchP
     const { data: session, status } = useSession();
     return (
         <>
-            <header className={`${headerBehavior()}   z-50 fixed top-0 w-full  duration-300 md:transition-none`}>
+            <header className={`${headerBehavior()}    z-50 fixed top-0 w-full  duration-300 md:transition-none`}>
                 {/* header top */}
                 <div
                     className={`${

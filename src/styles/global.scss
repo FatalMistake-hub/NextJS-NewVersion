@@ -134,9 +134,7 @@ input {
         height: calc(100vh - 160px);
     }
 }
-// .mapboxgl-marker {
-//     z-index: 0 !important;
-// }
+
 .loader div {
   animation-duration: 0.5s;
 }
@@ -335,4 +333,14 @@ body {
 
 .progress-animation--decrease {
     transform: scaleX(0);
+}
+.mapboxgl-map {
+    z-index: -1 !important;
+}
+// .overlays {
+//     z-index: -1 !important;
+
+// }
+.mapboxgl-marker {
+    z-index: 0 !important;
 }

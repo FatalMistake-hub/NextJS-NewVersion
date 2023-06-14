@@ -108,7 +108,7 @@ const FilterNav = ({ dataCategory }: Props) => {
                                         }
                                         // color={'black.100'}
                                         borderWidth={
-                                            i < 3 && categoryList.find((item: any) => item.categoryId === navItem.id) ? 2 : 1
+                                            i >= 3 && categoryList.find((item: any) => item.categoryId === navItem.id) ? 2 : 1
                                         }
                                         onClick={() => {
                                             navItem &&

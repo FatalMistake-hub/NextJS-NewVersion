@@ -27,6 +27,7 @@ import MenuBase from '../MenuBase';
 import MenuHosting from '../MenuHosting';
 import MenuHostingNav from '../MenuHostingNav/MenuHostingNav';
 import { useRouter } from 'next/router';
+import { useErrorBoundary } from 'react-error-boundary';
 
 interface HeaderHostingProps {
     exploreNearby?: IExploreNearby[];
@@ -204,6 +205,7 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                                         className="rounded-3xl "
                                         position={'relative'}
                                         color={'blackAlpha.700'}
+                                        
                                     >
                                         Thông tin phân tích
                                     </Tab>
