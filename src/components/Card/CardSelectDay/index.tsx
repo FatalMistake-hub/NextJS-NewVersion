@@ -6,8 +6,8 @@ import { DateTimeToStringBooking } from 'src/utils/dateUntils';
 
 const CardSelectDay: FC<any> = ({ start_time, end_time, day, price }) => {
     return (
-        <div className="p-6 flex items-start justify-center  flex-col border rounded-lg border-black-400 min-w-[200px]">
-            <div className="flex flex-col items-start">
+        <div className="p-6 drop-shadow-sm flex items-start justify-center  flex-col border rounded-lg border-black-400 min-w-[200px]">
+            <div className="flex flex-col items-start ">
                 <Text mb={1} fontSize={'16px'} fontWeight={600}>
                     {DateTimeToStringBooking(day)}
                 </Text>

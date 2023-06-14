@@ -39,8 +39,8 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
 
     const headerBehavior = () => {
         let style = [];
-        if (!isSnapTop) style.push('bg-white ');
-        if (!isActiveSearch) style.push('bg-white  h-[76px] ');
+        if (!isSnapTop) style.push('bg-white border border-b-gray-700 ');
+        if (!isActiveSearch) style.push('bg-white border border-b-gray-700 h-[76px] ');
         if (isActiveSearch) style.push('bg-white border border-b-gray-700 pt-3 pb-6');
         return style.join(' ');
     };
@@ -77,7 +77,8 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                                     {location || <span className="font-normal text-gray-300">Địa điểm</span>}
                                 </span>
                                 <span className="px-4 py-1 border-r border-gay-200">
-                                    {formatRangeDate(checkIn, checkOut) || <span className="font-normal text-gray-300">Thêm ngày</span>}
+                                    {formatRangeDate(checkIn, checkOut)
+                                        || <span className="font-normal text-gray-300">Thêm ngày</span>}
                                 </span>
                                 <span className="px-4 py-1">
                                     {formatGuests(guests, { noInfants: true }) || (

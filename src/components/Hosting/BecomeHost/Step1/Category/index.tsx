@@ -21,7 +21,7 @@ const CategorySt1: FC<Props> = ({ dataCategory }) => {
         }
         return () => {};
     }, [tour.categories[0].categoryId, tour.categories[0].categoryName]);
-    console.log(dataCategory);
+
     return (
         <>
             <div className="w-full justify-center  flex min-h-[calc(100vh-176px)] px-20">

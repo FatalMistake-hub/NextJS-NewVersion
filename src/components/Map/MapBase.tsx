@@ -10,6 +10,7 @@ interface IMap extends PropsWithChildren<any> {
 
 const MapBase: FC<IMap> = ({ children, center, viewportBbox }) => {
     // const { viewport: view, latitude, longitude } = useAppSelector(selectSearch);
+
     const calculatedZoom = useMemo(
         () =>
             calculateZoomVP(
@@ -20,7 +21,6 @@ const MapBase: FC<IMap> = ({ children, center, viewportBbox }) => {
             ),
         [viewportBbox],
     );
-
     const [viewport, setViewport] = React.useState<any>({
         longitude: 107.20623,
         latitude: 18.0583,

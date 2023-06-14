@@ -8,8 +8,8 @@ import { RootState } from '../store';
 
 interface ISearchState {
     location: string;
-    checkIn: Date | null;
-    checkOut: Date | null;
+    checkIn: any;
+    checkOut: any;
     guests: IGuests;
     categoryList: ICategory[];
     longitude: number;
@@ -32,14 +32,15 @@ const today = new Date();
 // Ngày sau đó 1 tháng
 const monthsLater = new Date();
 monthsLater.setMonth(monthsLater.getMonth() + 1);
+console.log(typeof monthsLater, typeof today);
 export const searchSlice = createSlice({
     name: 'search',
     initialState: {
         viewport: {
-            northEastLatitude: 23.388698,
-            northEastLongtitude: 109.46971,
-            southWestLatitude: 8.177667,
-            southWestLongtitude: 102.144576,
+            northEastLatitude: 8.177667,
+            northEastLongtitude: 102.144576,
+            southWestLatitude: 23.388698,
+            southWestLongtitude: 109.46971,
         },
         longitude: 107.20623,
         latitude: 18.0583,

@@ -1,10 +1,15 @@
 import { ex } from '@fullcalendar/core/internal-common';
 import { format } from 'date-fns';
-import { es, ru,vi } from 'date-fns/locale';
+import { es, ru, vi } from 'date-fns/locale';
 import { locale, min } from 'moment';
 export const formatCheckDate = (date: Date, dateFormat?: string) => {
-    if (!date) return '';
-    return format(date, dateFormat || 'MMM d', {
+    const dateCheck = new Date(date);
+    if (!dateCheck) return '';
+    console.log(
+        dateCheck,
+        typeof dateCheck)
+    
+    return format(dateCheck, dateFormat || 'MMM d', {
         locale: vi,
     });
 };
@@ -37,16 +42,16 @@ export const listTimeSlot = () => {
     const renderedList = list.slice(0, length);
     return renderedList;
 };
-export const numberToTime = (minutes:any) => {
+export const numberToTime = (minutes: any) => {
     const hours = minutes / 60;
     const formattedTime = hours + ' giờ';
     return formattedTime;
 };
 export const timeToMinute = (timePoint: any) => {
-   if (timePoint) {
-       const totalMinutes = timePoint.hour * 60 + timePoint.minutes;
-       return totalMinutes;
-   }
+    if (timePoint) {
+        const totalMinutes = timePoint.hour * 60 + timePoint.minutes;
+        return totalMinutes;
+    }
 };
 export const minuteToTime = (totalMinutes: any) => {
     const timePoint = {

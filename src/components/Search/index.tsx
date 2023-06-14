@@ -83,13 +83,14 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
             pathname: '/search',
             query: {
                 location,
-                checkIn: checkIn?.toISOString(),
-                checkOut: checkOut?.toISOString(),
+                checkIn: `${checkIn}`,
+                checkOut: `${checkOut}`,
                 guests: JSON.stringify(guests),
                 viewport: JSON.stringify(viewport),
             },
         });
     };
+
 
     const dateRangeStyle = 'left-2 right-2 searchbar:left-auto searchbar:right-1/2 searchbar:translate-x-1/2 searchbar:w-[950px]';
 
@@ -137,7 +138,9 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                             title="Ngày"
                             placeholder="Thêm ngày bạn muốn đi"
                             active={searchMenu === ESearchMenu.CHECK_OUT}
-                            value={formatRangeDate(checkIn, checkOut)}
+                            value={
+                                formatRangeDate(checkIn, checkOut)
+                            }
                             onFocus={() => setSearchMenu(ESearchMenu.CHECK_OUT)}
                             onBlur={handleOnBlur}
                             onClear={() => {

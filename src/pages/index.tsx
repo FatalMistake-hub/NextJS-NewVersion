@@ -171,7 +171,7 @@ const Home = ({ dataCategory, imageMain }: Props) => {
         hasPreviousPage,
     } = useGetAllTour(10);
     const router = useRouter();
-    const { location, checkIn, checkOut, guests, categoryList } = useAppSelector(selectSearch);
+    const { location, checkIn, checkOut, guests, categoryList,viewport } = useAppSelector(selectSearch);
     const dispatch = useAppDispatch();
     const handleClickCategory = async (cateory: ICategory) => {
         await dispatch(SET_CATEGORY([]));
@@ -181,13 +181,15 @@ const Home = ({ dataCategory, imageMain }: Props) => {
             pathname: '/search',
             query: {
                 location,
-                checkIn: checkIn?.toISOString(),
-                checkOut: checkOut?.toISOString(),
+                checkIn: `${checkIn}`,
+                checkOut: `${checkOut}`,
                 guests: JSON.stringify(guests),
-                categoryList: JSON.stringify([cateory]),
+                categoryList: JSON.stringify(categoryList[categoryList.length - 1]),
+                viewport: JSON.stringify(viewport),
             },
         });
     };
+    // console.log('viewport', checkIn?.toISOString(), checkOut?.toISOString());
     return (
         <>
             <Flex display="flex" flexDirection="column" justifyContent="center" alignItems="center">
@@ -375,13 +377,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
         imageLink: item.imageLink,
     }));
     const image = [
-        '/assets/image/aaasd.jpg',
-        '/assets/image/ass.jpg',
-        '/assets/image/pexels-photo-2161467.jpeg',
-        '/assets/image/river-3632175_1280.jpg',
-        '/assets/image/s.jpg',
-        '/assets/image/waallpaperflare.com_wallpaper.jpg',
-        // '/assets/image/wallpaperflare.com_wallpaper.jpg',
+        'https://res.cloudinary.com/sacchidananad-utech/image/upload/q_auto:low/v1686757209/aaasd_bpbp1e.webp',
+        'https://res.cloudinary.com/sacchidananad-utech/image/upload/q_auto:low/v1686757210/waallpaperflare.com_wallpaper_dvyycj.webp',
+        'https://res.cloudinary.com/sacchidananad-utech/image/upload/q_auto:low/v1686757211/ass_bavdp0.webp',
+        'https://res.cloudinary.com/sacchidananad-utech/image/upload/q_auto:low/v1686757211/s_zz3h0p.webp',
+        'https://res.cloudinary.com/sacchidananad-utech/image/upload/v1686757207/river-3632175_1280_eaabuk.jpg',
+        'https://res.cloudinary.com/sacchidananad-utech/image/upload/v1686757207/pexels-photo-2161467_q9v4ta.jpg',
     ];
     const imageMain = image[Math.floor(Math.random() * image.length)];
     return {
@@ -389,4 +390,4 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
     };
 };
 export default Home;
-Home.Layout = 'NoSearchLayout';
+// Home.Layout = 'NoSearchLayout';

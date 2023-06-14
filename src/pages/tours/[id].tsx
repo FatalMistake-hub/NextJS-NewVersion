@@ -38,15 +38,17 @@ import { Marker } from 'react-map-gl';
 import MapLocation from '@components/Map/MapLocation';
 import useGetAllTimeBookingByRange from 'src/hooks/guest/timeBooking/useGetAllTimeBookingByRange';
 import { IDayBook, TimeBookViewDtoList } from 'src/types/timeBooking.type';
-import { useAppSelector } from 'src/redux/hook';
-import { selectSearch } from 'src/redux/slice/searchSlice';
+import { useAppSelector, useAppDispatch } from 'src/redux/hook';
+import { ADD_CATEGORY, SET_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
 import moment from 'moment';
+import { ICategory } from 'src/types/category.type';
 function Tours() {
     const router = useRouter();
     const { id } = router.query;
     const { data, isLoading, isError, isSuccess } = useGetDetailTour(id);
-    const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
-    const [show, setShow] = useState<any>({ cp1: false, cp2: false, cp3: false, cp4: false });
+    const { location, checkIn, checkOut, guests, categoryList, viewport } = useAppSelector(selectSearch);
+    const dispatch = useAppDispatch();
+    const [show, setShow] = useState<any>({ cp1: true, cp2: true, cp3: true, cp4: true, cp5: true });
 
     const handleToggle = (name: string) => setShow((prevState: any) => ({ ...prevState, [name]: !prevState[name] }));
 
@@ -86,6 +88,22 @@ function Tours() {
             setJsxCardBookTime(sortedJsxMoreTime);
         }
     }, [dataTime]);
+    const handleClickBreadCumb = async (cateory: ICategory) => {
+        await dispatch(SET_CATEGORY([]));
+        await dispatch(ADD_CATEGORY(cateory));
+        await router.push({
+            pathname: '/search',
+            query: {
+                location,
+                checkIn: `${checkIn}`,
+                checkOut: `${checkOut}`,
+                guests: JSON.stringify(guests),
+                categoryList: JSON.stringify(categoryList[categoryList.length - 1]),
+                viewport: JSON.stringify(viewport),
+            },
+        });
+    };
+    // console.log(data);
     return (
         <>
             {data ? (
@@ -97,7 +115,16 @@ function Tours() {
                             </BreadcrumbItem>
 
                             <BreadcrumbItem>
-                                <BreadcrumbLink href="#">About</BreadcrumbLink>
+                                <BreadcrumbLink
+                                    onClick={() => {
+                                        handleClickBreadCumb({
+                                            categoryId: data.categoryId,
+                                            label: data.categoryName,
+                                        });
+                                    }}
+                                >
+                                    {data.categoryName}
+                                </BreadcrumbLink>
                             </BreadcrumbItem>
                         </Breadcrumb>
                     </div>
@@ -317,8 +344,8 @@ function Tours() {
                             <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={6}>
                                 Nơi bạn sẽ đến
                             </Heading>
-                            <Box pb={2} pt={2} w={'full'} className={`h-[500px] relative`}>
-                                {/* <MapTrip center={{ longitude: Number(data.longitude), latitude: Number(data.latitude) }}>
+                            <Box pb={2} pt={2} w={'full'} className={`h-[500px] relative drop-shadow-md`}>
+                                <MapTrip center={{ longitude: Number(data.longitude), latitude: Number(data.latitude) }}>
                                     <Marker
                                         latitude={Number(data.latitude)}
                                         longitude={Number(data.longitude)}
@@ -332,7 +359,7 @@ function Tours() {
                                             className=" text-[#3d9d9b] absolute top-0 right-1"
                                         />
                                     </Marker>
-                                </MapTrip> */}
+                                </MapTrip>
                                 <Box
                                     bgColor={'white'}
                                     position={'absolute'}
@@ -342,18 +369,24 @@ function Tours() {
                                     py={3}
                                     px={4}
                                     rounded={'lg'}
+                                    className="drop-shadow-md"
                                 >
                                     <Text fontWeight={500} fontSize={'16px'}>
                                         Nơi chúng ta sẽ gặp nhau
                                     </Text>
-                                    <Text fontWeight={400} fontSize={'14px'}>
+                                    <Text fontWeight={400} fontSize={'14px'} noOfLines={2}>
                                         {data.destination}
                                     </Text>
                                 </Box>
                             </Box>
-                            <Text className="pt-6">
-                                <div dangerouslySetInnerHTML={{ __html: `${data?.destinationDescription}` }}></div>
-                            </Text>
+                            <Collapse startingHeight={70} in={show.cp5}>
+                                <Text className="pt-6">
+                                    <div dangerouslySetInnerHTML={{ __html: `${data?.destinationDescription}` }}></div>
+                                </Text>
+                            </Collapse>
+                            <Button size="sm" variant={'link'} onClick={() => handleToggle('cp5')} mt="1rem">
+                                {show.cp5 ? 'Xem thêm' : 'Ẩn bớt'}
+                            </Button>
                         </Box>
                         <Box py={12}>
                             <Comment />

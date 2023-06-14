@@ -43,7 +43,7 @@ interface IForm {
     password: string;
 }
 export default function FilterModal({ isOpen, onClose }: FilterModalProps) {
-    const [show, setShow] = React.useState<any>({ cp1: false, cp2: false, cp3: false, cp4: false });
+    const [show, setShow] = React.useState<any>({ cp1: true, cp2: true, cp3: true, cp4: true });
 
     const handleToggle = (name: string) => setShow((prevState: any) => ({ ...prevState, [name]: !prevState[name] }));
     return (

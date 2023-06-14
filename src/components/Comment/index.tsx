@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { Heading, Flex, Avatar, Text, Collapse, Button, Box } from '@chakra-ui/react';
 import { FaStar } from 'react-icons/fa';
 const Comment: FC = () => {
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(true);
 
     const handleToggle = () => setShow(!show);
     return (
