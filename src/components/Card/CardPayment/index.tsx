@@ -1,10 +1,15 @@
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import { Box, Heading, StackDivider, VStack, Text, Button } from '@chakra-ui/react';
+import { Box, Heading, StackDivider, VStack, Text, Button, Badge } from '@chakra-ui/react';
 
 import { FC } from 'react';
 import Image from 'next/image';
 import Rating from '../Rating';
+import { ITours } from 'src/types/tours.type';
+import useGetDetailTour from 'src/hooks/guest/tours/useGetDetailTour';
+import { numberToTime } from 'src/utils/dateUntils';
+import { useAppSelector } from 'src/redux/hook';
+import { selectSearch } from 'src/redux/slice/searchSlice';
 
 enum ESearchMenu {
     LOCATION = 'location',
@@ -16,28 +21,29 @@ enum ESearchMenu {
 interface CardsPaymentProps {
     // priceOnePerson: number | undefined;
     className?: string;
+    tourId?: string | string[] | undefined;
 }
-const CardPayment: FC<CardsPaymentProps> = ({ className }) => {
+const CardPayment: FC<CardsPaymentProps> = ({ className, tourId }) => {
+    const { data, isLoading, isError, isSuccess } = useGetDetailTour(tourId);
+    const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
+
     return (
         <div className="sticky z-10 top-[130px] w-full inline-block pr-[1px]  border-slate-400 border-[1px] rounded-xl ">
             <VStack divider={<StackDivider borderColor="black.200" />} p={6} align="stretch" width={'full'}>
                 <Box pb={4} w={'full'}>
                     <div className="pb-2 flex">
-                        <Image
-                            src="https://a0.muscache.com/im/pictures/lombard/MtTemplate-1340671-media_library/original/5dcf4701-0837-42d3-ac9d-b03815a8d0be.jpg?im_w=720"
-                            width={124}
-                            height={106}
-                            className="rounded-lg"
-                        />
+                        {data?.imageMain && (
+                            <Image src={data?.imageMain} width={124} height={106} className="rounded-lg" blurDataURL={data?.imageMain} />
+                        )}
                         <div className="flex flex-col items-start ml-4 justify-between">
                             <Text as={'span'} fontSize={'12px'}>
-                                Thành phố Hội An · 2,5 giờ
+                                {data?.city} · {numberToTime(data?.timeSlotLength)}
                             </Text>
                             <div className="">
                                 <Text as={'p'} fontSize={'14px'}>
-                                    Hoi An Heritage Guided Tour
+                                    {data?.title}
                                     <Text as={'p'} fontSize={'14px'}>
-                                        Được tổ chức bằng Tiếng Anh
+                                        Được tổ chức bằng Tiếng Việt
                                     </Text>
                                 </Text>
                             </div>
@@ -50,9 +56,45 @@ const CardPayment: FC<CardsPaymentProps> = ({ className }) => {
                         Chi tiết giá
                     </Heading>
                     <div className="mt-6 flex items-center justify-between">
-                        <Text fontSize={'16px'}>$22,25 x 3 người lớn</Text>
-                        <Text fontSize={'16px'}>$66,75</Text>
+                        <Text fontSize={'16px'}>
+                            {data?.priceOnePerson && data.priceOnePerson.toLocaleString('vi-VN')}₫ x {guests.adults} người lớn
+                        </Text>
+                        <Text fontSize={'16px'}>
+                            {' '}
+                            {data?.priceOnePerson && (data.priceOnePerson * guests.adults).toLocaleString('vi-VN')}₫
+                        </Text>
                     </div>
+                    {guests.children > 0 && (
+                        <div className="mt-6 flex items-center justify-between">
+                            <Text fontSize={'16px'}>
+                                {data?.priceOnePerson && ((data.priceOnePerson * 70) / 100).toLocaleString('vi-VN')}₫ x {guests.children}{' '}
+                                trẻ em
+                                <Badge colorScheme="green" px={2} rounded={'lg'} ml={4}>
+                                    -30%
+                                </Badge>
+                            </Text>
+                            <Text fontSize={'16px'}>
+                                {' '}
+                                {data?.priceOnePerson && ((data.priceOnePerson * guests.children * 70) / 100).toLocaleString('vi-VN')}₫
+                            </Text>
+                        </div>
+                    )}
+
+                    {guests.infants > 0 && (
+                        <div className="mt-6 flex items-center justify-between">
+                            <Text fontSize={'16px'}>
+                                {data?.priceOnePerson && ((data.priceOnePerson * 50) / 100).toLocaleString('vi-VN')}₫ x {guests.infants} em
+                                bé
+                                <Badge colorScheme="green" px={2} rounded={'lg'} ml={4}>
+                                    -50%
+                                </Badge>
+                            </Text>
+                            <Text fontSize={'16px'}>
+                                {' '}
+                                {data?.priceOnePerson && ((data.priceOnePerson * guests.infants * 50) / 100).toLocaleString('vi-VN')}₫
+                            </Text>
+                        </div>
+                    )}
                 </Box>
                 <Box py={4}>
                     <div className="flex items-center justify-between">
@@ -60,7 +102,13 @@ const CardPayment: FC<CardsPaymentProps> = ({ className }) => {
                             Tổng (VND)
                         </Text>
                         <Text fontSize={'16px'} fontWeight={'600'}>
-                            $66,75
+                            {data?.priceOnePerson &&
+                                (
+                                    data.priceOnePerson * guests.adults +
+                                    (data.priceOnePerson * guests.children * 70) / 100 +
+                                    (data.priceOnePerson * guests.infants * 50) / 100
+                                ).toLocaleString('vi-VN')}
+                            ₫
                         </Text>
                     </div>
                 </Box>

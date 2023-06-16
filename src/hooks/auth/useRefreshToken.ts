@@ -43,7 +43,9 @@ export const useRefreshToken = () => {
                 // await signIn();
             }
         } catch (error: any) {
-            if (error.response && error.response.status === 401) {
+            if (error.response && error.response.status === 401
+                // || error.response.status === 500
+            ) {
                 await toast({
                     title: 'Phiên đăng nhập đã hết hạn.',
                     description: 'Vui lòng đăng nhập lại.',

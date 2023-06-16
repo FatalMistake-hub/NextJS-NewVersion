@@ -27,6 +27,7 @@ import { LayoutKeys, Layouts } from '@components/layouts';
 import Head from 'next/head';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorNotify from '@components/Error';
+import RedirectLayout from '@components/layouts/RedirectLayout';
 
 const progressBar = new ProgressBar({
     size: 2,
@@ -123,9 +124,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                         <ReduxProvider store={store}>
                             <PersistGate loading={null} persistor={persistor}>
                                 {Component.requireAuth ? (
-                                    <ProtectedLayout>{renderWithLayout(<Component {...pageProps} />)}</ProtectedLayout>
+                                    <RedirectLayout>
+                                        <ProtectedLayout>{renderWithLayout(<Component {...pageProps} />)}</ProtectedLayout>
+                                    </RedirectLayout>
                                 ) : (
-                                    renderWithLayout(<Component {...pageProps} />)
+                                    <RedirectLayout>{renderWithLayout(<Component {...pageProps} />)}</RedirectLayout>
                                 )}
                                 <ReactQueryDevtools />
                             </PersistGate>

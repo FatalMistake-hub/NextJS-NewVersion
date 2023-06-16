@@ -1,7 +1,7 @@
 const withPlugins = require('next-compose-plugins');
 module.exports = withPlugins([], {
     images: {
-        domains: ['res.cloudinary.com', 'a0.muscache.com', 'bit.ly'],
+        domains: ['res.cloudinary.com', 'a0.muscache.com', 'bit.ly','tiki.vn'],
     },
     experimental: {
         forceSwcTransforms: true,

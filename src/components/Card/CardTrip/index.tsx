@@ -2,7 +2,14 @@ import { Box, Flex, Heading, HStack, StackDivider, VStack, Text } from '@chakra-
 import Image from 'next/image';
 import Link from 'next/link';
 
-const CardTrip = () => {
+import { FC } from 'react';
+import { IOrder } from 'src/types/order.type';
+interface Props {
+    data: IOrder;
+
+}
+const CardTrip: FC<Props> = ({ data }) => {
+
     return (
         <Link href={'/trips/1'}>
             <Box w="100%" borderRadius={'lg'} boxShadow={'xl'} display={'flex'} className="hover:translate-x-1 translate-y-1 ">
@@ -10,7 +17,7 @@ const CardTrip = () => {
                     <VStack divider={<StackDivider borderColor="gray.200" />} spacing={5} align="stretch">
                         <Box>
                             <Heading lineHeight={1.4} as="h1" fontSize={'26px'} fontWeight={'600'} width={'full'} noOfLines={2}>
-                                Đi lướt sóng ở Hội An hoặc Đà Nẵng
+                                {data.tour_title}
                             </Heading>
                             <Text fontSize={'16px'} fontWeight={'400'} width={'full'} mt={1}>
                                 Trải nghiệm với sự đón tiếp của Rob
@@ -31,7 +38,8 @@ const CardTrip = () => {
                                 </Flex>
                                 <Flex alignItems={'center'} direction={'column'}>
                                     <Text fontSize={'16px'} fontWeight={'400'} width={'full'} noOfLines={2}>
-                                        190 Nguyễn Văn Thoại, An Hải Bắc, Sơn Trà, Đà Nẵng, Việt Nam
+                                        {/* 190 Nguyễn Văn Thoại, An Hải Bắc, Sơn Trà, Đà Nẵng, Việt Nam */}
+                                        {data.city}
                                     </Text>
 
                                     <Text fontSize={'14px'} fontWeight={'400'} width={'full'}>
@@ -44,16 +52,12 @@ const CardTrip = () => {
                 </Box>
                 <Box w="40%" minHeight="200px" height={'100%'} maxHeight={'405px'} position="relative">
                     <Image
-                        src={
-                            'https://a0.muscache.com/im/pictures/lombard/MtTemplate-1012393-media_library/original/febf3f05-2af1-4741-ae15-6588494ccfe0.jpg?im_w=1440'
-                        }
+                        src={data.imageMain}
                         alt={`Picture of `}
                         layout="fill"
                         objectFit="cover"
                         placeholder="blur"
-                        blurDataURL={
-                            'https://a0.muscache.com/im/pictures/lombard/MtTemplate-1012393-media_library/original/febf3f05-2af1-4741-ae15-6588494ccfe0.jpg?im_w=1440'
-                        }
+                        blurDataURL={data.imageMain}
                         className=" rounded-r-lg"
                     />
                 </Box>

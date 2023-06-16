@@ -3,9 +3,9 @@ export enum EHeaderOpions {
     FIND_EXPERIENCES = 'findExperiences',
 }
 export enum ERole {
-    USER = "USER",
-    ADMIN = "ADMIN",
-    OWNER= "OWNER",
+    USER = 'USER',
+    ADMIN = 'ADMIN',
+    OWNER = 'OWNER',
 }
 export enum EErrorType {
     NotBlank = 'NotBlank',
@@ -17,4 +17,10 @@ export enum ESearchMenu {
     CHECK_IN = 'checkIn',
     CHECK_OUT = 'checkOut',
     GUESTS = 'guests',
+}
+export enum EOrderStatus {
+    SUCCESS = 'SUCCESS',
+    CANCEL = 'CANCEL',
+    WAITTING = 'WAITTING',
+    USED = 'USED',
 }

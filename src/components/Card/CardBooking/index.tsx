@@ -23,6 +23,7 @@ import { formatGuests, formatGuestsMinimal } from 'src/utils/guestsUtil';
 import Link from 'next/link';
 import { ITours } from 'src/types/tours.type';
 import { TimeBookViewDtoList } from 'src/types/timeBooking.type';
+import { useRouter } from 'next/router';
 enum ESearchMenu {
     LOCATION = 'location',
     CHECK_IN = 'checkIn',
@@ -37,7 +38,7 @@ interface CardsBookingProps {
 }
 const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson, tourId, dataTimeBooking }) => {
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
-
+    const router = useRouter();
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
     const dispatch = useAppDispatch();
     // handler
@@ -65,6 +66,22 @@ const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson, tourId, dataTimeBo
         setSearchMenu(null);
     };
 
+    const handleSelect = (time: any) => {
+        router.push({
+            pathname: '/payment',
+            query: {
+                tourId: `${tourId}`,
+                checkIn: `${checkIn}`,
+                checkOut: `${checkOut}`,
+                guests: JSON.stringify(guests),
+                timeId: JSON.stringify(time.timeId),
+                start_time: `${time.start_time}`,
+                end_time: `${time.end_time}`,
+                day: `${time.day}`,
+                priceOnePerson: `${priceOnePerson}`,
+            },
+        });
+    };
     const dateRangeStyle = 'left-2 right-2 searchbar:left-auto searchbar:right-1/2 searchbar:translate-x-1/4 searchbar:w-[850px] ';
     return (
         <div className="sticky z-10 top-[130px] w-full inline-block pr-[1px] my-12 border-slate-400 border-[1px] rounded-xl shadow-xl">
@@ -187,8 +204,8 @@ const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson, tourId, dataTimeBo
                                     <Text mb={2} fontSize={'14px'} fontWeight={600}>
                                         Từ {priceOnePerson?.toLocaleString('vi-VN')}₫<span className="font-normal">/người</span>
                                     </Text>
-                                    <Button size={'sm'} colorScheme="teal">
-                                        <Link href={'/payment/1'}>Chọn</Link>
+                                    <Button size={'sm'} colorScheme="teal" onClick={() => handleSelect(time)}>
+                                        Chọn
                                     </Button>
                                 </div>
                             </div>

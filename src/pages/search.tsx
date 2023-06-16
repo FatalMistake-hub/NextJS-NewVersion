@@ -95,7 +95,7 @@ const Search = ({ dataCategory }: Props) => {
         hasNextPage,
         hasPreviousPage,
     } = useTourBySearch(9);
-    console.log(data);
+
 
     const getCenterMap = () => {
         // const coords = data?.pages?.map((page: any) =>

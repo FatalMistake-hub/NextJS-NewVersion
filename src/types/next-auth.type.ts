@@ -12,6 +12,7 @@ declare module 'next-auth' {
             refreshToken: string;
             role: ERole;
             username: string;
+            isWallet:boolean;
         };
     }
 }

@@ -1,3 +1,4 @@
+import { IDataPayment, IPayment } from 'src/types/payment.type';
 import { useToast } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { Router, useRouter } from 'next/router';
@@ -5,22 +6,22 @@ import { useAppDispatch } from 'src/redux/hook';
 import { becomeHostInitState } from 'src/redux/initState/becomeHostInitState';
 import { SET_INITSTATE } from 'src/redux/slice/becomeHostSlice';
 import { ITours, TourPost } from 'src/types/tours.type';
-import { postTours } from 'src/utils/apis/tours.api';
 import useAxiosAuth from '../../auth/useAxiosAuth';
+import { postPaymentTour } from 'src/utils/apis/payment.api';
 
-const useCreateTour = () => {
+const usePostPaymentTour = () => {
     const dispatch = useAppDispatch();
     const router = useRouter();
     const httpAuthJWT = useAxiosAuth();
     const toast = useToast();
     const { mutate, isLoading, isError, isSuccess } = useMutation({
-        mutationFn: (tours: TourPost) => postTours(tours, httpAuthJWT),
-        onSuccess: ({ data }) => {
-            dispatch(SET_INITSTATE(becomeHostInitState));
-            router.push(`/hosting`);
+        mutationFn: (payment: IPayment) =>
+            postPaymentTour(payment.data, payment.tourId, payment.time_book_id, Number(payment.priceTotal), httpAuthJWT),
+        onSuccess: (res) => {
+            console.log(res?.data.data);
+            window.location.href = res?.data.data.payment.paymentUrl;
         },
         onError: (error: any) => {
-
             if (error.response.status !== 401) {
                 toast({
                     title: 'Account created.',
@@ -31,7 +32,7 @@ const useCreateTour = () => {
                 });
             }
         },
-        onMutate: (tours: TourPost) => {
+        onMutate: (data: IPayment) => {
             toast({
                 title: 'Trải nghiệm đang được tạo.',
                 description: `Vui lòng đợi trong giây lát.`,
@@ -44,15 +45,15 @@ const useCreateTour = () => {
     });
 
     return {
-        postTours: (tours: TourPost) => {
-            if (tours) {
-                return mutate(tours);
+        postPaymentTour: (payment: IPayment) => {
+            if (payment) {
+                return mutate(payment);
             }
         },
-        isLoadingPost: isLoading,
+        isLoading,
         isError,
         isSuccess,
     };
 };
 
-export default useCreateTour;
+export default usePostPaymentTour;

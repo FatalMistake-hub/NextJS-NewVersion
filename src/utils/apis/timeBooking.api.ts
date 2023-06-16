@@ -32,3 +32,4 @@ export const patchTimeBook = async (timeBook: Omit<TimeBookViewDtoList, 'timeId'
 
 export const patchDayTimeBook = async (DayTimeBook: Omit<IDayBook[], 'tourId'>, axiosAuth: AxiosInstance) =>
     await axiosAuth.patch<IDayBookResponse>(`/day-booking/update-day-time/`, DayTimeBook);
+
