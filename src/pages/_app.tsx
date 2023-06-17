@@ -28,6 +28,8 @@ import Head from 'next/head';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorNotify from '@components/Error';
 import RedirectLayout from '@components/layouts/RedirectLayout';
+import WalletConnectionProvider from '../context/WalletConnectionProvider';
+import dynamic from 'next/dynamic';
 
 const progressBar = new ProgressBar({
     size: 2,
@@ -115,6 +117,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                 </ErrorBoundary>
             );
         };
+    
 
     return (
         <SessionProvider>
@@ -124,9 +127,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                         <ReduxProvider store={store}>
                             <PersistGate loading={null} persistor={persistor}>
                                 {Component.requireAuth ? (
-                                    <RedirectLayout>
-                                        <ProtectedLayout>{renderWithLayout(<Component {...pageProps} />)}</ProtectedLayout>
-                                    </RedirectLayout>
+                                    
+                                        <RedirectLayout>
+                                            <ProtectedLayout>{renderWithLayout(<Component {...pageProps} />)}</ProtectedLayout>
+                                        </RedirectLayout>
+                                    
                                 ) : (
                                     <RedirectLayout>{renderWithLayout(<Component {...pageProps} />)}</RedirectLayout>
                                 )}

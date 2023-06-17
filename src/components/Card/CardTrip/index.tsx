@@ -12,7 +12,7 @@ const CardTrip: FC<Props> = ({ data }) => {
 
     return (
         <Link href={'/trips/1'}>
-            <Box w="100%" borderRadius={'lg'} boxShadow={'xl'} display={'flex'} className="hover:translate-x-1 translate-y-1 ">
+            <Box w="100%" maxW={'700px'} borderRadius={'lg'} boxShadow={'xl'} display={'flex'} className="hover:translate-x-1 translate-y-1 ">
                 <Box w="60%" p={6}>
                     <VStack divider={<StackDivider borderColor="gray.200" />} spacing={5} align="stretch">
                         <Box>

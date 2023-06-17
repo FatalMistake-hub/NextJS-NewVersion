@@ -1,3 +1,4 @@
+import { IOrder } from './order.type';
 import { ICategory } from './category.type';
 
 export interface ITours {
@@ -22,6 +23,7 @@ export interface ITours {
     userId: string;
     timeBookStart: Time;
     timeBookEnd: Time;
+    orderDtoList?: IOrder[];
 }
 export interface IAllTours {
     content: ITours[];

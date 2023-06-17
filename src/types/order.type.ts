@@ -1,3 +1,4 @@
+import { TimeBookViewDtoList } from './timeBooking.type';
 
 export interface IOrder {
     orderId: string;
@@ -10,4 +11,8 @@ export interface IOrder {
     priceOnePerson: number;
     timeId: string;
     userId: string;
+    orderIdBlockChain: string;
+    publicKey: string;
+    timeBookViewDto: TimeBookViewDtoList;
+    date_name: string;
 }

@@ -39,6 +39,9 @@ class HttpAuth {
             headers: {
                 'Content-Type': 'application/json',
             },
+            httpsAgent: new https.Agent({
+                rejectUnauthorized: false,
+            }),
         });
     }
 }
@@ -51,6 +54,7 @@ class HttpMap {
             headers: {
                 'Content-Type': 'application/json',
             },
+            
         });
     }
 }

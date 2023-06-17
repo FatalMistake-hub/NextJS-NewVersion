@@ -295,7 +295,7 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                                         Tạo mục trải nghiệm mới
                                     </Tab>
                                 </Link>
-
+                                        
                                 {/* <MenuHostingNav /> */}
                             </TabList>
                         </Tabs>

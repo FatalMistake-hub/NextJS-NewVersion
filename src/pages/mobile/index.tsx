@@ -3,8 +3,14 @@ import { useRouter } from 'next/router';
 import { Login } from 'src/utils/apis/auths.api';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { signIn } from 'next-auth/react';
+import { useAppDispatch } from 'src/redux/hook';
+import { SET_ROLE_LOGIN, SET_isLogin_TRUE } from 'src/redux/slice/authSlice';
+import { useState } from 'react';
 const Mobile = () => {
     const router = useRouter();
+    const dispatch = useAppDispatch();
+    const [role, setRole] = useState('GUEST');
     const Login = useFormik({
         initialValues: {
             email: '',
@@ -22,15 +28,15 @@ const Mobile = () => {
                 ),
         }),
         onSubmit: async (values) => {
-            // const res = await signIn('credentials', {
-            //     email: values.email,
-            //     password: values.password,
-            //     redirect: false,
-            // });
-            // if (res?.status === 200) {
-            //     onClose();
-            //     dispatch(SET_isLogin_TRUE());
-            // }
+            const res = await signIn('credentials', {
+                email: values.email,
+                password: values.password,
+                redirect: false,
+            });
+            if (res?.status === 200) {
+                dispatch(SET_ROLE_LOGIN(role));
+                 dispatch(SET_isLogin_TRUE());
+            }
             router.push('/mobile/listings');
         },
     });
@@ -41,68 +47,72 @@ const Mobile = () => {
 
                 <p className="pt-2 text-lg font-medium">@sahil</p>
             </div>
-                            <form onSubmit={Login.handleSubmit}>
-
-            <Stack spacing={4}>
-                <FormControl id="email">
-                    <FormLabel>Địa chỉ email</FormLabel>
-                    <Input
-                        isInvalid={!!Login.errors.email}
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={Login.values.email}
-                        onChange={Login.handleChange}
-                    />
-                    {Login.errors.email && (
-                        <Text color={'red'} mt={2}>
-                            * {Login.errors.email}
-                        </Text>
-                    )}
-                </FormControl>
-                <FormControl id="password">
-                    <FormLabel>Mật khẩu</FormLabel>
-                    <Input
-                        isInvalid={!!Login.errors.password}
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={Login.values.password}
-                        onChange={Login.handleChange}
-                    />
-                    {Login.errors.password && (
-                        <Text color={'red'} mt={2}>
-                            * {Login.errors.password}
-                        </Text>
-                    )}
-                </FormControl>
-                <FormLabel>Đăng nhâp với vai trò :</FormLabel>
-                <Stack spacing={10}>
-                    <Stack direction={{ base: 'row', sm: 'row' }} align={'start'} justify={'space-between'}>
-                        <RadioGroup defaultValue="2">
-                            <Stack spacing={5} direction="row">
-                                <Radio colorScheme="teal" value="1">
-                                    Chủ tour
-                                </Radio>
-                                <Radio colorScheme="teal" value="2">
-                                    Người tham gia tour
-                                </Radio>
-                            </Stack>
-                        </RadioGroup>
+            <form onSubmit={Login.handleSubmit}>
+                <Stack spacing={4}>
+                    <FormControl id="email">
+                        <FormLabel>Địa chỉ email</FormLabel>
+                        <Input
+                            isInvalid={!!Login.errors.email}
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={Login.values.email}
+                            onChange={Login.handleChange}
+                        />
+                        {Login.errors.email && (
+                            <Text color={'red'} mt={2}>
+                                * {Login.errors.email}
+                            </Text>
+                        )}
+                    </FormControl>
+                    <FormControl id="password">
+                        <FormLabel>Mật khẩu</FormLabel>
+                        <Input
+                            isInvalid={!!Login.errors.password}
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={Login.values.password}
+                            onChange={Login.handleChange}
+                        />
+                        {Login.errors.password && (
+                            <Text color={'red'} mt={2}>
+                                * {Login.errors.password}
+                            </Text>
+                        )}
+                    </FormControl>
+                    <FormLabel>Đăng nhâp với vai trò :</FormLabel>
+                    <Stack spacing={10}>
+                        <Stack direction={{ base: 'row', sm: 'row' }} align={'start'} justify={'space-between'}>
+                            <RadioGroup
+                                defaultValue={role}
+                                onChange={(value) => {
+                                    setRole(value);
+                                }}
+                            >
+                                <Stack spacing={5} direction="row">
+                                    <Radio colorScheme="teal" value="HOST">
+                                        Chủ tour
+                                    </Radio>
+                                    <Radio colorScheme="teal" value="GUEST">
+                                        Người tham gia tour
+                                    </Radio>
+                                </Stack>
+                            </RadioGroup>
+                        </Stack>
+                        <Button
+                            type="submit"
+                            bg={'teal.400'}
+                            color={'white'}
+                            _hover={{
+                                bg: 'teal.500',
+                            }}
+                        >
+                            Đăng nhập
+                        </Button>
                     </Stack>
-                    <Button
-                        type="submit"
-                        bg={'teal.400'}
-                        color={'white'}
-                        _hover={{
-                            bg: 'teal.500',
-                        }}
-                    >
-                        Đăng nhập
-                    </Button>
                 </Stack>
-          </Stack>
-          </form>
+            </form>
         </div>
     );
 };

@@ -1,9 +1,12 @@
 import { Box, Button, Flex, Heading, Link, SimpleGrid, Tab, TabList, Tabs, Text, VStack } from '@chakra-ui/react';
 import CardReservation from '@components/Card/CardReservation';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { BiUserCircle } from 'react-icons/bi';
 
 const HostingPage = () => {
     return (
         <div className="min-h-screen">
+            
             <VStack float={'left'} alignItems={'center'} w={'full'}>
                 <Box w="100%" h="180px" bgGradient="linear(to-l, #09a3a1, #043b2e)" className="flex justify-center items-center">
                     <Heading
@@ -99,10 +102,10 @@ const HostingPage = () => {
                         // className="flex flex-col items-center justify-center "
                     >
                         <SimpleGrid minChildWidth="210px" spacing="40px" mt={4}>
-                            <CardReservation/>
-                            <CardReservation/>
-                            <CardReservation/>
-                            <CardReservation/>
+                            <CardReservation />
+                            <CardReservation />
+                            <CardReservation />
+                            <CardReservation />
                         </SimpleGrid>
                     </Box>
                 </VStack>

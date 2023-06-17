@@ -5,7 +5,7 @@ import { getAllGuestOrder } from 'src/utils/apis/order.api';
 const useGetAllGuestOrder = ()  => {
     const httpAuthJWT = useAxiosAuth();
 
-    const { data, isLoading, isError, isSuccess } = useQuery(['GET_ALL_ORDER'], () => getAllGuestOrder(httpAuthJWT));
+    const { data, isLoading, isError, isSuccess } = useQuery(['GET_ALL_GUEST_ORDER'], () => getAllGuestOrder(httpAuthJWT));
 
     return {
         data: data?.data,
