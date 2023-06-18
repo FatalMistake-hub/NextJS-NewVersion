@@ -1,12 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
+import { useAppDispatch } from 'src/redux/hook';
 import { IAccount } from 'src/types/auths.type';
 import { Login } from 'src/utils/apis/auths.api';
 
 const useLogin = () => {
     const router = useRouter();
     const client = useQueryClient();
-
+    const dispatch = useAppDispatch();
     const { data, mutate, isLoading, isError, isSuccess } = useMutation({
         mutationFn: Login,
         onSuccess: (data) => {
@@ -23,8 +24,11 @@ const useLogin = () => {
             //     navigate(PATHS.HOME);
             // }
             // return data.data;
+            console.log(data);
         },
-        onError: (error) => {},
+        onError: (error) => {
+            console.log(error);
+        },
     });
 
     return {

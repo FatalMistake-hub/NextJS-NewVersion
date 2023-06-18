@@ -14,13 +14,17 @@ const useGetAllHostingOrder = (pageParam: number, pageSize: number, selectedStat
             const filteredOrders = allTour.data.content.flatMap((item: ITours) => {
                 return item.orderDtoList?.filter((order: IOrder) => !selectedStatus || order.statusOrder === selectedStatus);
             });
+            console.log(allTour);
+            return {
+                res: filteredOrders.sort((a: IOrder, b: IOrder) => {
+                    const dateA = new Date(a.orderDate);
+                    const dateB = new Date(b.orderDate);
 
-            return filteredOrders.sort((a: IOrder, b: IOrder) => {
-                const dateA = new Date(a.orderDate);
-                const dateB = new Date(b.orderDate);
-
-                return dateB.getTime() - dateA.getTime();
-            });
+                    return dateB.getTime() - dateA.getTime();
+                }),
+                totalPage: allTour.data.totalPages,
+                totalElement: allTour.data.totalElements,
+            };
         },
         [selectedStatus],
     );
@@ -35,7 +39,7 @@ const useGetAllHostingOrder = (pageParam: number, pageSize: number, selectedStat
     });
 
     return {
-        data: allTour,
+        data: allTour as { res: IOrder[]; totalPage: number; totalElement: number },
         isLoading,
         isError,
         isSuccess,

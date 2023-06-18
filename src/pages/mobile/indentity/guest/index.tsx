@@ -8,9 +8,9 @@ const IndentityGuest = () => {
         (selectAuth);
     console.log(orderIdBlockChain, publicKey_creater);
     const generateQr = () => {
-        QRCode.toDataURL(`http://experience-travel.vercel.app/mobile/indentity/host/${orderIdBlockChain}/${publicKey_creater}`).then(
-            setData,
-        );
+        QRCode.toDataURL(
+            `http://experience-travel.vercel.app/mobile/indentity/host?orderIdBlockChain=${orderIdBlockChain}&publicKey=${publicKey_creater}`,
+        ).then(setData);
     };
     useEffect(() => {
         if(orderIdBlockChain && publicKey_creater)

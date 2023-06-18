@@ -59,10 +59,14 @@ export function useTour() {
 
                         const listings = await program.account.tourAccount.all();
 
-                        // console.log('allBookings', listings);
                         setLastBookId(listings);
                         setUser(profileAccount.toString());
-                        setTours(listings);
+
+                        const myTour = listings.filter(
+                            (booking) => booking.account.authority.toString() == profileAccount.authority.toString(),
+                        );
+
+                        setTours(myTour);
                     } else {
                         setInitialized(false);
                     }
@@ -159,38 +163,56 @@ export function useTour() {
         }
     };
 
-    // const updateTour = async ({ tourPda, tourIdx, location, country, price, imageURL, isReserved }) => {
-    //     console.log(tourPda.toString());
-    //     if (program && publicKey) {
-    //         try {
-    //             setLoading(true);
-    //             setTransactionPending(true);
-    //             const [profilePda] = findProgramAddressSync([utf8.encode('USER_STATE'), publicKey.toBuffer()], program.programId);
+    const updateTour = async ({
+        tourPda,
+        tourIdx,
+    }: // orderId,
+    // orderDate,
+    // price,
+    // tour_title,
+    // imageMain,
+    // timeId,
+    // userId,
+    // Omit<IOrder, 'priceOnePerson' | 'statusOrder' | 'city' | 'orderIdBlockChain' | 'publicKey' | 'timeBookViewDto' | 'date_name'> &
+    {
+        tourPda: string;
+        tourIdx: number;
+    }) => {
+        console.log(tourPda.toString());
+        if (program && publicKey) {
+            try {
+                setLoading(true);
+                setTransactionPending(true);
+                const [profilePda] = findProgramAddressSync([utf8.encode('USER_STATE'), publicKey.toBuffer()], program.programId);
 
-    //             await program.methods
-    //                 .updateTour(tourIdx, location, country, price, imageURL, isReserved)
-    //                 .accounts({
-    //                     userProfile: profilePda,
-    //                     tourAccount: tourPda,
-    //                     authority: publicKey,
-    //                     systemProgram: SystemProgram.programId,
-    //                 })
-    //                 .rpc();
-    //             toast({
-    //                 title: 'Successfully EDIT TOUR.',
-    //                 status: 'success',
-    //                 duration: 3000,
-    //                 isClosable: true,
-    //                 position: 'top',
-    //             });
-    //         } catch (error) {
-    //             console.error(error);
-    //         } finally {
-    //             setLoading(false);
-    //             setTransactionPending(false);
-    //         }
-    //     }
-    // };
+                await program.methods
+                    .updateTour(
+                        tourIdx,
+                        // , orderId, orderDate, price, tour_title, imageMain, timeId, userId
+                    )
+                    .accounts({
+                        userProfile: profilePda,
+                        tourAccount: tourPda,
+                        authority: publicKey,
+                        systemProgram: SystemProgram.programId,
+                    })
+                    .rpc();
+               
+            } catch (error) {
+                console.error(error);
+                 toast({
+                     title: 'Error EDIT TOUR.',
+                     status: 'error',
+                     duration: 3000,
+                     isClosable: true,
+                     position: 'top',
+                 });
+            } finally {
+                setLoading(false);
+                setTransactionPending(false);
+            }
+        }
+    };
 
     // const editListing = ({ publicKey, idx, location, country, price, description, imageURL }) => {
     //     console.log(publicKey, idx, location, country, price, description, imageURL, 'YAY');
@@ -198,9 +220,9 @@ export function useTour() {
 
     return {
         tours,
-        bookings,
+        // bookings,
         addTour,
-        // updateTour,
+        updateTour,
         initializeUser,
         initialized,
         loading,

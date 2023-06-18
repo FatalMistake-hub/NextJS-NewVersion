@@ -9,8 +9,8 @@ const RedirectLayout = ({ children }: any): JSX.Element => {
         const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
         if (isMobile) {
-            router.push('/mobile');
-            // session?.user ? router.push('/mobile') : router.push('/mobile/listings');
+            // router.push('/mobile');
+            // !session?.user ? router.push('/mobile') : router.push('/mobile/listings');
         }
     }, []);
     return <div>{children}</div>;

@@ -21,8 +21,8 @@ export const authOptions: AuthOptions = {
 
                     return null;
                 } catch (e: any) {
-                    // throw new Error(e);
-                    return null;
+                    throw new Error(e);
+                    // return null;
                 }
             },
             credentials: {

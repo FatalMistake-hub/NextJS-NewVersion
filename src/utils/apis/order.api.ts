@@ -7,3 +7,6 @@ export const changeStatusOrder = async (axiosAuth: AxiosInstance, orderId: strin
     await axiosAuth.get<any>(`/order/create-request/${orderId}/${status}`);
 export const patchUpdateOrder = async (axiosAuth: AxiosInstance, orderId: string | undefined, data: Partial<IOrder>) =>
     await axiosAuth.patch<any>(`/order/order-update/${orderId}/`, data);
+
+export const authorizeOrder = async (axiosAuth: AxiosInstance, orderIdBlockChain: string, publicKey: string) =>
+    await axiosAuth.get<any>(`/order/authorize-order/${orderIdBlockChain}/${publicKey}`);

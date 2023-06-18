@@ -7,10 +7,12 @@ import { signIn } from 'next-auth/react';
 import { useAppDispatch } from 'src/redux/hook';
 import { SET_ROLE_LOGIN, SET_isLogin_TRUE } from 'src/redux/slice/authSlice';
 import { useState } from 'react';
+import useLogin from 'src/hooks/auth/useLogin';
 const Mobile = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const [role, setRole] = useState('GUEST');
+    const { login } = useLogin();
     const Login = useFormik({
         initialValues: {
             email: '',
@@ -28,16 +30,29 @@ const Mobile = () => {
                 ),
         }),
         onSubmit: async (values) => {
-            const res = await signIn('credentials', {
-                email: values.email,
-                password: values.password,
-                redirect: false,
-            });
-            if (res?.status === 200) {
-                dispatch(SET_ROLE_LOGIN(role));
-                 dispatch(SET_isLogin_TRUE());
-            }
-            router.push('/mobile/listings');
+            // const res = await signIn('credentials', {
+            //     email: values.email,
+            //     password: values.password,
+            //     redirect: false,
+            // });
+            // if (res?.status === 200) {
+            //     dispatch(SET_ROLE_LOGIN(role));
+            //      dispatch(SET_isLogin_TRUE());
+            //     // router.push('/mobile/listings');
+            //     if (role === 'GUEST') {
+            //         router.push('/mobile/listings');
+            //     } else {
+            //         router.push('/mobile/indentity/host');
+            //     }
+            // }
+            // if (role === 'GUEST')
+            // {
+            //     router.push('/mobile/listings');
+            //     }
+            // else {
+            //     router.push('/mobile/indentity/host');
+            //     }
+            await login(values);
         },
     });
     return (

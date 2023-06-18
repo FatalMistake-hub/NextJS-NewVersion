@@ -27,6 +27,7 @@ import {
     MenuButton,
     MenuItem,
     MenuList,
+    useToast,
 } from '@chakra-ui/react';
 import Rating from '@components/Card/Rating';
 import moment from 'moment';
@@ -48,29 +49,41 @@ const Reservations = () => {
     const handleStatusChange = (status: string) => {
         setSelectedStatus(status);
     };
+    const toast = useToast();
     const [page, setPage] = useState(1);
     const handlePageClick = (p: number) => setPage(p + 1);
     const { data, isLoading, isError, isSuccess } = useGetAllHostingOrder(page, 2, selectedStatus);
     const { changeStatus } = useChangeStatusOrder();
-    const { addTour } = useTour();
+    const { addTour, updateTour } = useTour();
     const { updateOrder } = useUpdateOrder();
     const handleChangeStatusOrder = async (status: string, orderId: string, order: IOrder) => {
-        const response = await addTour({
-            orderId: order.orderId,
-            orderDate: order.orderDate,
-            price: order.price,
-            tour_title: order.tour_title,
-            imageMain: order.imageMain,
-            timeId: order.timeId,
-            userId: order.userId,
-        });
-        await changeStatus({ orderId, status });
-        await updateOrder({
-            orderIdBlockChain: response?.publicKeyOrder,
-            publicKey: response?.publicKeyCreater,
-            orderId: orderId,
-        });
-        console.log(response);
+        if (status === EOrderStatus.SUCCESS) {
+            const response = await addTour({
+                orderId: order.orderId,
+                orderDate: order.orderDate,
+                price: order.price,
+                tour_title: order.tour_title,
+                imageMain: order.imageMain,
+                timeId: order.timeId,
+                userId: order.userId,
+            });
+            await changeStatus({ orderId, status });
+            await updateOrder({
+                orderIdBlockChain: response?.publicKeyOrder,
+                publicKey: response?.publicKeyCreater,
+                orderId: orderId,
+            });
+            console.log(response);
+        } else {
+            await changeStatus({ orderId, status });
+            await toast({
+                title: 'SUCCESSFULLY ADDED A LISTING',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+            });
+        }
     };
     return (
         <div className="px-6 min-h-screen">
@@ -159,7 +172,7 @@ const Reservations = () => {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {data.map((order: IOrder) => (
+                            {data?.res?.map((order: IOrder) => (
                                 <Tr className=" rounded-2xl hover:bg-gray-100 ">
                                     <Td>
                                         <Badge px={2} rounded={'xl'} variant="solid" colorScheme={handleColorStatus(order.statusOrder)}>
@@ -257,7 +270,7 @@ const Reservations = () => {
                 <Paginate
                     // required props 👇
                     page={page - 1}
-                    count={100}
+                    count={data.totalPage ? Math.ceil(data.totalPage / 2) * 10 : 100}
                     pageSize={10}
                     onPageChange={handlePageClick}
                     // optional props 👇

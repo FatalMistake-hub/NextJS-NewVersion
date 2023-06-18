@@ -123,34 +123,6 @@
         {
           "name": "tourIdx",
           "type": "u8"
-        },
-        {
-          "name": "orderId",
-          "type": "string"
-        },
-        {
-          "name": "price",
-          "type": "string"
-        },
-        {
-          "name": "tourTittle",
-          "type": "string"
-        },
-        {
-          "name": "imageMain",
-          "type": "string"
-        },
-        {
-          "name": "timeId",
-          "type": "string"
-        },
-        {
-          "name": "userId",
-          "type": "string"
-        },
-        {
-          "name": "orderDate",
-          "type": "string"
         }
       ]
     }
