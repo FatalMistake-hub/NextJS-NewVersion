@@ -8,7 +8,7 @@ type Props = {
 };
 const CardReservation = ({ data }: Props) => {
     return (
-        <div className="group flex flex-col min-h-40  bg-white border border-gray-200 shadow-sm rounded-xl  ">
+        <div className="group max-w-[400px] flex flex-col min-h-40  bg-white border border-gray-200 shadow-sm rounded-xl  ">
             <div className="p-4 ">
                 <VStack float={'left'} alignItems={'flex-start'} w={'full'} gap={2}>
                     <Box>

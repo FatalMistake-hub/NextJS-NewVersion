@@ -284,7 +284,7 @@ const Reservations = () => {
                 <Paginate
                     // required props 👇
                     page={page - 1}
-                    count={data.totalPage ? Math.ceil(data.totalPage / 2) * 10 : 100}
+                    count={data.totalPage ? Math.ceil(data.totalPage / 2 +1) * 10 : 100}
                     pageSize={10}
                     onPageChange={handlePageClick}
                     // optional props 👇

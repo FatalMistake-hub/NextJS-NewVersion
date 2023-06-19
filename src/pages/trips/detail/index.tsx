@@ -23,7 +23,7 @@ const TripDetail = () => {
     const router = useRouter();
     const generateQr = () => {
         QRCode.toDataURL(
-            `http://experience-travel.vercel.app/mobile/indentity/host?orderIdBlockChain=${router.query.orderIdBlockChain}&publicKey=${router.query.publicKey}`,
+            `https://experience-travel.vercel.app/mobile/indentity/host?orderIdBlockChain=${router.query.orderIdBlockChain}&publicKey=${router.query.publicKey}`,
         ).then(setDataQr);
     };
     const { data: dataTour, isLoading, isError, isSuccess } = useGetDetailTour(router.query.tourId);

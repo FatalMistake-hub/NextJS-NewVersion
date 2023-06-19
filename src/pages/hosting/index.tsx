@@ -126,6 +126,25 @@ const HostingPage = () => {
                                 >
                                     Đã sử dụng
                                 </Tab>
+                                <Tab
+                                    _hover={{
+                                        bg: 'blackAlpha.200',
+                                    }}
+                                    _selected={{
+                                        color: 'black',
+                                        // borderBottom: '3px solid black',
+                                        border: ' 2px solid black',
+                                        bg: 'blackAlpha.100',
+                                    }}
+                                    className="rounded-3xl border border-gray-200 "
+                                    position={'relative'}
+                                    color={'blackAlpha.700'}
+                                    onClick={() => {
+                                        handleStatusChange('CANCEL');
+                                    }}
+                                >
+                                    Đã huỷ
+                                </Tab>
 
                                 {/* <MenuHostingNav /> */}
                             </TabList>
@@ -139,10 +158,12 @@ const HostingPage = () => {
                             w={'full'}
                             // className="flex flex-col items-center justify-center "
                         >
-                            <SimpleGrid minChildWidth="210px" spacing="40px" mt={4}>
-                                {dataOrder?.map((item, index) => (
-                                    <CardReservation data={item} />
-                                ))}
+                            <SimpleGrid minChildWidth="300px" spacing="40px" mt={4} maxH={'400px'} overflowY={'scroll'}>
+                                {dataOrder
+                                    .filter((item) => !selectedStatus || item.statusOrder === selectedStatus)
+                                    .map((item, index) => (
+                                        <CardReservation data={item} />
+                                    ))}
                             </SimpleGrid>
                         </Box>
                     ) : (
