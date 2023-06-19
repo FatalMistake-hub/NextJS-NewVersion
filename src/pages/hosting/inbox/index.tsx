@@ -62,7 +62,7 @@ const HostingInbox = () => {
                             </Box>
                         </Stack>
                     </Stack>
-                    <Stack mt={6} position="relative" minH={'calc(100vh - 400px )'} direction={'row'}>
+                    <Stack mt={6} position="relative" minH={'calc(100vh - 250px )'} direction={'row'}>
                         <Participants />
                         <Message />
                         {/* <ChatInput /> */}

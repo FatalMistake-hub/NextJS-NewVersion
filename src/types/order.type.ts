@@ -1,3 +1,4 @@
+import { IInfoAccount } from './account.type';
 import { TimeBookViewDtoList } from './timeBooking.type';
 
 export interface IOrder {
@@ -15,4 +16,6 @@ export interface IOrder {
     publicKey: string;
     timeBookViewDto: TimeBookViewDtoList;
     date_name: string;
+    tourId: string;
+    user:IInfoAccount
 }

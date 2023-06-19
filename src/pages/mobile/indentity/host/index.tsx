@@ -4,7 +4,7 @@ import { Alert, AlertIcon, AlertTitle, AlertDescription, useToast } from '@chakr
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useRouter } from 'next/router';
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, { useState, useRef, useMemo, useEffect, useCallback } from 'react';
 import { QrReader } from 'react-qr-reader';
 import { useTour } from 'src/hooks/blockchain/useTour';
 import useAuthorizeOrder from 'src/hooks/hosting/order/useAuthorizeOrder';
@@ -16,7 +16,7 @@ function IndentityHost() {
     const { authorizeOrder } = useAuthorizeOrder();
     const router = useRouter();
     const toast = useToast();
-    const [status, setStatus] = useState<'loading' | 'info' | 'warning' | 'success' | 'error' | undefined>('info');
+    const [status, setStatus] = useState<'loading' | 'info' | 'warning' | 'success' | 'error' | undefined>('success');
 
     const currentEditListing = useMemo(
         () =>
@@ -29,24 +29,29 @@ function IndentityHost() {
         [router.query.orderIdBlockChain, router.query.publicKey?.toString(), tours],
     );
 
-    const handleChangeStatusOrder = async (tourIdx: number, tourPda: string, authority: string) => {
-        setStatus('loading');
-        try {
-            await updateTour({ tourIdx: tourIdx, tourPda: tourPda });
-            await authorizeOrder({ orderIdBlockChain: tourPda, publicKey: authority });
-            setStatus('success');
-        } catch (error) {
-            toast({
-                title: 'Xác nhận đơn hàng thất bại',
-                description: 'Hệ thống lỗi, vui lòng thử lại sau',
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-                position: 'top',
-            });
-        }
-    };
-
+    const handleChangeStatusOrder = useCallback(
+        async (tourIdx: number, tourPda: string, authority: string) => {
+            try {
+                await updateTour({ tourIdx: tourIdx, tourPda: tourPda });
+                await authorizeOrder({ orderIdBlockChain: tourPda, publicKey: authority });
+                setStatus('success');
+                setTimeout(() => {}, 10000);
+            } catch (error) {
+                toast({
+                    title: 'Xác nhận đơn hàng thất bại',
+                    description: 'Hệ thống lỗi, vui lòng thử lại sau',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                });
+            }
+        },
+        [connected, toast, updateTour, authorizeOrder],
+    );
+    // console.log('currentEditListing', currentEditListing);
+    // console.log('idx', currentEditListing?.account.idx);
+    // console.log('router', router.query.orderIdBlockChain?.toString(), router.query.publicKey?.toString());
     useEffect(() => {
         if (
             currentEditListing?.account.idx &&
@@ -54,31 +59,44 @@ function IndentityHost() {
             router.query.orderIdBlockChain?.toString() &&
             router.query.publicKey?.toString()
         ) {
-            console.log('currentEditListing', currentEditListing);
-            console.log('idx', currentEditListing?.account.idx);
-            console.log('router', router.query.orderIdBlockChain?.toString(), router.query.publicKey?.toString());
-            if (currentEditListing.account.orderStatus === 'USED') {
+            console.log('runIndentity');
+            if (currentEditListing.account.statusOrder === 'SUCCESS') {
+                setStatus('loading');
                 handleChangeStatusOrder(
                     currentEditListing?.account.idx,
                     router.query.orderIdBlockChain?.toString(),
                     router.query.publicKey?.toString(),
                 );
             } else {
-                setStatus('error');
+                setStatus((prev) => {
+                    if (prev === 'success') {
+                        return prev;
+                    } else {
+                        return 'error';
+                    }
+                });
             }
-        }
-        if (!connected) {
+        } else {
             setStatus('warning');
-
         }
+        console.log('runIndentity');
         return () => {};
-    }, [currentEditListing?.account.idx, router.query.orderIdBlockChain, router.query.publicKey, connected]);
+    }, [currentEditListing, connected, router.query.orderIdBlockChain, router.query.publicKey]);
+
+    // ...
 
     return (
         <div className="h-full">
             <WalletMultiButton className="phantom-button z-50 ml-2 mr-4 rounded-2xl">
                 <span className="text-sm font-medium text-black">{connected ? truncate(publicKey?.toString()) : 'Connect Wallet'}</span>
             </WalletMultiButton>
+            {!connected && (
+                <Alert status="warning">
+                    <AlertIcon />
+                    Vui lòng kết nối ví để xác nhận
+                </Alert>
+            )}
+
             <div className="h-full  pt-20">
                 <Alert
                     status={status}
@@ -100,7 +118,7 @@ function IndentityHost() {
                             : status === 'info'
                             ? 'Chuẩn bị xác  thực mã'
                             : status === 'warning'
-                            ? 'Không tìm thấy kết nối ví'
+                            ? 'Không tìm thấy mã xác nhận'
                             : 'Đang xác nhận mã'}
                     </AlertTitle>
                     <AlertDescription maxWidth="sm">
@@ -111,7 +129,7 @@ function IndentityHost() {
                             : status === 'info'
                             ? ''
                             : status === 'warning'
-                            ? 'Vui lòng kết nối ví để xác nhận đơn hàng'
+                            ? 'Vui lòng kiểm tra lại mã xác nhận'
                             : 'Hệ thống đang tiến hành xác nhận mã'}
                     </AlertDescription>
                 </Alert>

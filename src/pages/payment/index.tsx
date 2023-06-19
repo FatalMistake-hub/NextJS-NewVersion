@@ -22,6 +22,7 @@ import {
     Menu,
     MenuItem,
     MenuList,
+    useToast,
 } from '@chakra-ui/react';
 
 import { BiChevronDown, BiChevronLeft, BiChevronUp } from 'react-icons/bi';
@@ -74,6 +75,7 @@ const Payment = () => {
     const { useGetWallet, useCreateWallet, useUpdateWallet } = useWallet();
 
     const { data: session, status } = useSession();
+    const toast = useToast();
     const paymentForm = useFormik({
         initialValues: {
             accountNumber: Number(useGetWallet.data?.data.accountNumber) || undefined,
@@ -123,39 +125,48 @@ const Payment = () => {
                     (Number(router.query.priceOnePerson) * guests.children * 70) / 100 +
                     (Number(router.query.priceOnePerson) * guests.infants * 50) / 100,
             );
-
-            values.accountNumber && !session?.user.isWallet
-                ? await useCreateWallet
-                      .mutateAsync({
-                          totalMoney: values.totalMoney,
-                          accountNumber: String(values.accountNumber),
-                          bankName: values.bankName,
-                      })
-                      .then((res) => {
-                          res.status === 201 &&
-                              postPaymentTour({
-                                  time_book_id: values.time_book_id,
-                                  tourId: values.tourId,
-                                  data: values.data,
-                                  priceTotal: values.priceTotal,
-                              });
-                      })
-                : await useUpdateWallet
-                      .mutateAsync({
-                          totalMoney: values.totalMoney,
-                          accountNumber: String(values.accountNumber),
-                          bankName: values.bankName,
-                          walletId: useGetWallet.data?.data.walletId,
-                      })
-                      .then((res) => {
-                          res.status === 200 &&
-                              postPaymentTour({
-                                  time_book_id: values.time_book_id,
-                                  tourId: values.tourId,
-                                  data: values.data,
-                                  priceTotal: values.priceTotal,
-                              });
-                      });
+            if (guests.adults || guests.children || guests.infants) {
+                values.accountNumber && !session?.user.isWallet
+                    ? await useCreateWallet
+                          .mutateAsync({
+                              totalMoney: values.totalMoney,
+                              accountNumber: String(values.accountNumber),
+                              bankName: values.bankName,
+                          })
+                          .then((res) => {
+                              res.status === 201 &&
+                                  postPaymentTour({
+                                      time_book_id: values.time_book_id,
+                                      tourId: values.tourId,
+                                      data: values.data,
+                                      priceTotal: values.priceTotal,
+                                  });
+                          })
+                    : await useUpdateWallet
+                          .mutateAsync({
+                              totalMoney: values.totalMoney,
+                              accountNumber: String(values.accountNumber),
+                              bankName: values.bankName,
+                              walletId: useGetWallet.data?.data.walletId,
+                          })
+                          .then((res) => {
+                              res.status === 200 &&
+                                  postPaymentTour({
+                                      time_book_id: values.time_book_id,
+                                      tourId: values.tourId,
+                                      data: values.data,
+                                      priceTotal: values.priceTotal,
+                                  });
+                          });
+            } else {
+                toast({
+                    title: 'Vui lòng chọn số lượng khách',
+                    status: 'warning',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                });
+            }
         },
     });
     return (

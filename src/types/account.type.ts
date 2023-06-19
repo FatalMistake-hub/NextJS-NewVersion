@@ -1,7 +1,13 @@
 export interface IInfoAccount {
-    address: string;
+    userId: string;
+    userName: string;
+    userEmail: string;
     description: string;
-    language: string;
+    address: string;
     phoneNumber: string;
+    language: string;
     urlImage: string;
+    role: string;
+    enabled: boolean;
+    accountAuthorize:string;
 }

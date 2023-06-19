@@ -7,12 +7,13 @@ declare module 'next-auth' {
             exp: number;
             iat: number;
             jti: string;
+            accountAuthorize: any;
             token: string;
             type: string;
             refreshToken: string;
             role: ERole;
             username: string;
-            isWallet:boolean;
+            isWallet: boolean;
         };
     }
 }

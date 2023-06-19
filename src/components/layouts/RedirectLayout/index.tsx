@@ -10,7 +10,7 @@ const RedirectLayout = ({ children }: any): JSX.Element => {
 
         if (isMobile) {
             // router.push('/mobile');
-            // !session?.user ? router.push('/mobile') : router.push('/mobile/listings');
+            !session?.user ? router.push('/mobile') : router.push('/mobile/listings');
         }
     }, []);
     return <div>{children}</div>;

@@ -81,7 +81,7 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                 <div
                     className={`${
                         searchPage ? 'px-10' : 'container'
-                    } hidden h-full md:grid md:grid-cols-[auto,1fr,auto] xl:grid-cols-[1.5fr,3fr,1.5fr] 2xl:grid-cols-[1fr,3fr,0.75fr] items-center`}
+                    } hidden h-full md:grid md:grid-cols-[auto,1fr,auto] xl:grid-cols-[0.75fr,3fr,1fr] 2xl:grid-cols-[0.75fr,3fr,0.75fr] items-center`}
                 >
                     {/* left side - logo */}
                     <div className="flex items-center h-12">

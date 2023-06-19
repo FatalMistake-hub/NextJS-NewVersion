@@ -1,5 +1,6 @@
 import { IOrder } from './order.type';
 import { ICategory } from './category.type';
+import { IInfoAccount } from './account.type';
 
 export interface ITours {
     tourId: number;
@@ -24,6 +25,7 @@ export interface ITours {
     timeBookStart: Time;
     timeBookEnd: Time;
     orderDtoList?: IOrder[];
+    user: IInfoAccount;
 }
 export interface IAllTours {
     content: ITours[];
@@ -55,12 +57,18 @@ export interface TourPost {
     imageDtoList: { link: string }[];
     timeBookStart: Time;
     timeBookEnd: Time;
-    checkIn: string;
-    checkOut: string;
+    // checkIn: string;
+    // checkOut: string;
     startDay: string;
     endDay: string;
 }
 interface Time {
     hour: number | undefined;
     minutes: number | undefined;
+}
+export interface IViewPort {
+    northEastLat: number;
+    northEastLng: number;
+    southWestLat: number;
+    southWestLng: number;
 }

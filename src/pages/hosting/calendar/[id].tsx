@@ -41,7 +41,7 @@ const CalendarHosting = () => {
         <div className="pt-[76px] flex relative   ">
             <Stack w={'full'} className="relative">
                 <CalendarBase />
-                <HStack spacing="12px" h={14} position="absolute" className="right-[18%] top-2">
+                <HStack spacing="12px" h={14} position="absolute" className="right-[22%] top-4">
                     <Popover placement={'bottom-start'} closeOnBlur={true}>
                         <PopoverTrigger>
                             <Button

@@ -30,7 +30,7 @@ import LanguagePicker from '../FilterItem/LanguagePicker';
 import PriceRange from '../FilterItem/PriceRange';
 import TimeInDay from '../FilterItem/TimeInDay';
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
-import { ADD_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
+import {  selectSearch, SET_CATEGORY } from 'src/redux/slice/searchSlice';
 interface NavItem {
     id?: number;
     type?: string;
@@ -104,16 +104,18 @@ const FilterNav = ({ dataCategory }: Props) => {
                                         colorScheme="blackAlpha"
                                         variant="outline"
                                         isActive={
-                                            i < 3 ? false : categoryList.find((item: any) => item.categoryId === navItem.id) ? true : false
+                                            // i < 3 ? false : categoryList.find((item: any) => item.categoryId === navItem.id) ? true : false
+                                            navItem.id===categoryList?.categoryId?true:false
                                         }
                                         // color={'black.100'}
                                         borderWidth={
-                                            i >= 3 && categoryList.find((item: any) => item.categoryId === navItem.id) ? 2 : 1
+                                            // i >= 3 && categoryList.find((item: any) => item.categoryId === navItem.id) ? 2 : 1
+                                            navItem.id===categoryList?.categoryId?2:1
                                         }
                                         onClick={() => {
                                             navItem &&
                                                 dispatch(
-                                                    ADD_CATEGORY({
+                                                    SET_CATEGORY({
                                                         categoryId: navItem.id,
                                                         label: navItem.label,
                                                         // type: navItem.type,

@@ -82,6 +82,7 @@ const Search = ({ dataCategory }: Props) => {
     //     const dates = formatRangeDate(startDate, endDate);
     //     if (dates) return `• ${dates}`;
     // };
+    const viewportString = router.query.viewport as string | undefined;
     const {
         status,
         ref,
@@ -94,24 +95,32 @@ const Search = ({ dataCategory }: Props) => {
         fetchPreviousPage,
         hasNextPage,
         hasPreviousPage,
-    } = useTourBySearch(9);
+    } = useTourBySearch(9, JSON.parse(viewportString as string));
 
+    const getCenterMap = (data: any) => {
+        const coordinates = useMemo(() => {
+            const allCoordinates: { latitude: number; longitude: number }[] = [];
+            data?.pages?.forEach((page: any) => {
+                page?.data?.content?.forEach((result: ITours) => {
+                    const { latitude, longitude } = result;
+                    if (latitude && longitude) {
+                        allCoordinates.push({ latitude: Number(latitude), longitude: Number(longitude) });
+                    }
+                });
+            });
+            return allCoordinates;
+        }, [data]);
 
-    const getCenterMap = () => {
-        // const coords = data?.pages?.map((page: any) =>
-        //     page?.data?.content?.map((result: ITours) => ({
-        //         latitude: result.latitude,
-        //         longitude: result.longitude,
-        //     })),
-        // );
-
-        const coords = searchResults.map((result) => ({
-            latitude: result.lat,
-            longitude: result.long,
-        }));
-        return getCenter(coords) || { latitude: 0, longitude: 0 };
+        return useMemo(() => {
+            if (coordinates.length > 0) {
+                const center = getCenter(coordinates);
+                return center || { latitude: 0, longitude: 0 };
+            } else {
+                return { latitude: 0, longitude: 0 };
+            }
+        }, [coordinates]);
     };
-    const viewportString = router.query.viewport as string | undefined;
+
     console.log('viewport', viewportString, router.query.viewport);
     return (
         <>
@@ -196,7 +205,7 @@ const Search = ({ dataCategory }: Props) => {
                         className={`block fixed left-0 right-0 bottom-0 top-[158px] sm:block sm:sticky top-[158px] h-map flex-grow bg-teal-900 bg-opacity-10   duration-100`}
                     >
                         {viewportString && (
-                            <MapBase center={getCenterMap()} viewportBbox={JSON.parse(viewportString)} className="relative top-[76px] ">
+                            <MapBase center={getCenterMap(data)} viewportBbox={JSON.parse(viewportString)} className="relative top-[76px] ">
                                 <button
                                     className="absolute  top-1 items-center hidden p-3 m-4 text-gray-500 duration-300 bg-white border border-gray-200 rounded-lg shadow-lg sm:flex active:scale-90"
                                     onClick={() => (isFullMap ? setIsFullMap(false) : setIsFullMap(true))}

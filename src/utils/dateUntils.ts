@@ -5,9 +5,7 @@ import { locale, min } from 'moment';
 export const formatCheckDate = (date: Date, dateFormat?: string) => {
     const dateCheck = new Date(date);
     if (!dateCheck) return '';
-    console.log(
-        dateCheck,
-        typeof dateCheck)
+
     
     return format(dateCheck, dateFormat || 'MMM d', {
         locale: vi,

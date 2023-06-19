@@ -122,7 +122,7 @@ export function useTour() {
         imageMain,
         timeId,
         userId,
-    }: Omit<IOrder, 'priceOnePerson' | 'statusOrder' | 'city' | 'orderIdBlockChain' | 'publicKey' | 'timeBookViewDto' | 'date_name'>) => {
+    }: Omit<IOrder, 'priceOnePerson' | 'statusOrder' | 'city' | 'orderIdBlockChain' | 'publicKey' | 'timeBookViewDto' | 'date_name'|'tourId'|'user'>) => {
         if (program && publicKey) {
             console.log(location, orderId, orderDate, price, tour_title, imageMain, timeId, userId, 'YOOO');
             setTransactionPending(true);

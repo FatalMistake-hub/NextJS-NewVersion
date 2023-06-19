@@ -35,13 +35,13 @@ import useGetDetailTour from 'src/hooks/guest/tours/useGetDetailTour';
 import { numberToTime } from 'src/utils/dateUntils';
 import MapTrip from '@components/Map/MapTrip';
 import { Marker } from 'react-map-gl';
-import MapLocation from '@components/Map/MapLocation';
 import useGetAllTimeBookingByRange from 'src/hooks/guest/timeBooking/useGetAllTimeBookingByRange';
 import { IDayBook, TimeBookViewDtoList } from 'src/types/timeBooking.type';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import { ADD_CATEGORY, SET_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
+import { SET_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
 import moment from 'moment';
 import { ICategory } from 'src/types/category.type';
+import useGetReviewByTour from 'src/hooks/guest/review/useGetReviewByTour';
 function Tours() {
     const router = useRouter();
     const { id } = router.query;
@@ -89,8 +89,9 @@ function Tours() {
         }
     }, [dataTime]);
     const handleClickBreadCumb = async (cateory: ICategory) => {
-        await dispatch(SET_CATEGORY([]));
-        await dispatch(ADD_CATEGORY(cateory));
+        // await dispatch(SET_CATEGORY([]));
+        // await dispatch(ADD_CATEGORY(cateory));
+        await dispatch(SET_CATEGORY({}));
         await router.push({
             pathname: '/search',
             query: {
@@ -104,6 +105,7 @@ function Tours() {
         });
     };
     // console.log(data);
+    const { data: dataReview } = useGetReviewByTour(Number(id));
     return (
         <>
             {data ? (
@@ -230,7 +232,7 @@ function Tours() {
                             </Button>
                         </div>
                     </div>
-                    <VStack divider={<StackDivider borderColor="black.200" />} align="stretch">
+                    <VStack divider={<StackDivider borderColor="black.200" />} align="stretch" pb={12}>
                         <Box display={'flex'} width={'100%'}>
                             <div className="relative w-[60%]">
                                 <VStack divider={<StackDivider borderColor="black.200" />} align="stretch">
@@ -247,11 +249,16 @@ function Tours() {
                                                     mb={1}
                                                     size={'lg'}
                                                 >
-                                                    Trải nghiệm do An tổ chức
+                                                    Trải nghiệm do {data.user.userName} tổ chức
                                                 </Heading>
-                                                <Text>{numberToTime(data.timeSlotLength)} - Ngôn ngữ: Tiếng Anh, Tiếng Việt</Text>
+                                                <Text>
+                                                    {numberToTime(data.timeSlotLength)} - Ngôn ngữ: {data.user.language}
+                                                </Text>
                                             </section>
-                                            <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+                                            <Avatar
+                                                name={data.user.userName}
+                                                src={data.user.urlImage ? data.user.urlImage : 'https://bit.ly/broken-link'}
+                                            />
                                         </div>
                                     </Box>
                                     <Box py={12}>
@@ -275,7 +282,12 @@ function Tours() {
                                     </Box>
                                     <Box py={12}>
                                         <div className="flex w-full mb-6">
-                                            <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" className="mr-4" size={'lg'} />
+                                            <Avatar
+                                                name={data.user.userName}
+                                                src={data.user.urlImage ? data.user.urlImage : 'https://bit.ly/broken-link'}
+                                                className="mr-4"
+                                                size={'lg'}
+                                            />
 
                                             <section>
                                                 <Heading
@@ -287,9 +299,9 @@ function Tours() {
                                                     noOfLines={1}
                                                     mb={1}
                                                 >
-                                                    Gặp gỡ người tổ chức của bạn – Huy
+                                                    Gặp gỡ người tổ chức của bạn – {data.user.userName}
                                                 </Heading>
-                                                <Text className="text-sm">Tổ chức trải nghiệm trên Airbnb kể từ 2016</Text>
+                                                <Text className="text-sm">Email: {data.user.userEmail}</Text>
                                             </section>
                                         </div>
                                         <ul className="flex w-full mb-3 mx-[-12px]">
@@ -303,10 +315,8 @@ function Tours() {
                                             </li>
                                         </ul>
                                         <Collapse startingHeight={170} in={show.cp2}>
-                                            Xin chào, tên tôi là Huy. Một đứa trẻ lớn thích đi du lịch và "yêu thích ẩm thực". Tôi đã đến
-                                            một số quốc gia và nhận ra rằng không nơi nào có thể đánh bại thành phố của tôi khi thảo luận về
-                                            sự đa dạng của thực phẩm thuần chay. <br />
-                                            <br />
+                                            {data.user.description}
+                                            
                                         </Collapse>
                                         <Button size="sm" variant={'link'} onClick={() => handleToggle('cp2')} mt="1rem">
                                             {show.cp2 ? 'Xem thêm' : 'Ẩn bớt'}
@@ -337,7 +347,12 @@ function Tours() {
                                 </VStack>
                             </div>
                             <div className="relative w-[38%] ml-[12%]">
-                                <CardBooking dataTimeBooking={jsxCardBookTime} priceOnePerson={data?.priceOnePerson} tourId={data.tourId} />
+                                <CardBooking
+                                    dataTimeBooking={jsxCardBookTime}
+                                    priceOnePerson={data?.priceOnePerson}
+                                    tourId={data.tourId}
+                                    onOpen={onModalOpen2}
+                                />
                             </div>
                         </Box>
                         <Box py={12}>
@@ -389,7 +404,19 @@ function Tours() {
                             </Button>
                         </Box>
                         <Box py={12}>
-                            <Comment />
+                            {dataReview && dataReview.length > 0 ? (
+                                <Comment data={dataReview} averageRating={data.avgRating} />
+                            ) : (
+                                <Heading
+                                    lineHeight={1.4}
+                                    as="h2"
+                                    fontSize={'22px'}
+                                    fontWeight={'600'}
+                                    className="mb-6 px-3 flex items-center"
+                                >
+                                    <Text className="ml-2 ">Chưa có đánh giá</Text>
+                                </Heading>
+                            )}
                         </Box>
                         <Box py={12}>
                             <section>
@@ -397,7 +424,7 @@ function Tours() {
                                     Chọn trong số các ngày còn trống
                                 </Heading>
                                 <Text mb={6} className="text-base  text-gray-400">
-                                    Có sẵn 311
+                                    Có sẵn {jsxCardBookTime.length}
                                 </Text>
 
                                 <div className=" max-w-[1120px] ">
@@ -410,16 +437,20 @@ function Tours() {
                                         modules={[Pagination]}
                                         className="min-h-[240px]"
                                     >
-                                        {jsxCardBookTime.slice(0, 15).map((time: any, index: number) => (
-                                            <SwiperSlide key={time?.timeId}>
-                                                <CardSelectDay
-                                                    start_time={time?.start_time}
-                                                    end_time={time?.end_time}
-                                                    day={time?.day}
-                                                    price={data?.priceOnePerson}
-                                                />
-                                            </SwiperSlide>
-                                        ))}
+                                        {jsxCardBookTime.slice(0, 15).map(
+                                            (time: any, index: number) =>
+                                                time.isDeleted === false && (
+                                                    <SwiperSlide key={time?.timeId}>
+                                                        <CardSelectDay
+                                                            timeId={time?.timeId}
+                                                            start_time={time?.start_time}
+                                                            end_time={time?.end_time}
+                                                            day={time?.day}
+                                                            price={data?.priceOnePerson}
+                                                        />
+                                                    </SwiperSlide>
+                                                ),
+                                        )}
                                     </Swiper>
                                 </div>
                                 <Button
@@ -519,7 +550,7 @@ function Tours() {
                                 </div>
                             </div>
                         </Box> */}
-                        <Box py={12}>
+                        {/* <Box py={12}>
                             <section>
                                 <Heading lineHeight={1.4} as="h2" fontSize={'22px'} fontWeight={'600'} width={'full'} noOfLines={1}>
                                     Trải nghiệm tương tự
@@ -535,13 +566,13 @@ function Tours() {
                                         modules={[FreeMode, Pagination]}
                                         className="mySwiper"
                                     >
-                                        {/* <SwiperSlide>
+                                        <SwiperSlide>
                                     <CardItem className="h-[370px]" />
-                                </SwiperSlide> */}
+                                </SwiperSlide>
                                     </Swiper>
                                 </div>
                             </section>
-                        </Box>
+                        </Box> */}
                     </VStack>
                     <AllPictureModal isOpen={isModalOpen} onClose={onModalClose} data={data?.images} />
                     <AllDayModal isOpen={isModalOpen2} onClose={onModalClose2} price={data.priceOnePerson} />

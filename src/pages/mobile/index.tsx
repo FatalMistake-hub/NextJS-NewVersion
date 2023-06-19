@@ -30,21 +30,21 @@ const Mobile = () => {
                 ),
         }),
         onSubmit: async (values) => {
-            // const res = await signIn('credentials', {
-            //     email: values.email,
-            //     password: values.password,
-            //     redirect: false,
-            // });
-            // if (res?.status === 200) {
-            //     dispatch(SET_ROLE_LOGIN(role));
-            //      dispatch(SET_isLogin_TRUE());
-            //     // router.push('/mobile/listings');
-            //     if (role === 'GUEST') {
-            //         router.push('/mobile/listings');
-            //     } else {
-            //         router.push('/mobile/indentity/host');
-            //     }
-            // }
+            const res = await signIn('credentials', {
+                email: values.email,
+                password: values.password,
+                redirect: false,
+            });
+            if (res?.status === 200) {
+                dispatch(SET_ROLE_LOGIN(role));
+                 dispatch(SET_isLogin_TRUE());
+                // router.push('/mobile/listings');
+                if (role === 'GUEST') {
+                    router.push('/mobile/listings');
+                } else {
+                    router.push('/mobile/indentity/host');
+                }
+            }
             // if (role === 'GUEST')
             // {
             //     router.push('/mobile/listings');

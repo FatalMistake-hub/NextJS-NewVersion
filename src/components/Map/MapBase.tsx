@@ -3,13 +3,14 @@ import ReactMapGL, { GeolocateControl, FullscreenControl, NavigationControl, Sca
 import { useAppSelector } from 'src/redux/hook';
 import { selectSearch } from 'src/redux/slice/searchSlice';
 import { calculateZoomVP } from 'src/utils/mapUntil';
+
 interface IMap extends PropsWithChildren<any> {
     center: { longitude: number; latitude: number };
     viewportBbox?: any;
 }
 
 const MapBase: FC<IMap> = ({ children, center, viewportBbox }) => {
-    // const { viewport: view, latitude, longitude } = useAppSelector(selectSearch);
+    // const { latitude, longitude } = useAppSelector(selectSearch);
 
     const calculatedZoom = useMemo(
         () =>
@@ -19,25 +20,29 @@ const MapBase: FC<IMap> = ({ children, center, viewportBbox }) => {
                 viewportBbox.southWestLongtitude,
                 viewportBbox.northEastLongtitude,
             ),
-        [viewportBbox],
+        [viewportBbox.southWestLatitude, viewportBbox.northEastLatitude, viewportBbox.southWestLongtitude, viewportBbox.northEastLongtitude]
     );
+
     const [viewport, setViewport] = React.useState<any>({
-        longitude: 107.20623,
-        latitude: 18.0583,
         zoom: calculatedZoom,
-        // latitude: center.latitude,
-        // longitude: center.longitude,
+        latitude: center.latitude || 18.0583,
+        longitude: center.longitude || 107.20623,
     });
+
+    useEffect(() => {
+        setViewport((prevViewport: any) => ({
+            ...prevViewport,
+            zoom: calculatedZoom,
+            latitude: center.latitude || 18.0583,
+            longitude: center.longitude || 107.20623,
+        }));
+    }, [calculatedZoom, center.latitude, center.longitude]);
+
     return (
         <ReactMapGL
             {...viewport}
-            zoom={
-                // viewport.zoom?.toString().length > 0
-                viewport.zoom ? viewport.zoom : calculatedZoom
-            }
             mapStyle={process.env.MAPBOX_STYLE}
             mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-            // style={{ width: '100vw', height: '100vh' }}
             width="100%"
             height="100%"
             onViewportChange={(viewport: any) => {

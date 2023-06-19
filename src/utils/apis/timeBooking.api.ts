@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { IDayBook, IDayBookResponse, TimeBookViewDtoList } from 'src/types/timeBooking.type';
-import { ITours } from 'src/types/tours.type';
+import { ITours, IViewPort } from 'src/types/tours.type';
 import { http } from '../instance/http';
 
 // export const deleteTours = async (tourId: number, axiosAuth: AxiosInstance) =>
@@ -12,6 +12,7 @@ export const getAllTimeByRange = async (
     pageNo: number,
     pageSize: number,
     tourId: string | string[] | undefined,
+
 ) =>
     await http.get<IDayBookResponse>(`/day-booking/day-time/${tourId}/${start_time}/${end_time}`, {
         params: {

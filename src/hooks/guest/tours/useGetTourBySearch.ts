@@ -7,9 +7,10 @@ import { IAllTours } from 'src/types/tours.type';
 import { getToursBySearch } from 'src/utils/apis/tours.api';
 import { selectSearch } from 'src/redux/slice/searchSlice';
 
-const useTourBySearch = (pageSize: number): UseQueryInfinityResponse<any> => {
+const useTourBySearch = (pageSize: number, viewport: any): UseQueryInfinityResponse<any> => {
     const { ref, inView } = useInView({ threshold: 0 });
-    const { location, checkIn, checkOut, guests, categoryList } = useAppSelector(selectSearch);
+    const { categoryList } = useAppSelector(selectSearch);
+
     const {
         status,
         data,
@@ -22,8 +23,21 @@ const useTourBySearch = (pageSize: number): UseQueryInfinityResponse<any> => {
         hasNextPage,
         hasPreviousPage,
     } = useInfiniteQuery(
-        ['GET_ALL_TOURS_BY_SEARCH', categoryList[categoryList.length - 1]],
-        async ({ pageParam = 1 }) => await getToursBySearch(categoryList[categoryList.length - 1], pageParam, pageSize),
+        [
+            'GET_ALL_TOURS_BY_SEARCH',
+            categoryList,
+            viewport.northEastLatitude,
+            viewport.northEastLongtitude,
+            viewport.southWestLatitude,
+            viewport.southWestLongtitude,
+        ],
+        async ({ pageParam = 1 }) =>
+            await getToursBySearch(categoryList, pageParam, pageSize, {
+                northEastLat: viewport.northEastLatitude,
+                northEastLng: viewport.northEastLongtitude,
+                southWestLat: viewport.southWestLatitude,
+                southWestLng: viewport.southWestLongtitude,
+            }),
         {
             getNextPageParam: (lastPage: any, allPages) => {
                 if (lastPage.data.pageNo < lastPage.data.totalPages) {
@@ -33,7 +47,7 @@ const useTourBySearch = (pageSize: number): UseQueryInfinityResponse<any> => {
             getPreviousPageParam: (firstPage: any, allPages) => {
                 return firstPage.data.pageNo - 1;
             },
-            enabled: categoryList.length > 0,
+            enabled: !!categoryList,
         },
     );
     useEffect(() => {

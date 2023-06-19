@@ -1,28 +1,35 @@
 import { Button, VStack, Text, Box, Flex, Avatar } from '@chakra-ui/react';
+import moment from 'moment';
+import { IOrder } from 'src/types/order.type';
+import { handleNameStatus } from 'src/utils/hostUtil';
 
-const CardReservation = () => {
+type Props = {
+    data?: IOrder;
+};
+const CardReservation = ({ data }: Props) => {
     return (
-        <div className="group flex flex-col min-h-40 bg-white border border-gray-200 shadow-sm rounded-xl  ">
+        <div className="group flex flex-col min-h-40  bg-white border border-gray-200 shadow-sm rounded-xl  ">
             <div className="p-4 ">
-                <VStack float={'left'} alignItems={'flex-start'} gap={2}>
+                <VStack float={'left'} alignItems={'flex-start'} w={'full'} gap={2}>
                     <Box>
                         <Text fontSize={'16px'} fontWeight={600} noOfLines={1} as={'p'} color={'teal'} textAlign={'left'}>
-                            Đang đón tiếp
+                            {data?.statusOrder && handleNameStatus(data.statusOrder)}
                         </Text>
                         <Text fontSize={'12px'} fontWeight={300} noOfLines={1} textAlign={'left'}>
-                            Chuyến đi nửa ngày Khám phá Địa đạo Củ Chi
+                            {data?.tour_title}
                         </Text>
                     </Box>
                     <Flex justifyContent={'space-between'} w={'full'}>
                         <Box>
                             <Text fontSize={'16px'} fontWeight={500} noOfLines={1} as={'p'} textAlign={'left'}>
-                                NguyenTriAn
+                                {data?.user?.userName}
                             </Text>
                             <Text fontSize={'12px'} fontWeight={500} noOfLines={1} as={'p'} textAlign={'left'}>
-                                26 Dec 2022, 08:30 - 09:30
+                                {moment(data?.date_name).format('dddd, DD MMMM')} {data?.timeBookViewDto?.start_time} -{' '}
+                                {data?.timeBookViewDto?.end_time}
                             </Text>
                         </Box>
-                        <Avatar name="Dan Abrahmov" src="https://bit.ly/dan-abramov" size={'md'}  />
+                        <Avatar name={data?.user?.userName} src={data?.user?.urlImage || 'https://bit.ly/broken-link'} size={'md'} />
                     </Flex>
                 </VStack>
             </div>
@@ -34,7 +41,7 @@ const CardReservation = () => {
                 color={'black'}
             >
                 {' '}
-                Message
+                Nhắn tin
             </Button>
         </div>
     );

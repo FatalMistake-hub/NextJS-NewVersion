@@ -15,7 +15,7 @@ const MenuHosting = () => {
     
     return (
         <div className="flex w-fit">
-            {initialized ? (
+            {/* {initialized ? (
                 <></>
             ) : (
                 <button
@@ -26,9 +26,9 @@ const MenuHosting = () => {
                 >
                     Initialize
                 </button>
-            )}
+            )} */}
             <WalletMultiButton className="phantom-button z-50 ml-2 mr-4 rounded-2xl">
-                <span className="text-sm font-medium text-black">{connected ? truncate(publicKey?.toString()) : 'Connect Wallet'}</span>
+                <span className="text-sm font-medium text-black">{connected ? truncate(publicKey?.toString()) : 'Kết nối ví của bạn'}</span>
             </WalletMultiButton>
             <Menu>
                 <MenuButton

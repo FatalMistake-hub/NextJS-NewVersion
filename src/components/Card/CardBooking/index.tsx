@@ -35,8 +35,9 @@ interface CardsBookingProps {
     priceOnePerson: number | undefined;
     tourId: number | undefined;
     dataTimeBooking: any;
+    onOpen: () => void;
 }
-const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson, tourId, dataTimeBooking }) => {
+const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson, tourId, dataTimeBooking, onOpen }) => {
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
     const router = useRouter();
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
@@ -224,9 +225,10 @@ const CardBooking: FC<CardsBookingProps> = ({ priceOnePerson, tourId, dataTimeBo
                         className="hover:bg-gray-100 cursor-pointer"
                         width={'100%'}
                         mt={6}
+                        onClick={onOpen}
                     >
                         <Text className="text-base break-words font-semibold  w-full  h-full py-3  text-center flex items-center justify-center">
-                            Hiển thị tất cả 31 đánh giá
+                            Hiển thị các ngày khác
                         </Text>
                     </Button>
                 </Box>

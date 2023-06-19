@@ -9,7 +9,7 @@ import BecomeHostStep2 from '@components/Hosting/BecomeHost/Step2';
 import BecomeHostStep3 from '@components/Hosting/BecomeHost/Step3';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
 import { selectBecomeHost, SET_imageMain, SET_STEP } from 'src/redux/slice/becomeHostSlice';
-import MultiStepBtn from '@components/GroupButton/MultiStepBtn';
+
 import LocationSt1 from '@components/Hosting/BecomeHost/Step1/Location';
 import CategorySt1 from '@components/Hosting/BecomeHost/Step1/Category';
 import { GetServerSideProps } from 'next';
@@ -21,6 +21,8 @@ import ImageListSt2 from '@components/Hosting/BecomeHost/Step2/ImageList';
 import TittleSt3 from '@components/Hosting/BecomeHost/Step3/Tittle';
 import PriceSt3 from '@components/Hosting/BecomeHost/Step3/Price';
 import FinalSt3 from '@components/Hosting/BecomeHost/Step3/Final';
+import MultiStepBtn from '@components/GroupButton/MultiStepBtn';
+
 interface Props {
     dataCategory: IAllCategory;
 }

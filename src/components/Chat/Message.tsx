@@ -1,5 +1,4 @@
-import { BiDownArrowAlt, BiGhost } from 'react-icons/bi';
-import { useSession } from 'next-auth/react';
+import { BiGhost } from 'react-icons/bi';
 import { Avatar, Box, Button, IconButton, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';

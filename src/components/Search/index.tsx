@@ -101,11 +101,11 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                 <div
                     className={`${
                         !isActiveHeader && 'translate-y-[-75px] transform scale-50 opacity-0 z-[100]'
-                    } max-w-[850px] mx-auto mt-2 rounded-2xl bg-white border border-gray-200 duration-300 hidden md:flex`}
+                    } max-w-[850px] mx-auto mt-2 rounded-2xl drop-shadow-2xl  bg-white border-2 border-[#008b8d] duration-300 hidden md:flex`}
                 >
                     <form
                         action="/search"
-                        className={' grid-cols-[0.8fr,0.7fr,0.7fr,auto] lg:grid-cols-[1fr,0.7fr,1fr] grid flex-grow'}
+                        className={' grid-cols-[0.8fr,0.7fr,0.7fr,auto] lg:grid-cols-[1fr,0.7fr,1fr] grid flex-grow  '}
                         onSubmit={handleOnSubmit}
                     >
                         {/* location */}
@@ -138,9 +138,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                             title="Ngày"
                             placeholder="Thêm ngày bạn muốn đi"
                             active={searchMenu === ESearchMenu.CHECK_OUT}
-                            value={
-                                formatRangeDate(checkIn, checkOut)
-                            }
+                            value={formatRangeDate(checkIn, checkOut)}
                             onFocus={() => setSearchMenu(ESearchMenu.CHECK_OUT)}
                             onBlur={handleOnBlur}
                             onClear={() => {

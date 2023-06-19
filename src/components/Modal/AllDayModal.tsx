@@ -41,7 +41,7 @@ import moment from 'moment';
 interface AllDayModalProps {
     isOpen: boolean;
     onClose: () => void;
-    price:number
+    price: number;
 }
 enum ESearchMenu {
     LOCATION = 'location',
@@ -49,7 +49,7 @@ enum ESearchMenu {
     CHECK_OUT = 'checkOut',
     GUESTS = 'guests',
 }
-const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose,price }) => {
+const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose, price }) => {
     const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
 
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
@@ -79,23 +79,32 @@ const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose,price }) => {
         setSearchMenu(null);
     };
 
-    
     const router = useRouter();
     const { id } = router.query;
-    const {
-        status,
-        data,
-        ref,
-        isFetching,
-        isFetchingNextPage,
-        isFetchingPreviousPage,
-        fetchNextPage,
-        fetchPreviousPage,
-        refetch,
-        hasNextPage,
-        hasPreviousPage,
-    } = useGetAllTimeBookingByRange(moment(checkIn).format('YYYY-MM-DD'), moment(checkOut).format('YYYY-MM-DD'), 2, id);
+    const { status, data, ref } = useGetAllTimeBookingByRange(
+        moment(checkIn).format('YYYY-MM-DD'),
+        moment(checkOut).format('YYYY-MM-DD'),
+        2,
+        id,
+    );
     const dateRangeStyle = 'left-2 right-2 searchbar:left-auto searchbar:right-1/4 searchbar:translate-x-1/4 searchbar:w-[800px] ';
+
+    const handleSelect = (time: any, day: any) => {
+        router.push({
+            pathname: '/payment',
+            query: {
+                tourId: `${id}`,
+                checkIn: `${checkIn}`,
+                checkOut: `${checkOut}`,
+                guests: JSON.stringify(guests),
+                timeId: JSON.stringify(time.timeId),
+                start_time: `${time.start_time}`,
+                end_time: `${time.end_time}`,
+                day: `${day}`,
+                priceOnePerson: `${price}`,
+            },
+        });
+    };
     return (
         <>
             <Modal onClose={onClose} size={'full'} isOpen={isOpen}>
@@ -222,7 +231,7 @@ const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose,price }) => {
                                                 day.timeBookDetailList.map(
                                                     (time: TimeBookViewDtoList) =>
                                                         time.isDeleted === false && (
-                                                            <div  key={time.timeId}>
+                                                            <div key={time.timeId}>
                                                                 <Heading
                                                                     as="h4"
                                                                     fontSize={'18px'}
@@ -246,7 +255,14 @@ const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose,price }) => {
                                                                                     <span className="font-normal">/người</span>
                                                                                 </Text>
                                                                             </div>
-                                                                            <Button colorScheme={'teal'}>Chọn</Button>
+                                                                            <Button
+                                                                                colorScheme={'teal'}
+                                                                                onClick={() => {
+                                                                                    handleSelect(time, day.date_name);
+                                                                                }}
+                                                                            >
+                                                                                Chọn
+                                                                            </Button>
                                                                         </div>
                                                                         <Text mt={6} fontSize={'14px'} color={'black.500'}>
                                                                             Được tổ chức bằng Tiếng Anh, Tiếng Hàn Quốc và Tiếng Nhật Bản

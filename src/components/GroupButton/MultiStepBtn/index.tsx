@@ -4,6 +4,11 @@ import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
 import { selectBecomeHost, SET_btnSTATUS, SET_imageMain, SET_STEP } from 'src/redux/slice/becomeHostSlice';
 import useCreateTour from 'src/hooks/guest/tours/useCreateTour';
+import usePatchProfile from 'src/hooks/account/usePatchProfile';
+import { useTour } from 'src/hooks/blockchain/useTour';
+import { el } from '@faker-js/faker';
+import { publicKey } from '@project-serum/anchor/dist/cjs/utils';
+import { useWallet } from '@solana/wallet-adapter-react';
 const END_STEP = 11;
 const START_STEP = 1;
 
@@ -43,10 +48,29 @@ const MultiStepBtn = () => {
             setIsLoading(false);
         }, 1000);
     };
-
+    const { connected, publicKey } = useWallet();
+    const { patchInfoAccount } = usePatchProfile();
+    const { initializeUser, transactionPending, initialized } = useTour();
     const handleFinalStep = async () => {
-        await postTours(tour);
-        console.log(tour);
+        try {
+            if (!initialized&&connected) {
+                await initializeUser();
+                await patchInfoAccount({
+                    accountAuthorize: publicKey?.toString(),
+                });
+                await postTours(tour);
+            } else {
+                await postTours(tour);
+            }
+        } catch (error) {
+            toast({
+                title: 'Lỗi không thể tạo tour.',
+                description: `${error}`,
+                status: 'error',
+                duration: 3000,
+                isClosable: true,
+            });
+        }
     };
 
     return (

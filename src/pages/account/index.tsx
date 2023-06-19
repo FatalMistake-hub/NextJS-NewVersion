@@ -20,7 +20,7 @@ import AccountModal from '@components/Modal/AccountModal';
 import { s } from '@fullcalendar/core/internal-common';
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { BiEdit, BiEditAlt, BiGlobe, BiPhone } from 'react-icons/bi';
+import { BiEdit, BiEditAlt, BiGlobe, BiPhone, BiUpload } from 'react-icons/bi';
 import { FaEdit, FaLanguage } from 'react-icons/fa';
 import { FiEdit2 } from 'react-icons/fi';
 import useProfile from 'src/hooks/account/useProfile';
@@ -29,6 +29,9 @@ import { formatRole } from 'src/utils/guestsUtil';
 import { useDisclosure } from '@chakra-ui/react';
 import { useState } from 'react';
 import { IInfoAccount } from 'src/types/account.type';
+import { useDropzone } from 'react-dropzone';
+import usePostToCloudinary from 'src/hooks/imageCloudinary/usePostToCloudinary';
+import usePatchProfile from 'src/hooks/account/usePatchProfile';
 
 const Account = () => {
     const { data: session, status } = useSession();
@@ -43,6 +46,29 @@ const Account = () => {
         await setProps({ title: title, value: value, key: key });
         await onOpen();
     };
+    const { patchInfoAccount } = usePatchProfile();
+
+    const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, open } = useDropzone({
+        maxFiles: 1,
+        accept: {
+            'image/*': ['.jpeg', '.png'],
+        },
+        onDrop: async (acceptedFiles) => {
+            
+            const listLink = await Promise.all(
+                acceptedFiles.map(async (file) => {
+                    const link = await usePostToCloudinary(file);
+                    return link;
+                }),
+            );
+            if (listLink.length > 0) {
+                await patchInfoAccount({
+                    urlImage: listLink[0].link,
+                });
+            }
+           
+        },
+    });
     return (
         <Tabs position="relative" variant="unstyled">
             <div className="min-h-screen flex justify-center w-full">
@@ -71,37 +97,31 @@ const Account = () => {
                                 justifyContent={'center'}
                                 alignItems={'center'}
                             >
-                                <div className="relative w-[104px] h-[104px]">
+                                <div className="relative w-[104px] h-[104px]" >
                                     <Image
-                                        src={
-                                            data?.urlImage
-                                                ? data?.urlImage
-                                                : 'https://a0.muscache.com/im/pictures/user/User-484410468/original/f28d0fde-327c-4fd0-943d-e7080640111a.png?im_w=480'
-                                        }
+                                        src={data?.urlImage ? data?.urlImage : 'https://bit.ly/broken-link'}
                                         alt={`Picture of `}
                                         layout="fill"
                                         objectFit="cover"
                                         placeholder="blur"
-                                        blurDataURL={
-                                            data?.urlImage
-                                                ? data?.urlImage
-                                                : 'https://a0.muscache.com/im/pictures/user/User-484410468/original/f28d0fde-327c-4fd0-943d-e7080640111a.png?im_w=480'
-                                        }
+                                        blurDataURL={data?.urlImage ? data?.urlImage : 'https://bit.ly/broken-link'}
+                                        className='rounded-full'
                                     />
-                                    <Box position={'absolute'} top={0} right={0}>
+                                    <Box position={'absolute'} top={0} right={-8}>
                                         <IconButton
-                                            size="sm"
+                                            size="md"
                                             rounded="full"
                                             // colorScheme="blackAlpha"
                                             color={'black'}
                                             variant={'link'}
-                                            icon={<FiEdit2 />}
+                                            icon={<BiUpload />}
                                             aria-label="Scroll bottom"
+                                            onClick={open}
                                             // onClick={() => handleClick()}
                                         />
                                     </Box>
                                 </div>
-                                <div className="flex flex-col justify-center items-center max-w-[160px]">
+                                <div className="flex relative flex-col justify-center items-center max-w-[160px]">
                                     <Heading
                                         lineHeight={1.4}
                                         as="h1"
@@ -115,6 +135,18 @@ const Account = () => {
                                     <Text fontSize={'14px'} fontWeight={'600'} mt={1} textAlign={'center'}>
                                         {formatRole(session?.user?.role)}
                                     </Text>
+                                    <Box position={'absolute'} top={0} right={-4}>
+                                        <IconButton
+                                            size="sm"
+                                            rounded="full"
+                                            // colorScheme="blackAlpha"
+                                            color={'black'}
+                                            variant={'link'}
+                                            icon={<FiEdit2 />}
+                                            aria-label="Scroll bottom"
+                                            onClick={() => handleClick('tên người dùng', data?.language, 'language')}
+                                        />
+                                    </Box>
                                 </div>
                             </Box>
                             <Box w={'full'} mt={8}>

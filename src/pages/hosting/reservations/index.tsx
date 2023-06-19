@@ -30,7 +30,9 @@ import {
     useToast,
 } from '@chakra-ui/react';
 import Rating from '@components/Card/Rating';
+import { useWallet } from '@solana/wallet-adapter-react';
 import moment from 'moment';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { BiCheck, BiChevronLeft, BiDotsHorizontal, BiX } from 'react-icons/bi';
@@ -49,36 +51,48 @@ const Reservations = () => {
     const handleStatusChange = (status: string) => {
         setSelectedStatus(status);
     };
+    const { data: session } = useSession();
     const toast = useToast();
     const [page, setPage] = useState(1);
     const handlePageClick = (p: number) => setPage(p + 1);
     const { data, isLoading, isError, isSuccess } = useGetAllHostingOrder(page, 2, selectedStatus);
     const { changeStatus } = useChangeStatusOrder();
     const { addTour, updateTour } = useTour();
+    const { connected, publicKey } = useWallet();
     const { updateOrder } = useUpdateOrder();
     const handleChangeStatusOrder = async (status: string, orderId: string, order: IOrder) => {
-        if (status === EOrderStatus.SUCCESS) {
-            const response = await addTour({
-                orderId: order.orderId,
-                orderDate: order.orderDate,
-                price: order.price,
-                tour_title: order.tour_title,
-                imageMain: order.imageMain,
-                timeId: order.timeId,
-                userId: order.userId,
-            });
-            await changeStatus({ orderId, status });
-            await updateOrder({
-                orderIdBlockChain: response?.publicKeyOrder,
-                publicKey: response?.publicKeyCreater,
-                orderId: orderId,
-            });
-            console.log(response);
+        if (session?.user.accountAuthorize === publicKey?.toString() && connected) {
+            if (status === EOrderStatus.SUCCESS) {
+                const response = await addTour({
+                    orderId: order.orderId,
+                    orderDate: order.orderDate,
+                    price: order.price,
+                    tour_title: order.tour_title,
+                    imageMain: order.imageMain,
+                    timeId: order.timeId,
+                    userId: order.userId,
+                });
+                await changeStatus({ orderId, status });
+                await updateOrder({
+                    orderIdBlockChain: response?.publicKeyOrder,
+                    publicKey: response?.publicKeyCreater,
+                    orderId: orderId,
+                });
+                console.log(response);
+            } else {
+                await changeStatus({ orderId, status });
+                await toast({
+                    title: 'SUCCESSFULLY ADDED A LISTING',
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                });
+            }
         } else {
-            await changeStatus({ orderId, status });
-            await toast({
-                title: 'SUCCESSFULLY ADDED A LISTING',
-                status: 'success',
+            toast({
+                title: 'Sử dụng không đúng ví',
+                status: 'warning',
                 duration: 3000,
                 isClosable: true,
                 position: 'top',
@@ -292,3 +306,4 @@ const Reservations = () => {
 
 export default Reservations;
 Reservations.Layout = 'HostingLayout';
+Reservations.requireAuth = true;

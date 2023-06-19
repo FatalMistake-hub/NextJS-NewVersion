@@ -34,8 +34,7 @@ import Image from 'next/image';
 import { BiAbacus } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
-import { ADD_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
-import { SET_CATEGORY } from 'src/redux/slice/becomeHostSlice';
+import {  SET_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
 import { ICategory } from 'src/types/category.type';
 
 interface Props {
@@ -171,11 +170,19 @@ const Home = ({ dataCategory, imageMain }: Props) => {
         hasPreviousPage,
     } = useGetAllTour(10);
     const router = useRouter();
-    const { location, checkIn, checkOut, guests, categoryList,viewport } = useAppSelector(selectSearch);
+    const { location, checkIn, checkOut, guests, categoryList, viewport } = useAppSelector(selectSearch);
     const dispatch = useAppDispatch();
-    const handleClickCategory = async (cateory: ICategory) => {
-        await dispatch(SET_CATEGORY([]));
-        await dispatch(ADD_CATEGORY(cateory));
+    const handleClickCategory = async (category: any) => {
+        // await dispatch(SET_CATEGORY([]));
+        // await dispatch(ADD_CATEGORY(cateory));
+
+        await dispatch(
+            SET_CATEGORY({
+                categoryId: category.id,
+                label: category.label,
+                // type: navItem.type,
+            }),
+        );
 
         await router.push({
             pathname: '/search',

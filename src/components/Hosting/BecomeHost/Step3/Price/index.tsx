@@ -1,19 +1,36 @@
-import { VStack, Text, Heading, Box, useNumberInput, Button, HStack, Input } from '@chakra-ui/react';
+import { VStack, Text, Heading, Box, useNumberInput, Button, HStack, Input, useToast } from '@chakra-ui/react';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { useSession } from 'next-auth/react';
 
 import { ChangeEvent, useEffect } from 'react';
+import { useTour } from 'src/hooks/blockchain/useTour';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
 import { selectBecomeHost, SET_btnSTATUS, SET_priceOnePerson, SET_TITLE } from 'src/redux/slice/becomeHostSlice';
+import { truncate } from 'src/utils/string';
 const PriceSt3 = () => {
     const { tour } = useAppSelector(selectBecomeHost);
     const dispatch = useAppDispatch();
+    const { connected, publicKey } = useWallet();
+    const { data: session } = useSession();
     useEffect(() => {
-        if (tour.priceOnePerson === null) {
-            dispatch(SET_btnSTATUS(true));
-        } else {
+        // if ( !connected || !session?.user.accountAuthorize) {
+        //     dispatch(SET_btnSTATUS(true));
+        // } else {
+        //     dispatch(SET_btnSTATUS(false));
+        // }
+        if (session?.user.accountAuthorize) {
             dispatch(SET_btnSTATUS(false));
         }
+        else if (session?.user.accountAuthorize===null && connected) {
+            dispatch(SET_btnSTATUS(false));
+        }
+        else {
+            dispatch(SET_btnSTATUS(true));
+        }
+        
         return () => {};
-    }, [tour.priceOnePerson]);
+    }, [tour.priceOnePerson, connected, session?.user.accountAuthorize]);
 
     const { getInputProps, getIncrementButtonProps, getDecrementButtonProps, value } = useNumberInput({
         step: 10000,
@@ -37,7 +54,7 @@ const PriceSt3 = () => {
             <div className="w-full justify-center items-center flex min-h-[calc(100vh-176px)] px-20">
                 <VStack w={'700px'} align={'left'} gap={2}>
                     <Heading lineHeight={1.2} as="h1" fontSize={'32px'} fontWeight={'600'} width={'full'} letterSpacing={'tight'}>
-                        Cuối cùng, hãy đặt mức giá mà bạn muốn
+                        Hãy đặt mức giá mà bạn muốn
                     </Heading>
                     <Text fontSize={'18px'} fontWeight={'400'} pb={4} color={'gray.600'}>
                         Bạn có thể thay đổi giá này bất cứ lúc nào.
@@ -100,6 +117,25 @@ const PriceSt3 = () => {
                             </Text>
                         </VStack>
                     </Box>
+
+                    {!session?.user.accountAuthorize && (
+                        <>
+                            <Text fontSize={'23px'} fontWeight={'500'} pt={4} color={'gray.600'}>
+                                Thêm tính năng xác thực cho trải nghiệm của bạn:
+                            </Text>
+                            <Text fontSize={'16px'} fontWeight={'500'} color={'gray.600'}>
+                                Kết nối ví Phantom (ví này sẽ được sử dụng để xác nhận trải nghiệm của bạn)
+                            </Text>
+
+                            <div className="w-1/3 m-4">
+                                <WalletMultiButton className="phantom-button  z-50 ml-2 mr-4 rounded-2xl">
+                                    <span className="text-sm font-medium text-black">
+                                        {connected ? truncate(publicKey?.toString()) : 'Kết nối ví của bạn'}
+                                    </span>
+                                </WalletMultiButton>
+                            </div>
+                        </>
+                    )}
                 </VStack>
             </div>
         </>

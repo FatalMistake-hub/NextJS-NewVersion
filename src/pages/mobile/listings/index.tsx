@@ -15,9 +15,7 @@ const MobileListings = () => {
     console.log(data);
     return (
         <div className="">
-            <WalletMultiButton className="phantom-button z-50 ml-2 mr-4 rounded-2xl">
-                <span className="text-sm font-medium text-black">{connected ? truncate(publicKey?.toString()) : 'Connect Wallet'}</span>
-            </WalletMultiButton>
+
             <Text fontSize={'24px'} fontWeight={'600'} width={'full'} py={4}>
                 Các chuyến đi đã đặt
             </Text>

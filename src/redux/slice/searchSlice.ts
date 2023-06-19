@@ -11,7 +11,7 @@ interface ISearchState {
     checkIn: any;
     checkOut: any;
     guests: IGuests;
-    categoryList: ICategory[];
+    categoryList: any;
     longitude: number;
     latitude: number;
     viewport: {
@@ -37,14 +37,14 @@ export const searchSlice = createSlice({
     name: 'search',
     initialState: {
         viewport: {
-            northEastLatitude: 8.177667,
+            northEastLatitude: 8.1893,
             northEastLongtitude: 102.144576,
-            southWestLatitude: 23.388698,
+            southWestLatitude: 21.3926,
             southWestLongtitude: 109.46971,
         },
         longitude: 107.20623,
         latitude: 18.0583,
-        categoryList: [],
+        categoryList: {},
         location: '',
         checkIn: today,
         checkOut: monthsLater,
@@ -55,19 +55,19 @@ export const searchSlice = createSlice({
             state.viewport = action.payload;
         },
 
-        SET_CATEGORY: (state, action: PayloadAction<ICategory[]>) => {
+        SET_CATEGORY: (state, action: PayloadAction<ICategory>) => {
             state.categoryList = action.payload;
         },
-        ADD_CATEGORY: (state, action: PayloadAction<ICategory>) => {
-            if (state.categoryList.find((item) => item.categoryId === action.payload.categoryId)) {
-                state.categoryList = state.categoryList.filter((item) => item.categoryId !== action.payload.categoryId);
-            } else {
-                state.categoryList.push(action.payload);
-            }
-        },
-        REMOVE_CATEGORY: (state, action: PayloadAction<number>) => {
-            state.categoryList = state.categoryList.filter((item) => item.categoryId !== action.payload);
-        },
+        // ADD_CATEGORY: (state, action: PayloadAction<ICategory>) => {
+        //     if (state.categoryList.find((item) => item.categoryId === action.payload.categoryId)) {
+        //         state.categoryList = state.categoryList.filter((item) => item.categoryId !== action.payload.categoryId);
+        //     } else {
+        //         state.categoryList.push(action.payload);
+        //     }
+        // },
+        // REMOVE_CATEGORY: (state, action: PayloadAction<number>) => {
+        //     state.categoryList = state.categoryList.filter((item) => item.categoryId !== action.payload);
+        // },
         SET_LOCATION: (state, action: PayloadAction<string>) => {
             state.location = action.payload;
         },
@@ -139,8 +139,8 @@ export const {
     SET_CHECK_IN,
     SET_CHECK_OUT,
     SET_CATEGORY,
-    ADD_CATEGORY,
-    REMOVE_CATEGORY,
+    // ADD_CATEGORY,
+    // REMOVE_CATEGORY,
     SET_GUESTS,
     RESET_DATES,
     RESET_GUESTS,

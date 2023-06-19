@@ -14,7 +14,6 @@ const useGetAllHostingOrder = (pageParam: number, pageSize: number, selectedStat
             const filteredOrders = allTour.data.content.flatMap((item: ITours) => {
                 return item.orderDtoList?.filter((order: IOrder) => !selectedStatus || order.statusOrder === selectedStatus);
             });
-            console.log(allTour);
             return {
                 res: filteredOrders.sort((a: IOrder, b: IOrder) => {
                     const dateA = new Date(a.orderDate);

@@ -1,6 +1,7 @@
 import '@styles/global.scss';
 import '@styles/cardSwiper.scss';
 import '@styles/reactDateRange.scss';
+import '@styles/style.module.scss';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -28,8 +29,8 @@ import Head from 'next/head';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorNotify from '@components/Error';
 import RedirectLayout from '@components/layouts/RedirectLayout';
-import WalletConnectionProvider from '../context/WalletConnectionProvider';
 import dynamic from 'next/dynamic';
+import HostingLayout from '@components/layouts/HostingLayout';
 
 const progressBar = new ProgressBar({
     size: 2,
@@ -70,6 +71,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     );
     // const getLayout = Component.getLayout ?? ((page) => page);
     const SessionProps = pageProps as { session: Session };
+    
     const renderWithLayout =
         Component.getLayout ||
         function (page) {
@@ -82,20 +84,14 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                 >
                     <Layout>
                         {' '}
+                        {/* {Layout===HostingLayout ? ()} */}
+                        {console.log(Component)}
                         <Head>
                             <head data-locator-hook-status-message="No valid renderers found." />
                             <meta charSet="UTF-8" />
                             <link rel="icon" href="/pwa/favicon.ico" />
                             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                             <link rel="apple-touch-icon" sizes="57x57" href="/pwa/apple-icon-57x57.png" />
-                            <link rel="apple-touch-icon" sizes="60x60" href="/pwa/apple-icon-60x60.png" />
-                            <link rel="apple-touch-icon" sizes="72x72" href="/pwa/apple-icon-72x72.png" />
-                            <link rel="apple-touch-icon" sizes="76x76" href="/pwa/apple-icon-76x76.png" />
-                            <link rel="apple-touch-icon" sizes="114x114" href="/pwa/apple-icon-114x114.png" />
-                            <link rel="apple-touch-icon" sizes="120x120" href="/pwa/apple-icon-120x120.png" />
-                            <link rel="apple-touch-icon" sizes="144x144" href="/pwa/apple-icon-144x144.png" />
-                            <link rel="apple-touch-icon" sizes="152x152" href="/pwa/apple-icon-152x152.png" />
-                            <link rel="apple-touch-icon" sizes="180x180" href="/pwa/apple-icon-180x180.png" />
                             <link rel="icon" type="image/png" sizes="192x192" href="/pwa/android-icon-192x192.png" />
                             <link rel="icon" type="image/png" sizes="32x32" href="/pwa/favicon-32x32.png" />
                             <link rel="icon" type="image/png" sizes="96x96" href="/pwa/favicon-96x96.png" />
@@ -117,7 +113,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                 </ErrorBoundary>
             );
         };
-    
+    const WalletConnectionProvider = dynamic(() => import('../context/WalletConnectionProvider'), {
+        ssr: false,
+    });
 
     return (
         <SessionProvider>
@@ -129,7 +127,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                                 {Component.requireAuth ? (
                                     
                                         <RedirectLayout>
-                                            <ProtectedLayout>{renderWithLayout(<Component {...pageProps} />)}</ProtectedLayout>
+                                            <WalletConnectionProvider><ProtectedLayout>{renderWithLayout(<Component {...pageProps} />)}</ProtectedLayout></WalletConnectionProvider>
                                         </RedirectLayout>
                                     
                                 ) : (
