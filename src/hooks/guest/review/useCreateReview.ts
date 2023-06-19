@@ -12,7 +12,7 @@ const useCreateReview = () => {
     const toast = useToast();
 
     const { mutateAsync, isSuccess, isLoading, isError } = useMutation({
-        mutationFn: async (data: Omit<IReview, 'reviewId' | 'userId'>) => await postCreateReview(data, httpAuthJWT),
+        mutationFn: async (data: Omit<IReview, 'reviewId' | 'userId' | 'user'>) => await postCreateReview(data, httpAuthJWT),
         onSuccess: ({ data }) => {
             toast({
                 title: 'Đăng thành công',
@@ -35,7 +35,7 @@ const useCreateReview = () => {
     });
 
     return {
-        mutateReview: async (data: Omit<IReview, 'reviewId' | 'userId'>) => {
+        mutateReview: async (data: Omit<IReview, 'reviewId' | 'userId' | 'user'>) => {
             return mutateAsync(data);
         },
         isSuccess,
