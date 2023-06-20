@@ -11,7 +11,7 @@ import useLogin from 'src/hooks/auth/useLogin';
 const Mobile = () => {
     const router = useRouter();
     const dispatch = useAppDispatch();
-    const [role, setRole] = useState('GUEST');
+    const [role, setRole] = useState('HOST');
     const { login } = useLogin();
     const Login = useFormik({
         initialValues: {
@@ -45,13 +45,6 @@ const Mobile = () => {
                     router.push('/mobile/indentity/host');
                 }
             }
-            // if (role === 'GUEST')
-            // {
-            //     router.push('/mobile/listings');
-            //     }
-            // else {
-            //     router.push('/mobile/indentity/host');
-            //     }
             await login(values);
         },
     });
@@ -60,7 +53,7 @@ const Mobile = () => {
             <div className="text-center">
                 <img className="rounded-full" alt="profile pic" src="https://i.ibb.co/4mWnBWV/AREmoji-20220303-153534-12754.png" />
 
-                <p className="pt-2 text-lg font-medium">@sahil</p>
+                <p className="py-4 text-lg font-medium">Xác thực trải nghiệm</p>
             </div>
             <form onSubmit={Login.handleSubmit}>
                 <Stack spacing={4}>
@@ -98,7 +91,7 @@ const Mobile = () => {
                     </FormControl>
                     <FormLabel>Đăng nhâp với vai trò :</FormLabel>
                     <Stack spacing={10}>
-                        <Stack direction={{ base: 'row', sm: 'row' }} align={'start'} justify={'space-between'}>
+                        {/* <Stack direction={{ base: 'row', sm: 'row' }} align={'start'} justify={'space-between'}>
                             <RadioGroup
                                 defaultValue={role}
                                 onChange={(value) => {
@@ -114,7 +107,7 @@ const Mobile = () => {
                                     </Radio>
                                 </Stack>
                             </RadioGroup>
-                        </Stack>
+                        </Stack> */}
                         <Button
                             type="submit"
                             bg={'teal.400'}

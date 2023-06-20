@@ -19,11 +19,18 @@ export const ProtectedLayout = ({ children }: any): JSX.Element => {
 
         // if the user is not authorized, redirect to the login page
         // with a return url to the current page
-        if (unAuthorized && router.pathname !== '/payment/[id]') {
-            router.push({
-                pathname: '/',
-                query: { returnUrl: router.asPath },
-            });
+        if (unAuthorized && router.pathname !== '/payment') {
+            const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+            if (isMobile) {
+                // router.push('/mobile');
+                !session?.user ? router.push('/mobile') : router.push('/mobile/listings');
+            } else {
+                router.push({
+                    pathname: '/',
+                    query: { returnUrl: router.asPath },
+                });
+            }
             toast({
                 title: 'Cảnh báo!',
                 description: 'Bạn phải đăng nhập trước khi sử dụng tính năng này.',
@@ -37,7 +44,7 @@ export const ProtectedLayout = ({ children }: any): JSX.Element => {
                 duration: 3000,
             });
             dispatch(SET_isLogin_FALSE());
-        } else if (unAuthorized && router.pathname === '/payment/[id]') {
+        } else if (unAuthorized && router.pathname === '/payment') {
             router.back();
             dispatch(SET_isLogin_FALSE());
         }

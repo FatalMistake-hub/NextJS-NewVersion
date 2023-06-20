@@ -1,26 +1,20 @@
 import {
-    Box,
     Button,
     Input,
     InputGroup,
-    InputLeftElement,
     Modal,
     ModalBody,
     ModalCloseButton,
     ModalContent,
-    ModalHeader,
     ModalOverlay,
-    VStack,
     Flex,
     FormControl,
     FormLabel,
-    HStack,
     InputRightElement,
     Stack,
     Heading,
     Text,
     useColorModeValue,
-    Link,
 } from '@chakra-ui/react';
 import { FaEnvelope, FaLock, FaRegEye, FaRegEyeSlash, FaUserNinja, FaUserSecret } from 'react-icons/fa';
 import React, { useState } from 'react';
@@ -34,7 +28,8 @@ interface SignUpModalProps {
 export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const { register, isLoading } = useRegister();
+    const { register, isLoading, isSuccess } = useRegister();
+
     const Register = useFormik({
         initialValues: {
             email: '',
@@ -67,10 +62,9 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                 matchingPassword: values.confirmPassword,
                 userName: values.name,
             });
-          
         },
     });
-  
+
     return (
         <Modal onClose={onClose} isOpen={isOpen}>
             <ModalOverlay />
@@ -81,18 +75,18 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                     <Flex align={'center'} justify={'center'} bg={useColorModeValue('white.50', 'white.800')}>
                         <Stack spacing={8} mx={'auto'} w={'full'} py={6} px={6}>
                             <Stack align={'center'}>
-                                <Heading lineHeight={1.4} fontSize={'4xl'} textAlign={'center'}>
-                                    Sign up
+                                <Heading lineHeight={1.4} fontSize={'4xl'} textAlign={'left'}>
+                                    Đăng ký tài khoản
                                 </Heading>
                                 <Text fontSize={'lg'} color={'gray.600'}>
-                                    to enjoy all of our cool features ✌️
+                                    để khám phá các trải nghiệm tuyệt vời ✌️
                                 </Text>
                             </Stack>
 
                             <form onSubmit={Register.handleSubmit}>
                                 <Stack spacing={4}>
                                     <FormControl id="userName" isRequired>
-                                        <FormLabel>User Name</FormLabel>
+                                        <FormLabel>Tên sử dụng</FormLabel>
                                         <Input
                                             isInvalid={!!Register.errors.name}
                                             type="text"
@@ -109,7 +103,7 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                                     </FormControl>
 
                                     <FormControl id="email" isRequired>
-                                        <FormLabel>Email address</FormLabel>
+                                        <FormLabel>Địa chỉ email</FormLabel>
                                         <Input
                                             isInvalid={!!Register.errors.email}
                                             type="email"
@@ -125,7 +119,7 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                                         )}
                                     </FormControl>
                                     <FormControl id="password" isRequired>
-                                        <FormLabel>Password</FormLabel>
+                                        <FormLabel>Mật khẩu</FormLabel>
                                         <InputGroup>
                                             <Input
                                                 isInvalid={!!Register.errors.password}
@@ -148,7 +142,7 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                                         )}
                                     </FormControl>
                                     <FormControl id="confirmPassword" isRequired>
-                                        <FormLabel>ConfirmPassword</FormLabel>
+                                        <FormLabel>Xác nhận mật khẩu</FormLabel>
                                         <InputGroup>
                                             <Input
                                                 isInvalid={!!Register.errors.confirmPassword}
@@ -173,11 +167,18 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                                             </Text>
                                         )}
                                     </FormControl>
-
+                                    {isSuccess && (
+                                        <Stack pt={6}>
+                                            <Text align={'center'} color={'green'}>
+                                                Kiểm tra gmail để xác nhận tài khoản!
+                                            </Text>
+                                        </Stack>
+                                    )}
                                     <Stack spacing={10} pt={2}>
                                         <Button
                                             type="submit"
-                                            loadingText="Submitting"
+                                            loadingText="Đang xử lý..."
+                                            isLoading={isLoading}
                                             size="lg"
                                             bg={'teal.400'}
                                             color={'white'}
@@ -185,13 +186,8 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                                                 bg: 'teal.500',
                                             }}
                                         >
-                                            Sign up
+                                            Đăng ký
                                         </Button>
-                                    </Stack>
-                                    <Stack pt={6}>
-                                        <Text align={'center'}>
-                                            Already a user? <Link color={'teal.400'}>Register</Link>
-                                        </Text>
                                     </Stack>
                                 </Stack>
                             </form>

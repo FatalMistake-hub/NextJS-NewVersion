@@ -1,41 +1,27 @@
-import MainLayout from '@components/layouts/MainLayout';
-import React, { ReactElement } from 'react';
-import { NextPageWithLayout } from './_app';
+
+import React from 'react';
 import {
     Box,
     Button,
-    useColorModeValue,
     Flex,
     Heading,
-    Link,
     SimpleGrid,
-    Spacer,
     Text,
-    useTheme,
-    Stack,
-    Center,
     chakra,
-    Icon,
 } from '@chakra-ui/react';
 import CardItem, { CardItemSkeleton } from '@components/Card/CardItem';
 
 import useGetAllTour from 'src/hooks/guest/tours/useGetAllTour';
 import { ITours } from 'src/types/tours.type';
-import FilterNav from '@components/Filter/FilterNav';
 import { GetServerSideProps } from 'next';
-import useGetAllCatgory from 'src/hooks/guest/category/useGetAllCategory';
-import { getCategory, getSearch } from 'src/utils/data';
 import { getAllCategory } from 'src/utils/apis/category.api';
 import Search from '@components/Search';
-import { HeaderNoSearch } from '@components/layouts/common/HeaderNoSearch';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { FreeMode, Pagination, Navigation } from 'swiper';
+import { Pagination } from 'swiper';
 import Image from 'next/image';
-import { BiAbacus } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import {  SET_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
-import { ICategory } from 'src/types/category.type';
 
 interface Props {
     dataCategory: any;
@@ -261,6 +247,7 @@ const Home = ({ dataCategory, imageMain }: Props) => {
                                         flexDirection={'column'}
                                         backdropBlur={'2xl'}
                                         bgColor={'white'}
+                                        boxShadow={'md'}
                                         className="hover:-translate-y-4 hover:drop-shadow-2xl transition-all duration-300 ease-in-out"
                                         onClick={() => {
                                             handleClickCategory(item);

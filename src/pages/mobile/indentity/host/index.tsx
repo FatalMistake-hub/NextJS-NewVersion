@@ -1,11 +1,11 @@
 //scan.js
 
-import { Alert, AlertIcon, AlertTitle, AlertDescription, useToast } from '@chakra-ui/react';
+import { Alert, AlertIcon, Text,AlertTitle, AlertDescription,Avatar, useToast, Heading } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useState, useRef, useMemo, useEffect, useCallback } from 'react';
-import { QrReader } from 'react-qr-reader';
 import { useTour } from 'src/hooks/blockchain/useTour';
 import useAuthorizeOrder from 'src/hooks/hosting/order/useAuthorizeOrder';
 import { truncate } from 'src/utils/string';
@@ -16,7 +16,8 @@ function IndentityHost() {
     const { authorizeOrder } = useAuthorizeOrder();
     const router = useRouter();
     const toast = useToast();
-    const [status, setStatus] = useState<'loading' | 'info' | 'warning' | 'success' | 'error' | undefined>('success');
+    const { data: session } = useSession();
+    const [status, setStatus] = useState<'loading' | 'info' | 'warning' | 'success' | 'error' | undefined>('info');
 
     const currentEditListing = useMemo(
         () =>
@@ -53,51 +54,80 @@ function IndentityHost() {
     // console.log('idx', currentEditListing?.account.idx);
     // console.log('router', router.query.orderIdBlockChain?.toString(), router.query.publicKey?.toString());
     useEffect(() => {
-        if (
-            currentEditListing?.account.idx &&
-            connected &&
-            router.query.orderIdBlockChain?.toString() &&
-            router.query.publicKey?.toString()
-        ) {
-            console.log('runIndentity');
-            if (currentEditListing.account.statusOrder === 'SUCCESS') {
-                setStatus('loading');
-                handleChangeStatusOrder(
-                    currentEditListing?.account.idx,
-                    router.query.orderIdBlockChain?.toString(),
-                    router.query.publicKey?.toString(),
-                );
+        if (session?.user.accountAuthorize === publicKey?.toString() && connected) {
+            
+            if (
+                currentEditListing?.account.idx &&
+                connected &&
+                router.query.orderIdBlockChain?.toString() &&
+                router.query.publicKey?.toString()
+            ) {
+                console.log('runIndentity');
+                if (currentEditListing.account.statusOrder === 'SUCCESS') {
+                    setStatus('loading');
+                    handleChangeStatusOrder(
+                        currentEditListing?.account.idx,
+                        router.query.orderIdBlockChain?.toString(),
+                        router.query.publicKey?.toString(),
+                    );
+                } else {
+                    setStatus((prev) => {
+                        if (prev === 'success') {
+                            return prev;
+                        } else {
+                            return 'error';
+                        }
+                    });
+                }
             } else {
-                setStatus((prev) => {
-                    if (prev === 'success') {
-                        return prev;
-                    } else {
-                        return 'error';
-                    }
-                });
+                setStatus('warning');
             }
         } else {
-            setStatus('warning');
+            toast({
+                title: 'Sử dụng không đúng ví',
+                status: 'warning',
+                duration: 8000,
+                isClosable: true,
+                position: 'top',
+            });
         }
-        console.log('runIndentity');
+
+
+
         return () => {};
-    }, [currentEditListing, connected, router.query.orderIdBlockChain, router.query.publicKey]);
+    }, [currentEditListing, connected, router.query.orderIdBlockChain, router.query.publicKey, publicKey, session?.user.accountAuthorize]);
 
     // ...
 
     return (
-        <div className="h-full">
-            <WalletMultiButton className="phantom-button z-50 ml-2 mr-4 rounded-2xl">
-                <span className="text-sm font-medium text-black">{connected ? truncate(publicKey?.toString()) : 'Connect Wallet'}</span>
-            </WalletMultiButton>
-            {!connected && (
-                <Alert status="warning">
-                    <AlertIcon />
-                    Vui lòng kết nối ví để xác nhận
-                </Alert>
-            )}
+        <div className="max-h-screen">
+            <div className="p-2 flex w-full justify-between">
+                <div className="flex flex-col">
+                    <Heading lineHeight={1.4} as="h1" fontSize={'22px'} fontWeight={'600'} noOfLines={2}>
+                        Xác thực trải nghiệm
+                    </Heading>
+                    <Text fontSize={'14px'} fontWeight={'400'} color={'gray.500'}>
+                        Người xác thực: {session?.user.username}
+                    </Text>
+                </div>
+                <Avatar name={session?.user.username} src={'https://bit.ly/broken-link'} />
+            </div>
+            <Text fontSize={'14px'} fontWeight={'500'} color={'gray.500'} className="p-2 my-2">
+                Ví xác thực:
+            </Text>
+            <div className="border border-gray-600 py-1 px-4 rounded-2xl shadow-lg">
+                <WalletMultiButton className="phantom-button z-50 ml-2  my-4 rounded-2xl">
+                    <span className="text-sm font-medium text-black">{connected ? truncate(publicKey?.toString()) : 'Hãy kết nối ví'}</span>
+                </WalletMultiButton>
+                {!connected && (
+                    <Alert status="warning" size={'sm'} rounded={'xl'} mb={'2'}>
+                        <AlertIcon />
+                        Vui lòng kết nối ví để xác nhận
+                    </Alert>
+                )}
+            </div>
 
-            <div className="h-full  pt-20">
+            <div className="h-full  pt-10">
                 <Alert
                     status={status}
                     variant="subtle"
@@ -140,7 +170,7 @@ function IndentityHost() {
 
 export default IndentityHost;
 IndentityHost.Layout = 'MobileLayout';
-
+IndentityHost.requireAuth = true;
 // const [data, setData] = useState('No result');
 
 /* <div className="rounded-md drop-shadow-sm">

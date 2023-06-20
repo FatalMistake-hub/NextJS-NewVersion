@@ -15,7 +15,6 @@ const MobileListings = () => {
     console.log(data);
     return (
         <div className="">
-
             <Text fontSize={'24px'} fontWeight={'600'} width={'full'} py={4}>
                 Các chuyến đi đã đặt
             </Text>
@@ -92,3 +91,4 @@ const MobileListings = () => {
 
 export default MobileListings;
 MobileListings.Layout = 'MobileLayout';
+MobileListings.requireAuth = true;

@@ -1,9 +1,9 @@
-import { Flex, Circle, Text, Box, Badge, useColorModeValue, Icon, chakra, Tooltip, Skeleton, SkeletonText } from '@chakra-ui/react';
-import { BsHeart, BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs';
-import { FiShoppingCart } from 'react-icons/fi';
+import { Flex, Text, Box, useColorModeValue, Skeleton, SkeletonText } from '@chakra-ui/react';
+import { BsHeart } from 'react-icons/bs';
+
 import React from 'react';
 import Link from 'next/link';
-import { FaHeart } from 'react-icons/fa';
+
 import Image from 'next/image';
 import Rating from '../Rating';
 import { ITours } from 'src/types/tours.type';

@@ -1,36 +1,29 @@
 import {
     Box,
-    Flex,
     Text,
-    IconButton,
     Button,
     Popover,
     PopoverTrigger,
     PopoverContent,
-    useColorModeValue,
-    useBreakpointValue,
     PopoverArrow,
-    PopoverHeader,
-    PopoverCloseButton,
     PopoverBody,
     useDisclosure,
     Divider,
     PopoverFooter,
-    ButtonGroup,
-    HStack,
     Center,
+    HStack,
 } from '@chakra-ui/react';
 import FilterModal from '@components/Modal/FilterModal';
-import { GetServerSideProps } from 'next';
+
 import { FC, JSXElementConstructor, ReactElement } from 'react';
 import { FaChevronDown, FaSlidersH } from 'react-icons/fa';
-import { IconType } from 'react-icons/lib';
-import useGetAllCatgory from 'src/hooks/guest/category/useGetAllCategory';
+
 import LanguagePicker from '../FilterItem/LanguagePicker';
 import PriceRange from '../FilterItem/PriceRange';
 import TimeInDay from '../FilterItem/TimeInDay';
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
-import {  selectSearch, SET_CATEGORY } from 'src/redux/slice/searchSlice';
+import { selectSearch, SET_CATEGORY } from 'src/redux/slice/searchSlice';
+import { useRouter } from 'next/router';
 interface NavItem {
     id?: number;
     type?: string;
@@ -48,6 +41,7 @@ interface Props {
 const FilterNav = ({ dataCategory }: Props) => {
     const NAV_ITEMS: Array<NavItem> = [
         {
+            id: 87,
             type: 'Button',
             label: 'Giá',
             rightIcon: <FaChevronDown />,
@@ -55,6 +49,7 @@ const FilterNav = ({ dataCategory }: Props) => {
             minWidth: '400px',
         },
         {
+            id: 88,
             type: 'Button',
             label: 'Ngôn ngữ có thể sử dụng',
             rightIcon: <FaChevronDown />,
@@ -62,6 +57,7 @@ const FilterNav = ({ dataCategory }: Props) => {
             minWidth: '500px',
         },
         {
+            id: 89,
             type: 'Button',
             label: 'Thời gian trong ngày',
             rightIcon: <FaChevronDown />,
@@ -77,6 +73,7 @@ const FilterNav = ({ dataCategory }: Props) => {
     const { isOpen: isFilterOpen, onClose: onFilterClose, onOpen: onFilterOpen } = useDisclosure();
     const dispatch = useAppDispatch();
     const { categoryList } = useAppSelector(selectSearch);
+    const router = useRouter();
     return (
         // <Stack direction={'row'} spacing={2} justifyContent="space-between" width="full" >
         // <div className="flex flex-wrap items-center justify-between w-full pl-1 overflow-y-hidden h-14 ">
@@ -105,22 +102,28 @@ const FilterNav = ({ dataCategory }: Props) => {
                                         variant="outline"
                                         isActive={
                                             // i < 3 ? false : categoryList.find((item: any) => item.categoryId === navItem.id) ? true : false
-                                            navItem.id===categoryList?.categoryId?true:false
+                                            navItem.id === categoryList?.categoryId ? true : false
                                         }
                                         // color={'black.100'}
                                         borderWidth={
                                             // i >= 3 && categoryList.find((item: any) => item.categoryId === navItem.id) ? 2 : 1
-                                            navItem.id===categoryList?.categoryId?2:1
+                                            navItem.id === categoryList?.categoryId ? 2 : 1
                                         }
                                         onClick={() => {
-                                            navItem &&
-                                                dispatch(
-                                                    SET_CATEGORY({
-                                                        categoryId: navItem.id,
-                                                        label: navItem.label,
-                                                        // type: navItem.type,
-                                                    }),
-                                                );
+                                            if (navItem.id === categoryList?.categoryId) {
+                                                dispatch(SET_CATEGORY({}));
+                                                router.push('/');
+                                            } else {
+                                                navItem.id === 87 || navItem.id === 88 || navItem.id === 89
+                                                    ? null
+                                                    : dispatch(
+                                                          SET_CATEGORY({
+                                                              categoryId: navItem.id,
+                                                              label: navItem.label,
+                                                              // type: navItem.type,
+                                                          }),
+                                                      );
+                                            }
                                         }}
                                     >
                                         <Text color={'black'}>{navItem.label}</Text>

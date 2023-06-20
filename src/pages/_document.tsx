@@ -1,4 +1,4 @@
-import { NextComponentType, NextPageContext } from 'next';
+
 import Document, { DocumentContext, DocumentInitialProps } from 'next/document';
 
 interface MyDocumentProps {

@@ -20,7 +20,6 @@ const CommentItem: FC<Props> = ({ item }) => {
                 <section>
                     <Heading lineHeight={1.4} as="h1" fontSize={'16px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
                         {item?.user?.userName}
-                        Ng.TriAn
                     </Heading>
                     <Text className="text-sm  text-gray-400">tháng 4 năm 2023</Text>
                 </section>

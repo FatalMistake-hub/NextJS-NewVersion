@@ -1,10 +1,9 @@
 import { useToast } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import useAxiosAuth from 'src/hooks/auth/useAxiosAuth';
-import { UseQueryResponse } from 'src/types/axios.type';
-import { ITours } from 'src/types/tours.type';
+
 import { authorizeOrder, changeStatusOrder } from 'src/utils/apis/order.api';
-import { getDetailHostTours } from 'src/utils/apis/tours.api';
+
 
 const useAuthorizeOrder = () => {
     const client = useQueryClient();

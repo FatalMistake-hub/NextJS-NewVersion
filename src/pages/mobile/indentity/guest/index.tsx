@@ -4,8 +4,7 @@ import { useAppSelector } from 'src/redux/hook';
 import { selectAuth } from 'src/redux/slice/authSlice';
 const IndentityGuest = () => {
     const [data, setData] = useState<string>();
-    const { orderIdBlockChain, publicKey_creater } = useAppSelector
-        (selectAuth);
+    const { orderIdBlockChain, publicKey_creater } = useAppSelector(selectAuth);
     console.log(orderIdBlockChain, publicKey_creater);
     const generateQr = () => {
         QRCode.toDataURL(
@@ -13,10 +12,8 @@ const IndentityGuest = () => {
         ).then(setData);
     };
     useEffect(() => {
-        if(orderIdBlockChain && publicKey_creater)
-        generateQr();
-    }
-    ,[orderIdBlockChain, publicKey_creater])
+        if (orderIdBlockChain && publicKey_creater) generateQr();
+    }, [orderIdBlockChain, publicKey_creater]);
     return (
         <div className="flex-wrap items-center h-full justify-center md:flex">
             <img className="mx-auto mt-12 h-52 w-52 rounded-lg border p-2 md:mt-0" src={data} alt="step" />
@@ -31,4 +28,4 @@ const IndentityGuest = () => {
 
 export default IndentityGuest;
 IndentityGuest.Layout = 'MobileLayout';
-
+IndentityGuest.requireAuth = true;

@@ -12,7 +12,7 @@ const persistConfig = {
     key: 'root',
     version: 1,
     storage,
-    blacklist: ['calendarHost', 'auth'],
+    blacklist: ['calendarHost','becomeHost', 'auth'],
 };
 const rootReducer = combineReducers({
     search: searchSlice,

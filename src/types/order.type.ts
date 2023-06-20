@@ -19,3 +19,11 @@ export interface IOrder {
     tourId: string;
     user:IInfoAccount
 }
+
+export interface IAllOrder {
+    content: IOrder[];
+    pageNo: number;
+    pageSize: number;
+    totalElements: number;
+    totalPages: number;
+}

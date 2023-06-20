@@ -2,8 +2,7 @@ import { useToast } from '@chakra-ui/react';
 import { InfiniteData, QueryObserverResult, RefetchOptions, RefetchQueryFilters, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import useAxiosAuth from 'src/hooks/auth/useAxiosAuth';
-import { useAppSelector } from 'src/redux/hook';
-import { selectCalendarHost } from 'src/redux/slice/calendarHostSlice';
+
 import { IDayBook } from 'src/types/timeBooking.type';
 import { patchDayTimeBook } from 'src/utils/apis/timeBooking.api';
 const usePatchDayTimeBook = (
@@ -16,7 +15,7 @@ const usePatchDayTimeBook = (
 ) => {
     const client = useQueryClient();
 
-    const { dateRange } = useAppSelector(selectCalendarHost);
+
     const httpAuthJWT = useAxiosAuth();
     const toast = useToast();
     const { data, isLoading, isError, isSuccess, mutate } = useMutation({

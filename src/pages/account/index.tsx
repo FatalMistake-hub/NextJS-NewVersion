@@ -17,18 +17,16 @@ import {
     VStack,
 } from '@chakra-ui/react';
 import AccountModal from '@components/Modal/AccountModal';
-import { s } from '@fullcalendar/core/internal-common';
+
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { BiEdit, BiEditAlt, BiGlobe, BiPhone, BiUpload } from 'react-icons/bi';
-import { FaEdit, FaLanguage } from 'react-icons/fa';
+import {  BiGlobe, BiPhone, BiUpload } from 'react-icons/bi';
+import {  FaLanguage } from 'react-icons/fa';
 import { FiEdit2 } from 'react-icons/fi';
 import useProfile from 'src/hooks/account/useProfile';
-import useBgGradient from 'src/hooks/style/useBgGradient';
 import { formatRole } from 'src/utils/guestsUtil';
 import { useDisclosure } from '@chakra-ui/react';
 import { useState } from 'react';
-import { IInfoAccount } from 'src/types/account.type';
 import { useDropzone } from 'react-dropzone';
 import usePostToCloudinary from 'src/hooks/imageCloudinary/usePostToCloudinary';
 import usePatchProfile from 'src/hooks/account/usePatchProfile';
@@ -97,7 +95,7 @@ const Account = () => {
                                 justifyContent={'center'}
                                 alignItems={'center'}
                             >
-                                <div className="relative w-[104px] h-[104px]" >
+                                <div className="relative w-[104px] h-[104px]">
                                     <Image
                                         src={data?.urlImage ? data?.urlImage : 'https://bit.ly/broken-link'}
                                         alt={`Picture of `}
@@ -105,7 +103,7 @@ const Account = () => {
                                         objectFit="cover"
                                         placeholder="blur"
                                         blurDataURL={data?.urlImage ? data?.urlImage : 'https://bit.ly/broken-link'}
-                                        className='rounded-full'
+                                        className="rounded-full"
                                     />
                                     <Box position={'absolute'} top={0} right={-8}>
                                         <IconButton
@@ -144,7 +142,7 @@ const Account = () => {
                                             variant={'link'}
                                             icon={<FiEdit2 />}
                                             aria-label="Scroll bottom"
-                                            onClick={() => handleClick('tên người dùng', data?.language, 'language')}
+                                            onClick={() => handleClick('tên người dùng', data?.userName, 'userName')}
                                         />
                                     </Box>
                                 </div>

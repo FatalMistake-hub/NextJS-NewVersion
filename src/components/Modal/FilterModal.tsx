@@ -1,8 +1,5 @@
 import {
-    Box,
-    Input,
-    InputGroup,
-    InputLeftElement,
+
     Modal,
     ModalBody,
     ModalCloseButton,
@@ -11,24 +8,16 @@ import {
     ModalOverlay,
     Text,
     VStack,
-    useToast,
+
     Flex,
     ModalFooter,
-    FormControl,
-    FormLabel,
-    Checkbox,
-    Stack,
-    Link,
-    Heading,
-    useColorModeValue,
+
     Divider,
     Collapse,
     Button,
     StackDivider,
 } from '@chakra-ui/react';
-import { FaLock, FaUserNinja } from 'react-icons/fa';
 import React, { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import LanguagePicker from '@components/Filter/FilterItem/LanguagePicker';
 import PriceRange from '@components/Filter/FilterItem/PriceRange';
 import TimeInDay from '@components/Filter/FilterItem/TimeInDay';

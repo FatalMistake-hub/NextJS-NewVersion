@@ -2,7 +2,6 @@ import React, { ChangeEvent, FC, FocusEvent, PropsWithChildren } from 'react';
 
 import ClearButtonProps from './ClearButton';
 import { FaSearch } from 'react-icons/fa';
-import { Button } from '@chakra-ui/react';
 
 // components
 

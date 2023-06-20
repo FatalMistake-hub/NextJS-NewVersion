@@ -5,13 +5,11 @@ import {
     ModalBody,
     ModalCloseButton,
     ModalContent,
-    ModalHeader,
     ModalOverlay,
     Text,
     Flex,
     FormControl,
     FormLabel,
-    Checkbox,
     Stack,
     Link,
     Heading,
@@ -82,17 +80,17 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                         <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
                             <Stack align={'center'}>
                                 <Heading lineHeight={1.4} fontSize={'4xl'}>
-                                    Sign in to your account
+                                    Đăng nhập vào tài khoản của bạn
                                 </Heading>
                                 <Text fontSize={'lg'} color={'gray.600'}>
-                                    to enjoy all of our cool <Link color={'teal.400'}>features</Link> ✌️
+                                    cùng khám phá các trải nghiệm <Link color={'teal.400'}>mới mẻ</Link> ✌️
                                 </Text>
                             </Stack>
 
                             <form onSubmit={Login.handleSubmit}>
                                 <Stack spacing={4}>
                                     <FormControl id="email">
-                                        <FormLabel>Email address</FormLabel>
+                                        <FormLabel>Địa chỉ email</FormLabel>
                                         <Input
                                             isInvalid={!!Login.errors.email}
                                             type="email"
@@ -108,7 +106,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                         )}
                                     </FormControl>
                                     <FormControl id="password">
-                                        <FormLabel>Password</FormLabel>
+                                        <FormLabel>Mật khẩu</FormLabel>
                                         <Input
                                             isInvalid={!!Login.errors.password}
                                             type="password"
@@ -123,11 +121,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                             </Text>
                                         )}
                                     </FormControl>
-                                    <Stack spacing={10}>
-                                        <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
+                                    <Stack pt={4} spacing={10}>
+                                        {/* <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
                                             <Checkbox>Remember me</Checkbox>
                                             <Link color={'teal.400'}>Forgot password?</Link>
-                                        </Stack>
+                                        </Stack> */}
                                         <Button
                                             type="submit"
                                             bg={'teal.400'}
@@ -136,7 +134,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                                 bg: 'teal.500',
                                             }}
                                         >
-                                            Sign in
+                                           Đăng nhập
                                         </Button>
                                     </Stack>
                                 </Stack>

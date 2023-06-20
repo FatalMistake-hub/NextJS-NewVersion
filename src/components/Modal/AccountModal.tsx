@@ -3,12 +3,11 @@ import {
     ModalBody,
     ModalCloseButton,
     ModalContent,
-    ModalHeader,
+
     ModalOverlay,
-    Text,
-    Flex,
+
     Stack,
-    Link,
+
     Heading,
     Input,
     Button,
@@ -17,7 +16,7 @@ import {
 
 import React, { useEffect, useState } from 'react';
 import usePatchProfile from 'src/hooks/account/usePatchProfile';
-import { IInfoAccount } from 'src/types/account.type';
+
 
 interface AccountModalProps {
     isOpen: boolean;

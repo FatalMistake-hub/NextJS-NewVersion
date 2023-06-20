@@ -1,8 +1,8 @@
-import { GetPreviousPageParamFunction, useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import {  useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { UseQueryInfinityResponse, UseQueryResponse } from 'src/types/axios.type';
-import { IAllTours } from 'src/types/tours.type';
+
 import { getAllTours } from 'src/utils/apis/tours.api';
 
 const useGetAllTour = (pageSize: number): UseQueryInfinityResponse<any> => {

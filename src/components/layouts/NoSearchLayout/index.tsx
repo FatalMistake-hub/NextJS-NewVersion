@@ -1,5 +1,5 @@
 import Footer from '../common/Footer';
-import { Header } from '../common/Header';
+
 import { HeaderNoSearch } from '../common/HeaderNoSearch';
 
 const name = '[Your Name]';

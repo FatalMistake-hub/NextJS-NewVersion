@@ -1,21 +1,21 @@
 import { Box, Button, Flex, Heading, SimpleGrid, Tab, TabList, Tabs, Text, VStack } from '@chakra-ui/react';
 import CardReservation from '@components/Card/CardReservation';
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+
 import { useSession } from 'next-auth/react';
-import { BiUserCircle } from 'react-icons/bi';
+
 import Link from 'next/link';
 import { useState } from 'react';
-import useGetAllHostingOrder from 'src/hooks/hosting/order/useGetAllHostingOrder';
-import useGetAllGuestOrder from 'src/hooks/hosting/order/useGetAllGuestOrder';
+
+import useGetAllOwnerOrder from 'src/hooks/hosting/order/useGetAllOwnerOrder';
 const HostingPage = () => {
-    const { data } = useSession();
+    const { data: session } = useSession();
     const [selectedStatus, setSelectedStatus] = useState<string>('');
 
     const handleStatusChange = (status: string) => {
         setSelectedStatus(status);
     };
-    const { data: dataOrder, isLoading, isError, isSuccess } = useGetAllGuestOrder();
-    console.log(dataOrder);
+    const { data, isLoading, isError, isSuccess } = useGetAllOwnerOrder(1, 6);
+
     return (
         <div className="min-h-screen">
             <VStack float={'left'} alignItems={'center'} w={'full'}>
@@ -31,7 +31,7 @@ const HostingPage = () => {
                         pb={6}
                         color={'white'}
                     >
-                        Chào mừng quay trở lại, {data?.user.username}
+                        Chào mừng quay trở lại, {session?.user.username}
                     </Heading>
                 </Box>
                 <VStack width={'1280px'} float={'left'} alignItems={'flex-start'} py={16}>
@@ -151,7 +151,8 @@ const HostingPage = () => {
                         </Tabs>
                     </Box>
 
-                    {dataOrder && dataOrder?.filter((item) => !selectedStatus || item.statusOrder === selectedStatus).length > 0 ? (
+                    {data?.content &&
+                    data?.content?.filter((item: any) => !selectedStatus || item.statusOrder === selectedStatus).length > 0 ? (
                         <Box
                             rounded={'xl'}
                             minH={'200px'}
@@ -159,8 +160,8 @@ const HostingPage = () => {
                             // className="flex flex-col items-center justify-center "
                         >
                             <SimpleGrid minChildWidth="300px" spacing="40px" mt={4} maxH={'400px'} overflowY={'scroll'}>
-                                {dataOrder
-                                    .filter((item) => !selectedStatus || item.statusOrder === selectedStatus)
+                                {data?.content
+                                    .filter((item: any) => !selectedStatus || item.statusOrder === selectedStatus)
                                     .map((item, index) => (
                                         <CardReservation data={item} />
                                     ))}

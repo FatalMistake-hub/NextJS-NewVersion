@@ -1,14 +1,13 @@
 import ProgressBar from '@ramonak/react-progress-bar';
-import { ButtonGroup, Flex, Button, useToast, Progress } from '@chakra-ui/react';
+import { ButtonGroup, Flex, Button, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
 import { selectBecomeHost, SET_btnSTATUS, SET_imageMain, SET_STEP } from 'src/redux/slice/becomeHostSlice';
 import useCreateTour from 'src/hooks/guest/tours/useCreateTour';
 import usePatchProfile from 'src/hooks/account/usePatchProfile';
 import { useTour } from 'src/hooks/blockchain/useTour';
-import { el } from '@faker-js/faker';
-import { publicKey } from '@project-serum/anchor/dist/cjs/utils';
 import { useWallet } from '@solana/wallet-adapter-react';
+import { useSession } from 'next-auth/react';
 const END_STEP = 11;
 const START_STEP = 1;
 
@@ -48,18 +47,30 @@ const MultiStepBtn = () => {
             setIsLoading(false);
         }, 1000);
     };
+    const { data: session } = useSession();
+
     const { connected, publicKey } = useWallet();
     const { patchInfoAccount } = usePatchProfile();
     const { initializeUser, transactionPending, initialized } = useTour();
     const handleFinalStep = async () => {
         try {
-            if (!initialized&&connected) {
+            if (!initialized && connected) {
                 await initializeUser();
                 await patchInfoAccount({
                     accountAuthorize: publicKey?.toString(),
                 });
                 await postTours(tour);
             } else {
+                toast({
+                    title: 'Ví của bạn không hợp lệ.',
+                    description: `Ví của bạn đã được sử dụng ở một tài khoản khác hoặc chưa được kết nối.`,
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                });
+            }
+            if (session?.user.accountAuthorize === publicKey?.toString() && connected && initialized) {
                 await postTours(tour);
             }
         } catch (error) {

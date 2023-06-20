@@ -20,9 +20,6 @@ import { DateTimeToStringBooking, formatRangeDate } from 'src/utils/dateUntils';
 import DateRangeCP from '@components/Search/DateRange';
 import Counter from '@components/Search/Counter';
 import { formatGuests, formatGuestsMinimal } from 'src/utils/guestsUtil';
-import Link from 'next/link';
-import { ITours } from 'src/types/tours.type';
-import { TimeBookViewDtoList } from 'src/types/timeBooking.type';
 import { useRouter } from 'next/router';
 enum ESearchMenu {
     LOCATION = 'location',

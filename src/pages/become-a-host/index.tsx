@@ -1,14 +1,11 @@
-import { Box, ButtonGroup, Button, Flex, useColorModeValue } from '@chakra-ui/react';
-import ProgressBar from '@ramonak/react-progress-bar';
-import { useToast } from '@chakra-ui/react';
+import { Box, useColorModeValue } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useState } from 'react';
 import { FaAirbnb } from 'react-icons/fa';
 import BecomeHostStep1 from '@components/Hosting/BecomeHost/Step1';
 import BecomeHostStep2 from '@components/Hosting/BecomeHost/Step2';
 import BecomeHostStep3 from '@components/Hosting/BecomeHost/Step3';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import { selectBecomeHost, SET_imageMain, SET_STEP } from 'src/redux/slice/becomeHostSlice';
+import { selectBecomeHost } from 'src/redux/slice/becomeHostSlice';
 
 import LocationSt1 from '@components/Hosting/BecomeHost/Step1/Location';
 import CategorySt1 from '@components/Hosting/BecomeHost/Step1/Category';

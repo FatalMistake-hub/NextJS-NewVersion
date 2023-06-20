@@ -4,22 +4,22 @@ import {
     VStack,
     Tabs,
     TabList,
-    TabPanels,
+
     Tab,
-    TabPanel,
+
     TabIndicator,
     Text,
     Table,
     Thead,
     Tbody,
-    Tfoot,
+
     Tr,
     Th,
     Td,
     Badge,
-    Box,
+
     Flex,
-    TableCaption,
+
     TableContainer,
     HStack,
     Button,
@@ -29,17 +29,15 @@ import {
     MenuList,
     useToast,
 } from '@chakra-ui/react';
-import Rating from '@components/Card/Rating';
 import { useWallet } from '@solana/wallet-adapter-react';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
-import Image from 'next/image';
 import { useState } from 'react';
 import { BiCheck, BiChevronLeft, BiDotsHorizontal, BiX } from 'react-icons/bi';
 import { Paginate } from 'react-paginate-chakra-ui';
 import { useTour } from 'src/hooks/blockchain/useTour';
 import useChangeStatusOrder from 'src/hooks/hosting/order/useChangeOrderStatus';
-import useGetAllHostingOrder from 'src/hooks/hosting/order/useGetAllHostingOrder';
+import useGetAllOwnerOrder from 'src/hooks/hosting/order/useGetAllOwnerOrder';
 import useUpdateOrder from 'src/hooks/hosting/order/useUpdateOrder';
 import { IOrder } from 'src/types/order.type';
 import { EOrderStatus } from 'src/utils/constants/Enums';
@@ -55,7 +53,7 @@ const Reservations = () => {
     const toast = useToast();
     const [page, setPage] = useState(1);
     const handlePageClick = (p: number) => setPage(p + 1);
-    const { data, isLoading, isError, isSuccess } = useGetAllHostingOrder(page, 2, selectedStatus);
+    const { data, isLoading, isError, isSuccess } = useGetAllOwnerOrder(page, 6);
     const { changeStatus } = useChangeStatusOrder();
     const { addTour, updateTour } = useTour();
     const { connected, publicKey } = useWallet();
@@ -169,7 +167,8 @@ const Reservations = () => {
                     Bạn không có yêu cầu đặt phòng nào
                 </Text> */}
 
-                <TableContainer w={'full'} pt={6} h={'60vh'} overflowY={'scroll'}>
+            </VStack>
+                <TableContainer borderBottom={'none'} w={'full'} pt={6} h={'60vh'} overflowY={'scroll'}>
                     <Table variant="simple">
                         <Thead>
                             <Tr>
@@ -186,119 +185,127 @@ const Reservations = () => {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {data?.res?.map((order: IOrder) => (
-                                <Tr className=" rounded-2xl hover:bg-gray-100 ">
-                                    <Td>
-                                        <Badge px={2} rounded={'xl'} variant="solid" colorScheme={handleColorStatus(order.statusOrder)}>
-                                            {handleNameStatus(order.statusOrder)}
-                                        </Badge>
-                                    </Td>
+                            {data?.content
+                                ?.filter((order) => !selectedStatus || order.statusOrder === selectedStatus)
+                                .map((order: IOrder) => (
+                                    <Tr className=" rounded-2xl hover:bg-gray-100 ">
+                                        <Td>
+                                            <Badge px={2} rounded={'xl'} variant="solid" colorScheme={handleColorStatus(order.statusOrder)}>
+                                                {handleNameStatus(order.statusOrder)}
+                                            </Badge>
+                                        </Td>
 
-                                    <Td>
-                                        <VStack float={'left'} alignItems={'flex-start'}>
-                                            <Text
-                                                fontSize={'16px'}
-                                                fontWeight={600}
-                                                noOfLines={1}
-                                                as={'p'}
-                                                color={'teal'}
-                                                textAlign={'left'}
-                                            >
-                                                {order.userId}
-                                            </Text>
-                                            {/* <Text fontSize={'12px'} fontWeight={400} noOfLines={1} as={'p'} textAlign={'left'}>
+                                        <Td>
+                                            <VStack float={'left'} alignItems={'flex-start'}>
+                                                <Text
+                                                    fontSize={'16px'}
+                                                    fontWeight={600}
+                                                    noOfLines={1}
+                                                    as={'p'}
+                                                    color={'teal'}
+                                                    textAlign={'left'}
+                                                >
+                                                    {order.user.userName}
+                                                </Text>
+                                                {/* <Text fontSize={'12px'} fontWeight={400} noOfLines={1} as={'p'} textAlign={'left'}>
                                                 6 adults, 2 children, 1 infant
                                             </Text> */}
-                                        </VStack>
-                                    </Td>
-                                    <Td>
-                                        <Text fontSize={'14px'} fontWeight={400} noOfLines={1} as={'p'} textAlign={'left'}>
-                                            26 Dec 2022
-                                        </Text>
-                                    </Td>
-                                    <Td>
-                                        <VStack float={'left'} alignItems={'flex-start'}>
-                                            <Text fontSize={'16px'} fontWeight={400} noOfLines={1} as={'p'} textAlign={'left'}>
-                                                {moment(order.orderDate).format('DD MMM YYYY')}
-                                            </Text>
-                                            <Text fontSize={'12px'} fontWeight={300} noOfLines={1} as={'p'} textAlign={'left'}>
-                                                {moment(order.orderDate).format('HH:mm')}
-                                            </Text>
-                                        </VStack>
-                                    </Td>
-                                    <Td>
-                                        <Flex alignItems={'center'}>{order.tour_title}</Flex>
-                                    </Td>
-                                    <Td>{order.price.toLocaleString('vi-VN')}₫</Td>
-                                    <Td minW={'300px'}>
-                                        <HStack justifyContent={'flex-end'} gap={2}>
-                                            <Button variant={'outline'} colorScheme={'teal'}>
-                                                Chi tiết
-                                            </Button>
-                                            {order.statusOrder === 'WAITING' && (
-                                                <Menu>
-                                                    <MenuButton
-                                                        as={IconButton}
-                                                        aria-label="Options"
-                                                        icon={<BiDotsHorizontal />}
-                                                        variant="outline"
-                                                        colorScheme="blackAlpha"
-                                                    />
-                                                    <MenuList maxW={'40px'}>
-                                                        <>
-                                                            <MenuItem
-                                                                _hover={{ backgroundColor: ' #88fa2b83 ' }}
-                                                                className="flex justify-between "
-                                                                onClick={() => {
-                                                                    handleChangeStatusOrder('SUCCESS', order.orderId, order);
-                                                                }}
-                                                            >
-                                                                <Text fontWeight={500}> Xác nhận</Text>
-                                                                <BiCheck color="green" size={24} />
-                                                            </MenuItem>
-                                                            <MenuItem
-                                                                _hover={{ backgroundColor: ' #fa2b2b83 ' }}
-                                                                className="flex justify-between"
-                                                                onClick={() => {
-                                                                    handleChangeStatusOrder('CANCEL', order.orderId, order);
-                                                                }}
-                                                            >
-                                                                <Text fontWeight={500}> Huỷ</Text>
-                                                                <BiX color="red" size={24} />
-                                                            </MenuItem>
-                                                        </>
-                                                    </MenuList>
-                                                </Menu>
-                                            )}
-                                        </HStack>
-                                    </Td>
+                                            </VStack>
+                                        </Td>
+                                        <Td>
+                                            <VStack float={'left'} alignItems={'flex-start'}>
+                                                <Text fontSize={'16px'} fontWeight={400} noOfLines={1} as={'p'} textAlign={'left'}>
+                                                    {moment(order.date_name).format('DD MMM YYYY')}
+                                                </Text>
+                                                <Text fontSize={'12px'} fontWeight={300} noOfLines={1} as={'p'} textAlign={'left'}>
+                                                    {order.timeBookViewDto.start_time.slice(0, 5)}
+                                                </Text>
+                                            </VStack>
+                                        </Td>
+                                        <Td>
+                                            <VStack float={'left'} alignItems={'flex-start'}>
+                                                <Text fontSize={'16px'} fontWeight={400} noOfLines={1} as={'p'} textAlign={'left'}>
+                                                    {moment(order.orderDate).format('DD MMM YYYY')}
+                                                </Text>
+                                                <Text fontSize={'12px'} fontWeight={300} noOfLines={1} as={'p'} textAlign={'left'}>
+                                                    {moment(order.orderDate).format('HH:mm')}
+                                                </Text>
+                                            </VStack>
+                                        </Td>
+                                        <Td>
+                                            <Flex alignItems={'center'}>{order.tour_title}</Flex>
+                                        </Td>
+                                        <Td>{order.price.toLocaleString('vi-VN')}₫</Td>
+                                        <Td minW={'300px'}>
+                                            <HStack justifyContent={'flex-end'} gap={2}>
+                                                <Button variant={'outline'} colorScheme={'teal'}>
+                                                    Chi tiết
+                                                </Button>
+                                                {order.statusOrder === 'WAITING' && (
+                                                    <Menu>
+                                                        <MenuButton
+                                                            as={IconButton}
+                                                            aria-label="Options"
+                                                            icon={<BiDotsHorizontal />}
+                                                            variant="outline"
+                                                            colorScheme="blackAlpha"
+                                                        />
+                                                        <MenuList maxW={'40px'}>
+                                                            <>
+                                                                <MenuItem
+                                                                    _hover={{ backgroundColor: ' #88fa2b83 ' }}
+                                                                    className="flex justify-between "
+                                                                    onClick={() => {
+                                                                        handleChangeStatusOrder('SUCCESS', order.orderId, order);
+                                                                    }}
+                                                                >
+                                                                    <Text fontWeight={500}> Xác nhận</Text>
+                                                                    <BiCheck color="green" size={24} />
+                                                                </MenuItem>
+                                                                <MenuItem
+                                                                    _hover={{ backgroundColor: ' #fa2b2b83 ' }}
+                                                                    className="flex justify-between"
+                                                                    onClick={() => {
+                                                                        handleChangeStatusOrder('CANCEL', order.orderId, order);
+                                                                    }}
+                                                                >
+                                                                    <Text fontWeight={500}> Huỷ</Text>
+                                                                    <BiX color="red" size={24} />
+                                                                </MenuItem>
+                                                            </>
+                                                        </MenuList>
+                                                    </Menu>
+                                                )}
+                                            </HStack>
+                                        </Td>
 
-                                    {/* <Td isNumeric>25.4</Td> */}
-                                </Tr>
-                            ))}
+                                        {/* <Td isNumeric>25.4</Td> */}
+                                    </Tr>
+                                ))}
                         </Tbody>
                     </Table>
                 </TableContainer>
-            </VStack>
-            <div className="w-full justify-center flex pt-4">
-                <Paginate
-                    // required props 👇
-                    page={page - 1}
-                    count={data.totalPage ? Math.ceil(data.totalPage / 2 +1) * 10 : 100}
-                    pageSize={10}
-                    onPageChange={handlePageClick}
-                    // optional props 👇
-                    margin={2}
-                    shadow="lg"
-                    // fontWeight="blue"
-                    variant="outline"
-                    colorScheme="teal"
-                    // ...border and other props also work 💪
-                    border="2px solid"
-                    // you can use w to adjust to parent
-                    // container
-                    // w="400px"
-                />
+            <div className="w-full justify-center flex ">
+                {data?.totalPages && (
+                    <Paginate
+                        // required props 👇
+                        page={page - 1}
+                        count={data?.totalPages * 10}
+                        pageSize={10}
+                        onPageChange={handlePageClick}
+                        // optional props 👇
+                        margin={2}
+                        shadow="lg"
+                        // fontWeight="blue"
+                        variant="outline"
+                        colorScheme="teal"
+                        // ...border and other props also work 💪
+                        // border="2px solid"
+                        // you can use w to adjust to parent
+                        // container
+                        // w="400px"
+                    />
+                )}
             </div>
         </div>
     );

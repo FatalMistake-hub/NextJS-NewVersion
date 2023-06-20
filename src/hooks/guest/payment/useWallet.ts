@@ -1,11 +1,7 @@
 import { useToast } from '@chakra-ui/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Router, useRouter } from 'next/router';
-import { useAppDispatch } from 'src/redux/hook';
-import { becomeHostInitState } from 'src/redux/initState/becomeHostInitState';
-import { SET_INITSTATE } from 'src/redux/slice/becomeHostSlice';
-import { ITours, TourPost } from 'src/types/tours.type';
-import { postTours } from 'src/utils/apis/tours.api';
+import {  useRouter } from 'next/router';
+
 import useAxiosAuth from '../../auth/useAxiosAuth';
 import { IWallet } from 'src/types/payment.type';
 import { getWallet, postCreateWallet, postUpdateWallet } from 'src/utils/apis/payment.api';

@@ -1,4 +1,4 @@
-import { ReactElement, useMemo } from 'react';
+import { ReactElement } from 'react';
 import { HeaderHosting } from '@components/layouts/common/HeaderHosting';
 import { Stack, SkeletonText } from '@chakra-ui/react';
 
@@ -28,7 +28,7 @@ const CalendarRouter = () => {
     );
 };
 
-// CalendarRouter.requireAuth = true;
+CalendarRouter.requireAuth = true;
 export default CalendarRouter;
 
 CalendarRouter.getLayout = function (page: ReactElement) {

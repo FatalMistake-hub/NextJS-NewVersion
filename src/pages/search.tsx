@@ -1,15 +1,11 @@
-import React, { FC, ReactElement, useMemo, useState } from 'react';
-import { Marker, Popup } from 'react-map-gl';
+import React, {  ReactElement, useMemo, useState } from 'react';
+import { Marker } from 'react-map-gl';
 import { getCenter } from 'geolib';
-import { getSearch, searchResults } from 'src/utils/data';
 import Image from 'next/image';
-import { BiChevronLeft, BiChevronRight, BiClipboard, BiDrink, BiFoodMenu, BiMap, BiMusic, BiRun, BiX } from 'react-icons/bi';
+import { BiChevronLeft, BiChevronRight,  BiDrink, BiMusic, BiRun } from 'react-icons/bi';
 import MapBase from '@components/Map/MapBase';
 import { useRouter } from 'next/router';
-import { useAppSelector } from 'src/redux/hook';
-import { selectSearch } from 'src/redux/slice/searchSlice';
 import { formatGuests } from 'src/utils/guestsUtil';
-import { formatRangeDate } from 'src/utils/dateUntils';
 import Link from 'next/link';
 import CardItem, { CardItemSkeleton } from '@components/Card/CardItem';
 import { Header } from '@components/layouts/common/Header';

@@ -9,7 +9,6 @@ import {
     Popover,
     PopoverTrigger,
     PopoverContent,
-    PopoverHeader,
     PopoverCloseButton,
     PopoverBody,
     Image,
@@ -28,7 +27,7 @@ import {
 import { BiChevronDown, BiChevronLeft, BiChevronUp } from 'react-icons/bi';
 import { ESearchMenu } from 'src/utils/constants/Enums';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import { FC, useState, FocusEvent, FormEvent } from 'react';
+import {  useState, FocusEvent,  useEffect } from 'react';
 
 import {
     DECREASE_ADULTS,
@@ -43,9 +42,7 @@ import {
 import Counter from '@components/Search/Counter';
 import CardPayment from '@components/Card/CardPayment';
 import { useRouter } from 'next/router';
-import useGetDetailTour from 'src/hooks/guest/tours/useGetDetailTour';
 import moment from 'moment';
-import { TimeBookViewDtoList } from 'src/types/timeBooking.type';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import usePostPaymentTour from 'src/hooks/guest/payment/usePostPaymentTour';
@@ -76,9 +73,10 @@ const Payment = () => {
 
     const { data: session, status } = useSession();
     const toast = useToast();
+
     const paymentForm = useFormik({
         initialValues: {
-            accountNumber: Number(useGetWallet.data?.data.accountNumber) || undefined,
+            accountNumber:  undefined,
             bankName: '',
             totalMoney: 0,
             data: [
@@ -169,6 +167,12 @@ const Payment = () => {
             }
         },
     });
+
+    useEffect(() => {
+        if (useGetWallet.data?.data.accountNumber) {
+            paymentForm.setFieldValue('accountNumber', Number(useGetWallet.data?.data.accountNumber));
+        }
+    }, [useGetWallet.data?.data.accountNumber]);
     return (
         <form onSubmit={paymentForm.handleSubmit}>
             <div className="w-full h-full ">
