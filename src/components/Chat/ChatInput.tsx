@@ -1,23 +1,25 @@
 import { Box, Input, Stack, InputGroup, IconButton, FormControl, useColorModeValue, InputRightElement, Textarea } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import { BiSend } from 'react-icons/bi';
 import Media from './Media';
-
-const ChatInput = () => {
+type Props = {
+    askGpt: (message: { message: string }) => void;
+    isLoading: boolean;
+};
+const ChatInput: FC<Props> = ({ askGpt, isLoading }) => {
     const [message, setMessage] = useState('');
     const [numLines, setNumLines] = useState(1);
 
     const handleMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const newMessage = e.target.value;
         setMessage(newMessage);
-
         // Tính số dòng dựa trên kích thước của nội dung
         const lineBreaks = (newMessage.match(/\n/g) || []).length + 1;
         setNumLines(lineBreaks);
     };
     return (
-        <Box my={2} width={'80%'} className="relative">
+        <Box my={2} width={'100%'} className="relative">
             <form>
                 <Stack direction="row">
                     <FormControl isRequired>
@@ -29,10 +31,11 @@ const ChatInput = () => {
                                 value={message}
                                 placeholder="Nhập tin nhắn"
                                 focusBorderColor="#31979552"
+                                isDisabled={isLoading}
                                 // onKeyDown={(e) => handleTypingState(e)}
                                 bg={useColorModeValue('#fafafa', '#272727')}
                                 onChange={handleMessageChange}
-                                maxHeight={'240px'}
+                                maxHeight={'200px'}
                                 height={`${numLines * 40}px`}
                             />
                             <InputRightElement>{/* <Media /> */}</InputRightElement>
@@ -55,9 +58,15 @@ const ChatInput = () => {
                                         icon={<BiSend />}
                                         aria-label="Send"
                                         size={'sm'}
+                                        isLoading={isLoading}
                                         colorScheme="teal"
                                         rounded={'full'}
                                         disabled={!message.trim()}
+                                        onClick={() => {
+                                            askGpt({
+                                                message: message,
+                                            });
+                                        }}
                                     />
                                 </motion.div>
                             )}

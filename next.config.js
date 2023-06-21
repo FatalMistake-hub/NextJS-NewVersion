@@ -1,7 +1,7 @@
 const withPlugins = require('next-compose-plugins');
 module.exports = withPlugins([], {
     images: {
-        domains: ['res.cloudinary.com', 'a0.muscache.com', 'bit.ly','tiki.vn'],
+        domains: ['res.cloudinary.com', 'a0.muscache.com', 'bit.ly', 'tiki.vn'],
     },
     experimental: {
         forceSwcTransforms: true,
@@ -14,6 +14,7 @@ module.exports = withPlugins([], {
         NEXT_APP_BASE_URL: 'https://221.132.33.161:9000/api',
         NEXTAUTH_URL: 'https://experience-travel.vercel.app',
         NEXTAUTH_SECRET: 'c8f18c19336ce5aa7fdb4aecab25feba',
+        GPT_CHAT_URL: 'https://f11d-123-19-171-187.ngrok-free.app/api',
     },
     runtime: 'nodejs',
 });

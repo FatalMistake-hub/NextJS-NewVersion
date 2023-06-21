@@ -31,6 +31,7 @@ import ErrorNotify from '@components/Error';
 import RedirectLayout from '@components/layouts/RedirectLayout';
 import dynamic from 'next/dynamic';
 import HostingLayout from '@components/layouts/HostingLayout';
+import GptChatBox from '@components/GptChatBox';
 
 const progressBar = new ProgressBar({
     size: 2,
@@ -71,7 +72,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     );
     // const getLayout = Component.getLayout ?? ((page) => page);
     const SessionProps = pageProps as { session: Session };
-    
+
     const renderWithLayout =
         Component.getLayout ||
         function (page) {
@@ -83,9 +84,8 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                     }}
                 >
                     <Layout>
-                        {' '}
-                        {/* {Layout===HostingLayout ? ()} */}
-                        {console.log(Component)}
+                        {(Component.Layout !== 'HostingLayout' && Component.Layout !== 'BlankLayout') || undefined ? <GptChatBox /> : ''}
+
                         <Head>
                             <head data-locator-hook-status-message="No valid renderers found." />
                             <meta charSet="UTF-8" />
@@ -104,7 +104,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                             <link
                                 rel="icon"
                                 type="image/png"
-                                href="https://res.cloudinary.com/sacchidananad-utech/image/upload/v1686421474/logo-search_eo6gdq.png"
+                                href="https://res.cloudinary.com/sacchidananad-utech/image/upload/v1687368934/na-letter-resolution-logo-color-on-transparent-background_uhm42s.png"
                             />
                             <link rel="modulepreload" href="/assets/vendor.b3b38b8f.js" />
                         </Head>
@@ -125,11 +125,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                         <ReduxProvider store={store}>
                             <PersistGate loading={null} persistor={persistor}>
                                 {Component.requireAuth ? (
-                                    
-                                        <RedirectLayout>
-                                            <WalletConnectionProvider><ProtectedLayout>{renderWithLayout(<Component {...pageProps} />)}</ProtectedLayout></WalletConnectionProvider>
-                                        </RedirectLayout>
-                                    
+                                    <RedirectLayout>
+                                        <WalletConnectionProvider>
+                                            <ProtectedLayout>{renderWithLayout(<Component {...pageProps} />)}</ProtectedLayout>
+                                        </WalletConnectionProvider>
+                                    </RedirectLayout>
                                 ) : (
                                     <RedirectLayout>{renderWithLayout(<Component {...pageProps} />)}</RedirectLayout>
                                 )}

@@ -323,7 +323,7 @@ const Search = ({ dataCategory }: Props) => {
                         )}
                     </section>
                 </main>
-                {!isFullMap && <Footer />}
+                {/* {!isFullMap && <Footer />} */}
             </div>
         </>
     );
@@ -338,11 +338,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 };
 
 export default Search;
-Search.getLayout = function (page: ReactElement) {
-    return (
-        <>
-            <Header />
-            {page}
-        </>
-    );
-};
+// Search.getLayout = function (page: ReactElement) {
+//     return (
+//         <>
+//             <Header />
+//             {page}
+//         </>
+//     );
+// };

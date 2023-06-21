@@ -53,7 +53,11 @@ const BecomeHost = ({ dataCategory }: Props) => {
                         <Link href="/">
                             <Box color={logoColor}>
                                 <Link href={'/'}>
-                                    <FaAirbnb size={'36'} />
+                                    <img
+                                        src="https://res.cloudinary.com/sacchidananad-utech/image/upload/v1687368934/na-letter-resolution-logo-color-on-transparent-background_uhm42s.png"
+                                        alt="logo"
+                                        className="h-12"
+                                    />
                                 </Link>
                             </Box>
                         </Link>
@@ -82,9 +86,9 @@ const BecomeHost = ({ dataCategory }: Props) => {
                         <TittleSt3 />
                     ) : step === 10 ? (
                         <PriceSt3 />
-                    ) : step === 11 && (
-                        <FinalSt3 />
-                    ) }
+                    ) : (
+                        step === 11 && <FinalSt3 />
+                    )}
                     {/* {componentRender.map((item, index) => (
                         <div key={index} className={`${index + 1 === step ? '' : 'hidden'} ${index + 1}`}>
                             {item}

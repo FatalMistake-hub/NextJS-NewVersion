@@ -60,7 +60,11 @@ export const HeaderNoSearch: FC<HeaderNoSearchProps> = ({ exploreNearby, searchP
                         <Link href="/">
                             <a>
                                 <Box color={logoColor}>
-                                    <FaAirbnb size={'48'} />
+                                    <img
+                                        src="https://res.cloudinary.com/sacchidananad-utech/image/upload/v1687368934/na-letter-resolution-logo-color-on-transparent-background_uhm42s.png"
+                                        alt="logo"
+                                        className="h-12"
+                                    />
                                 </Box>
                             </a>
                         </Link>

@@ -44,7 +44,7 @@ export const useRefreshToken = () => {
             }
         } catch (error: any) {
             if (error.response && error.response.status === 401
-                // || error.response.status === 500
+                || error.response.status === 500
             ) {
                 await toast({
                     title: 'Phiên đăng nhập đã hết hạn.',

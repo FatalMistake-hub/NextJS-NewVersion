@@ -88,7 +88,11 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                         <Link href="/">
                             <a>
                                 <Box color={logoColor}>
-                                    <FaAirbnb size={'48'} />
+                                    <img
+                                        src="https://res.cloudinary.com/sacchidananad-utech/image/upload/v1687368934/na-letter-resolution-logo-color-on-transparent-background_uhm42s.png"
+                                        alt="logo"
+                                        className="h-12"
+                                    />
                                 </Box>
                             </a>
                         </Link>
@@ -205,7 +209,6 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                                         className="rounded-3xl "
                                         position={'relative'}
                                         color={'blackAlpha.700'}
-                                        
                                     >
                                         Thông tin phân tích
                                     </Tab>
@@ -295,7 +298,7 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                                         Tạo mục trải nghiệm mới
                                     </Tab>
                                 </Link>
-                                        
+
                                 {/* <MenuHostingNav /> */}
                             </TabList>
                         </Tabs>

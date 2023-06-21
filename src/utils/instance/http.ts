@@ -58,6 +58,18 @@ class HttpMap {
         });
     }
 }
+class HttpGptChat {
+    instance: AxiosInstance;
+    constructor() {
+        this.instance = axios.create({
+            baseURL: process.env.GPT_CHAT_URL,
+            timeout: 300000,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    }
+}
 class HttpMapAddress {
     instance: AxiosInstance;
     constructor() {
@@ -76,3 +88,4 @@ export const httpAuth = new HttpAuth().instance;
 export const httpMap = new HttpMap().instance;
 export const httpHost = new HttpHost().instance;
 export const httpMapAddress = new HttpMapAddress().instance;
+export const httpGptChat = new HttpGptChat().instance;

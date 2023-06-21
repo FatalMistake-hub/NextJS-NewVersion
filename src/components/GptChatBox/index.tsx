@@ -17,10 +17,10 @@ function GptChatBox() {
     const locationRef = useRef<LottieRefCurrentProps | null>(null);
 
     return (
-        <div className="">
-            <Popover isLazy placement="top-end">
+        <div className="fixed bottom-6 right-8 drop-shadow-xl z-50">
+            <Popover isLazy placement="top-end" closeOnBlur={false}>
                 <PopoverTrigger>
-                    <Box w={20}>
+                    <Box w={20} className="drop-shadow-xl ">
                         <Lottie
                             lottieRef={locationRef}
                             animationData={animationData}
@@ -32,11 +32,13 @@ function GptChatBox() {
                         />
                     </Box>
                 </PopoverTrigger>
-                <PopoverContent>
-                    <PopoverHeader fontWeight="semibold">Popover placement</PopoverHeader>
+                <PopoverContent rounded={'2xl'} w={'700px'} bgColor={'white'}>
+                    <PopoverHeader border="0" fontWeight="semibold" px='4'>
+                       Trò chuyện với BotGPT
+                    </PopoverHeader>
                     <PopoverArrow />
-                    <PopoverCloseButton />
-                    <PopoverBody>
+                    <PopoverCloseButton mt={2} mr={1} />
+                    <PopoverBody px={3} pb={3} pt={1} className="drop-shadow-md">
                         <Message />
                     </PopoverBody>
                 </PopoverContent>

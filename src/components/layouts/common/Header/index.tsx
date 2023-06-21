@@ -59,7 +59,11 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                         <Link href="/">
                             <a>
                                 <Box color={logoColor}>
-                                    <FaAirbnb size={'48'} />
+                                    <img
+                                        src="https://res.cloudinary.com/sacchidananad-utech/image/upload/v1687368934/na-letter-resolution-logo-color-on-transparent-background_uhm42s.png"
+                                        alt="logo"
+                                        className="h-12"
+                                    />
                                 </Box>
                             </a>
                         </Link>
@@ -77,8 +81,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                                     {location || <span className="font-normal text-gray-300">Địa điểm</span>}
                                 </span>
                                 <span className="px-4 py-1 border-r border-gay-200">
-                                    {formatRangeDate(checkIn, checkOut)
-                                        || <span className="font-normal text-gray-300">Thêm ngày</span>}
+                                    {formatRangeDate(checkIn, checkOut) || <span className="font-normal text-gray-300">Thêm ngày</span>}
                                 </span>
                                 <span className="px-4 py-1">
                                     {formatGuests(guests, { noInfants: true }) || (
