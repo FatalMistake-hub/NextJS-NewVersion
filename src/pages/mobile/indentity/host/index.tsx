@@ -1,6 +1,6 @@
 //scan.js
 
-import { Alert, AlertIcon, Text,AlertTitle, AlertDescription,Avatar, useToast, Heading } from '@chakra-ui/react';
+import { Alert, AlertIcon, Text, AlertTitle, AlertDescription, Avatar, useToast, Heading } from '@chakra-ui/react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useSession } from 'next-auth/react';
@@ -55,7 +55,6 @@ function IndentityHost() {
     // console.log('router', router.query.orderIdBlockChain?.toString(), router.query.publicKey?.toString());
     useEffect(() => {
         if (session?.user.accountAuthorize === publicKey?.toString() && connected) {
-            
             if (
                 currentEditListing?.account.idx &&
                 connected &&
@@ -92,8 +91,6 @@ function IndentityHost() {
             });
         }
 
-
-
         return () => {};
     }, [currentEditListing, connected, router.query.orderIdBlockChain, router.query.publicKey, publicKey, session?.user.accountAuthorize]);
 
@@ -117,7 +114,9 @@ function IndentityHost() {
             </Text>
             <div className="border border-gray-600 py-1 px-4 rounded-2xl shadow-lg">
                 <WalletMultiButton className="phantom-button z-50 ml-2  my-4 rounded-2xl">
-                    <span className="text-sm font-medium text-black">{connected ? truncate(publicKey?.toString()) : 'Hãy kết nối ví'}</span>
+                    <span className="text-sm font-medium text-black">
+                        {connected ? truncate(publicKey?.toString()) : `Kết nối ví của bạn ( ${truncate(session?.user.accountAuthorize)} )`}
+                    </span>
                 </WalletMultiButton>
                 {!connected && (
                     <Alert status="warning" size={'sm'} rounded={'xl'} mb={'2'}>

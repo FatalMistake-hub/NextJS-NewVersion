@@ -58,6 +58,10 @@ export const searchSlice = createSlice({
         SET_CATEGORY: (state, action: PayloadAction<ICategory>) => {
             state.categoryList = action.payload;
         },
+        SET_COORDINATE: (state, action: PayloadAction<{ longitude: number; latitude: number }>) => {
+            state.longitude = action.payload.longitude;
+            state.latitude = action.payload.latitude;
+        },
         // ADD_CATEGORY: (state, action: PayloadAction<ICategory>) => {
         //     if (state.categoryList.find((item) => item.categoryId === action.payload.categoryId)) {
         //         state.categoryList = state.categoryList.filter((item) => item.categoryId !== action.payload.categoryId);
@@ -141,6 +145,7 @@ export const {
     SET_CATEGORY,
     // ADD_CATEGORY,
     // REMOVE_CATEGORY,
+    SET_COORDINATE,
     SET_GUESTS,
     RESET_DATES,
     RESET_GUESTS,

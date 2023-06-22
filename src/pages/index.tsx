@@ -1,14 +1,5 @@
-
 import React from 'react';
-import {
-    Box,
-    Button,
-    Flex,
-    Heading,
-    SimpleGrid,
-    Text,
-    chakra,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, SimpleGrid, Text, chakra } from '@chakra-ui/react';
 import CardItem, { CardItemSkeleton } from '@components/Card/CardItem';
 
 import useGetAllTour from 'src/hooks/guest/tours/useGetAllTour';
@@ -21,7 +12,8 @@ import { Pagination } from 'swiper';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
-import {  SET_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
+import { SET_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
+import useUserLocation from 'src/hooks/map/useUserLocation';
 
 interface Props {
     dataCategory: any;
@@ -183,6 +175,7 @@ const Home = ({ dataCategory, imageMain }: Props) => {
         });
     };
     // console.log('viewport', checkIn?.toISOString(), checkOut?.toISOString());
+    useUserLocation();
     return (
         <>
             <Flex display="flex" flexDirection="column" justifyContent="center" alignItems="center">
@@ -286,7 +279,7 @@ const Home = ({ dataCategory, imageMain }: Props) => {
 
                 <div className="max-w-[1640px] relative top-24 w-full pt-10 pb-24">
                     <Heading lineHeight={1.4} as="h2" size="lg" w={'full'} textAlign={'center'} noOfLines={1} pt={12} mb={14}>
-                        Vì sao bạn nên chọn wwe
+                        Vì sao bạn nên chọn NATravel
                     </Heading>
                     <SimpleGrid columns={4} spacing={16} pb={8}>
                         {features.map((feature: any, index: any) => (

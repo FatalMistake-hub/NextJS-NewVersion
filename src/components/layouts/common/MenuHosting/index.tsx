@@ -12,7 +12,7 @@ const MenuHosting = () => {
     const { data: session } = useSession();
     const { initializeUser, transactionPending, initialized } = useTour();
     const { connected, publicKey } = useWallet();
-    
+
     return (
         <div className="flex w-fit">
             {/* {initialized ? (
@@ -28,7 +28,9 @@ const MenuHosting = () => {
                 </button>
             )} */}
             <WalletMultiButton className="phantom-button z-50 ml-2 mr-4 rounded-2xl">
-                <span className="text-sm font-medium text-black">{connected ? truncate(publicKey?.toString()) : 'Kết nối ví của bạn'}</span>
+                <span className="text-sm font-medium text-black">
+                    {connected ? truncate(publicKey?.toString()) : `Kết nối ví của bạn ( ${truncate(session?.user.accountAuthorize)} )`}
+                </span>
             </WalletMultiButton>
             <Menu>
                 <MenuButton
