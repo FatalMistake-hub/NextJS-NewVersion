@@ -14,7 +14,6 @@ module.exports = withPlugins([], {
         NEXT_APP_BASE_URL: 'https://221.132.33.161:9000/api',
         NEXTAUTH_URL: 'https://experience-travel.vercel.app',
         NEXTAUTH_SECRET: 'c8f18c19336ce5aa7fdb4aecab25feba',
-        GPT_CHAT_URL: 'https://4dff-2402-9d80-446-dc91-b5c1-ebc7-bea6-4faa.ngrok-free.app',
     },
     runtime: 'nodejs',
 });

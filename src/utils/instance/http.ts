@@ -62,7 +62,7 @@ class HttpGptChat {
     instance: AxiosInstance;
     constructor() {
         this.instance = axios.create({
-            baseURL: process.env.GPT_CHAT_URL,
+            baseURL: process.env.NEXT_APP_BASE_URL,
             timeout: 300000,
             headers: {
                 'Content-Type': 'application/json',

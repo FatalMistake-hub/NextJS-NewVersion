@@ -5,8 +5,13 @@ import { useEffect, useRef, useState } from 'react';
 import useBgGradient from 'src/hooks/style/useBgGradient';
 import ChatInput from './ChatInput';
 import ScrollBtn from '@components/GroupButton/ScrollBtn';
-import Media from './Media';
+import Image from 'next/image';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination } from 'swiper';
 import useAskGpt from 'src/hooks/guest/gptChat/useAskGpt';
+import { useRouter } from 'next/router';
+import { IGptChat } from 'src/types/chat.type';
+import Link from 'next/link';
 function ScrollBottom({ messages }: { messages: any }) {
     const scrollRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
@@ -45,6 +50,8 @@ const Message = () => {
     }
 
     const { askGpt, isLoading, isError, isSuccess, conversation } = useAskGpt();
+    const router = useRouter();
+
     return (
         <Stack
             w="100%"
@@ -66,7 +73,44 @@ const Message = () => {
                 maxH={'50vh'}
                 height="100%"
             >
-                {conversation.map((msg, index) => (
+                <div>
+                    <motion.div
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.2 }}
+                        // initial={{ opacity: 0, x: isAuthor ? 80 : -80 }}
+                        initial={{ opacity: 0, x: -80 }}
+                    >
+                        <Stack py={2} alignItems="start" direction={'row'}>
+                            <Avatar
+                                size="md"
+                                shadow="xl"
+                                color="#fafafa"
+                                src={
+                                    'https://images.unsplash.com/photo-1684487747720-1ba29cda82f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YWklMjBib3R8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'
+                                }
+                                // name={'An'}
+                                bg={'gray.800'}
+                                mt={2}
+                            />
+                            <Stack p={2} px={4} minW={100} maxW={400} shadow="xl" rounded="lg" bg={secondaryMsgBg}>
+                                <Stack direction="row" justifyContent="space-between">
+                                    <Text fontSize={'16px'} wordBreak="break-word">
+                                        Xin chào, tôi là một chatbot dựa trên GPT-3. Tôi có thể trả lời các câu hỏi của bạn về chuyến du
+                                        lịch tại website. Bạn có thể hỏi tôi bất cứ điều gì về các tour du lịch, các địa điểm du lịch, các
+                                        dịch vụ du lịch, ...
+                                    </Text>
+                                </Stack>
+                                <Box>
+                                    <Text fontSize={'12px'} opacity={0.35} fontWeight={'500'}>
+                                        BotGPT
+                                    </Text>
+                                </Box>
+                            </Stack>
+                        </Stack>
+                    </motion.div>
+                    <ScrollBottom messages={'aaaa'} />
+                </div>
+                {conversation?.map((msg, index) => (
                     <div key={index}>
                         <motion.div
                             animate={{ opacity: 1, x: 0 }}
@@ -88,11 +132,95 @@ const Message = () => {
                                     bg={'gray.800'}
                                     mt={2}
                                 />
-                                <Stack p={2} px={4} minW={100} maxW={400} shadow="xl" rounded="lg" bg={secondaryMsgBg}>
-                                    <Stack direction="row" justifyContent="space-between">
-                                        <Text fontSize={'16px'} wordBreak="break-word">
-                                            {msg.message}
-                                        </Text>
+                                <Stack p={2} px={4} minW={100} maxW={430} shadow="xl" rounded="lg" bg={secondaryMsgBg}>
+                                    <Stack direction="column">
+                                        {msg.author === 'botGpt' ? (
+                                            <>
+                                                <Text fontSize={'16px'} fontWeight={'500'} py={3} px={2} wordBreak="break-word">
+                                                    BotGPT gợi ý cho bạn 1 số tour sau:
+                                                </Text>
+                                                <div className="w-full  flex">
+                                                    <Swiper
+                                                        slidesPerView={1}
+                                                        spaceBetween={6}
+                                                        pagination={{ clickable: true }}
+                                                        modules={[Pagination]}
+                                                        style={{ borderRadius: '0.75rem' }}
+                                                        className="min-h-[430px]   bg-transparent    "
+                                                    >
+                                                        {msg.message?.map((item: IGptChat) => (
+                                                            <SwiperSlide className="h-full min-w-[400px]   " key={item.tourId}>
+                                                                {/* <div> */}
+
+                                                                <Link href={`/tours/${item.tourId}`}>
+                                                                    <a target="_blank">
+                                                                        <Box
+                                                                            minW={'full'}
+                                                                            minH={'full'}
+                                                                            // minW={'500px'}
+                                                                            rounded={'xl'}
+                                                                            textAlign={'left'}
+                                                                            justifyContent={'space-between'}
+                                                                            display={'flex'}
+                                                                            flexDirection={'column'}
+                                                                            backdropBlur={'2xl'}
+                                                                            bgColor={'white'}
+                                                                            dropShadow={'xl'}
+                                                                            cursor={'pointer'}
+                                                                        >
+                                                                            <Box w={'full'} minH={'300px'} position={'relative'}>
+                                                                                <Image
+                                                                                    src={item.imageMain}
+                                                                                    alt={`Picture of `}
+                                                                                    layout="fill"
+                                                                                    objectFit="cover"
+                                                                                    placeholder="blur"
+                                                                                    blurDataURL={item.imageMain}
+                                                                                    className={'rounded-xl'}
+                                                                                />
+                                                                            </Box>
+                                                                            <Text
+                                                                                px={4}
+                                                                                mt={2}
+                                                                                noOfLines={1}
+                                                                                fontSize={'18px'}
+                                                                                fontWeight={600}
+                                                                            >
+                                                                                {item.title}
+                                                                            </Text>
+                                                                            <div className="flex px-2 flex-row justify-between">
+                                                                                <Text
+                                                                                    p={2}
+                                                                                    noOfLines={2}
+                                                                                    fontSize={'18px'}
+                                                                                    fontWeight={600}
+                                                                                >
+                                                                                    {item.priceOnePerson.toLocaleString('vi-VN')}₫ /người
+                                                                                </Text>
+                                                                                <Text
+                                                                                    p={2}
+                                                                                    noOfLines={2}
+                                                                                    fontSize={'18px'}
+                                                                                    fontWeight={600}
+                                                                                >
+                                                                                    {item.categoryName}
+                                                                                </Text>
+                                                                            </div>
+                                                                        </Box>
+                                                                    </a>
+                                                                </Link>
+
+                                                                {/* </div> */}
+                                                            </SwiperSlide>
+                                                        ))}
+                                                    </Swiper>
+                                                </div>
+                                            </>
+                                        ) : (
+                                            <Text fontSize={'16px'} wordBreak="break-word">
+                                                {msg.message}
+                                            </Text>
+                                        )}
                                     </Stack>
                                     <Box>
                                         <Text fontSize={'12px'} opacity={0.35} fontWeight={'500'}>

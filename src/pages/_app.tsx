@@ -84,7 +84,14 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                     }}
                 >
                     <Layout>
-                        {(Component.Layout !== 'HostingLayout' && Component.Layout !== 'BlankLayout') || undefined ? <GptChatBox /> : ''}
+                        {(Component.Layout !== 'HostingLayout' &&
+                            Component.Layout !== 'BlankLayout' &&
+                            Component.Layout !== 'MobileLayout') ||
+                        undefined ? (
+                            <GptChatBox />
+                        ) : (
+                            ''
+                        )}
 
                         <Head>
                             <head data-locator-hook-status-message="No valid renderers found." />
