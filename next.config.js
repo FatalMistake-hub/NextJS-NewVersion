@@ -1,4 +1,5 @@
 const withPlugins = require('next-compose-plugins');
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 module.exports = withPlugins([], {
     images: {
         domains: ['res.cloudinary.com', 'a0.muscache.com', 'bit.ly', 'tiki.vn'],
@@ -18,10 +19,9 @@ module.exports = withPlugins([], {
     runtime: 'nodejs',
     server: {
         Proxy: {
-            '/api': 'https://221.132.33.161:9000'
-        }
-    }
-
+            '/api': 'https://221.132.33.161:9000',
+        },
+    },
 });
 
 // module.exports = {
