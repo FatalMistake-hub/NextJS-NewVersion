@@ -16,6 +16,12 @@ module.exports = withPlugins([], {
         NEXTAUTH_SECRET: 'c8f18c19336ce5aa7fdb4aecab25feba',
     },
     runtime: 'nodejs',
+    server: {
+        Proxy: {
+            '/api': 'https://221.132.33.161:9000'
+        }
+    }
+
 });
 
 // module.exports = {
