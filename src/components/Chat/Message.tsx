@@ -70,7 +70,7 @@ const Message = () => {
                 px={4}
                 py={4}
                 minH={'350px'}
-                maxH={'50vh'}
+                maxH={'55vh'}
                 height="100%"
             >
                 <div>
@@ -137,84 +137,91 @@ const Message = () => {
                                         {msg.author === 'botGpt' ? (
                                             <>
                                                 <Text fontSize={'16px'} fontWeight={'500'} py={3} px={2} wordBreak="break-word">
-                                                    BotGPT gợi ý cho bạn 1 số tour sau:
+                                                    {msg.message.length > 0 ? (
+                                                        'BotGPT gợi ý cho bạn 1 số tour sau:'
+                                                    ) : (
+                                                        <div className='flex items-center justify-between'>
+                                                            <BiGhost size={60} className='mr-2' />
+                                                            Xin lỗi! BotGPT không có câu trả lời cho câu hỏi của bạn
+                                                        </div>
+                                                    )}
                                                 </Text>
-                                                <div className="w-full  flex">
-                                                    <Swiper
-                                                        slidesPerView={1}
-                                                        spaceBetween={6}
-                                                        pagination={{ clickable: true }}
-                                                        modules={[Pagination]}
-                                                        style={{ borderRadius: '0.75rem' }}
-                                                        className="min-h-[430px]   bg-transparent    "
-                                                    >
-                                                        {msg.message?.map((item: IGptChat) => (
-                                                            <SwiperSlide className="h-full min-w-[400px]   " key={item.tourId}>
-                                                                {/* <div> */}
-
-                                                                <Link href={`/tours/${item.tourId}`}>
-                                                                    <a target="_blank">
-                                                                        <Box
-                                                                            minW={'full'}
-                                                                            minH={'full'}
-                                                                            // minW={'500px'}
-                                                                            rounded={'xl'}
-                                                                            textAlign={'left'}
-                                                                            justifyContent={'space-between'}
-                                                                            display={'flex'}
-                                                                            flexDirection={'column'}
-                                                                            backdropBlur={'2xl'}
-                                                                            bgColor={'white'}
-                                                                            dropShadow={'xl'}
-                                                                            cursor={'pointer'}
-                                                                        >
-                                                                            <Box w={'full'} minH={'300px'} position={'relative'}>
-                                                                                <Image
-                                                                                    src={item.imageMain}
-                                                                                    alt={`Picture of `}
-                                                                                    layout="fill"
-                                                                                    objectFit="cover"
-                                                                                    placeholder="blur"
-                                                                                    blurDataURL={item.imageMain}
-                                                                                    className={'rounded-xl'}
-                                                                                />
-                                                                            </Box>
-                                                                            <Text
-                                                                                px={4}
-                                                                                mt={2}
-                                                                                noOfLines={1}
-                                                                                fontSize={'18px'}
-                                                                                fontWeight={600}
+                                                {msg.message.length > 0 && (
+                                                    <div className="w-full  flex">
+                                                        <Swiper
+                                                            slidesPerView={1}
+                                                            spaceBetween={24}
+                                                            pagination={{ clickable: true }}
+                                                            modules={[Pagination]}
+                                                            style={{ borderRadius: '0.75rem' }}
+                                                            className="min-h-[420px]   bg-transparent    "
+                                                        >
+                                                            {msg.message?.map((item: IGptChat) => (
+                                                                <SwiperSlide className="h-full min-w-[400px]   " key={item.tourId}>
+                                                                    <Link href={`/tours/${item.tourId}`}>
+                                                                        <a target="_blank">
+                                                                            <Box
+                                                                                minW={'full'}
+                                                                                minH={'full'}
+                                                                                rounded={'xl'}
+                                                                                textAlign={'left'}
+                                                                                justifyContent={'space-between'}
+                                                                                display={'flex'}
+                                                                                flexDirection={'column'}
+                                                                                backdropBlur={'2xl'}
+                                                                                bgColor={'white'}
+                                                                                dropShadow={'xl'}
+                                                                                cursor={'pointer'}
                                                                             >
-                                                                                {item.title}
-                                                                            </Text>
-                                                                            <div className="flex px-2 flex-row justify-between">
+                                                                                <Box w={'full'} minH={'300px'} position={'relative'}>
+                                                                                    <Image
+                                                                                        src={item.imageMain}
+                                                                                        alt={`Picture of `}
+                                                                                        layout="fill"
+                                                                                        objectFit="cover"
+                                                                                        placeholder="blur"
+                                                                                        blurDataURL={item.imageMain}
+                                                                                        className={''}
+                                                                                    />
+                                                                                </Box>
                                                                                 <Text
-                                                                                    p={2}
-                                                                                    noOfLines={2}
+                                                                                    px={4}
+                                                                                    mt={2}
+                                                                                    noOfLines={1}
                                                                                     fontSize={'18px'}
                                                                                     fontWeight={600}
                                                                                 >
-                                                                                    {item.priceOnePerson.toLocaleString('vi-VN')}₫ /người
+                                                                                    {item.title}
                                                                                 </Text>
-                                                                                <Text
-                                                                                    p={2}
-                                                                                    noOfLines={2}
-                                                                                    fontSize={'18px'}
-                                                                                    fontWeight={600}
-                                                                                >
-                                                                                    {item.categoryName}
-                                                                                </Text>
-                                                                            </div>
-                                                                        </Box>
-                                                                    </a>
-                                                                </Link>
+                                                                                <div className="flex px-2 flex-row justify-between">
+                                                                                    <Text
+                                                                                        p={2}
+                                                                                        noOfLines={1}
+                                                                                        fontSize={'16px'}
+                                                                                        fontWeight={600}
+                                                                                    >
+                                                                                        {item.priceOnePerson.toLocaleString('vi-VN')}₫
+                                                                                        /người
+                                                                                    </Text>
+                                                                                    <Text
+                                                                                        p={2}
+                                                                                        noOfLines={1}
+                                                                                        fontSize={'16px'}
+                                                                                        fontWeight={600}
+                                                                                    >
+                                                                                        {item.categoryName}
+                                                                                    </Text>
+                                                                                </div>
+                                                                            </Box>
+                                                                        </a>
+                                                                    </Link>
 
-                                                                {/* </div> */}
-                                                            </SwiperSlide>
-                                                        ))}
-                                                    </Swiper>
-                                                </div>
+                                                                    {/* </div> */}
+                                                                </SwiperSlide>
+                                                            ))}
+                                                        </Swiper>
+                                                    </div>
+                                                )}
                                             </>
                                         ) : (
                                             <Text fontSize={'16px'} wordBreak="break-word">
