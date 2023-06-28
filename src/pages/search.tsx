@@ -130,7 +130,7 @@ const Search = ({ dataCategory }: Props) => {
                     } flex-grow grid grid-cols-1 duration-500 min-h-[100vh]`}
                 >
                     {/* left - cards */}
-                    <div className={`${isFullMap && 'hidden'} px-6 pb-8 pt-[156px] duration-500`}>
+                    <div className={`${isFullMap && 'hidden'} px-6 pb-8 pt-[90px] duration-500`}>
                         <Text fontSize={'14px'} fontWeight={600} my={6}>
                             {data?.pages[0].data.totalElements} trải nghiệm
                         </Text>
@@ -158,7 +158,7 @@ const Search = ({ dataCategory }: Props) => {
                                     {isFetchingPreviousPage ? 'Loading more...' : hasPreviousPage ? 'Load Older' : 'Nothing more to load'}
                                 </button>
                             </div> */}
-                                <SimpleGrid pt={3} pb={12} minChildWidth={'250px'} columnGap={'20px'} rowGap={'80px'}>
+                                <SimpleGrid pt={3} pb={12} minChildWidth={'250px'}  columnGap={'20px'} rowGap={'80px'}>
                                     {data?.pages?.map((page: any) =>
                                         page?.data?.content?.map((result: ITours) => (
                                             // result.isDeleted === false &&
@@ -167,7 +167,7 @@ const Search = ({ dataCategory }: Props) => {
                                                 onMouseLeave={() => handleMouseLeave()}
                                             >
                                                 <CardItem
-                                                    className="h-full max-h-[416px]"
+                                                    className="h-full max-h-[416px] max-w-[250px]"
                                                     data={result}
                                                     key={result.tourId}
                                                     minImgHeight={'334px'}

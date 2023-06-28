@@ -37,7 +37,7 @@ const Mobile = () => {
             });
             if (res?.status === 200) {
                 dispatch(SET_ROLE_LOGIN(role));
-                 dispatch(SET_isLogin_TRUE());
+                dispatch(SET_isLogin_TRUE());
                 // router.push('/mobile/listings');
                 if (role === 'GUEST') {
                     router.push('/mobile/listings');
@@ -51,7 +51,11 @@ const Mobile = () => {
     return (
         <div className="">
             <div className="text-center">
-                <img className="rounded-full" alt="profile pic" src="https://i.ibb.co/4mWnBWV/AREmoji-20220303-153534-12754.png" />
+                <img
+                    className="rounded-full"
+                    alt="profile pic"
+                    src="https://res.cloudinary.com/sacchidananad-utech/image/upload/v1687368934/na-letter-resolution-logo-color-on-transparent-background_uhm42s.png"
+                />
 
                 <p className="py-4 text-lg font-medium">Xác thực trải nghiệm</p>
             </div>

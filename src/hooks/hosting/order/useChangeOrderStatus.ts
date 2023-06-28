@@ -15,8 +15,7 @@ const useChangeStatusOrder = () => {
     const { mutate, isLoading, isError, isSuccess } = useMutation({
         mutationFn: (status: { orderId: string; status: string }) => changeStatusOrder(httpAuthJWT, status.orderId, status.status),
         onSuccess: () => {
-            client.invalidateQueries(['GET_ALL_HOST_ORDER']);
-            
+            client.invalidateQueries(['GET_ALL_OWNER_ORDER']);     
         },
     });
 

@@ -1,6 +1,5 @@
 import { Box, useColorModeValue } from '@chakra-ui/react';
 import Link from 'next/link';
-import { FaAirbnb } from 'react-icons/fa';
 import BecomeHostStep1 from '@components/Hosting/BecomeHost/Step1';
 import BecomeHostStep2 from '@components/Hosting/BecomeHost/Step2';
 import BecomeHostStep3 from '@components/Hosting/BecomeHost/Step3';
@@ -24,24 +23,11 @@ interface Props {
     dataCategory: IAllCategory;
 }
 const BecomeHost = ({ dataCategory }: Props) => {
-    const { step, tour } = useAppSelector(selectBecomeHost);
+    const { step } = useAppSelector(selectBecomeHost);
     const dispatch = useAppDispatch();
     const logoColor = useColorModeValue('teal.500', 'teal.200');
 
     console.log('reRender');
-    const componentRender = [
-        <BecomeHostStep1 />,
-        <LocationSt1 />,
-        <CategorySt1 dataCategory={dataCategory} />,
-        <BecomeHostStep2 />,
-        <DescriptionSt2 />,
-        <TimeFrameSt2 />,
-        <ImageListSt2 />,
-        <BecomeHostStep3 />,
-        <TittleSt3 />,
-        <PriceSt3 />,
-        <FinalSt3 />,
-    ];
     return (
         <div className="min-h-screen w-full">
             <div className={`pt-8 z-50  w-full px-12 `}>
@@ -67,36 +53,30 @@ const BecomeHost = ({ dataCategory }: Props) => {
             <Box w={'full'} h={'calc(100vh - 166px)'}>
                 <div className="pb-24">
                     {step === 1 ? (
-                        <BecomeHostStep1 />
+                        <BecomeHostStep1 key="BecomeHostStep1" />
                     ) : step === 2 ? (
-                        <LocationSt1 />
+                        <LocationSt1 key="LocationSt1" />
                     ) : step === 3 ? (
-                        <CategorySt1 dataCategory={dataCategory} />
+                        <CategorySt1 dataCategory={dataCategory} key="CategorySt1" />
                     ) : step === 4 ? (
-                        <BecomeHostStep2 />
+                        <BecomeHostStep2 key="BecomeHostStep2" />
                     ) : step === 5 ? (
-                        <DescriptionSt2 />
+                        <DescriptionSt2 key="DescriptionSt2" />
                     ) : step === 6 ? (
-                        <TimeFrameSt2 />
+                        <TimeFrameSt2 key="TimeFrameSt2" />
                     ) : step === 7 ? (
-                        <ImageListSt2 />
+                        <ImageListSt2 key="ImageListSt2" />
                     ) : step === 8 ? (
-                        <BecomeHostStep3 />
+                        <BecomeHostStep3 key="BecomeHostStep3" />
                     ) : step === 9 ? (
-                        <TittleSt3 />
+                        <TittleSt3 key="TittleSt3" />
                     ) : step === 10 ? (
-                        <PriceSt3 />
+                        <PriceSt3 key="PriceSt3" />
                     ) : (
-                        step === 11 && <FinalSt3 />
+                        step === 11 && <FinalSt3 key="FinalSt3" />
                     )}
-                    {/* {componentRender.map((item, index) => (
-                        <div key={index} className={`${index + 1 === step ? '' : 'hidden'} ${index + 1}`}>
-                            {item}
-                        </div>
-                    )) */}
-                    {/* } */}
                 </div>
-                <MultiStepBtn />
+                <MultiStepBtn key="MultiStepBtn" />
             </Box>
         </div>
     );

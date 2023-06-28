@@ -27,7 +27,7 @@ import {
 import { BiChevronDown, BiChevronLeft, BiChevronUp } from 'react-icons/bi';
 import { ESearchMenu } from 'src/utils/constants/Enums';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import {  useState, FocusEvent,  useEffect } from 'react';
+import { useState, FocusEvent, useEffect } from 'react';
 
 import {
     DECREASE_ADULTS,
@@ -48,35 +48,21 @@ import * as Yup from 'yup';
 import usePostPaymentTour from 'src/hooks/guest/payment/usePostPaymentTour';
 import useWallet from 'src/hooks/guest/payment/useWallet';
 import { useSession } from 'next-auth/react';
+import Suspense from '@components/Supense';
+import WalletModal from '@components/Modal/WalletModal';
+
 const Payment = () => {
-    const [searchMenu, setSearchMenu] = useState<ESearchMenu | null>(null);
     const router = useRouter();
-
-    const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
+    const { guests } = useAppSelector(selectSearch);
     const dispatch = useAppDispatch();
-    // handler
-    const handleOnBlur = (event?: FocusEvent<HTMLElement>) => {
-        const { relatedTarget } = event || {};
-        if (!relatedTarget) {
-            setSearchMenu(null);
-            return;
-        }
-        const relatedTargetClassList = Array.from((relatedTarget as Element)?.classList);
-        const result = relatedTargetClassList.some((className) => {
-            const prefix = ['rdr', 'btn'];
-            if (prefix.includes(className.slice(0, 3))) return true;
-        });
-        if (!result) setSearchMenu(null);
-    };
-    const { isLoading, isError, isSuccess, postPaymentTour } = usePostPaymentTour();
+    const { postPaymentTour } = usePostPaymentTour();
     const { useGetWallet, useCreateWallet, useUpdateWallet } = useWallet();
-
-    const { data: session, status } = useSession();
+    const { data: session } = useSession();
     const toast = useToast();
-
+    const [loading, setLoading] = useState(false);
     const paymentForm = useFormik({
         initialValues: {
-            accountNumber:  undefined,
+            accountNumber: undefined,
             bankName: '',
             totalMoney: 0,
             data: [
@@ -103,7 +89,7 @@ const Payment = () => {
         }),
         onSubmit: async (values) => {
             values.bankName = 'NCB';
-            values.totalMoney = 10000000;
+            values.totalMoney = 1000000000;
             values.data = [
                 {
                     guestType: 'ADULTS',
@@ -124,6 +110,8 @@ const Payment = () => {
                     (Number(router.query.priceOnePerson) * guests.infants * 50) / 100,
             );
             if (guests.adults || guests.children || guests.infants) {
+                setLoading(true);
+
                 values.accountNumber && !session?.user.isWallet
                     ? await useCreateWallet
                           .mutateAsync({
@@ -156,6 +144,7 @@ const Payment = () => {
                                       priceTotal: values.priceTotal,
                                   });
                           });
+                setLoading(false);
             } else {
                 toast({
                     title: 'Vui lòng chọn số lượng khách',
@@ -173,8 +162,10 @@ const Payment = () => {
             paymentForm.setFieldValue('accountNumber', Number(useGetWallet.data?.data.accountNumber));
         }
     }, [useGetWallet.data?.data.accountNumber]);
+
     return (
         <form onSubmit={paymentForm.handleSubmit}>
+            {loading && <Suspense />}
             <div className="w-full h-full ">
                 <div className="px-20 max-w-[1280px] mx-auto pb-12 pt-16 flex items-center">
                     <IconButton
@@ -352,7 +343,7 @@ const Payment = () => {
                                     hoàn tiền cho khách và Hướng dẫn về giãn cách xã hội và các hướng dẫn khác liên quan đến COVID-19 của
                                     Airbnb.
                                 </Text>
-                                <Button type="submit" size={'lg'} width={'50%'} py={7} colorScheme={'teal'}>
+                                <Button type="submit" isLoading={loading} size={'lg'} width={'50%'} py={7} colorScheme={'teal'}>
                                     Xác nhận và thanh toán
                                 </Button>
                             </Box>

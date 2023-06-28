@@ -1,5 +1,5 @@
 import { useToast } from '@chakra-ui/react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {  useRouter } from 'next/router';
 
 import useAxiosAuth from '../../auth/useAxiosAuth';
@@ -8,13 +8,17 @@ import { getWallet, postCreateWallet, postUpdateWallet } from 'src/utils/apis/pa
 import { useSession } from 'next-auth/react';
 
 const useWallet = () => {
+    const client =useQueryClient();
     const router = useRouter();
     const httpAuthJWT = useAxiosAuth();
     const toast = useToast();
     const { data: session, status } = useSession();
     const useCreateWallet = useMutation({
         mutationFn: async (wallet: IWallet) => await postCreateWallet(wallet, httpAuthJWT),
-        onSuccess: ({ data }) => {},
+        onSuccess: ({ data }) => {
+            client.invalidateQueries(['GET_WALLET']);
+
+        },
         onError: (error: any) => {
 
             if (error.response.status !== 401) {
@@ -30,7 +34,9 @@ const useWallet = () => {
     });
     const useUpdateWallet = useMutation({
         mutationFn: (wallet: IWallet) => postUpdateWallet(wallet, httpAuthJWT),
-        onSuccess: ({ data }) => {},
+        onSuccess: ({ data }) => {
+            client.invalidateQueries(['GET_WALLET']);
+        },
         onError: (error: any) => {
 
             if (error.response.status !== 401) {

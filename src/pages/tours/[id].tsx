@@ -15,6 +15,8 @@ import {
     Text,
     Avatar,
     Collapse,
+    Skeleton,
+    SkeletonCircle,
 } from '@chakra-ui/react';
 import { BiCheck, BiChevronRight, BiNotification, BiShare, BiStar } from 'react-icons/bi';
 import Rating from '@components/Card/Rating';
@@ -48,7 +50,7 @@ function Tours() {
     const { data, isLoading, isError, isSuccess } = useGetDetailTour(id);
     const { location, checkIn, checkOut, guests, categoryList, viewport } = useAppSelector(selectSearch);
     const dispatch = useAppDispatch();
-    const [show, setShow] = useState<any>({ cp1: true, cp2: true, cp3: true, cp4: true, cp5: true });
+    const [show, setShow] = useState<any>({ cp1: false, cp2: false, cp3: false, cp4: false, cp5: false });
 
     const handleToggle = (name: string) => setShow((prevState: any) => ({ ...prevState, [name]: !prevState[name] }));
 
@@ -111,32 +113,40 @@ function Tours() {
             {data ? (
                 <Flex display="flex" flexDirection="column" justifyContent="center" alignItems="center" margin={'auto'} maxW={'1120px'}>
                     <div className="w-full py-8 underline">
-                        <Breadcrumb spacing="8px" separator={<BiChevronRight color="gray.500" />}>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
-                            </BreadcrumbItem>
+                        {isLoading ? (
+                            <Skeleton height="20px" width={'300px'} />
+                        ) : (
+                            <Breadcrumb spacing="8px" separator={<BiChevronRight color="gray.500" />}>
+                                <BreadcrumbItem>
+                                    <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
+                                </BreadcrumbItem>
 
-                            <BreadcrumbItem>
-                                <BreadcrumbLink
-                                    onClick={() => {
-                                        handleClickBreadCumb({
-                                            categoryId: data.categoryId,
-                                            label: data.categoryName,
-                                        });
-                                    }}
-                                >
-                                    {data.categoryName}
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                        </Breadcrumb>
+                                <BreadcrumbItem>
+                                    <BreadcrumbLink
+                                        onClick={() => {
+                                            handleClickBreadCumb({
+                                                categoryId: data.categoryId,
+                                                label: data.categoryName,
+                                            });
+                                        }}
+                                    >
+                                        {data.categoryName}
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                            </Breadcrumb>
+                        )}
                     </div>
-
                     <Heading lineHeight={1.4} as="h1" fontSize={'26px'} fontWeight={'600'} width={'full'} noOfLines={1} mb={1}>
-                        {data?.title}
+                        {isLoading ? <Skeleton height="26px" width={'500px'} /> : data?.title}
                     </Heading>
+
                     <div className="w-full flex justify-between items-center">
                         <div className="mt-1">
-                            <Rating rating={data.rating} avgRating={data.avgRating} location={data.city} />
+                            {isLoading ? (
+                                <Skeleton height="20px" width={'200px'} />
+                            ) : (
+                                <Rating rating={data.rating} avgRating={data.avgRating} location={data.city} />
+                            )}
                         </div>
                         {/* <div className="flex items-center">
                             <Button leftIcon={<BiShare />} color={'black'} variant={'ghost'} className="hover:bg-slate-100 underline ">
@@ -147,7 +157,7 @@ function Tours() {
                             </Button>
                         </div> */}
                     </div>
-                    <div className="w-full h-full mt-8 rounded-lg max-h-[415px] overflow-hidden relative">
+                    <div className="w-full h-full mt-8 rounded-lg max-h-[full] overflow-hidden relative">
                         <Grid
                             templateAreas={`
                   "pic pic1 pic2 pic4"
@@ -162,59 +172,79 @@ function Tours() {
                         >
                             <>
                                 <GridItem area={'pic4'} position="relative">
-                                    <Image
-                                        src={data?.imageMain}
-                                        alt={`Picture of `}
-                                        layout="fill"
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={data?.imageMain}
-                                        className=""
-                                    />
+                                    {isLoading ? (
+                                        <Skeleton height="full" width={'full'} />
+                                    ) : (
+                                        <Image
+                                            src={data?.imageMain}
+                                            alt={`Picture of `}
+                                            layout="fill"
+                                            objectFit="cover"
+                                            placeholder="blur"
+                                            blurDataURL={data?.imageMain}
+                                            className=""
+                                        />
+                                    )}
                                 </GridItem>
                                 <GridItem area={'pic'} position="relative">
-                                    <Image
-                                        src={data?.images[0].link}
-                                        alt={`Picture of `}
-                                        layout="fill"
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={data?.images[0].link}
-                                        className=""
-                                    />
+                                    {isLoading ? (
+                                        <Skeleton height="full" width={'full'} />
+                                    ) : (
+                                        <Image
+                                            src={data?.images[0].link}
+                                            alt={`Picture of `}
+                                            layout="fill"
+                                            objectFit="cover"
+                                            placeholder="blur"
+                                            blurDataURL={data?.images[0].link}
+                                            className=""
+                                        />
+                                    )}
                                 </GridItem>
                                 <GridItem area={'pic1'} position="relative">
-                                    <Image
-                                        src={data?.images[1].link}
-                                        alt={`Picture of `}
-                                        layout="fill"
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={data?.images[1].link}
-                                        className=""
-                                    />
+                                    {isLoading ? (
+                                        <Skeleton height="full" width={'full'} />
+                                    ) : (
+                                        <Image
+                                            src={data?.images[1].link}
+                                            alt={`Picture of `}
+                                            layout="fill"
+                                            objectFit="cover"
+                                            placeholder="blur"
+                                            blurDataURL={data?.images[1].link}
+                                            className=""
+                                        />
+                                    )}
                                 </GridItem>
                                 <GridItem area={'pic2'} position="relative">
-                                    <Image
-                                        src={data?.images[2].link}
-                                        alt={`Picture of `}
-                                        layout="fill"
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={data?.images[2].link}
-                                        className=""
-                                    />
+                                    {isLoading ? (
+                                        <Skeleton height="full" width={'full'} />
+                                    ) : (
+                                        <Image
+                                            src={data?.images[2].link}
+                                            alt={`Picture of `}
+                                            layout="fill"
+                                            objectFit="cover"
+                                            placeholder="blur"
+                                            blurDataURL={data?.images[2].link}
+                                            className=""
+                                        />
+                                    )}
                                 </GridItem>
                                 <GridItem area={'pic3'} position="relative">
-                                    <Image
-                                        src={data?.images[3].link}
-                                        alt={`Picture of `}
-                                        layout="fill"
-                                        objectFit="cover"
-                                        placeholder="blur"
-                                        blurDataURL={data?.images[3].link}
-                                        className=""
-                                    />
+                                    {isLoading ? (
+                                        <Skeleton height="full" width={'full'} />
+                                    ) : (
+                                        <Image
+                                            src={data?.images[3].link}
+                                            alt={`Picture of `}
+                                            layout="fill"
+                                            objectFit="cover"
+                                            placeholder="blur"
+                                            blurDataURL={data?.images[3].link}
+                                            className=""
+                                        />
+                                    )}
                                 </GridItem>
                             </>
                         </Grid>
@@ -239,21 +269,30 @@ function Tours() {
                                     <Box pt={12} pb={6}>
                                         <div className="flex justify-between items-center">
                                             <section>
-                                                <Heading
-                                                    lineHeight={1.4}
-                                                    as="h2"
-                                                    fontSize={'22px'}
-                                                    fontWeight={'600'}
-                                                    width={'full'}
-                                                    noOfLines={1}
-                                                    mb={1}
-                                                    size={'lg'}
-                                                >
-                                                    Trải nghiệm do {data.user.userName} tổ chức
-                                                </Heading>
-                                                <Text>
-                                                    {numberToTime(data.timeSlotLength)} - Ngôn ngữ: {data.user.language}
-                                                </Text>
+                                                {isLoading ? (
+                                                    <>
+                                                        <Skeleton height="22px" width={'400px'} mb={2} />
+                                                        <Skeleton height="20px" width={'250px'} />
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <Heading
+                                                            lineHeight={1.4}
+                                                            as="h2"
+                                                            fontSize={'22px'}
+                                                            fontWeight={'600'}
+                                                            width={'full'}
+                                                            noOfLines={1}
+                                                            mb={1}
+                                                            size={'lg'}
+                                                        >
+                                                            Trải nghiệm do {data.user.userName} tổ chức
+                                                        </Heading>
+                                                        <Text>
+                                                            {numberToTime(data.timeSlotLength)} - Ngôn ngữ: {data.user.language}
+                                                        </Text>
+                                                    </>
+                                                )}
                                             </section>
                                             <Avatar
                                                 name={data.user.userName}
@@ -282,12 +321,16 @@ function Tours() {
                                     </Box>
                                     <Box py={12}>
                                         <div className="flex w-full mb-6">
-                                            <Avatar
-                                                name={data.user.userName}
-                                                src={data.user.urlImage ? data.user.urlImage : 'https://bit.ly/broken-link'}
-                                                className="mr-4"
-                                                size={'lg'}
-                                            />
+                                            {isLoading ? (
+                                                <SkeletonCircle size={'lg'} />
+                                            ) : (
+                                                <Avatar
+                                                    name={data.user.userName}
+                                                    src={data.user.urlImage ? data.user.urlImage : 'https://bit.ly/broken-link'}
+                                                    className="mr-4"
+                                                    size={'lg'}
+                                                />
+                                            )}
 
                                             <section>
                                                 <Heading
@@ -316,7 +359,6 @@ function Tours() {
                                         </ul>
                                         <Collapse startingHeight={170} in={show.cp2}>
                                             {data.user.description}
-                                            
                                         </Collapse>
                                         <Button size="sm" variant={'link'} onClick={() => handleToggle('cp2')} mt="1rem">
                                             {show.cp2 ? 'Xem thêm' : 'Ẩn bớt'}
@@ -347,12 +389,19 @@ function Tours() {
                                 </VStack>
                             </div>
                             <div className="relative w-[38%] ml-[12%]">
-                                <CardBooking
-                                    dataTimeBooking={jsxCardBookTime}
-                                    priceOnePerson={data?.priceOnePerson}
-                                    tourId={data.tourId}
-                                    onOpen={onModalOpen2}
-                                />
+                                {isLoading ? (
+                                    <div className="mt-11">
+                                        <Skeleton height="40px" width={'300px'} mb={4} />
+                                        <Skeleton height="60px" width={'400px'} />
+                                    </div>
+                                ) : (
+                                    <CardBooking
+                                        dataTimeBooking={jsxCardBookTime}
+                                        priceOnePerson={data?.priceOnePerson}
+                                        tourId={data.tourId}
+                                        onOpen={onModalOpen2}
+                                    />
+                                )}
                             </div>
                         </Box>
                         <Box py={12}>

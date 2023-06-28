@@ -2,7 +2,6 @@
   "name": "tourApp",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://221.132.33.161:9000/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

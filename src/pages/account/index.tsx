@@ -8,7 +8,7 @@ import {
     IconButton,
     StackDivider,
     Tab,
-    TabIndicator,
+    useDisclosure,
     TabList,
     TabPanel,
     TabPanels,
@@ -20,20 +20,22 @@ import AccountModal from '@components/Modal/AccountModal';
 
 import { useSession } from 'next-auth/react';
 import Image from 'next/image';
-import {  BiGlobe, BiPhone, BiUpload } from 'react-icons/bi';
-import {  FaLanguage } from 'react-icons/fa';
+import { BiGlobe, BiPhone, BiUpload } from 'react-icons/bi';
+import { FaLanguage } from 'react-icons/fa';
 import { FiEdit2 } from 'react-icons/fi';
 import useProfile from 'src/hooks/account/useProfile';
 import { formatRole } from 'src/utils/guestsUtil';
-import { useDisclosure } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import usePostToCloudinary from 'src/hooks/imageCloudinary/usePostToCloudinary';
 import usePatchProfile from 'src/hooks/account/usePatchProfile';
+import useWallet from 'src/hooks/guest/payment/useWallet';
+import WalletModal from '@components/Modal/WalletModal';
 
 const Account = () => {
     const { data: session, status } = useSession();
     const { data, isLoading, isSuccess, isError } = useProfile();
+    const { useGetWallet } = useWallet();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [props, setProps] = useState<{
         title: string;
@@ -46,13 +48,12 @@ const Account = () => {
     };
     const { patchInfoAccount } = usePatchProfile();
 
-    const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject, open } = useDropzone({
+    const { open } = useDropzone({
         maxFiles: 1,
         accept: {
             'image/*': ['.jpeg', '.png'],
         },
         onDrop: async (acceptedFiles) => {
-            
             const listLink = await Promise.all(
                 acceptedFiles.map(async (file) => {
                     const link = await usePostToCloudinary(file);
@@ -64,9 +65,10 @@ const Account = () => {
                     urlImage: listLink[0].link,
                 });
             }
-           
         },
     });
+    const { isOpen: isModalOpen, onClose: onModalClose, onOpen: onModalOpen } = useDisclosure();
+    const [type, setType] = useState<'create' | 'update'>('create');
     return (
         <Tabs position="relative" variant="unstyled">
             <div className="min-h-screen flex justify-center w-full">
@@ -142,7 +144,7 @@ const Account = () => {
                                             variant={'link'}
                                             icon={<FiEdit2 />}
                                             aria-label="Scroll bottom"
-                                            onClick={() => handleClick('tên người dùng', data?.userName, 'userName')}
+                                            onClick={() => handleClick('tên người dùng', session?.user?.username, 'userName')}
                                         />
                                     </Box>
                                 </div>
@@ -264,10 +266,70 @@ const Account = () => {
                                     <Box></Box>
                                 </VStack>
                             </TabPanel>
-                            <TabPanel display={'flex'} justifyContent={'flex-start'}>
+                            <TabPanel display={'flex'} alignItems={'flex-start'} flexDirection={'column'}>
+                                <WalletModal isOpen={isModalOpen} onClose={onModalClose} type={type} data={useGetWallet.data?.data} />
                                 <Heading lineHeight={1.4} as="h2" fontSize={'32px'} fontWeight={'700'} noOfLines={2} textAlign={'center'}>
                                     Thanh toán & chi trả
                                 </Heading>
+                                {useGetWallet.data?.data ? (
+                                    <div className="mt-6 w-full shadow-2xl text-white bg-[#201f1f] rounded-xl">
+                                        <div className="p-8 flex flex-col">
+                                            <h3 className="font-semibold text-xl text-gray-300 leading-relaxed flex justify-between mb-4">
+                                                <div className="flex">Tài khoản ngân hàng {useGetWallet.data?.data.bankName}</div>
+                                                <button
+                                                    className=""
+                                                    onClick={() => {
+                                                        setType('update');
+                                                        onModalOpen();
+                                                    }}
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        // xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                        aria-hidden="true"
+                                                        role="img"
+                                                        width="1em"
+                                                        height="1em"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
+                                                        <circle cx="12" cy="5" r="2" fill="currentColor"></circle>
+                                                        <circle cx="12" cy="19" r="2" fill="currentColor"></circle>
+                                                    </svg>
+                                                </button>
+                                            </h3>
+                                            <h3 className="font-bold leading-normal text-4xl mt-2">{session?.user?.username}</h3>
+                                            <h6 className="flex flex-end flex-row-reverse items-center my-4">
+                                                **** **** ****{' '}
+                                                {useGetWallet.data?.data.accountNumber.slice(
+                                                    -4,
+                                                    useGetWallet.data?.data.accountNumber.length,
+                                                )}
+                                                <img
+                                                    src="https://frontend.tikicdn.com/_desktop-next/static/img/icons/checkout/icon-payment-method-vnpay.png"
+                                                    alt=""
+                                                    className="w-12 h-12 mr-2"
+                                                />
+                                            </h6>
+                                            <div className="flex flex-end flex-row">
+                                                <h5 className="font-semibold text-l text-gray-300 leading-relaxed">Expired Date: 08/26</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <Button
+                                        mt={6}
+                                        py={6}
+                                        colorScheme="blackAlpha"
+                                        bgColor={'black'}
+                                        onClick={() => {
+                                            setType('create');
+                                            onModalOpen();
+                                        }}
+                                    >
+                                        Thêm phương thức thanh toán
+                                    </Button>
+                                )}
                             </TabPanel>
                         </TabPanels>
                     </Box>

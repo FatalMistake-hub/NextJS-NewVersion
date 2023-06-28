@@ -1,4 +1,4 @@
 export interface IStatisticOrder {
-    totalOrder: number;
+    value: number;
     label: string;
 }

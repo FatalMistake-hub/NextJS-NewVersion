@@ -1,9 +1,9 @@
 import { Box, VStack, Text, Heading } from '@chakra-ui/react';
 import MultiStepBtn from '@components/GroupButton/MultiStepBtn';
 import Lottie, { LottieRefCurrentProps } from 'lottie-react';
-import { useRef } from 'react';
+import { FC, useRef } from 'react';
 import animationData from '@public/assets/animation/29582-looping-idle-location-animation.json';
-const BecomeHostStep1 = () => {
+const BecomeHostStep1:FC = () => {
     const locationRef = useRef<LottieRefCurrentProps | null>(null);
     return (
         <>

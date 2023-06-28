@@ -16,7 +16,7 @@ const useUpdateOrder = () => {
         mutationFn: (data: Partial<IOrder>) =>
             patchUpdateOrder(httpAuthJWT, data.orderId, { orderIdBlockChain: data.orderIdBlockChain, publicKey: data.publicKey }),
         onSuccess: () => {
-            client.invalidateQueries(['GET_ALL_HOST_ORDER']);
+            client.invalidateQueries(['GET_ALL_OWNER_ORDER']);
             toast({
                 title: 'SUCCESSFULLY ADDED A LISTING',
                 status: 'success',

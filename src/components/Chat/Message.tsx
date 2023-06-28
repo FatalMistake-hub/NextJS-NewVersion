@@ -140,8 +140,8 @@ const Message = () => {
                                                     {msg.message.length > 0 ? (
                                                         'BotGPT gợi ý cho bạn 1 số tour sau:'
                                                     ) : (
-                                                        <div className='flex items-center justify-between'>
-                                                            <BiGhost size={60} className='mr-2' />
+                                                        <div className="flex items-center justify-between">
+                                                            <BiGhost size={60} className="mr-2" />
                                                             Xin lỗi! BotGPT không có câu trả lời cho câu hỏi của bạn
                                                         </div>
                                                     )}
@@ -181,7 +181,7 @@ const Message = () => {
                                                                                         objectFit="cover"
                                                                                         placeholder="blur"
                                                                                         blurDataURL={item.imageMain}
-                                                                                        className={''}
+                                                                                        className={'rounded-t-xl'}
                                                                                     />
                                                                                 </Box>
                                                                                 <Text

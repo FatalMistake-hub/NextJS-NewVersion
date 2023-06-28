@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
 
 const RedirectLayout = ({ children }: any): JSX.Element => {
     const router = useRouter();
     const { data: session, status } = useSession();
-    useEffect(() => {
+    useLayoutEffect(() => {
         const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
         if (isMobile) {

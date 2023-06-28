@@ -28,7 +28,9 @@
   left: 0;
   top: -8px;
 }
-
+.rdrStaticRangeSelected{
+  color: teal !important;
+}
 .rdrMonthAndYearPickers {
   display: none !important;
 }
@@ -73,6 +75,7 @@
 
 .rdrDays {
   row-gap: 2px;
+  justify-content: center !important;
 }
 
 .rdrStartEdge,

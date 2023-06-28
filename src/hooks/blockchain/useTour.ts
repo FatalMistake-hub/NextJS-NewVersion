@@ -1,14 +1,10 @@
 import * as anchor from '@project-serum/anchor';
 import { useEffect, useMemo, useState } from 'react';
-
 import tourIDL from '../../utils/constants/tour.json';
 import { SystemProgram } from '@solana/web3.js';
 import { utf8 } from '@project-serum/anchor/dist/cjs/utils/bytes';
 import { findProgramAddressSync } from '@project-serum/anchor/dist/cjs/utils/pubkey';
 import { useAnchorWallet, useConnection, useWallet } from '@solana/wallet-adapter-react';
-
-import { PublicKey } from '@solana/web3.js';
-
 import { useToast } from '@chakra-ui/react';
 import { TOUR_PROGRAM_PUBKEY } from 'src/utils/constants/programPubkey';
 import { IOrder } from 'src/types/order.type';
@@ -25,15 +21,10 @@ export function useTour() {
     const [initialized, setInitialized] = useState(false);
     const [user, setUser] = useState({});
     const [tours, setTours] = useState<any>([]);
-    const [bookings, setBookings] = useState([]);
     const [lastTour, setLastTour] = useState(0);
-    const [lastBookId, setLastBookId] = useState<any>(0);
     const [loading, setLoading] = useState(false);
     const [transactionPending, setTransactionPending] = useState(false);
 
-    // const program = new PublicKey(
-    //     "8ktkADKMec8BE1q47k6LnMWqYpNTjqtinZ6ng219wMwf"
-    //   );
 
     const program = useMemo(() => {
         if (anchorWallet) {
@@ -51,15 +42,11 @@ export function useTour() {
                         program.programId,
                     );
                     const profileAccount = await program.account.userProfile.fetch(profilePda);
-                    // console.log(profileAccount);
                     if (profileAccount) {
                         setLastTour(profileAccount.lastTour);
                         setInitialized(true);
                         setLoading(true);
-
                         const listings = await program.account.tourAccount.all();
-
-                        setLastBookId(listings);
                         setUser(profileAccount.toString());
 
                         const myTour = listings.filter(
@@ -78,7 +65,6 @@ export function useTour() {
                 }
             }
         };
-
         start();
     }, [publicKey, program, transactionPending]);
 
@@ -122,9 +108,11 @@ export function useTour() {
         imageMain,
         timeId,
         userId,
-    }: Omit<IOrder, 'priceOnePerson' | 'statusOrder' | 'city' | 'orderIdBlockChain' | 'publicKey' | 'timeBookViewDto' | 'date_name'|'tourId'|'user'>) => {
+    }: Omit<
+        IOrder,
+        'priceOnePerson' | 'statusOrder' | 'city' | 'orderIdBlockChain' | 'publicKey' | 'timeBookViewDto' | 'date_name' | 'tourId' | 'user'
+    >) => {
         if (program && publicKey) {
-            console.log(location, orderId, orderDate, price, tour_title, imageMain, timeId, userId, 'YOOO');
             setTransactionPending(true);
             setLoading(true);
             try {
@@ -133,16 +121,6 @@ export function useTour() {
                     [utf8.encode('TOUR_STATE'), publicKey.toBuffer(), Uint8Array.from([lastTour])],
                     program.programId,
                 );
-
-                console.log(
-                    publicKey.toString(),
-                    program.programId,
-                    profilePda.toString(),
-                    tourPda.toString(),
-                    lastTour,
-                    SystemProgram.programId,
-                );
-
                 await program.methods
                     .addTour(orderId, String(price), tour_title, imageMain, timeId, userId, orderDate)
                     .accounts({
@@ -152,7 +130,6 @@ export function useTour() {
                         systemProgram: SystemProgram.programId,
                     })
                     .rpc();
-
                 return { publicKeyCreater: publicKey.toString(), publicKeyOrder: tourPda.toString() };
             } catch (error) {
                 console.error(error);
@@ -163,21 +140,7 @@ export function useTour() {
         }
     };
 
-    const updateTour = async ({
-        tourPda,
-        tourIdx,
-    }: // orderId,
-    // orderDate,
-    // price,
-    // tour_title,
-    // imageMain,
-    // timeId,
-    // userId,
-    // Omit<IOrder, 'priceOnePerson' | 'statusOrder' | 'city' | 'orderIdBlockChain' | 'publicKey' | 'timeBookViewDto' | 'date_name'> &
-    {
-        tourPda: string;
-        tourIdx: number;
-    }) => {
+    const updateTour = async ({ tourPda, tourIdx }: { tourPda: string; tourIdx: number }) => {
         console.log(tourPda.toString());
         if (program && publicKey) {
             try {
@@ -186,10 +149,7 @@ export function useTour() {
                 const [profilePda] = findProgramAddressSync([utf8.encode('USER_STATE'), publicKey.toBuffer()], program.programId);
 
                 await program.methods
-                    .updateTour(
-                        tourIdx,
-                        // , orderId, orderDate, price, tour_title, imageMain, timeId, userId
-                    )
+                    .updateTour(tourIdx)
                     .accounts({
                         userProfile: profilePda,
                         tourAccount: tourPda,
@@ -197,30 +157,22 @@ export function useTour() {
                         systemProgram: SystemProgram.programId,
                     })
                     .rpc();
-               
             } catch (error) {
-                console.error(error);
-                 toast({
-                     title: 'Error EDIT TOUR.',
-                     status: 'error',
-                     duration: 3000,
-                     isClosable: true,
-                     position: 'top',
-                 });
+                toast({
+                    title: 'Error EDIT TOUR.',
+                    status: 'error',
+                    duration: 3000,
+                    isClosable: true,
+                    position: 'top',
+                });
             } finally {
                 setLoading(false);
                 setTransactionPending(false);
             }
         }
     };
-
-    // const editListing = ({ publicKey, idx, location, country, price, description, imageURL }) => {
-    //     console.log(publicKey, idx, location, country, price, description, imageURL, 'YAY');
-    // };
-
     return {
-        tours,
-        // bookings,
+        tours, 
         addTour,
         updateTour,
         initializeUser,

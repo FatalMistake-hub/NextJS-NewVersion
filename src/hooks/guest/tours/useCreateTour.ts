@@ -16,8 +16,8 @@ const useCreateTour = () => {
     const { mutate, isLoading, isError, isSuccess } = useMutation({
         mutationFn: (tours: TourPost) => postTours(tours, httpAuthJWT),
         onSuccess: ({ data }) => {
-            dispatch(SET_INITSTATE(becomeHostInitState));
             router.push(`/hosting`);
+            dispatch(SET_INITSTATE(becomeHostInitState));
         },
         onError: (error: any) => {
 
@@ -32,14 +32,14 @@ const useCreateTour = () => {
             }
         },
         onMutate: (tours: TourPost) => {
-            toast({
-                title: 'Trải nghiệm đang được tạo.',
-                description: `Vui lòng đợi trong giây lát.`,
-                status: 'info',
-                duration: 3000,
-                isClosable: true,
-                position: 'top',
-            });
+            // toast({
+            //     title: 'Trải nghiệm đang được tạo.',
+            //     description: `Vui lòng đợi trong giây lát.`,
+            //     status: 'info',
+            //     duration: 3000,
+            //     isClosable: true,
+            //     position: 'top',
+            // });
         },
     });
 

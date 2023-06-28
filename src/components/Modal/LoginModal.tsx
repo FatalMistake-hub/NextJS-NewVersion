@@ -31,6 +31,7 @@ interface LoginModalProps {
 export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     const { isLogin } = useAppSelector(selectAuth);
     const dispatch = useAppDispatch();
+    const [loading, setLoading] = useState(false);
     const Login = useFormik({
         initialValues: {
             email: '',
@@ -48,6 +49,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 ),
         }),
         onSubmit: async (values) => {
+            setLoading(true);
             const res = await signIn('credentials', {
                 email: values.email,
                 password: values.password,
@@ -58,6 +60,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 onClose();
                 dispatch(SET_isLogin_TRUE());
             }
+            setLoading(false);
         },
     });
     return (
@@ -127,6 +130,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                             <Link color={'teal.400'}>Forgot password?</Link>
                                         </Stack> */}
                                         <Button
+                                            isLoading={loading}
                                             type="submit"
                                             bg={'teal.400'}
                                             color={'white'}

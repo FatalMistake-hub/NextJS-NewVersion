@@ -8,6 +8,7 @@ import usePatchProfile from 'src/hooks/account/usePatchProfile';
 import { useTour } from 'src/hooks/blockchain/useTour';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useSession } from 'next-auth/react';
+import Suspense from '@components/Supense';
 const END_STEP = 11;
 const START_STEP = 1;
 
@@ -54,24 +55,28 @@ const MultiStepBtn = () => {
     const { initializeUser, transactionPending, initialized } = useTour();
     const handleFinalStep = async () => {
         try {
-            if (!initialized && connected) {
-                await initializeUser();
-                await patchInfoAccount({
-                    accountAuthorize: publicKey?.toString(),
-                });
+            if (session?.user.role === 'OWNER') {
                 await postTours(tour);
             } else {
-                toast({
-                    title: 'Ví của bạn không hợp lệ.',
-                    description: `Ví của bạn đã được sử dụng ở một tài khoản khác hoặc chưa được kết nối.`,
-                    status: 'error',
-                    duration: 3000,
-                    isClosable: true,
-                    position: 'top',
-                });
-            }
-            if (session?.user.accountAuthorize === publicKey?.toString() && connected && initialized) {
-                await postTours(tour);
+                if (!initialized && connected) {
+                    await initializeUser();
+                    await patchInfoAccount({
+                        accountAuthorize: publicKey?.toString(),
+                    });
+                    await postTours(tour);
+                }
+                if (session?.user.accountAuthorize === publicKey?.toString() && connected && initialized) {
+                    await postTours(tour);
+                } else {
+                    toast({
+                        title: 'Ví của bạn không hợp lệ.',
+                        description: `Ví của bạn đã được sử dụng ở một tài khoản khác hoặc chưa được kết nối.`,
+                        status: 'error',
+                        duration: 3000,
+                        isClosable: true,
+                        position: 'top',
+                    });
+                }
             }
         } catch (error) {
             toast({
@@ -95,6 +100,8 @@ const MultiStepBtn = () => {
                 transitionDuration="1.5s"
                 transitionTimingFunction="linear"
             />
+
+            {isLoadingPost && <Suspense />}
             <ButtonGroup w="100%" py={4} px={12}>
                 <Flex w="100%" justifyContent="space-between">
                     <Flex>

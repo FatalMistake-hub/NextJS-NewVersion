@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import { SET_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
 import useUserLocation from 'src/hooks/map/useUserLocation';
+import moment from 'moment';
 
 interface Props {
     dataCategory: any;
@@ -300,7 +301,7 @@ const Home = ({ dataCategory, imageMain }: Props) => {
                     </Heading>
 
                     {status === 'loading' ? (
-                        <SimpleGrid minChildWidth={'304px'} columnGap="4" py={12}>
+                        <SimpleGrid minChildWidth={'304px'} columnGap="4" pb={12}>
                             <CardItemSkeleton />
                             <CardItemSkeleton />
                             <CardItemSkeleton />

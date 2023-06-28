@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ChangeEvent, useState } from 'react';
 
 import useGetAllGuestOrder from 'src/hooks/hosting/order/useGetAllGuestOrder';
+import { IOrder } from 'src/types/order.type';
 
 const Trips = () => {
     const { data, isLoading, isError, isSuccess } = useGetAllGuestOrder();
@@ -43,6 +44,12 @@ const Trips = () => {
                     <SimpleGrid minChildWidth={'600px'} gap={16}>
                         {data
                             ?.filter((order) => !selectedStatus || order.statusOrder === selectedStatus)
+                            .sort((a: IOrder, b: IOrder) => {
+                                const dateA = new Date(a.orderDate);
+                                const dateB = new Date(b.orderDate);
+
+                                return dateB.getTime() - dateA.getTime();
+                            })
                             .map((item, index) => (
                                 <CardTrip key={item.orderId} data={item} />
                             ))}

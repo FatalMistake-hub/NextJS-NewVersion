@@ -187,15 +187,19 @@ const TripDetail = () => {
                             center={{ longitude: Number(dataTour?.longitude), latitude: Number(dataTour?.latitude) }}
                             className="relative"
                         >
-                            <Button
-                                className="absolute top-4 left-4 z-10 "
-                                colorScheme="teal"
-                                variant={'solid'}
-                                onClick={onModalReviewOpen}
-                            >
-                                Đánh giá trải nghiệm{' '}
-                            </Button>
-                            <ReviewModal isOpen={isModalReviewOpen} onClose={onModalReviewClose} />
+                            {router.query.statusOrder === 'USED' && (
+                                <>
+                                    <Button
+                                        className="absolute top-4 left-4 z-10 "
+                                        colorScheme="teal"
+                                        variant={'solid'}
+                                        onClick={onModalReviewOpen}
+                                    >
+                                        Đánh giá trải nghiệm{' '}
+                                    </Button>
+                                    <ReviewModal isOpen={isModalReviewOpen} onClose={onModalReviewClose} />
+                                </>
+                            )}
                             <Marker latitude={Number(dataTour?.latitude)} longitude={Number(dataTour?.longitude)}>
                                 <BsGeoAltFill style={{ zIndex: 10 }} size={'3rem'} className=" text-[#3d9d9b] absolute top-0 right-1" />
                             </Marker>

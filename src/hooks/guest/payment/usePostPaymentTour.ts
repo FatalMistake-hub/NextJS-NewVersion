@@ -33,14 +33,7 @@ const usePostPaymentTour = () => {
             }
         },
         onMutate: (data: IPayment) => {
-            toast({
-                title: 'Trải nghiệm đang được tạo.',
-                description: `Vui lòng đợi trong giây lát.`,
-                status: 'info',
-                duration: 3000,
-                isClosable: true,
-                position: 'top',
-            });
+            
         },
     });
 

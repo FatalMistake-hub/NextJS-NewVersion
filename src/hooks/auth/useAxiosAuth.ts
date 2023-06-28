@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { useSession } from 'next-auth/react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useLayoutEffect } from 'react';
 import { httpAuth } from 'src/utils/instance/http';
 import { useRefreshToken } from './useRefreshToken';
 
@@ -10,7 +10,7 @@ const useAxiosAuth = (): AxiosInstance => {
     const requestInterceptorRef = useRef<number | null>(null);
     const responseInterceptorRef = useRef<number | null>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (status === 'loading') {
             return;
         }
