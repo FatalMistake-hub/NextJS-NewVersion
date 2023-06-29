@@ -15,7 +15,7 @@ import Lottie, { LottieRefCurrentProps } from 'lottie-react';
 import { useRef } from 'react';
 function GptChatBox() {
     const locationRef = useRef<LottieRefCurrentProps | null>(null);
-
+    console.log('reRender');
     return (
         <div className="fixed bottom-6 right-8 drop-shadow-xl z-50">
             <Popover isLazy placement="top-end" closeOnBlur={false}>

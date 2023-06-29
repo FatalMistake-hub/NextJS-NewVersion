@@ -43,6 +43,22 @@ const Performance = () => {
                 text: `${type === 'ORDER' ? 'Thống kê đơn đặt' : 'Thống kê doanh thu'}`,
             },
         },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: `${type === 'ORDER' ? 'Tổng đơn đặt' : 'Tổng doanh thu'}`,
+                },
+            },
+            x: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Ngày',
+                },
+            },
+        },
     };
     const [state, setState] = useState<any>([
         {
@@ -57,7 +73,6 @@ const Performance = () => {
             end: moment(state[0].endDate).format('YYYY-MM-DD'),
             type: type,
         });
-        console.log(data, type);
     }, [state, type]);
     return (
         <div className="min-h-screen flex flex-col items-center pt-20">

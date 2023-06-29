@@ -21,6 +21,7 @@ function ScrollBottom({ messages }: { messages: any }) {
     return <div ref={scrollRef} />;
 }
 const Message = () => {
+    console.log('render Message');
     let scrollBottom = false;
     const msgsContainer = useRef<HTMLDivElement>(null);
     const bgGradient = useBgGradient();

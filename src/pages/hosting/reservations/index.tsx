@@ -253,7 +253,7 @@ const Reservations = () => {
                                                     <MenuList maxW={'40px'}>
                                                         <>
                                                             <MenuItem
-                                                                _hover={{ backgroundColor: ' #88fa2b83 ' }}
+                                                                _hover={{ backgroundColor: ' #23ce1483 ' }}
                                                                 className="flex justify-between "
                                                                 onClick={() => {
                                                                     handleChangeStatusOrder('SUCCESS', order.orderId, order);

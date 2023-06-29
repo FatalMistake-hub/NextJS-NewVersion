@@ -12,7 +12,6 @@ import {
     PopoverCloseButton,
     PopoverBody,
     Image,
-    PopoverFooter,
     PopoverArrow,
     Input,
     InputLeftAddon,
@@ -25,9 +24,8 @@ import {
 } from '@chakra-ui/react';
 
 import { BiChevronDown, BiChevronLeft, BiChevronUp } from 'react-icons/bi';
-import { ESearchMenu } from 'src/utils/constants/Enums';
 import { useAppSelector, useAppDispatch } from 'src/redux/hook';
-import { useState, FocusEvent, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import {
     DECREASE_ADULTS,
@@ -36,7 +34,6 @@ import {
     INCREASE_ADULTS,
     INCREASE_CHILDREN,
     INCREASE_INFANTS,
-    RESET_GUESTS,
     selectSearch,
 } from 'src/redux/slice/searchSlice';
 import Counter from '@components/Search/Counter';
@@ -266,9 +263,6 @@ const Payment = () => {
                                                     </div>
                                                 </div>
                                             </PopoverBody>
-                                            <PopoverFooter border="0" display="flex" alignItems="center" justifyContent="flex-end">
-                                                <Button colorScheme="teal">Next</Button>
-                                            </PopoverFooter>
                                         </PopoverContent>
                                     </Popover>
                                 </div>
