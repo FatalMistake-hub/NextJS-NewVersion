@@ -12,25 +12,19 @@ const useUpdateOrder = () => {
     const httpAuthJWT = useAxiosAuth();
     const toast = useToast();
 
-    const { mutate, isLoading, isError, isSuccess } = useMutation({
+    const { mutateAsync, isLoading, isError, isSuccess } = useMutation({
         mutationFn: (data: Partial<IOrder>) =>
             patchUpdateOrder(httpAuthJWT, data.orderId, { orderIdBlockChain: data.orderIdBlockChain, publicKey: data.publicKey }),
         onSuccess: () => {
             client.invalidateQueries(['GET_ALL_OWNER_ORDER']);
-            toast({
-                title: 'SUCCESSFULLY ADDED A LISTING',
-                status: 'success',
-                duration: 3000,
-                isClosable: true,
-                position: 'top',
-            });
+            
         },
     });
 
     return {
         updateOrder: (data: Partial<IOrder>) => {
             if (data) {
-                return mutate(data);
+                return mutateAsync(data);
             }
         },
         isLoading,

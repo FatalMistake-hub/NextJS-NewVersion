@@ -29,7 +29,7 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const { register, isLoading, isSuccess } = useRegister();
-
+    const [error, setError] = useState('');
     const Register = useFormik({
         initialValues: {
             email: '',
@@ -56,11 +56,14 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                 .oneOf([Yup.ref('password')], 'Mật khẩu nhập lại không trùng khớp!'),
         }),
         onSubmit: async (values) => {
+            setError('');
             await register({
                 userEmail: values.email,
                 userPassword: values.password,
                 matchingPassword: values.confirmPassword,
                 userName: values.name,
+            }).catch((err) => {
+                setError('Đăng ký thất bại!');
             });
         },
     });
@@ -171,6 +174,13 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
                                         <Stack pt={6}>
                                             <Text align={'center'} color={'green'}>
                                                 Kiểm tra gmail để xác nhận tài khoản!
+                                            </Text>
+                                        </Stack>
+                                    )}
+                                    {error && (
+                                        <Stack pt={6}>
+                                            <Text align={'center'} color={'red'}>
+                                                {error}
                                             </Text>
                                         </Stack>
                                     )}

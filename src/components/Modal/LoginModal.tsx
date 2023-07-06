@@ -32,6 +32,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
     const { isLogin } = useAppSelector(selectAuth);
     const dispatch = useAppDispatch();
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const Login = useFormik({
         initialValues: {
             email: '',
@@ -50,6 +51,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
         }),
         onSubmit: async (values) => {
             setLoading(true);
+            setError('');
             const res = await signIn('credentials', {
                 email: values.email,
                 password: values.password,
@@ -59,6 +61,9 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             if (res?.status === 200) {
                 onClose();
                 dispatch(SET_isLogin_TRUE());
+            } else {
+                setError('Đăng nhập thất bại!');
+
             }
             setLoading(false);
         },
@@ -124,6 +129,11 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                             </Text>
                                         )}
                                     </FormControl>
+                                    {error && (
+                                        <Text color={'red'} mt={2}>
+                                            * {error}
+                                        </Text>
+                                    )}
                                     <Stack pt={4} spacing={10}>
                                         {/* <Stack direction={{ base: 'column', sm: 'row' }} align={'start'} justify={'space-between'}>
                                             <Checkbox>Remember me</Checkbox>
@@ -138,7 +148,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                                                 bg: 'teal.500',
                                             }}
                                         >
-                                           Đăng nhập
+                                            Đăng nhập
                                         </Button>
                                     </Stack>
                                 </Stack>

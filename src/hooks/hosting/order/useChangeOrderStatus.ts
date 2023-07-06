@@ -12,17 +12,24 @@ const useChangeStatusOrder = () => {
     const httpAuthJWT = useAxiosAuth();
     const toast = useToast();
 
-    const { mutate, isLoading, isError, isSuccess } = useMutation({
+    const { mutateAsync, isLoading, isError, isSuccess } = useMutation({
         mutationFn: (status: { orderId: string; status: string }) => changeStatusOrder(httpAuthJWT, status.orderId, status.status),
         onSuccess: () => {
-            client.invalidateQueries(['GET_ALL_OWNER_ORDER']);     
+            client.invalidateQueries(['GET_ALL_OWNER_ORDER']);
+            toast({
+                title: 'SUCCESSFULLY ADDED A LISTING',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                position: 'top',
+            });
         },
     });
 
     return {
         changeStatus: (status: { orderId: string; status: string }) => {
             if (status) {
-                return mutate(status);
+                return mutateAsync(status);
             }
         },
         isLoading,

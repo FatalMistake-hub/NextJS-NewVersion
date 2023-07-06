@@ -20,9 +20,10 @@ const CardTrip: FC<Props> = ({ data }) => {
             pathname: '/trips/detail',
             query: {
                 tourId: data.tourId,
-                orderIdBlockChain: data.orderIdBlockChain,
-                publicKey: data.publicKey,
-                statusOrder: data.statusOrder,
+                // orderIdBlockChain: data.orderIdBlockChain,
+                // publicKey: data.publicKey,
+                // statusOrder: data.statusOrder,
+                orderId: data.orderId,
             },
         });
     };

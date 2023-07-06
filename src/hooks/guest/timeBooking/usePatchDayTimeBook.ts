@@ -22,9 +22,7 @@ const usePatchDayTimeBook = (
         mutationFn: (data: Omit<IDayBook[], 'tourId'>) => patchDayTimeBook(data, httpAuthJWT),
         onSuccess: ({ data }) => {
             client.invalidateQueries(['GET_ALL_DAYBOOKING_TOURS', tourId]);
-            // client.invalidateQueries(['GET_ALL_TIME_BOOK_RANGE', tourId]);
             if (refetch) refetch();
-
             toast({
                 // title: 'Thành công.',
                 description: 'Đã cập nhật tình trạng trải nghiệm.',

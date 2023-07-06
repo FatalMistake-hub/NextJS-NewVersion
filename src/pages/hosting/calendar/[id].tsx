@@ -144,7 +144,7 @@ const CalendarHosting = () => {
                     </Popover>
                 </HStack>
             </Stack>
-            <Stack w={'430px'} float={'right'} className="border-l border-l-gray-700  ">
+            <Stack w={'20vw'} float={'right'} className="border-l border-l-gray-700  ">
                 <DaySection />
             </Stack>
         </div>

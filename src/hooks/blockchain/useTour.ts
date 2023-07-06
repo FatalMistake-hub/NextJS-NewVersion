@@ -25,7 +25,6 @@ export function useTour() {
     const [loading, setLoading] = useState(false);
     const [transactionPending, setTransactionPending] = useState(false);
 
-
     const program = useMemo(() => {
         if (anchorWallet) {
             const provider = new anchor.AnchorProvider(connection, anchorWallet, anchor.AnchorProvider.defaultOptions());
@@ -129,7 +128,9 @@ export function useTour() {
                         authority: publicKey,
                         systemProgram: SystemProgram.programId,
                     })
-                    .rpc();
+                    .rpc()
+                    
+
                 return { publicKeyCreater: publicKey.toString(), publicKeyOrder: tourPda.toString() };
             } catch (error) {
                 console.error(error);
@@ -172,7 +173,7 @@ export function useTour() {
         }
     };
     return {
-        tours, 
+        tours,
         addTour,
         updateTour,
         initializeUser,

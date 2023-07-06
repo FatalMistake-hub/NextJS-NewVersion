@@ -12,7 +12,7 @@ const useGetAllTimeBookingByRange = (
     end_time: string,
     pageSize: number,
     tourId: string | string[] | undefined,
-    setRes?: Dispatch<SetStateAction<IDayBookResponse | undefined>>,
+    setRes?: Dispatch<SetStateAction<IDayBookResponse >>,
 ): UseQueryInfinityResponse<any> => {
     const { ref, inView } = useInView({ threshold: 0 });
 

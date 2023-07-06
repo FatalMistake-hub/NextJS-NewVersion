@@ -12,7 +12,6 @@ export const getAllTimeByRange = async (
     pageNo: number,
     pageSize: number,
     tourId: string | string[] | undefined,
-
 ) =>
     await http.get<IDayBookResponse>(`/day-booking/day-time/${tourId}/${start_time}/${end_time}`, {
         params: {
@@ -33,4 +32,12 @@ export const patchTimeBook = async (timeBook: Omit<TimeBookViewDtoList, 'timeId'
 
 export const patchDayTimeBook = async (DayTimeBook: Omit<IDayBook[], 'tourId'>, axiosAuth: AxiosInstance) =>
     await axiosAuth.patch<IDayBookResponse>(`/day-booking/update-day-time/`, DayTimeBook);
-
+export const addDayTimeBooking = async (
+    DayTimeBook: Omit<TimeBookViewDtoList, 'timeId' | 'isDeleted'>,
+    tourId: string,
+    axiosAuth: AxiosInstance,
+) =>
+    await axiosAuth.post<IDayBookResponse>(`/tour/create-day-time/${tourId}`, {
+        endDay: DayTimeBook.end_time,
+        startDay: DayTimeBook.start_time,
+    });

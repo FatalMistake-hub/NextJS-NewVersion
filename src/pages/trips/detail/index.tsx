@@ -15,15 +15,17 @@ import { useRouter } from 'next/router';
 import { Marker } from 'react-map-gl';
 import { BsGeoAltFill } from 'react-icons/bs';
 import ReviewModal from '@components/Modal/ReviewModal';
+import useGetDetailGuestOrder from 'src/hooks/hosting/order/useGetOrderDetail';
 
 const TripDetail = () => {
     const [dataQr, setDataQr] = useState<string>();
     const { isOpen: isModalOpen, onClose: onModalClose, onOpen: onModalOpen } = useDisclosure();
     const { isOpen: isModalReviewOpen, onClose: onModalReviewClose, onOpen: onModalReviewOpen } = useDisclosure();
     const router = useRouter();
+    const { data: dataOrder } = useGetDetailGuestOrder(router.query.orderId as string);
     const generateQr = () => {
         QRCode.toDataURL(
-            `https://experience-travel.vercel.app/mobile/indentity/host?orderIdBlockChain=${router.query.orderIdBlockChain}&publicKey=${router.query.publicKey}`,
+            `https://experience-travel.vercel.app/mobile/indentity/host?orderIdBlockChain=${dataOrder?.orderIdBlockChain}&publicKey=${dataOrder?.publicKey}`,
         ).then(setDataQr);
     };
     const { data: dataTour, isLoading, isError, isSuccess } = useGetDetailTour(router.query.tourId);
@@ -43,7 +45,7 @@ const TripDetail = () => {
                 >
                     <Box w={'full'} boxShadow={'base'} borderRadius={'md'} backgroundColor={'white'}>
                         <Box w="full" minHeight="350px" maxHeight={'350px'} position="relative">
-                            {router.query.statusOrder === 'SUCCESS' && (
+                            {dataOrder?.statusOrder === 'SUCCESS' && (
                                 <div className="absolute bottom-4 right-4 z-10">
                                     <Button
                                         onClick={() => {
@@ -61,19 +63,19 @@ const TripDetail = () => {
                                 </div>
                             )}
 
-                            {router.query.statusOrder && (
+                            {dataOrder?.statusOrder && (
                                 <Badge
                                     py={1}
                                     px={4}
                                     rounded={'xl'}
                                     variant="solid"
-                                    colorScheme={handleColorStatus(router.query.statusOrder.toString())}
+                                    colorScheme={handleColorStatus(dataOrder?.statusOrder.toString())}
                                     position="absolute"
                                     className="bottom-4 left-4"
                                     zIndex={20}
                                     fontSize={'14px'}
                                 >
-                                    {handleNameStatus(router.query.statusOrder.toString())}
+                                    {handleNameStatus(dataOrder?.statusOrder.toString())}
                                 </Badge>
                             )}
                             <QrCodeModal isOpen={isModalOpen} onClose={onModalClose} data={dataQr} />
@@ -187,7 +189,7 @@ const TripDetail = () => {
                             center={{ longitude: Number(dataTour?.longitude), latitude: Number(dataTour?.latitude) }}
                             className="relative"
                         >
-                            {router.query.statusOrder === 'USED' && (
+                            {dataOrder?.statusOrder === 'USED' && (
                                 <>
                                     <Button
                                         className="absolute top-4 left-4 z-10 "

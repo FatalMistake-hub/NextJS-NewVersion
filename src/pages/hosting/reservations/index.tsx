@@ -24,6 +24,7 @@ import {
     MenuList,
     useToast,
 } from '@chakra-ui/react';
+import Suspense from '@components/Supense';
 import { useWallet } from '@solana/wallet-adapter-react';
 import moment from 'moment';
 import { useSession } from 'next-auth/react';
@@ -49,51 +50,62 @@ const Reservations = () => {
     const [page, setPage] = useState(1);
     const handlePageClick = (p: number) => setPage(p + 1);
     const { data, isLoading, isError, isSuccess } = useGetAllOwnerOrder(page, 6);
+    const [loading, setLoading] = useState(false);
     const { changeStatus } = useChangeStatusOrder();
     const { addTour, updateTour } = useTour();
     const { connected, publicKey } = useWallet();
     const { updateOrder } = useUpdateOrder();
     const handleChangeStatusOrder = async (status: string, orderId: string, order: IOrder) => {
-        if (session?.user.accountAuthorize === publicKey?.toString() && connected) {
-            if (status === EOrderStatus.SUCCESS) {
-                const response = await addTour({
-                    orderId: order.orderId,
-                    orderDate: order.orderDate,
-                    price: order.price,
-                    tour_title: order.tour_title,
-                    imageMain: order.imageMain,
-                    timeId: order.timeId,
-                    userId: order.userId,
-                });
-                await changeStatus({ orderId, status });
-                await updateOrder({
-                    orderIdBlockChain: response?.publicKeyOrder,
-                    publicKey: response?.publicKeyCreater,
-                    orderId: orderId,
-                });
-                console.log(response);
+        setLoading(true);
+        try {
+            if (session?.user.accountAuthorize === publicKey?.toString() && connected) {
+                if (status === EOrderStatus.SUCCESS) {
+                    const response = await addTour({
+                        orderId: order.orderId,
+                        orderDate: order.orderDate,
+                        price: order.price,
+                        tour_title: order.tour_title,
+                        imageMain: order.imageMain,
+                        timeId: order.timeId,
+                        userId: order.userId,
+                    });
+                    if (response?.publicKeyCreater === '' && response?.publicKeyOrder === '') {
+                        throw new Error('Lỗi tạo tour');
+                    } else {
+                        await updateOrder({
+                            orderIdBlockChain: response?.publicKeyOrder,
+                            publicKey: response?.publicKeyCreater,
+                            orderId: orderId,
+                        });
+                        await changeStatus({ orderId, status });
+                    }
+                } else {
+                    await changeStatus({ orderId, status });
+                }
             } else {
-                await changeStatus({ orderId, status });
-                await toast({
-                    title: 'SUCCESSFULLY ADDED A LISTING',
-                    status: 'success',
+                toast({
+                    title: 'Sử dụng không đúng ví',
+                    status: 'warning',
                     duration: 3000,
                     isClosable: true,
                     position: 'top',
                 });
             }
-        } else {
+        } catch (e) {
             toast({
-                title: 'Sử dụng không đúng ví',
-                status: 'warning',
+                title: 'Xác nhận thất bại',
+                status: 'error',
                 duration: 3000,
                 isClosable: true,
                 position: 'top',
             });
         }
+        setLoading(false);
     };
     return (
         <div className="px-6 min-h-screen">
+            {loading && <Suspense />}
+
             <VStack float={'left'} alignItems={'flex-start'} w={'full'} className=" border-b border-b-gray-900">
                 <IconButton
                     aria-label="back"

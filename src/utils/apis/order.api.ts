@@ -2,6 +2,8 @@ import { AxiosInstance } from 'axios';
 import { IAllOrder, IOrder } from 'src/types/order.type';
 
 export const getAllGuestOrder = async (axiosAuth: AxiosInstance) => await axiosAuth.get<IOrder[]>(`/order/all/`);
+export const getDetailGuestOrder = async (axiosAuth: AxiosInstance, orderId: string) =>
+    await axiosAuth.get<IOrder>(`/order/get-order-detail/${orderId}`);
 export const getAllHostOrder = async (axiosAuth: AxiosInstance) => await axiosAuth.get<IOrder[]>(`/order/get_list_order/`);
 export const changeStatusOrder = async (axiosAuth: AxiosInstance, orderId: string, status: string) =>
     await axiosAuth.get<any>(`/order/create-request/${orderId}/${status}`);

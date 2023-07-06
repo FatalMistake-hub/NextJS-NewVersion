@@ -14,7 +14,6 @@ import { useRouter } from 'next/router';
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import { SET_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
 import useUserLocation from 'src/hooks/map/useUserLocation';
-import moment from 'moment';
 
 interface Props {
     dataCategory: any;
@@ -190,6 +189,7 @@ const Home = ({ dataCategory, imageMain }: Props) => {
                             placeholder="blur"
                             blurDataURL={imageMain}
                             className={'brightness-[.7] rounded-2xl'}
+                            priority
                         />
                     </Box>
                     <Box
@@ -264,6 +264,7 @@ const Home = ({ dataCategory, imageMain }: Props) => {
                                                         : 'https://res.cloudinary.com/sacchidananad-utech/image/upload/v1686583596/steffen-b-qDZ-Xd8dX6w-unsplash_vsuyhz.jpg'
                                                 }
                                                 className={'rounded-xl'}
+                                                priority
                                             />
                                         </Box>
                                         <Text p={2} noOfLines={2} fontSize={'18px'} fontWeight={600}>
