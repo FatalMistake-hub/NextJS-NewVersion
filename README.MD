@@ -1,43 +1,30 @@
-# tourApp
+# XÂY DỰNG HỆ THỐNG ĐẶT TOUR DU LỊCH TRẢI NGHIỆM VÀ XÁC THỰC DỰA TRÊN CÔNG NGHỆ BLOCKCHAIN
 
-This project was generated with [superplate](https://github.com/pankod/superplate).
+Hệ thống giúp việc quản lý và đặt tour trở nên nhanh chóng, thuận tiện, giúp người dùng tiếp cận một cách dễ dàng và trực quan, đồng thời thông tin cá nhân cũng được lưu trữ một cách minh bạch và an toàn hơn với công nghệ Blockchain.
 
-## Getting Started
+## Yêu cầu hệ thống
 
-superplate is a Next.js all-in-one project generator. Create your project with the tools you need without spending hours on setting them up.
+- Node.js (version 18.15.0)
+- npm (version 9.7.2)
+- NextJs (version 12.1.6)
+- React JS: (version 18.2.0)
 
-## Available Scripts
+## Cài đặt
 
-### Running the development server.
+   1. Giải nén file chứa code
 
+   2. Mở terminal tại folder chứa code và chạy lệnh sau để cài đặt NPM dependencies:  
 ```bash
-    npm run dev
+npm install
 ```
 
-### Building for production.
-
+   3. Khởi chạy dự án: 
 ```bash
-    npm run build
+npm run dev
 ```
 
-### Running the production server.
+5. Truy cập trang web tại trình duyệt với đường dẫn:    
+      http://localhost:3000/
 
-```bash
-    npm run start
-```
-
-### **Chakra UI**
-
-Chakra UI is a simple, modular and accessible component library that gives you the building blocks you need to build your React applications.
-
-[Go To Documentation](https://chakra-ui.com/docs/getting-started)
-
-### **SASS/SCSS**
-
-Sass is a stylesheet language that’s compiled to CSS. It allows you to use variables, nested rules, mixins, functions, and more, all with a fully CSS-compatible syntax.
-
-[Go To Documentation](https://sass-lang.com/documentation)
-
-## License
-
-MIT
+6. Cài đặt ví Phantom để sử dụng tính năng xác thực: 
+      https://chrome.google.com/webstore/detail/phantom/bfnaelmomeimhlpmgjnjophhpkkoljpa
