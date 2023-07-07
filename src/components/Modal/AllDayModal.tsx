@@ -263,7 +263,7 @@ const AllDayModal: FC<AllDayModalProps> = ({ isOpen, onClose, price }) => {
                                                                             </Button>
                                                                         </div>
                                                                         <Text mt={6} fontSize={'14px'} color={'black.500'}>
-                                                                            Được tổ chức bằng Tiếng Anh, Tiếng Hàn Quốc và Tiếng Nhật Bản
+                                                                            Được tổ chức bằng Tiếng Anh, Tiếng Việt
                                                                         </Text>
                                                                     </div>
                                                                     <div className="pl-6 bg-gray-100 w-full py-2 px-1">
