@@ -1,7 +1,7 @@
 import { useToast } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useLayoutEffect, ReactElement, ReactNode, useEffect } from 'react';
+import {  ReactElement, ReactNode, useEffect } from 'react';
 import { useAppDispatch } from 'src/redux/hook';
 import { SET_isLogin_FALSE } from 'src/redux/slice/authSlice';
 
@@ -13,7 +13,7 @@ export const ProtectedLayout = ({ children }: any): JSX.Element => {
     const loading = sessionStatus === 'loading';
     const toast = useToast();
     const dispatch = useAppDispatch();
-    useLayoutEffect(() => {
+    useEffect(() => {
         // check if the session is loading or the router is not ready
         if (loading || !router.isReady) return;
 
@@ -53,7 +53,7 @@ export const ProtectedLayout = ({ children }: any): JSX.Element => {
 
     // if the user refreshed the page or somehow navigated to the protected page
     if (loading) {
-        return <>Loading app...</>;
+        return <></>;
     }
 
     // if the user is authorized, render the page

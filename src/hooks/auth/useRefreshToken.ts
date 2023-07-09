@@ -31,15 +31,15 @@ export const useRefreshToken = () => {
                 session.user.token = res.data.accessToken;
                 session.user.refreshToken = res.data.refreshToken;
             } else {
-                await toast({
-                    title: 'Bạn chưa đăng nhập.',
-                    description: 'Vui lòng đăng nhập.',
-                    status: 'warning',
-                    duration: 3000,
-                    isClosable: true,
-                    position: 'top',
-                });
-                await router.push('/');
+                // await toast({
+                //     title: 'Bạn chưa đăng nhập.',
+                //     description: 'Vui lòng đăng nhập.',
+                //     status: 'warning',
+                //     duration: 3000,
+                //     isClosable: true,
+                //     position: 'top',
+                // });
+                // await router.push('/');
                 // await signIn();
             }
         } catch (error: any) {

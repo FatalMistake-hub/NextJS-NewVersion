@@ -107,6 +107,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                         action="/search"
                         className={' grid-cols-[0.8fr,0.7fr,0.7fr,auto] lg:grid-cols-[1fr,0.7fr,1fr] grid flex-grow  '}
                         onSubmit={handleOnSubmit}
+                        
                     >
                         {/* location */}
                         <SearchOptionButton

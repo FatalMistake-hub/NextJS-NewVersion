@@ -36,7 +36,7 @@ const CalendarHosting = () => {
     const router = useRouter();
     const { id } = router.query;
     const tourId = Number(id);
-
+    
     return (
         <div className="pt-[76px] flex relative   ">
             <Stack w={'full'} className="relative">
