@@ -2,6 +2,8 @@
 
 Hệ thống giúp việc quản lý và đặt tour trở nên nhanh chóng, thuận tiện, giúp người dùng tiếp cận một cách dễ dàng và trực quan, đồng thời thông tin cá nhân cũng được lưu trữ một cách minh bạch và an toàn hơn với công nghệ Blockchain.
 
+Link báo cáo : https://docs.google.com/document/d/1P7AQDvWXFcjEhg-XjhMCegReEokkZLZ6/edit?usp=sharing&ouid=109581143956194311002&rtpof=true&sd=true
+
 ## Yêu cầu hệ thống
 
 - Node.js (version 18.15.0)
