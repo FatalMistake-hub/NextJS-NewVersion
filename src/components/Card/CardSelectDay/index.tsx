@@ -1,6 +1,6 @@
 import { Text, Button } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import { selectSearch } from 'src/redux/slice/searchSlice';

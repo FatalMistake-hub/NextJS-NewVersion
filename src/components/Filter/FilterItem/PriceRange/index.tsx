@@ -1,16 +1,14 @@
+"use client"
 import {
-    RangeSlider,
-    RangeSliderTrack,
-    RangeSliderFilledTrack,
-    RangeSliderThumb,
     Box,
-    SliderMark,
     NumberInput,
     NumberInputField,
+    RangeSlider,
+    RangeSliderFilledTrack,
+    RangeSliderThumb,
+    RangeSliderTrack,
     Stack,
-    Center,
-    Text,
-    Divider,
+    Text
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { BsSliders2Vertical } from 'react-icons/bs';

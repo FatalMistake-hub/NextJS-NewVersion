@@ -20,7 +20,7 @@ import { DateTimeToStringBooking, formatRangeDate } from 'src/utils/dateUntils';
 import DateRangeCP from '@components/Search/DateRange';
 import Counter from '@components/Search/Counter';
 import { formatGuests, formatGuestsMinimal } from 'src/utils/guestsUtil';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 enum ESearchMenu {
     LOCATION = 'location',
     CHECK_IN = 'checkIn',

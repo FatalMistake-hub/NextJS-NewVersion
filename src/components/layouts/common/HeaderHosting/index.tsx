@@ -26,7 +26,7 @@ import LoginModal from '@components/Modal/LoginModal';
 import MenuBase from '../MenuBase';
 import MenuHosting from '../MenuHosting';
 import MenuHostingNav from '../MenuHostingNav/MenuHostingNav';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useErrorBoundary } from 'react-error-boundary';
 
 interface HeaderHostingProps {
@@ -86,7 +86,7 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                     {/* left side - logo */}
                     <div className="flex items-center h-12">
                         <Link href="/">
-                            <a>
+                            {/* <a> */}
                                 <Box color={logoColor}>
                                     <img
                                         src="https://res.cloudinary.com/sacchidananad-utech/image/upload/v1687368934/na-letter-resolution-logo-color-on-transparent-background_uhm42s.png"
@@ -94,7 +94,7 @@ export const HeaderHosting: FC<HeaderHostingProps> = ({ exploreNearby, searchPag
                                         className="h-12"
                                     />
                                 </Box>
-                            </a>
+                            {/* </a> */}
                         </Link>
                     </div>
                     {/*  bar */}

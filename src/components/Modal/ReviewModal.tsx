@@ -14,7 +14,7 @@ import {
 import { useState } from 'react';
 import useCreateReview from 'src/hooks/guest/review/useCreateReview';
 import StarRatings from 'react-star-ratings';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 interface ReviewModalProps {
     isOpen: boolean;
     onClose: () => void;

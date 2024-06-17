@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper';
 import useAskGpt from 'src/hooks/guest/gptChat/useAskGpt';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { IGptChat } from 'src/types/chat.type';
 import Link from 'next/link';
 function ScrollBottom({ messages }: { messages: any }) {
@@ -160,7 +160,7 @@ const Message = () => {
                                                             {msg.message?.map((item: IGptChat) => (
                                                                 <SwiperSlide className="h-full min-w-[400px]   " key={item.tourId}>
                                                                     <Link href={`/tours/${item.tourId}`}>
-                                                                        <a target="_blank">
+                                                                        {/* <a target="_blank"> */}
                                                                             <Box
                                                                                 minW={'full'}
                                                                                 minH={'full'}
@@ -214,7 +214,7 @@ const Message = () => {
                                                                                     </Text>
                                                                                 </div>
                                                                             </Box>
-                                                                        </a>
+                                                                        {/* </a> */}
                                                                     </Link>
 
                                                                     {/* </div> */}

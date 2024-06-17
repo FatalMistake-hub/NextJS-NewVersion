@@ -58,15 +58,15 @@ export const HeaderNoSearch: FC<HeaderNoSearchProps> = ({ exploreNearby, searchP
                     {/* left side - logo */}
                     <div className="flex items-center h-12">
                         <Link href="/">
-                            <a>
-                                <Box color={logoColor}>
-                                    <img
-                                        src="https://res.cloudinary.com/sacchidananad-utech/image/upload/v1687368934/na-letter-resolution-logo-color-on-transparent-background_uhm42s.png"
-                                        alt="logo"
-                                        className="h-12"
-                                    />
-                                </Box>
-                            </a>
+                            {/* <a> */}
+                            <Box color={logoColor}>
+                                <img
+                                    src="https://res.cloudinary.com/sacchidananad-utech/image/upload/v1687368934/na-letter-resolution-logo-color-on-transparent-background_uhm42s.png"
+                                    alt="logo"
+                                    className="h-12"
+                                />
+                            </Box>
+                            {/* </a> */}
                         </Link>
                     </div>
                     {/* small search bar */}
@@ -75,13 +75,13 @@ export const HeaderNoSearch: FC<HeaderNoSearchProps> = ({ exploreNearby, searchP
                     {/* <HStack spacing={2}></HStack> */}
                     <div className="flex items-center justify-end min-w-[370px]">
                         <Link href="/become-a-host">
-                            <a
+                            <p
                                 className={`${
                                     isSnapTop ? 'text-white hover: hover:bg-opacity-10' : 'text-gray-500 hover:bg-gray-100 '
                                 } flex items-center h-10 px-4 rounded-full font-medium tracking-wide text-sm min-w-fit mr-2`}
                             >
                                 Đón tiếp khách
-                            </a>
+                            </p>
                         </Link>
 
                         {session?.user ? (

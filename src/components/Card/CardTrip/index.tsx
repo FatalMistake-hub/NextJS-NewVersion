@@ -6,7 +6,7 @@ import { useAppDispatch } from 'src/redux/hook';
 import { FC } from 'react';
 import { IOrder } from 'src/types/order.type';
 import { SET_orderIdBlockChain, SET_publicKey_CREATER } from 'src/redux/slice/authSlice';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import moment from 'moment';
 interface Props {
     data: IOrder;

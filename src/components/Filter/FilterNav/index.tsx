@@ -1,29 +1,29 @@
+"use client"
 import {
     Box,
-    Text,
     Button,
+    Center,
+    Divider,
+    HStack,
     Popover,
-    PopoverTrigger,
-    PopoverContent,
     PopoverArrow,
     PopoverBody,
-    useDisclosure,
-    Divider,
+    PopoverContent,
     PopoverFooter,
-    Center,
-    HStack,
+    PopoverTrigger,
+    Text,
 } from '@chakra-ui/react';
-import FilterModal from '@components/Modal/FilterModal';
 
-import { FC, JSXElementConstructor, ReactElement } from 'react';
-import { FaChevronDown, FaSlidersH } from 'react-icons/fa';
+import { JSXElementConstructor, ReactElement } from 'react';
+import { FaChevronDown } from 'react-icons/fa';
 
+import { useRouter } from 'next/navigation';
+import { useAppDispatch, useAppSelector } from 'src/redux/hook';
+import { SET_CATEGORY, selectSearch } from 'src/redux/slice/searchSlice';
 import LanguagePicker from '../FilterItem/LanguagePicker';
 import PriceRange from '../FilterItem/PriceRange';
 import TimeInDay from '../FilterItem/TimeInDay';
-import { useAppDispatch, useAppSelector } from 'src/redux/hook';
-import { selectSearch, SET_CATEGORY } from 'src/redux/slice/searchSlice';
-import { useRouter } from 'next/router';
+import FilterButton from './FilterButton';
 interface NavItem {
     id?: number;
     type?: string;
@@ -35,10 +35,7 @@ interface NavItem {
     href?: string;
     minWidth?: string;
 }
-interface Props {
-    dataCategory: any;
-}
-const FilterNav = ({ dataCategory }: Props) => {
+export default function FilterNav({dataCategory}: {dataCategory: any}) {
     const NAV_ITEMS: Array<NavItem> = [
         {
             id: 87,
@@ -67,10 +64,9 @@ const FilterNav = ({ dataCategory }: Props) => {
         {
             type: 'Divider',
         },
-        ...dataCategory,
+        ...(dataCategory || []),
     ];
 
-    const { isOpen: isFilterOpen, onClose: onFilterClose, onOpen: onFilterOpen } = useDisclosure();
     const dispatch = useAppDispatch();
     const { categoryList } = useAppSelector(selectSearch);
     const router = useRouter();
@@ -155,15 +151,8 @@ const FilterNav = ({ dataCategory }: Props) => {
                     </Box>
                 ))}
             </HStack>
-            <div className="flex items-center pr-1 ml-2">
-                <Button borderRadius="48px" leftIcon={<FaSlidersH />} colorScheme="blackAlpha" variant="outline" onClick={onFilterOpen}>
-                    <Text color={'black'}> Bộ lọc</Text>
-                </Button>
-            </div>
-            <FilterModal isOpen={isFilterOpen} onClose={onFilterClose} />
+            <FilterButton />
         </>
         // </Stack>
     );
-};
-
-export default FilterNav;
+}

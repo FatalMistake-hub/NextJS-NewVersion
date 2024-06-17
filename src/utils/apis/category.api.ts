@@ -1,4 +1,4 @@
-import { IAllCategory } from 'src/types/category.type';
-import { http, httpHost } from '../instance/http';
+import { httpSever } from '../instance/http';
 
-export const getAllCategory = async () => await httpHost.get<IAllCategory>('/categories/', {});
+// export const getAllCategory = async () => await httpHost.get<IAllCategory>('/categories/', {});
+export const getAllCategory = async () => httpSever.get<any>('/categories/');

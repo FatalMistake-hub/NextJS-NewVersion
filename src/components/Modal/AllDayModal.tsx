@@ -31,7 +31,7 @@ import DateRangeCP from '@components/Search/DateRange';
 import Counter from '@components/Search/Counter';
 import { formatGuests } from 'src/utils/guestsUtil';
 import { BiUpload } from 'react-icons/bi';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import useGetAllTimeBookingByRange from 'src/hooks/guest/timeBooking/useGetAllTimeBookingByRange';
 import { time } from 'console';
 import { IDayBook, TimeBookViewDtoList } from 'src/types/timeBooking.type';

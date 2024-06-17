@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import useAxiosAuth from '../../auth/useAxiosAuth';
 

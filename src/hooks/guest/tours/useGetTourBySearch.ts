@@ -1,13 +1,12 @@
-import { GetPreviousPageParamFunction, useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useAppSelector } from 'src/redux/hook';
-import { UseQueryInfinityResponse, UseQueryResponse } from 'src/types/axios.type';
-import { IAllTours } from 'src/types/tours.type';
-import { getToursBySearch } from 'src/utils/apis/tours.api';
 import { selectSearch } from 'src/redux/slice/searchSlice';
+import { UseQueryInfinityResponse } from 'src/types/axios.type';
+import { getToursBySearch } from 'src/utils/apis/tours.api';
 
-const useTourBySearch = (pageSize: number, viewport: any): UseQueryInfinityResponse<any> => {
+const  useTourBySearch = (pageSize: number, viewport: any): UseQueryInfinityResponse<any> => {
     const { ref, inView } = useInView({ threshold: 0 });
     const { categoryList } = useAppSelector(selectSearch);
 

@@ -1,3 +1,4 @@
+'use client'
 import React, { FC, useState } from 'react';
 import { Box, Button, Stack, useColorMode, useColorModeValue, useDisclosure, useToast, Text, SkeletonCircle } from '@chakra-ui/react';
 import { FaAirbnb, FaGlobe, FaMoon, FaSearch, FaSun } from 'react-icons/fa';
@@ -18,6 +19,7 @@ import LoginModal from '@components/Modal/LoginModal';
 import { Logout } from 'src/utils/apis/auths.api';
 import MenuBase from '../MenuBase';
 import Head from 'next/head';
+import useUserLocation from 'src/hooks/map/useUserLocation';
 
 interface HeaderProps {
     exploreNearby?: IExploreNearby[];
@@ -27,6 +29,8 @@ interface HeaderProps {
 export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, query }) => {
     const { isOpen: isLoginOpen, onClose: onLoginClose, onOpen: onLoginOpen } = useDisclosure();
     const { isOpen: isSignUpOpen, onClose: onSignUpClose, onOpen: onSignUpOpen } = useDisclosure();
+
+    useUserLocation();
 
     const toast = useToast();
     const { location, checkIn, checkOut, guests } = useAppSelector(selectSearch);
@@ -57,7 +61,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                     {/* left side - logo */}
                     <div className="flex items-center h-12">
                         <Link href="/">
-                            <a>
+                            {/* <a> */}
                                 <Box color={logoColor}>
                                     <img
                                         src="https://res.cloudinary.com/sacchidananad-utech/image/upload/v1687368934/na-letter-resolution-logo-color-on-transparent-background_uhm42s.png"
@@ -65,7 +69,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                                         className="h-12"
                                     />
                                 </Box>
-                            </a>
+                            {/* </a> */}
                         </Link>
                     </div>
                     {/* small search bar */}
@@ -114,13 +118,13 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                     {/* <HStack spacing={2}></HStack> */}
                     <div className="flex items-center justify-end min-w-[370px]">
                         <Link href="/become-a-host">
-                            <a
+                            <p
                                 className={`${
                                     isSnapTop ? 'text-white hover: hover:bg-opacity-10' : 'text-gray-500 hover:bg-gray-100 '
                                 } flex items-center h-10 px-4 rounded-full font-medium tracking-wide text-sm min-w-fit mr-2`}
                             >
                                 Đón tiếp khách
-                            </a>
+                            </p>
                         </Link>
 
                         {session?.user ? (

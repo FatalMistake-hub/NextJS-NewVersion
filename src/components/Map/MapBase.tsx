@@ -1,3 +1,4 @@
+'use client'
 import React, { FC, PropsWithChildren, memo, useEffect, useMemo } from 'react';
 import ReactMapGL, { GeolocateControl, FullscreenControl, NavigationControl, ScaleControl } from 'react-map-gl';
 import { useAppSelector } from 'src/redux/hook';

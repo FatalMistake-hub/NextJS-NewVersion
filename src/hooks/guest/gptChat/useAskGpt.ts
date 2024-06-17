@@ -15,9 +15,8 @@ const useAskGpt = () => {
     const { mutate, isLoading, isError, isSuccess } = useMutation({
         mutationFn: (message: { message: string }) => postAskGpt(message),
         onSuccess: (data) => {
-            setConverSation((prev) => [...prev, { author: 'botGpt', message: data.data }])
+            setConverSation((prev) => [...prev, { author: 'botGpt', message: data.data }]);
             console.log(data);
-
         },
     });
 

@@ -1,3 +1,4 @@
+"use client";
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 
@@ -9,7 +10,7 @@ import SearchOptionButton from './SearchOptionButton';
 import SearchOptionWrapper from './SearchOptionWrapper';
 import { formatRangeDate } from 'src/utils/dateUntils';
 import { useDataContext } from 'src/hooks/useDataContext';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import {
     DECREASE_ADULTS,
@@ -88,7 +89,7 @@ const Search: FC<ISearchBarProps> = ({ menu, isActiveHeader = true, closeSearch,
                 guests: JSON.stringify(guests),
                 viewport: JSON.stringify(viewport),
             },
-        });
+        } as any);
     };
 
 

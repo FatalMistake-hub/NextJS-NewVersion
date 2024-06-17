@@ -9,7 +9,7 @@ import { selectCalendarHost, SET_dateRange } from 'src/redux/slice/calendarHostS
 import { memo, useEffect, useState } from 'react';
 import useGetAllDayBookingById from 'src/hooks/guest/timeBooking/useGetAllDayBookingById';
 import { IDayBook } from 'src/types/timeBooking.type';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const headerToolbar = {
     start: 'title',

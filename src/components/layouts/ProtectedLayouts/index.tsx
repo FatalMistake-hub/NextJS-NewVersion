@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import {  ReactElement, ReactNode, useEffect } from 'react';
 import { useAppDispatch } from 'src/redux/hook';
 import { SET_isLogin_FALSE } from 'src/redux/slice/authSlice';

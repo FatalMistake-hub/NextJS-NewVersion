@@ -41,7 +41,7 @@ const DetailTour = ({ onClose, tourId }: IDetailTourProps) => {
                     {data?.title}
                 </Heading>
                 <Link href={`/tours/${data?.tourId}`}>
-                    <a target="_blank">
+                    {/* <a target="_blank"> */}
                         <IconButton
                             aria-label="close"
                             icon={<BsEyeFill />}
@@ -53,7 +53,7 @@ const DetailTour = ({ onClose, tourId }: IDetailTourProps) => {
                             onClick={onClose}
                             fontSize={'18px'}
                         />
-                    </a>
+                    {/* </a> */}
                 </Link>
                 <IconButton
                     aria-label="close"

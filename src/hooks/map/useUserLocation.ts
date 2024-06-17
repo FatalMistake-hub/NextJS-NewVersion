@@ -14,7 +14,7 @@ const useUserLocation = () => {
         async (position) => {
           const { latitude, longitude } = position.coords;
           const res = await searchByCoordinate(longitude, latitude);
-          dispatch(SET_LOCATION(res.data.features[0].properties.context.region.name));
+          dispatch(SET_LOCATION(res.data.features?.[0]?.properties.context.region.name));
           dispatch(SET_COORDINATE({ longitude, latitude }));
           dispatch(
             SET_VIEWPORT({

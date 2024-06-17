@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import {IRegisterAccount } from 'src/types/auths.type';
 import { Register } from 'src/utils/apis/auths.api';
 

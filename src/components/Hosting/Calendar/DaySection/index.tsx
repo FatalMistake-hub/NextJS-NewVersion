@@ -23,7 +23,7 @@ import { IDayBook, IDayBookResponse, TimeBookViewDtoList } from 'src/types/timeB
 import useGetAllTimeBookingByRange from 'src/hooks/guest/timeBooking/useGetAllTimeBookingByRange';
 import { useAppDispatch, useAppSelector } from 'src/redux/hook';
 import { selectCalendarHost } from 'src/redux/slice/calendarHostSlice';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import usePatchDayTimeBook from 'src/hooks/guest/timeBooking/usePatchDayTimeBook';
 import { ESearchMenu } from 'src/utils/constants/Enums';
 import SearchOptionButton from '@components/Search/SearchOptionButton';

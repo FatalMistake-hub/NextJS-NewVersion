@@ -12,12 +12,16 @@ module.exports = withPlugins([], {
         MAPBOX_STYLE: 'mapbox://styles/nhat21313/clgqcgh2y00k101r7dg0he141',
         MAPBOX_URL: 'https://api.mapbox.com/search/geocode/v6/',
         MAPBOX_ADDRESS_URL: 'https://maps.vnpost.vn/api',
-        NEXT_APP_BASE_URL: 'https://221.132.33.161:9000/api',
-        NEXTAUTH_URL: 'https://experience-travel.vercel.app',
+        // NEXT_APP_BASE_URL: 'https://221.132.33.161:9000/api',
+        NEXT_APP_BASE_URL: 'http://192.168.5.107:9000/api',
+        // NEXTAUTH_URL: 'https://experience-travel.vercel.app',
+        NEXTAUTH_URL: 'http://localhost:3000',
         NEXTAUTH_SECRET: 'c8f18c19336ce5aa7fdb4aecab25feba',
     },
     runtime: 'nodejs',
-    
+    compilers: {
+        styledComponents: true,
+    }
 });
 
 // module.exports = {

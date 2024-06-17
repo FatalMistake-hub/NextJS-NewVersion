@@ -1,5 +1,5 @@
 import { Box, Stack, Badge, Heading, Tooltip, useColorModeValue } from '@chakra-ui/react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState, useCallback } from 'react';
 

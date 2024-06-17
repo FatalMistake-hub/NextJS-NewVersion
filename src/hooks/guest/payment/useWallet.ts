@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {  useRouter } from 'next/router';
+import {  useRouter } from 'next/navigation';
 
 import useAxiosAuth from '../../auth/useAxiosAuth';
 import { IWallet } from 'src/types/payment.type';

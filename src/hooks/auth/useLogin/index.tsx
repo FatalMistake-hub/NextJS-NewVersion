@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useAppDispatch } from 'src/redux/hook';
 import { IAccount } from 'src/types/auths.type';
 import { Login } from 'src/utils/apis/auths.api';

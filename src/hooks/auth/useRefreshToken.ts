@@ -1,6 +1,7 @@
+'use client'
 import { useToast } from '@chakra-ui/react';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 import { useAppDispatch } from 'src/redux/hook';
 import { SET_isLogin_FALSE } from 'src/redux/slice/authSlice';
@@ -9,7 +10,7 @@ import { http } from 'src/utils/instance/http';
 export const useRefreshToken = () => {
     const { data: session, status } = useSession();
     const toast = useToast();
-    const router = useRouter();
+    // const router = useRouter();
     const refreshTokenCalledRef = useRef(false);
     const dispatch = useAppDispatch();
     const refreshToken = async () => {

@@ -7,7 +7,7 @@ const useGetAllCatgory = (): UseQueryResponse<IAllCategory> => {
     const { data, isLoading, isError, isSuccess } = useQuery(['GET_ALL_CATEGORY'], async () => await getAllCategory());
 
     return {
-        data: data?.data,
+        data: data?.payload,
         isLoading,
         isError,
         isSuccess,

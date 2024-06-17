@@ -29,7 +29,7 @@ const CardItem: React.FC<CardItemProps> = ({ className, data, minImgHeight = '40
                         flexDirection="column"
                         className={`${className} rounded-xl hover:-translate-y-3 hover:shadow-3xl transition-all duration-300 ease-in-out  `}
                     >
-                        <Box w="100%" maxH={'405px'} h="full" minHeight={minImgHeight} position="relative">
+                        <Box w="100%" maxH={'405px'}  h="full" minHeight={minImgHeight} position="relative">
                             {/* {true && (
                                 <Box zIndex={1} boxSize="20px" position="absolute" top={4} right={4} bg="transparent">
                                     <BsHeart className="w-5 h-5 " />
@@ -43,7 +43,7 @@ const CardItem: React.FC<CardItemProps> = ({ className, data, minImgHeight = '40
                                 objectFit="cover"
                                 placeholder="blur"
                                 blurDataURL={data.imageMain}
-                                className="rounded-t-xl"
+                                className="rounded-md"
                             />
                         </Box>
                         <Box
