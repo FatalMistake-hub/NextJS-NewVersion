@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from 'axios';
-const https = require('https');
 class Http {
     instance: AxiosInstance;
     constructor() {
@@ -9,14 +8,11 @@ class Http {
             headers: {
                 'Content-Type': 'application/json',
             },
-            httpsAgent: new https.Agent({
-                rejectUnauthorized: false,
-            }),
         });
     }
 }
 class HttpHost {
-    instance: AxiosInstance;
+    instance: AxiosInstance;    
     constructor() {
         this.instance = axios.create({
             baseURL: process.env.NEXT_APP_BASE_URL,
@@ -24,9 +20,6 @@ class HttpHost {
             headers: {
                 'Content-Type': 'application/json',
             },
-            httpsAgent: new https.Agent({
-                rejectUnauthorized: false,
-            }),
         });
     }
 }
@@ -39,9 +32,6 @@ class HttpAuth {
             headers: {
                 'Content-Type': 'application/json',
             },
-            httpsAgent: new https.Agent({
-                rejectUnauthorized: false,
-            }),
         });
     }
 }

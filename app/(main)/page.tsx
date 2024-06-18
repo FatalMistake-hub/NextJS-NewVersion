@@ -7,17 +7,11 @@ import { CategorySkeleton } from '@components/Skeleton/CategorySkeleton';
 import MainLayout from '@components/layouts/MainLayout';
 import Image from 'next/image';
 import { Suspense } from 'react';
+import { image } from 'src/utils/data';
 export const runtime = 'experimental-edge';
 
 export default async function Home() {
-    const image = [
-        'https://res.cloudinary.com/sacchidananad-utech/image/upload/q_auto:low/v1686757209/aaasd_bpbp1e.webp',
-        'https://res.cloudinary.com/sacchidananad-utech/image/upload/q_auto:low/v1686757210/waallpaperflare.com_wallpaper_dvyycj.webp',
-        'https://res.cloudinary.com/sacchidananad-utech/image/upload/q_auto:low/v1686757211/ass_bavdp0.webp',
-        'https://res.cloudinary.com/sacchidananad-utech/image/upload/q_auto:low/v1686757211/s_zz3h0p.webp',
-        'https://res.cloudinary.com/sacchidananad-utech/image/upload/v1686757207/river-3632175_1280_eaabuk.jpg',
-        'https://res.cloudinary.com/sacchidananad-utech/image/upload/v1686757207/pexels-photo-2161467_q9v4ta.jpg',
-    ];
+    
     const imageMain = image[Math.floor(Math.random() * image.length)];
     return (
         <MainLayout>
@@ -59,9 +53,8 @@ export default async function Home() {
                         <Search />
                     </Box>
                     <div className="pl-[52px] pr-[68px] w-full  ">
-                        {/* {dataCategory ? <Category dataCategory={dataCategory} /> : <CategorySkeleton count={5} />} */}
                         <Suspense fallback={<CategorySkeleton count={5} />}>
-                            {/* <Category /> */}
+                            <Category />
                         </Suspense>
                     </div>
                 </section>

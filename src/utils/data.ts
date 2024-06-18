@@ -86,3 +86,11 @@ export const getCategory = async () => {
     const searchResponse = await fetch('https://221.132.33.161:9000/api/categories/');
     return searchResponse.json();
 };
+export const image = [
+    'https://res.cloudinary.com/sacchidananad-utech/image/upload/q_auto:low/v1686757209/aaasd_bpbp1e.webp',
+    'https://res.cloudinary.com/sacchidananad-utech/image/upload/q_auto:low/v1686757210/waallpaperflare.com_wallpaper_dvyycj.webp',
+    'https://res.cloudinary.com/sacchidananad-utech/image/upload/q_auto:low/v1686757211/ass_bavdp0.webp',
+    'https://res.cloudinary.com/sacchidananad-utech/image/upload/q_auto:low/v1686757211/s_zz3h0p.webp',
+    'https://res.cloudinary.com/sacchidananad-utech/image/upload/v1686757207/river-3632175_1280_eaabuk.jpg',
+    'https://res.cloudinary.com/sacchidananad-utech/image/upload/v1686757207/pexels-photo-2161467_q9v4ta.jpg',
+];

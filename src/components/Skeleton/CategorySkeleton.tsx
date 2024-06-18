@@ -15,12 +15,12 @@ export const CategorySkeleton: FC<CategorySkeletonProps> = ({ count }) => {
             pagination={{ clickable: true }}
             modules={[Pagination]}
             style={{ padding: '16px 48px 0px 48px', borderRadius: '0.75rem' }}
-            className="min-h-[300px] max-w-[1816px]  bg-transparent    "
+            className="min-h-[300px]  bg-transparent "
         >
             {[...Array(count).keys()].map((item: any, index: number) => (
                 <SwiperSlide key={index} className="mx-2 bg-transparent">
                     <Box
-                        maxW={'280px'}
+                        w={'280px'}
                         h={'240px'}
                         rounded={'xl'}
                         p={2}

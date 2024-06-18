@@ -1,15 +1,4 @@
-// 'use client';
-import {
-  Box,
-  Flex,
-  IconButton,
-  Popover,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
-  Text,
-  useColorModeValue
-} from '@chakra-ui/react';
+import { Box, Flex, IconButton, Popover, PopoverBody, PopoverContent, PopoverTrigger, Text, useColorModeValue } from '@chakra-ui/react';
 import Rating from '@components/Card/Rating';
 import MapBase from '@components/Map/MapBase';
 import { getCenter } from 'geolib';
@@ -29,25 +18,6 @@ interface MapTourProps {
     setIsFullMap: any;
 }
 export default function MapTour({ isHovered, isFullMap, setIsFullMap }: MapTourProps) {
-    function renderIcon(categoryName: string, classname: string, size: number) {
-        switch (categoryName) {
-            case 'Thể thao':
-                return <BiRun className={classname} size={size} />;
-            case 'Tham quan':
-                return <BsCameraFill className={classname} size={size} />;
-            case 'Nghệ thuật và văn hóa':
-                return <FaTheaterMasks className={classname} size={size} />;
-            case 'Giải trí':
-                return <BiMusic className={classname} size={size} />;
-            case 'Thức ăn và đồ uống':
-                return <BiDrink className={classname} size={size} />;
-            case 'Tour':
-                return <FaPlane className={classname} size={size} />;
-            default:
-                return <BiRun className={classname} size={size} />;
-        }
-    }
-
     const searchParams = useSearchParams();
     const viewportString = searchParams.get('viewport');
 
@@ -85,7 +55,7 @@ export default function MapTour({ isHovered, isFullMap, setIsFullMap }: MapTourP
                 <MapBase center={getCenterMap(data)} viewportBbox={JSON.parse(viewportString)} className="relative top-[76px] ">
                     <button
                         className="absolute  top-1 items-center hidden p-3 m-4 text-gray-500 duration-300 bg-white border border-gray-200 rounded-lg shadow-lg sm:flex active:scale-90"
-                        // onClick={() => (isFullMap ? setIsFullMap(false) : setIsFullMap(true))}
+                        onClick={() => (isFullMap ? setIsFullMap(false) : setIsFullMap(true))}
                     >
                         {isFullMap ? (
                             <>
@@ -199,4 +169,23 @@ export default function MapTour({ isHovered, isFullMap, setIsFullMap }: MapTourP
             )}
         </section>
     );
+}
+
+function renderIcon(categoryName: string, classname: string, size: number) {
+    switch (categoryName) {
+        case 'Thể thao':
+            return <BiRun className={classname} size={size} />;
+        case 'Tham quan':
+            return <BsCameraFill className={classname} size={size} />;
+        case 'Nghệ thuật và văn hóa':
+            return <FaTheaterMasks className={classname} size={size} />;
+        case 'Giải trí':
+            return <BiMusic className={classname} size={size} />;
+        case 'Thức ăn và đồ uống':
+            return <BiDrink className={classname} size={size} />;
+        case 'Tour':
+            return <FaPlane className={classname} size={size} />;
+        default:
+            return <BiRun className={classname} size={size} />;
+    }
 }

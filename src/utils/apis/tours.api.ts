@@ -3,28 +3,28 @@ import { ICategory } from 'src/types/category.type';
 import { IAllTours, ITours, IViewPort, TourPost } from 'src/types/tours.type';
 import { httpSever, http } from '../instance/http';
 // const httpJWT= useAxiosAuth()
-export const getToursBySearch = async (category: ICategory, pageNo: number, pageSize: number, viewport: IViewPort) =>
-    await httpSever.get(
-        `/tour/${category.label}/${viewport.northEastLat}/${viewport.northEastLng}/${viewport.southWestLat}/${viewport.southWestLng}/`,
-        {
-            pageNo: pageNo,
-            pageSize: pageSize,
-        },
-        {
-            cache: "no-store"
-        }
-    );
-
 // export const getToursBySearch = async (category: ICategory, pageNo: number, pageSize: number, viewport: IViewPort) =>
-//     await http.get<IAllTours>(
+//     await httpSever.get(
 //         `/tour/${category.label}/${viewport.northEastLat}/${viewport.northEastLng}/${viewport.southWestLat}/${viewport.southWestLng}/`,
 //         {
-//             params: {
-//                 pageNo: pageNo,
-//                 pageSize: pageSize,
-//             },
+//             pageNo: pageNo,
+//             pageSize: pageSize,
 //         },
+//         {
+//             cache: "no-store"
+//         }
 //     );
+
+export const getToursBySearch = async (category: ICategory, pageNo: number, pageSize: number, viewport: IViewPort) =>
+    await http.get<IAllTours>(
+        `/tour/${category.label}/${viewport.northEastLat}/${viewport.northEastLng}/${viewport.southWestLat}/${viewport.southWestLng}/`,
+        {
+            params: {
+                pageNo: pageNo,
+                pageSize: pageSize,
+            },
+        },
+    );
 
 export const getAllTours = async (pageNo: number, pageSize: number) =>
     await http.get<IAllTours>('/tour/all', {
