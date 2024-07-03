@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { ICategory } from 'src/types/category.type';
 import { IAllTours, ITours, IViewPort, TourPost } from 'src/types/tours.type';
-import { httpSever, http } from '../instance/http';
+import { http, httpSever } from '../instance/http';
 // const httpJWT= useAxiosAuth()
 // export const getToursBySearch = async (category: ICategory, pageNo: number, pageSize: number, viewport: IViewPort) =>
 //     await httpSever.get(
@@ -26,7 +26,7 @@ export const getToursBySearch = async (category: ICategory, pageNo: number, page
         },
     );
 
-export const getAllTours = async (pageNo: number, pageSize: number) =>
+export const getAllTours = async (pageNo: number = 1, pageSize: number = 10) =>
     await http.get<IAllTours>('/tour/all', {
         params: {
             pageNo: pageNo,
@@ -55,3 +55,4 @@ export const getAllHostTours = async (pageNo: number, pageSize: number, axiosAut
             pageSize: pageSize,
         },
     });
+

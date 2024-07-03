@@ -105,6 +105,7 @@ export const request = async <Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE
     });
     const payload: Response = await res.json();
     console.log('payload', payload);
+    console.log('url', url);
     const data = {
         status: res.status,
         payload,
@@ -113,8 +114,8 @@ export const request = async <Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE
 };
 
 export const httpSever = {
-    get<Response>(url: string, body?: any, options?: Omit<CustomOptions, 'body'> | undefined) {
-        return request<Response>('GET', url, { ...options, body });
+    get<Response>(url: string,  options?: Omit<CustomOptions, 'body'> | undefined) {
+        return request<Response>('GET', url, { ...options});
     },
     post<Response>(url: string, body: any, options?: Omit<CustomOptions, 'body'> | undefined) {
         return request<Response>('POST', url, { ...options, body });

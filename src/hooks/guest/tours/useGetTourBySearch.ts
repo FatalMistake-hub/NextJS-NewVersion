@@ -6,7 +6,7 @@ import { selectSearch } from 'src/redux/slice/searchSlice';
 import { UseQueryInfinityResponse } from 'src/types/axios.type';
 import { getToursBySearch } from 'src/utils/apis/tours.api';
 
-const  useTourBySearch = (pageSize: number, viewport: any): UseQueryInfinityResponse<any> => {
+const useTourBySearch = (pageSize: number, viewport: any): UseQueryInfinityResponse<any> => {
     const { ref, inView } = useInView({ threshold: 0 });
     const { categoryList } = useAppSelector(selectSearch);
 
@@ -21,8 +21,8 @@ const  useTourBySearch = (pageSize: number, viewport: any): UseQueryInfinityResp
         fetchPreviousPage,
         hasNextPage,
         hasPreviousPage,
-    } = useInfiniteQuery(
-        [
+    } = useInfiniteQuery({
+        queryKey: [
             'GET_ALL_TOURS_BY_SEARCH',
             categoryList,
             viewport.northEastLatitude,
@@ -30,25 +30,24 @@ const  useTourBySearch = (pageSize: number, viewport: any): UseQueryInfinityResp
             viewport.southWestLatitude,
             viewport.southWestLongtitude,
         ],
-        async ({ pageParam = 1 }) =>
+        queryFn: async ({ pageParam }) =>
             await getToursBySearch(categoryList, pageParam, pageSize, {
                 northEastLat: viewport.northEastLatitude,
                 northEastLng: viewport.northEastLongtitude,
                 southWestLat: viewport.southWestLatitude,
                 southWestLng: viewport.southWestLongtitude,
             }),
-        {
-            getNextPageParam: (lastPage: any, allPages) => {
-                if (lastPage.data.pageNo < lastPage.data.totalPages) {
-                    return lastPage.data.pageNo + 1;
-                }
-            },
-            getPreviousPageParam: (firstPage: any, allPages) => {
-                return firstPage.data.pageNo - 1;
-            },
-            enabled: !!categoryList,
+        initialPageParam: 1,
+        getNextPageParam: (lastPage: any, allPages) => {
+            if (lastPage.data.pageNo < lastPage.data.totalPages) {
+                return lastPage.data.pageNo + 1;
+            }
         },
-    );
+        getPreviousPageParam: (firstPage: any, allPages) => {
+            return firstPage.data.pageNo - 1;
+        },
+        enabled: !!categoryList,
+    });
     useEffect(() => {
         if (inView) {
             fetchNextPage();

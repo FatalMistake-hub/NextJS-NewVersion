@@ -9,13 +9,11 @@ const useSearchLocation = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
 
     const debouncedSearchTerm = useDebounce(searchTerm, 500);
-    const { isLoading, error, data, isSuccess } = useQuery(
-        ['geocodes', debouncedSearchTerm],
-        async () => await searchLocation(debouncedSearchTerm),
-        {
-            enabled: !!debouncedSearchTerm,
-        },
-    );
+    const { isLoading, error, data, isSuccess } = useQuery({
+        queryKey: ['geocodes', debouncedSearchTerm],
+        queryFn: async () => await searchLocation(debouncedSearchTerm),
+        enabled: !!debouncedSearchTerm,
+    });
 
     return {
         data,

@@ -94,3 +94,4 @@ export const image = [
     'https://res.cloudinary.com/sacchidananad-utech/image/upload/v1686757207/river-3632175_1280_eaabuk.jpg',
     'https://res.cloudinary.com/sacchidananad-utech/image/upload/v1686757207/pexels-photo-2161467_q9v4ta.jpg',
 ];
+

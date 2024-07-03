@@ -5,14 +5,27 @@ import { TourList } from '@components/List/TourList';
 import Search from '@components/Search';
 import { CategorySkeleton } from '@components/Skeleton/CategorySkeleton';
 import MainLayout from '@components/layouts/MainLayout';
+import { HydrationBoundary, QueryClient, dehydrate } from '@tanstack/react-query';
 import Image from 'next/image';
 import { Suspense } from 'react';
+import { getAllToursServer } from 'src/utils/apis/tour.sever.api';
 import { image } from 'src/utils/data';
 export const runtime = 'experimental-edge';
 
 export default async function Home() {
-    
     const imageMain = image[Math.floor(Math.random() * image.length)];
+    const queryClient = new QueryClient();
+    await queryClient.prefetchInfiniteQuery({
+        queryKey: ['GET_ALL_TOURS'],
+        queryFn: () => getAllToursServer(1, 10),
+        initialPageParam: 1,
+        getNextPageParam: (lastPage: any) => {
+            if (lastPage.data?.pageNo < lastPage.data?.totalPages) {
+                return lastPage.data?.pageNo + 1;
+            }
+        },
+        pages: 1,
+    });
     return (
         <MainLayout>
             <Flex display="flex" flexDirection="column" justifyContent="center" alignItems="center">
@@ -58,7 +71,9 @@ export default async function Home() {
                         </Suspense>
                     </div>
                 </section>
-                <TourList />
+                <HydrationBoundary state={dehydrate(queryClient)}>
+                    <TourList />
+                </HydrationBoundary>
             </Flex>
         </MainLayout>
     );
