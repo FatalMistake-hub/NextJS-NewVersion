@@ -6,7 +6,7 @@ import useAxiosAuth from '../auth/useAxiosAuth';
 
 const useProfile = () => {
     const httpJWT = useAxiosAuth();
-    const { data, isLoading, isError, isSuccess } = useQuery(['GET_DETAIL_PROFILE'], () => getInfoAccount(httpJWT));
+    const { data, isLoading, isError, isSuccess } = useQuery({ queryKey: ['GET_DETAIL_PROFILE'], queryFn: () => getInfoAccount(httpJWT) });
 
     return {
         data: data?.data,

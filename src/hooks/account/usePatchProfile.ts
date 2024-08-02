@@ -10,10 +10,10 @@ const usePatchProfile = () => {
 
     const httpAuthJWT = useAxiosAuth();
     const toast = useToast();
-    const { mutate, isLoading, isError, isSuccess } = useMutation({
+    const { mutate, isPending, isError, isSuccess } = useMutation({
         mutationFn: (data: Partial<IInfoAccount>) => patchInfoAccount(httpAuthJWT, data),
         onSuccess: ({ data }) => {
-            client.invalidateQueries(['GET_DETAIL_PROFILE']);
+            client.invalidateQueries({queryKey: ['GET_DETAIL_PROFILE']});
             toast({
                 title: 'Thành công',
                 status: 'success',
@@ -30,7 +30,7 @@ const usePatchProfile = () => {
                 return mutate(data);
             }
         },
-        isLoading,
+        isPending,
         isError,
         isSuccess,
     };

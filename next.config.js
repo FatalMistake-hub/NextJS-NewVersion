@@ -21,7 +21,8 @@ module.exports = withPlugins([], {
     runtime: 'nodejs',
     compilers: {
         styledComponents: true,
-    }
+    },
+    reactStrictMode: false,
 });
 
 // module.exports = {

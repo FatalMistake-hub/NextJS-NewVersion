@@ -56,7 +56,7 @@ export const Header: FC<HeaderProps> = ({ exploreNearby, searchPage = true, quer
                 <div
                     className={`${
                         searchPage ? 'px-10' : 'container'
-                    } hidden h-full md:grid md:grid-cols-[auto,1fr,auto] xl:grid-cols-[1.5fr,3fr,1.5fr] 2xl:grid-cols-[1fr,3fr,0.75fr] items-center`}
+                    } hidden h-full md:grid md:grid-cols-[auto,3fr,auto] xl:grid-cols-[1.5fr,3fr,1.5fr] 2xl:grid-cols-[1fr,3fr,0.75fr] items-center`}
                 >
                     {/* left side - logo */}
                     <div className="flex items-center h-12">

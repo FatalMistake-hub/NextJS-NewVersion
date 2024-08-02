@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import {  ReactElement, ReactNode, useEffect } from 'react';
 import { useAppDispatch } from 'src/redux/hook';
 import { SET_isLogin_FALSE } from 'src/redux/slice/authSlice';
@@ -24,7 +24,7 @@ export const ProtectedLayout = ({ children }: any): JSX.Element => {
 
             if (isMobile) {
                 // router.push('/mobile');
-                !session?.user ? router.push('/mobile') : router.push('/mobile/listings');
+                !((session as any)?.user) ? router.push('/mobile') : router.push('/mobile/listings');
             } else {
                 router.push({
                     pathname: '/',

@@ -3,6 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { UseQueryInfinityResponse } from 'src/types/axios.type';
+import { getAllToursServer } from 'src/utils/apis/tour.sever.api';
 
 import { getAllTours } from 'src/utils/apis/tours.api';
 
@@ -22,7 +23,7 @@ const useGetAllTour = (pageSize: number): UseQueryInfinityResponse<any> => {
         hasPreviousPage,
     } = useInfiniteQuery({
         queryKey: ["GET_ALL_TOURS"],
-        queryFn: ({ pageParam }) => getAllTours(pageParam, pageSize),
+        queryFn: ({ pageParam }) => getAllToursServer(pageParam, pageSize),
         initialPageParam: 1,    
         getNextPageParam: (lastPage:any) => {
             if (lastPage.data?.pageNo < lastPage.data?.totalPages) {

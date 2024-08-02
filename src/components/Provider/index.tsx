@@ -15,7 +15,7 @@ function makeQueryClient() {
                 // above 0 to avoid refetching immediately on the client
                 staleTime: 60 * 1000,
                 refetchOnWindowFocus: false,
-                retry: 2,
+                // retry: 2,
             },
             mutations: {},
         },

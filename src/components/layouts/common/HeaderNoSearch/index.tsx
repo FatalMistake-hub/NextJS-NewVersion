@@ -1,27 +1,13 @@
-import React, { FC, useEffect, useState } from 'react';
-import {
-    Avatar,
-    Box,
-    Button,
-    Menu,
-    MenuButton,
-    MenuDivider,
-    MenuItem,
-    MenuList,
-    SkeletonCircle,
-    Stack,
-    useColorMode,
-    useColorModeValue,
-    useDisclosure,
-} from '@chakra-ui/react';
-import { FaAirbnb } from 'react-icons/fa';
+'use client';
+import { Box, Button, SkeletonCircle, Stack, useColorModeValue, useDisclosure } from '@chakra-ui/react';
+import { FC, useState } from 'react';
 
-import Link from 'next/link';
 import SignUpModal from '@components/Modal/RegisterModal';
+import Link from 'next/link';
 import { IExploreNearby } from 'src/types/interface';
 
-import { signOut, useSession } from 'next-auth/react';
 import LoginModal from '@components/Modal/LoginModal';
+import { useSession } from 'next-auth/react';
 import MenuBase from '../MenuBase';
 
 interface HeaderNoSearchProps {

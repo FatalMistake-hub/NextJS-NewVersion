@@ -6,17 +6,19 @@ import { useRefreshToken } from './useRefreshToken';
 
 const useAxiosAuth = (): AxiosInstance => {
     const { data: session, status } = useSession();
+    console.log({ session }, { status });
     const refreshToken = useRefreshToken();
     const requestInterceptorRef = useRef<number | null>(null);
     const responseInterceptorRef = useRef<number | null>(null);
 
     useEffect(() => {
-        if (status === 'loading') {
+        if (status === 'loading' || !session?.user?.token) {
             return;
         }
 
         const requestIntercept = httpAuth.interceptors.request.use(
             (config) => {
+                console.log(config);
                 if (!config.headers['Authorization']) {
                     config.headers['Authorization'] = `Bearer ${session?.user?.token}`;
                 }

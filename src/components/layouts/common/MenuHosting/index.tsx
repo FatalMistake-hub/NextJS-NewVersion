@@ -57,7 +57,7 @@ const MenuHosting = () => {
                             onClick={async () => {
                                 const res = await Logout();
                                 if (res.status === 202) {
-                                    signOut();
+                                    signOut({ redirect: false });
                                 } else {
                                     toast({
                                         title: 'Lỗi.',
