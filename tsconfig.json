@@ -1,65 +1,45 @@
 {
-  "compilerOptions": {
-    "target": "ES2015",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "baseUrl": ".",
-    "paths": {
-      "@definitions/*": [
-        "src/definitions/*"
-      ],
-      "@definitions": [
-        "src/definitions"
-      ],
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@components": [
-        "src/components"
-      ],
-      "@public/*": [
-        "public/*"
-      ],
-      "@public": [
-        "public"
-      ],
-      "@styles/*": [
-        "src/styles/*"
-      ],
-      "@styles": [
-        "src/styles"
-      ]
+    "compilerOptions": {
+        "target": "ES2015",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "forceConsistentCasingInFileNames": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "baseUrl": ".",
+        "paths": {
+            "@definitions/*": ["src/definitions/*"],
+            "@definitions": ["src/definitions"],
+            "@components/*": ["src/components/*"],
+            "@components": ["src/components"],
+            "@public/*": ["public/*"],
+            "@public": ["public"],
+            "@styles/*": ["src/styles/*"],
+            "@styles": ["src/styles"],
+            "@src/*": ["src/*"]
+        },
+        "incremental": true,
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ]
     },
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src/context/WalletConnectionProvider.js",
-    "codux.config.js",
-    ".next/types/**/*.ts"
-, "node_modules/search.tsx"  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "src/context/WalletConnectionProvider.js",
+        "codux.config.js",
+        ".next/types/**/*.ts",
+        "node_modules/search.tsx"
+    ],
+    "exclude": ["node_modules"]
 }

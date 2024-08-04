@@ -1,77 +1,55 @@
 import axios, { AxiosInstance } from 'axios';
-class Http {
+
+class HttpBase {
     instance: AxiosInstance;
-    constructor() {
+
+    constructor(baseURL?: string, timeout?: number) {
         this.instance = axios.create({
-            baseURL: process.env.NEXT_APP_BASE_URL,
-            timeout: 100000,
+            baseURL: baseURL,
+            timeout: timeout,
             headers: {
                 'Content-Type': 'application/json',
             },
         });
     }
 }
-class HttpHost {
-    instance: AxiosInstance;    
+class Http extends HttpBase {
     constructor() {
-        this.instance = axios.create({
-            baseURL: process.env.NEXT_APP_BASE_URL,
-            timeout: 100000,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        super(process.env.BASE_URL, 10000);
     }
 }
-class HttpAuth {
-    instance: AxiosInstance;
+
+class HttpAuth extends HttpBase {
     constructor() {
-        this.instance = axios.create({
-            baseURL: process.env.NEXT_APP_BASE_URL,
-            timeout: 100000,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        super(process.env.AUTH_URL, 10000);
     }
 }
-class HttpMap {
-    instance: AxiosInstance;
+
+class HttpMap extends HttpBase {
     constructor() {
-        this.instance = axios.create({
-            baseURL: process.env.MAPBOX_URL,
-            timeout: 10000,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        super(process.env.MAPBOX_URL, 10000);
     }
 }
-class HttpGptChat {
-    instance: AxiosInstance;
+
+class HttpHost extends HttpBase {
     constructor() {
-        this.instance = axios.create({
-            baseURL: process.env.NEXT_APP_BASE_URL,
-            timeout: 300000,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        super(process.env.HOST_URL, 10000);
     }
 }
-class HttpMapAddress {
-    instance: AxiosInstance;
+
+class HttpMapAddress extends HttpBase {
     constructor() {
-        this.instance = axios.create({
-            baseURL: process.env.MAPBOX_ADDRESS_URL,
-            timeout: 10000,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
+        super(process.env.MAP_ADDRESS_URL, 10000);
     }
 }
-type CustomOptions = Omit<RequestInit, 'method'> & {
+
+class HttpGptChat extends HttpBase {
+    constructor() {
+        super(process.env.NEXT_APP_BASE_URL, 300000);
+    }
+}
+
+export type CustomOptions = Omit<RequestInit, 'method'> & {
     baseUrl?: string | undefined;
 };
 export const request = async <Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE', url: string, options?: CustomOptions | undefined) => {
@@ -114,8 +92,8 @@ export const request = async <Response>(method: 'GET' | 'POST' | 'PUT' | 'DELETE
 };
 
 export const httpSever = {
-    get<Response>(url: string,  options?: Omit<CustomOptions, 'body'> | undefined) {
-        return request<Response>('GET', url, { ...options});
+    get<Response>(url: string, options?: Omit<CustomOptions, 'body'> | undefined) {
+        return request<Response>('GET', url, { ...options });
     },
     post<Response>(url: string, body: any, options?: Omit<CustomOptions, 'body'> | undefined) {
         return request<Response>('POST', url, { ...options, body });
