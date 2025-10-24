@@ -1,14 +1,12 @@
-// __tests__/page.test.tsx
-
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Home from '../../app/(main)/page';
-import { getAllToursServer } from '../../utils/apis/tour.sever.api';
+import Home from 'src/app/(main)/page';
+import { getAllToursServer } from 'src/utils/apis/tour.sever.api';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { vi, Mock, describe, it, expect } from 'vitest';
 
 // Mock the getAllToursServer function
-vi.mock('src/utils/apis/tour.sever.api', () => ({
+vi.mock('../../utils/apis/tour.sever.api', () => ({
     getAllToursServer: vi.fn(),
 }));
 
@@ -20,7 +18,22 @@ describe('Home Component', () => {
             data: {
                 pageNo: 1,
                 totalPages: 1,
-                tours: [],
+                tours: [
+                    {
+                        _id: '1',
+                        name: 'Tour 1',
+                        price: 100,
+                        rating: 4.5,
+                        imageCover: 'tour-1.jpg',
+                    },
+                    {
+                        _id: '2',
+                        name: 'Tour 2',
+                        price: 200,
+                        rating: 4.8,
+                        imageCover: 'tour-2.jpg',
+                    },
+                ],
             },
         });
     });

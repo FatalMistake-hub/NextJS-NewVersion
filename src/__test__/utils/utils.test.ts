@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { isAxiosError } from '../../utils/instance/utils';
+import { isAxiosError } from 'src/utils/instance/utils';
 import { describe, it, expect } from 'vitest';
 describe('isAxiosError', () => {
     it('should return true if error is an AxiosError', () => {

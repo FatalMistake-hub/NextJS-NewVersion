@@ -1,4 +1,4 @@
-import { clearLS, getAccessTokenFromLS, getProfileFromLS, getRefreshTokenFromLS, setAccessTokenToLS, setProfileToLS, setRefreshTokenToLS } from '../../utils/authTestExp';
+import { clearLS, getAccessTokenFromLS, getProfileFromLS, getRefreshTokenFromLS, setAccessTokenToLS, setProfileToLS, setRefreshTokenToLS } from 'src/utils/authTestExp';
 import { describe, test, expect, beforeEach } from 'vitest';
 
 const access_token =

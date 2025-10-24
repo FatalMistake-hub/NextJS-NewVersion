@@ -20,6 +20,7 @@
     "@fullcalendar/interaction": "^6.1.7",
     "@fullcalendar/multimonth": "^6.1.7",
     "@fullcalendar/react": "^6.1.7",
+    "@next/bundle-analyzer": "^15.0.3",
     "@project-serum/anchor": "^0.25.0",
     "@ramonak/react-progress-bar": "^5.0.3",
     "@reduxjs/toolkit": "^1.9.3",
@@ -59,7 +60,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.0.2",
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^14.0.0",
+    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/jsdom": "^21.1.7",
     "@types/mapbox-gl": "^2.7.10",
@@ -70,18 +71,19 @@
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.25",
     "@types/react-star-ratings": "^2.3.0",
-    "@vitejs/plugin-react": "^4.3.1",
+    "@vitejs/plugin-react": "^3.0.0",
     "@vitest/coverage-c8": "^0.33.0",
     "@vitest/coverage-v8": "^2.0.5",
     "@wixc3/react-board": "^2.3.0",
     "autoprefixer": "^10.4.14",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-testing-library": "^6.0.1",
-    "jsdom": "^24.1.1",
+    "jsdom": "^21.1.0",
+    "msw": "1.0.1",
     "postcss": "^8.4.21",
     "rollup-plugin-visualizer": "^5.12.0",
     "tailwindcss": "^3.3.1",
     "typescript": "^5.4.5",
-    "vitest": "^2.0.5"
+    "vitest": "^0.28.4"
   }
 }

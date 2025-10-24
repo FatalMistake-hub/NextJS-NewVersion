@@ -1,4 +1,4 @@
-import { httpSever } from '../../utils/instance/http';
+import { httpSever } from 'src/utils/instance/http';
 import { HttpStatusCode } from 'axios';
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, test } from 'vitest';
 
